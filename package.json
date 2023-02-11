@@ -10,15 +10,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Benthusiast/gnawlinz.git"
+    "url": "git+https://github.com/krewe-deaux-code/gnawlinz.git"
   },
   "keywords": [],
   "author": "",
   "license": "unlicensed",
   "bugs": {
-    "url": "https://github.com/Benthusiast/gnawlinz/issues"
+    "url": "https://github.com/krewe-deaux-code/gnawlinz/issues"
   },
-  "homepage": "https://github.com/Benthusiast/gnawlinz#readme",
+  "homepage": "https://github.com/krewe-deaux-code/gnawlinz#readme",
   "devDependencies": {
     "@babel/core": "^7.20.12",
     "@babel/cli": "7.20.7",
