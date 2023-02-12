@@ -1,8 +1,9 @@
 const path = require('path');
 require('dotenv').config();
+import HtmlWebpackPlugin from 'html-webpack-plugin'; 
 
-const SRC_DIR = path.resolve(__dirname, 'src/client');
-const DIST_DIR = path.resolve(__dirname, 'dist');
+//const SRC_DIR = path.resolve(__dirname, 'src/client');
+//const DIST_DIR = path.resolve(__dirname, 'dist');
 const { ENV_BUNDLE_MODE } = process.env;
 
 module.exports = {
@@ -18,7 +19,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(tsx|jsx|js|png)$/,
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(jsx|js|png)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -47,6 +53,14 @@ module.exports = {
         ]
       }
     ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'src/client/index.html'
+    })
+  ],
+  resolve: {
+    extensions: ['.ts', '.js']
   }
 };
 //The below code will help facilitate rerouting to a specific page when a client side request failed.
