@@ -8,7 +8,7 @@ const { ENV_BUNDLE_MODE } = process.env;
 
 module.exports = {
   mode: ENV_BUNDLE_MODE,
-  entry: path.resolve(__dirname, 'src', 'client', 'Index.jsx'),
+  entry: path.resolve(__dirname, 'src', 'client', 'Index.tsx'),
   output: {
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js', // set up for code-splitting
@@ -18,13 +18,11 @@ module.exports = {
   watch: true,
   module: {
     rules: [
-      /*
       {
         test: /\.tsx?$/,
         use: 'ts-loader',
         exclude: /node_modules/
       },
-      */
       {
         test: /\.(jsx|js|png)$/,
         exclude: /node_modules/,
