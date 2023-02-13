@@ -18,13 +18,15 @@ module.exports = {
   watch: true,
   module: {
     rules: [
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   exclude: /node_modules|\.d\.ts$/,
+      //   use: {
+      //     loader: 'ts-loader'
+      //   }
+      // },
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      },
-      {
-        test: /\.(jsx|js|png)$/,
+        test: /\.(jsx|js|png|tsx?)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -56,11 +58,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/client/index.html'
+      template: 'src/client/index.html',
+      inject: 'body'
     })
   ],
   resolve: {
-    extensions: ['.ts', '.js', '.tsx']//.tsx????
+    extensions: ['.ts', '.js', '.tsx', 'jsx'] // .tsx????
   },
   devServer: {
     historyApiFallback: true,

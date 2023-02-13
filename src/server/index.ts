@@ -1,11 +1,20 @@
-const express = require('express');
+import express from 'express';
+import 'dotenv/config';
+import path from 'path';
 const app = express();
-const port = 8080;
+
+const { PORT } = process.env;
+const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
+
+// middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(DIST_DIR));
 
 app.get('/', (req, res) => {
-  res.send('Hello World!');
+  res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+app.listen(PORT, () => {
+  console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
 });

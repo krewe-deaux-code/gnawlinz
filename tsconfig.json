@@ -6,12 +6,12 @@
     /* Empty */
 
     /* Language and Environment */
-    "target": "es2016",                                  /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
-    "lib": ["ES5", "ES6", "DOM.Iterable", "DOM"],        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "target": "es6",                                     /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["es5", "es6", "DOM.Iterable", "DOM"],        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "jsx": "preserve",                                   /* Specify what JSX code is generated. <-- MAYBE use "react" instead of "preserve" --> */
 
     /* Modules */
-    "module": "ES6",                                     /* Specify what module code is generated. */
+    "module": "commonjs",                                /* Specify what module code is generated. */ // <-- USED TO BE "ES6" -->
     "moduleResolution": "node",                          /* Specify how TypeScript looks up a file from a given module specifier. */
     "resolveJsonModule": true,                           /* Enable importing .json files. */
 
@@ -21,8 +21,11 @@
     /* Emit */
     "sourceMap": true,                                   /* Create source map files for emitted JavaScript files. */
     "outDir": "./dist/",                                 /* Specify an output folder for all emitted files. --> "dist" <-- ? */
+    "declaration": true,                                 /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
+    "noEmit": true,                                      /* Disable emitting files from a compilation. */ // <-- SWITCH FOR emitDeclarationOnly: true -->
 
     /* Interop Constraints */
+    "isolatedModules": true,                             /* Ensure that each file can be safely transpiled without relying on other imports. */
     "esModuleInterop": true,                             /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */
     "forceConsistentCasingInFileNames": true,            /* Ensure that casing is correct in imports. */
 
@@ -36,8 +39,8 @@
     /* Completeness */
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
-  "include": ["src/client", "types"],
-  "exclude": ["node_modules"]
+  "include": ["src/client/*", "types"],
+  "exclude": ["node_modules", "dist"]
 }
 
 
@@ -91,12 +94,12 @@
 //     /* Emit */
 //     // "declaration": true,                              /* Generate .d.ts files from TypeScript and JavaScript files in your project. */
 //     // "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
-//     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
+//     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */ <-- ORIGINALLY HAD THIS, SWITCHED for LINE 102 noEmit: true -->
 //     // "sourceMap": true,                                /* Create source map files for emitted JavaScript files. */
 //     // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
 //     // "outDir": "./",                                   /* Specify an output folder for all emitted files. */
 //     // "removeComments": true,                           /* Disable emitting comments. */
-//     // "noEmit": true,                                   /* Disable emitting files from a compilation. */
+//     // "noEmit": true,                                   /* Disable emitting files from a compilation. */ // <-- SWITCH FOR emitDeclarationOnly: true -->
 //     // "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
 //     // "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types. */
 //     // "downlevelIteration": true,                       /* Emit more compliant, but verbose and less performant JavaScript for iteration. */
