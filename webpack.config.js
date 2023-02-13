@@ -8,7 +8,7 @@ const { ENV_BUNDLE_MODE } = process.env;
 
 module.exports = {
   mode: ENV_BUNDLE_MODE,
-  entry: path.resolve(__dirname, 'src', 'client', 'Index.jsx'),
+  entry: path.resolve(__dirname, 'src', 'client', 'Index.tsx'),
   output: {
     filename: '[name].bundle.js',
     chunkFilename: '[name].bundle.js', // set up for code-splitting
@@ -18,15 +18,15 @@ module.exports = {
   watch: true,
   module: {
     rules: [
-      /*
+      // {
+      //   test: /\.(ts|tsx)$/,
+      //   exclude: /node_modules|\.d\.ts$/,
+      //   use: {
+      //     loader: 'ts-loader'
+      //   }
+      // },
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/
-      },
-      */
-      {
-        test: /\.(jsx|js|png)$/,
+        test: /\.(jsx|js|png|tsx?)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -58,11 +58,12 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/client/index.html'
+      template: 'src/client/index.html',
+      inject: 'body'
     })
   ],
   resolve: {
-    extensions: ['.ts', '.js', '.tsx']//.tsx????
+    extensions: ['.ts', '.js', '.tsx', 'jsx'] // .tsx????
   },
   devServer: {
     historyApiFallback: true,
