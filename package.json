@@ -8,11 +8,6 @@
     "start": "nodemon src/server/index.ts",
     "build": "tsc && webpack"
   },
-  "type": "module",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/krewe-deaux-code/gnawlinz.git"
-  },
   "keywords": [],
   "author": "",
   "license": "unlicensed",
