@@ -18,5 +18,7 @@ node_modules/
 .env
 #.env.test
 
+gnawlinz-key.pem 
+
 
 
