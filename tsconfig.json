@@ -1,8 +1,5 @@
 {
-  "ts-node": {
-    "compilerOptions": {"module": "es6"}
-  },
-  "compilerOptions": {
+    "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
 
     /* Projects */
