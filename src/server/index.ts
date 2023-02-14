@@ -2,13 +2,12 @@ import express from 'express';
 import 'dotenv/config';
 import path from 'path';
 const app = express();
+import  { db }  from '../db/index';
 
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 
-import DBconnection from '../db/index';
-console.log('testing DB availability:', DBconnection);
-
+console.log(db);
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
