@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom'; //Routes, Route, Navigate
 const App = () => (
   <BrowserRouter>
     <Suspense fallback = {<div>LOADING...</div>}>
-      <h1>ROUTES WILL LIVE HERE</h1>
+      <h1>... TypeScript!</h1>
     </Suspense>
   </BrowserRouter>
 );
