@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
-import  { db }  from '../db/index';
+import { db } from '../db/index';
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -16,7 +16,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
 app.use(session({
-  secret: 'typescript sucks lolipops.',
+  secret: 'typescript is great.',
   resave: false,
   saveUninitialized: false
   // cookie: { maxAge: 1000 * 60 * 60 * 24 },
@@ -30,12 +30,19 @@ const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:8080/auth/google/callback"
-  },
- (accessToken, refreshToken, profile, cb) => {
-  User.findOrCreate({ googleId: profile.id }, (err, user) => {
-    return cb(err, user);
-  });
+  callbackURL: "http://localhost:8080/auth/google/callback",
+  //passReqToCallback: true
+},
+  (accessToken, refreshToken, profile, cb) => {
+    User.findOrCreate({
+      where: { googleId: profile.id }
+    })
+      .then((user) => {
+        return cb(null, user)
+      }).catch((err) => {
+        console.log('errrrrrr', err);
+        return cb(err);
+      })
   }
 ));
 
@@ -64,3 +71,23 @@ app.get('/typescript', (req, res) => {
 app.listen(PORT, () => {
   console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
 });
+
+//passport.use(User.createStrategy());
+passport.serializeUser((user, done) => {
+  done(null, user);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findOne({
+    where: {
+      googleId: id
+    }
+  }).then((user) => {
+    done(null, user);
+  }).catch((err) => {
+    done(err);
+  })
+});
+
+
+
