@@ -5,6 +5,7 @@
 import 'dotenv/config';
 import 'postgresql'; // ???
 //import schemas
+import User from './user'
 import { Sequelize } from 'sequelize';
 
 const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
@@ -25,3 +26,4 @@ db.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
   .catch((error) => console.error('Unable to connect to the database:', error));
 
+module.exports.db = db;
