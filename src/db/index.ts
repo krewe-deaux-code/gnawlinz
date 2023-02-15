@@ -3,6 +3,7 @@
 //import GoogleStrategy from 'passport-google-oauth20';
 //import { Sequelize } from 'sequelize-typescript'; //UNINSTALL ME?
 import 'dotenv/config';
+import 'postgresql'; // ???
 //import schemas
 import { Sequelize } from 'sequelize';
 
