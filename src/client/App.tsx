@@ -5,7 +5,7 @@ const App = () => (
   <BrowserRouter>
     <Suspense fallback = {<div>LOADING...</div>}>
       <h1>... TypeScript!</h1>
-      <a href="/auth/google">authenticate that typescript SUCKS</a>
+      <a href="/auth/google">authenticate that typescript is great</a>
     </Suspense>
   </BrowserRouter>
 );
