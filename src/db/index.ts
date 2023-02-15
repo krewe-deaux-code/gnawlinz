@@ -10,8 +10,8 @@ const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
 //uncomment second sequelize call for using external db
 export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
   host: DATABASE_URL,
-  dialect: 'mysql',
-  protocol: 'mysql',
+  dialect: 'postgres',
+  protocol: 'postgres',
   // dialectOptions: {
   //   ssl: {
   //     require: true,
