@@ -1,0 +1,61 @@
+import { DataTypes } from 'sequelize';
+import { db } from './index';
+const Character = db.define('character', {
+  _id: {
+    type: DataTypes.INTEGER,
+    primaryKey: true
+  },
+  handle_id: {
+    type: DataTypes.INTEGER
+  },
+  name:{
+    type: DataTypes.STRING,
+  },
+  image:{
+    type: DataTypes.STRING,
+  },
+  slot0:{
+    type: DataTypes.INTEGER
+  },
+  slot1:{
+    type: DataTypes.INTEGER
+  },
+  slot2:{
+    type: DataTypes.INTEGER
+  },
+  slot3:{
+    type: DataTypes.INTEGER
+  },
+  slot4:{
+    type: DataTypes.INTEGER
+  },
+  slot5:{
+    type: DataTypes.INTEGER
+  },
+  slot6:{
+    type: DataTypes.INTEGER
+  },
+  slot7:{
+    type: DataTypes.INTEGER
+  },
+  health:{
+    type: DataTypes.INTEGER
+  },
+  strength:{
+    type: DataTypes.INTEGER
+  },
+  endurance:{
+    type: DataTypes.INTEGER
+  },
+  mood:{
+    type: DataTypes.INTEGER
+  },
+  location:{
+    type: DataTypes.INTEGER
+  },
+  ally_count:{
+    type: DataTypes.INTEGER
+  },
+})
+
+export default Character;
