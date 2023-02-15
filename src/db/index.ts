@@ -5,7 +5,7 @@
 import 'dotenv/config';
 import 'postgresql'; // ???
 //import schemas
-import User from './user'
+//import User from './user'
 import { Sequelize } from 'sequelize';
 
 const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
