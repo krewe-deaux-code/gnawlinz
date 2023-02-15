@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import path from 'path';
-import { db } from '../db/index';
+// import { db } from '../db/index';
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
@@ -8,7 +8,7 @@ import passport from 'passport';
 import User from '../db/user';
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
-console.log(db);
+// console.log(db); // check DB connection
 const app = express();
 
 // middleware
@@ -31,14 +31,15 @@ passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,
   callbackURL: "http://localhost:8080/auth/google/callback",
-  //passReqToCallback: true
+  // passReqToCallback: true
 },
   (accessToken, refreshToken, profile, cb) => {
+    console.log('GOOGLE', profile);
     User.findOrCreate({
-      where: { googleId: profile.id }
+      where: { googleId: profile.id, name: profile.name.givenName }
     })
       .then((user) => {
-        return cb(null, user)
+        return cb(null, user) // <-- serializeUser called here?
       }).catch((err) => {
         console.log('errrrrrr', err);
         return cb(err);
@@ -47,17 +48,13 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }, (req, res) => {
-    console.log('console.log req #1', req, 'res # 1', res);
-  })
-);
+  passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    console.log('google #2', res);
-    res.redirect('/');
+    res.redirect('/'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
   });
 
 app.get('/', (req, res) => {
@@ -70,23 +67,42 @@ app.get('/typescript', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
+})
+// Fix the Error EADDRINUSE
+.on("error", (err) => {
+  process.once("SIGUSR2", () => {
+    process.kill(process.pid, "SIGUSR2");
+  });
+  process.on("SIGINT", () => {
+    // this is only called on ctrl+c, not restart
+    process.kill(process.pid, "SIGINT");
+  });
 });
 
 //passport.use(User.createStrategy());
-passport.serializeUser((user, done) => {
-  done(null, user);
+passport.serializeUser((user: any, done) => {
+  console.log('SERIALIZE', user);
+  const [ userCookie ] = user;
+  const { dataValues } = userCookie;
+  console.log('DATA VALUES --> COOKIE', dataValues);
+  done(null, dataValues);
 });
 
-passport.deserializeUser((id, done) => {
-  User.findOne({
-    where: {
-      googleId: id
-    }
-  }).then((user) => {
-    done(null, user);
-  }).catch((err) => {
-    done(err);
-  })
+passport.deserializeUser((user: any, done) => {
+  // const [ profile ] = response;
+  // const { googleId } = profile;
+  // User.findOne({
+  //   where: {
+  //     googleId
+  //   }
+  // }).then((user) => {
+  //   console.log('USER?', user);
+  //   done(null, user);
+  // }).catch((err) => {
+  //   done(err);
+  // })
+  console.log('DESERIALIZE USER', user);
+  done(null, user);
 });
 
 

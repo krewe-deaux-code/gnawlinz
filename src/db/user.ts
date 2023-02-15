@@ -4,6 +4,7 @@ import { db } from './index';
 const User = db.define('user', {
   googleId: {
     type: DataTypes.STRING,
+    unique: true
   },
   user_id: {
     type: DataTypes.INTEGER,
