@@ -1,6 +1,7 @@
-import React, { Suspense } from "react"; //lazy
+import React, { Suspense, lazy } from "react"; //lazy
 import { BrowserRouter } from 'react-router-dom'; //Routes, Route, Navigate
-import Title from './title/Title';
+
+const Title = lazy(() => import('./components/title/Title'));
 
 const App = () => (
   <BrowserRouter>
