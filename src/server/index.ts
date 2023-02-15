@@ -13,15 +13,31 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(session({
   secret: 'typescript sucks lolipops.',
   resave: false,
   saveUninitialized: false
 }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const User = { findOrCreate: (a, b) => console.log('typescript is total garbage.', a, b) }  // DELETE ME WHEN USER SCHEMA IS PROPERLY IMPORTED
+passport.use(new GoogleStrategy({
+  clientID: GOOGLE_CLIENT_ID,
+  clientSecret: GOOGLE_CLIENT_SECRET,
+  callbackURL: "http://localhost:8080/auth/google/callback"
+},
+  function (accessToken, refreshToken, profile, cb) {
+    User.findOrCreate({ googleId: profile.id }, function (err, user) {
+      return cb(err, user);
+    });
+  }
+));
+
 app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }));
+passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 app.get('/auth/google/callback', 
   passport.authenticate('google', { failureRedirect: '/login' }),
