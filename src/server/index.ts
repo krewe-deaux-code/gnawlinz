@@ -4,7 +4,8 @@ import  { db }  from '../db/index';
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
-
+//////import schemas//////
+import User from '../db/user';
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 console.log(db);
@@ -26,7 +27,6 @@ app.use(passport.session());
 
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-const User = {findOrCreate: (a, b)=> console.log('typescript is total garbage.', a, b)}  // DELETE ME WHEN USER SCHEMA IS PROPERLY IMPORTED
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID,
   clientSecret: GOOGLE_CLIENT_SECRET,

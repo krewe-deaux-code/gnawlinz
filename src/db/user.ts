@@ -15,3 +15,5 @@ const User = db.define('user', {
     type: DataTypes.STRING
   }
 });
+
+export default User;
