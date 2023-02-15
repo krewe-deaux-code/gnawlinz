@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {DataTypes } from 'sequelize';
+//import axios from 'axios';
+import { DataTypes } from 'sequelize';
 import { db } from './index';
 const User = db.define('user', {
   googleId: {
@@ -15,5 +15,8 @@ const User = db.define('user', {
     type: DataTypes.STRING
   }
 });
+
+User.sync({ force: true })
+  .then(() => console.log('User table created'));
 
 export default User;
