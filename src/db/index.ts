@@ -4,14 +4,14 @@
 //import { Sequelize } from 'sequelize-typescript'; //UNINSTALL ME?
 import 'dotenv/config';
 //import schemas
-import { Sequelize } from 'sequelize'
+import { Sequelize } from 'sequelize';
 
-const { DB_USER, DATABASE_URL, DB } = process.env;
+const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
 //uncomment second sequelize call for using external db
-export const db = new Sequelize(DB!, DB_USER!, '', {
+export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
   host: DATABASE_URL,
-  dialect: 'postgres',
-  protocol: 'postgres',
+  dialect: 'mysql',
+  protocol: 'mysql',
   // dialectOptions: {
   //   ssl: {
   //     require: true,
