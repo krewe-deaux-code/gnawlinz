@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { db } from './index';
+import { db } from '../index';
 import Choice from './choice';
 
 const Event = db.define('character', {

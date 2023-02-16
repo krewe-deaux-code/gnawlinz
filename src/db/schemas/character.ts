@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { db } from './index';
+import { db } from '../index';
 import Item from './item'
 import Location from './location';
 const Character = db.define('character', {
