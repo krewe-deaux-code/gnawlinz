@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize';
-import { db } from './index';
+import { db } from '../index';
 import Location from './location';
 
 const Enemy = db.define('character', {
