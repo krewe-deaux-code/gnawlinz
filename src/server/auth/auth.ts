@@ -1,7 +1,7 @@
 import 'dotenv/config';
 import passport from 'passport';
 
-import User from '../../db/user';
+import User from '../../db/schemas/user';
 
 import { Router } from 'express';
 const Auth = Router();

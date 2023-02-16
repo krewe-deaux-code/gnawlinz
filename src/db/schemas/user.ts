@@ -27,14 +27,14 @@ const User = db.define('user', {
   char1: {
     type: DataTypes.INTEGER,
     references: {
-      model: Character, 
+      model: Character,
       key: 'id'
     }
   },
   char2: {
     type: DataTypes.INTEGER,
     references: {
-      model: Character, 
+      model: Character,
       key: 'id'
     }
   }
