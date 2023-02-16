@@ -96,4 +96,7 @@ const Character = db.define('character', {
   },
 })
 
+Character.sync({ force: true })
+  .then(() => console.log('Character table created'));
+
 export default Character;

@@ -1,7 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Character from './character';
-const User = db.define('user', {
+const User = db.define('users', {
   user_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
@@ -13,34 +12,11 @@ const User = db.define('user', {
   },
   name: {
     type: DataTypes.STRING
-  },
-  avatar: {
-    type: DataTypes.STRING
-  },
-  char0: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Character,
-      key: 'id'
-    }
-  },
-  char1: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Character,
-      key: 'id'
-    }
-  },
-  char2: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Character,
-      key: 'id'
-    }
   }
 });
 
-User.sync({ force: true })
-  .then(() => console.log('User table created'));
+User.sync({force:true})
+  .then(()=>console.log('user table synced'))
+  .catch(()=>console.error('failed to create users table.'))
 
 export default User;
