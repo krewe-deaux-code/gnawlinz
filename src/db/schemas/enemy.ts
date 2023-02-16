@@ -25,4 +25,7 @@ const Enemy = db.define('character', {
   },
 })
 
+Enemy.sync({ force: true })
+  .then(() => console.log('Enemy table created'));
+
 export default Enemy;
