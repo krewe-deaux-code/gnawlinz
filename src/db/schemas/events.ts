@@ -39,3 +39,8 @@ const Event = db.define('character', {
     }
   }
 })
+
+Event.sync({ force: true })
+  .then(() => console.log('Event table created'));
+
+export default Event;

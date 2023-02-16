@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 
 
-const Ally = db.define('character', {
+const Item = db.define('character', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -30,10 +30,7 @@ const Ally = db.define('character', {
   }
 })
 
-export default Ally;
+Item.sync({ force: true })
+  .then(() => console.log('Item table created'));
 
-/**+ modified_stat: String
-+ modifier: Int
-+ buy_price: Int
-+ sell_price: Int
- */
+export default Item;

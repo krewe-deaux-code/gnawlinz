@@ -8,5 +8,6 @@ const Story = db.define('user', {
     primaryKey: true
   }
 });
-
+Story.sync({ force: true })
+  .then(() => console.log('Story table created'));
 export default Story;
