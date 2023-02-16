@@ -6,7 +6,7 @@ import 'dotenv/config';
 import 'postgresql'; // ???
 import { Sequelize } from 'sequelize';
 //import User from './schemas/user';
-import { DataTypes } from 'sequelize';
+// import { DataTypes } from 'sequelize';
 const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
 //uncomment second sequelize call for using external db
 export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
@@ -27,44 +27,43 @@ db.authenticate()
 
 
 //import Character from './character';
-const User = db.define('users', {
-  user_id: {
-    type: DataTypes.INTEGER,
-    autoIncrement: true,
-    allowNull: false,
-    primaryKey: true
-  },
-  googleId: {
-    type: DataTypes.STRING
-  },
-  name: {
-    type: DataTypes.STRING
-  },
-  avatar: {
-    type: DataTypes.STRING
-  },
-  char0: {
-    type: DataTypes.INTEGER,
-    references: {
-      //model: Character,
-      key: 'id'
-    }
-  },
-  char1: {
-    type: DataTypes.INTEGER,
-    references: {
-      //model: Character, 
-      key: 'id'
-    }
-  },
-  char2: {
-    type: DataTypes.INTEGER,
-    references: {
-      //model: Character, 
-      key: 'id'
-    }
-  }
-});
+// export const User = db.define('users', {
+//   user_id: {
+//     type: DataTypes.INTEGER,
+//     autoIncrement: true,
+//     allowNull: false,
+//     primaryKey: true
+//   },
+//   googleId: {
+//     type: DataTypes.STRING
+//   },
+//   name: {
+//     type: DataTypes.STRING
+//   },
+//   avatar: {
+//     type: DataTypes.STRING
+//   },
+//   char0: {
+//     type: DataTypes.INTEGER,
+//     references: {
+//       //model: Character,
+//       key: 'id'
+//     }
+//   },
+//   char1: {
+//     type: DataTypes.INTEGER,
+//     references: {
+//       //model: Character,
+//       key: 'id'
+//     }
+//   },
+//   char2: {
+//     type: DataTypes.INTEGER,
+//     references: {
+//       //model: Character,
+//       key: 'id'
+//     }
+//   }
+// });
 
-module.exports.db = db;
-module.exports.User = User;
+
