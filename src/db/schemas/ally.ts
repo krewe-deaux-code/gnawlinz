@@ -31,5 +31,7 @@ const Ally = db.define('character', {
     }
   },
 })
+Ally.sync({ force: true })
+  .then(() => console.log('Ally table created'));
 
 export default Ally;

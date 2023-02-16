@@ -12,8 +12,10 @@ const Choice = db.define('character', {
   flavor_text1: {
     type: DataTypes.STRING
   }
-  //
   // benefits and detriments?
 })
 
-  export default Choice;
+Choice.sync({ force: true })
+  .then(() => console.log('Choice table created'));
+
+export default Choice;

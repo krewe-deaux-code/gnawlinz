@@ -44,5 +44,6 @@ const Location = db.define('character', {
   },
 
 })
-
+Location.sync({ force: true })
+  .then(() => console.log('Location table created'));
 export default Location;
