@@ -1,20 +1,21 @@
 import 'dotenv/config';
 import path from 'path';
-import { db } from '../db/index';
+
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
-//////import schemas//////
-import User from '../db/user';
+
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
-console.log(db);
+
 const app = express();
 
 // middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
+
+// <-- session -->
 app.use(session({
   secret: 'typescript is great.',
   resave: false,
@@ -23,42 +24,17 @@ app.use(session({
   // store //connect-mongodb-session // <-- above lines ?? new MemoryStore() ??
 }));
 app.use(passport.initialize());
-app.use(passport.session());
+app.use(passport.session()); // 18 - 26 ***
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
-passport.use(new GoogleStrategy({
-  clientID: GOOGLE_CLIENT_ID,
-  clientSecret: GOOGLE_CLIENT_SECRET,
-  callbackURL: "http://localhost:8080/auth/google/callback",
-  //passReqToCallback: true
-},
-  (accessToken, refreshToken, profile, cb) => {
-    User.findOrCreate({
-      where: { googleId: profile.id }
-    })
-      .then((user) => {
-        return cb(null, user)
-      }).catch((err) => {
-        console.log('errrrrrr', err);
-        return cb(err);
-      })
-  }
-));
+// <-- express router -->
+import Auth from './auth/auth'
 
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] }, (req, res) => {
-    console.log('console.log req #1', req, 'res # 1', res);
-  })
-);
+// <-- use routes -->
+app.use('/auth', Auth);
 
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    console.log('google #2', res);
-    res.redirect('/');
-  });
+// ***********************
+// ****** ENDPOINTS ******
+// ***********************
 
 app.get('/', (req, res) => {
   res.sendFile(path.resolve(DIST_DIR, 'index.html'));
@@ -68,26 +44,21 @@ app.get('/typescript', (req, res) => {
   res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
 
+// ***********************
+// *** LISTEN/WILDCARD ***
+// ***********************
 app.listen(PORT, () => {
   console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
+})
+// fix the EADDRINUSE error
+.on("error", (err) => {
+  process.once("SIGUSR2", () => {
+    process.kill(process.pid, "SIGUSR2");
+  });
+  process.on("SIGINT", () => {
+    // this is only called on ctrl+c, not restart
+    process.kill(process.pid, "SIGINT");
+  });
 });
 
-//passport.use(User.createStrategy());
-passport.serializeUser((user, done) => {
-  done(null, user);
-});
-
-passport.deserializeUser((id, done) => {
-  User.findOne({
-    where: {
-      googleId: id
-    }
-  }).then((user) => {
-    done(null, user);
-  }).catch((err) => {
-    done(err);
-  })
-});
-
-
-
+export default app;
