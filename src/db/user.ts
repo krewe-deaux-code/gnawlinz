@@ -1,6 +1,6 @@
-//import axios from 'axios';
 import { DataTypes } from 'sequelize';
 import { db } from './index';
+import Character from './character';
 const User = db.define('user', {
   user_id: {
     type: DataTypes.INTEGER,
@@ -18,23 +18,23 @@ const User = db.define('user', {
     type: DataTypes.STRING
   },
   char0: {
-    type: DataTypes.STRING, //INTEGER?
+    type: DataTypes.INTEGER,
     references: {
-      //model: Character, //uncomment this when the character model is in the DB
+      model: Character,
       key: 'id'
     }
   },
   char1: {
-    type: DataTypes.STRING, //INTEGER?
+    type: DataTypes.INTEGER,
     references: {
-      //model: Character, //uncomment this when the character model is in the DB
+      model: Character, 
       key: 'id'
     }
   },
   char2: {
-    type: DataTypes.STRING, //INTEGER?
+    type: DataTypes.INTEGER,
     references: {
-      //model: Character, //uncomment this when the character model is in the DB
+      model: Character, 
       key: 'id'
     }
   }
