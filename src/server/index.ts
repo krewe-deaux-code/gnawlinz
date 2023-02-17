@@ -44,6 +44,15 @@ app.get('/', (req, res) => {
 // *** LISTEN/WILDCARD ***
 // ***********************
 
+// <-- SERVER WILDCARD -->
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', '..', 'dist', 'index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
+});
+
 app.listen(PORT, () => {
   console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
 })
@@ -57,5 +66,7 @@ app.listen(PORT, () => {
     process.kill(process.pid, "SIGINT");
   });
 });
+
+
 
 export default app;

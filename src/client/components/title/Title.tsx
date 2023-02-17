@@ -10,8 +10,9 @@ import GameView from '../gameView/GameView';
 const Title: React.FC = () => {
 
   // dayjs 72 hour function
+  let daysLeft = 3;
   const startTime = dayjs();
-  const endTime = startTime.add(72, 'hour');
+  const endTime = startTime.add( daysLeft, 'day').startOf('day');
   const [remainingTime, setRemainingTime] = useState<string>('');
 
   function calculateRemainingTime() {
