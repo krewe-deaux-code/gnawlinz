@@ -17,7 +17,7 @@ passport.use(new GoogleStrategy({
 },
   (accessToken, refreshToken, profile: any, cb) => {
     User.findOrCreate({
-      where: { googleId: profile.id, name: profile.name.givenName }
+      where: { google_Id: profile.id, name: profile.name.givenName }
     })
       .then((user) => {
         return cb(null, user) // <-- serializeUser called here

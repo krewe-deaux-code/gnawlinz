@@ -38,6 +38,8 @@ import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
+//import iconSeeder from './seed/iconSeeder';
+import Icon from './seed/icon';
 
 (async () => {
   await Story.sync({ force: true });
@@ -50,4 +52,6 @@ import Character_Ally from './schemas/character_ally';
   await Choice.sync({ force: true });
   await Event.sync({ force: true });
   await Character_Ally.sync({ force: true });
+  await Icon.sync({ force: true })
+  //iconSeeder();
 })();
