@@ -39,7 +39,7 @@ import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
-//import iconSeeder from './seed/iconSeeder';
+import iconSeeder from './seed/iconSeeder';
 import Icon from './seed/icon';
 
 const modelSync = async (dropTables = false) => {
@@ -56,6 +56,8 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await Character_Ally.sync(options);
+  await Icon.sync({force: true});
+  iconSeeder();
 };
 
 // <-- WILL DROP ALL TABLES -->
