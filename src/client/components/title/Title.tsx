@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import dayjs from 'dayjs';
-import { TitleContainer, TopBar, Main, Footer } from './Styled';
+import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } from './Styled';
 
 // Need logo - top left, title image - center, possibly login pic - top right
 // Clock above title image, start button bottom center
@@ -32,11 +32,11 @@ const Title: React.FC = () => {
   return (
     <TitleContainer>
       <TopBar>
-        <h1>
-          {remainingTime}
-        </h1>
+        <Content1><h1>Logo</h1></Content1>
+        <Content2><h1>{remainingTime}</h1></Content2>
+        <Content3><h1>Google User</h1></Content3>
       </TopBar>
-      
+
       <Main>Title Image</Main>
 
       <Footer>
