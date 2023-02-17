@@ -3,6 +3,10 @@ import { db } from '../index';
 import Character from './character';
 import Ally from './ally';
 
+// *****************************************
+// *** Current User-Char's teammate/ally ***
+// *****************************************
+
 const Character_Ally = db.define('character_ally', {
   _id: {
     type: DataTypes.INTEGER,
@@ -22,4 +26,15 @@ const Character_Ally = db.define('character_ally', {
       key: '_id'
     }
   },
+  health: {
+    type: DataTypes.INTEGER
+  },
+  mood: {
+    type: DataTypes.INTEGER
+  },
+  weapon1: {
+    type: DataTypes.STRING
+  },
 })
+
+export default Character_Ally;

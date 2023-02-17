@@ -17,16 +17,4 @@ const Enemy = db.define('enemy', {
   },
 })
 
-// await Enemy.sync({ force: true })
-//   .then(() => console.log('Enemy table created'))
-//   .catch((err: any) => console.log('Enemy table failed to create', err));
-
 export default Enemy;
-
-// location:{
-//   type: DataTypes.STRING,
-//   references: {
-//     model: Location,
-//     key: '_id'
-//   }
-// },

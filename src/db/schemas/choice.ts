@@ -46,13 +46,4 @@ const Choice = db.define('choice', {
   },
 })
 
-
-
-
-
-
-
-// Choice.sync({ force: true })
-//   .then(() => console.log('Choice table created'));
-
 export default Choice;

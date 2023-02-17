@@ -27,25 +27,6 @@ const Location = db.define('location', {
   graffitiMsg:{
     type: DataTypes.STRING
   },
-  // allies_id:{
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: Ally,
-  //     key: '_id'
-  //   }
-  // },
-  // enemies_id:{
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: Enemy,
-  //     key: '_id'
-  //   }
-  // },
-
 })
-
-// Location.sync({ force: true })
-//   .then(() => console.log('Location table created'))
-//   .catch((err: any) => console.log('Location tables failed to create', err));
 
 export default Location;

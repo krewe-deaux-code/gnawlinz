@@ -2,8 +2,6 @@ import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
 
-// const Models = [ Ally, Character, Choice, Enemy, Event, Item, Location, Story, User];
-
 // *********************
 // *** DB CONNECTION ***
 // *********************
@@ -39,6 +37,7 @@ import Item from './schemas/item';
 import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
+import Character_Ally from './schemas/character_ally';
 
 (async () => {
   await Story.sync({ force: true });
@@ -50,10 +49,5 @@ import User from './schemas/user';
   await User.sync({ force: true });
   await Choice.sync({ force: true });
   await Event.sync({ force: true });
-  // <-- Cur Ally Join Table Sync -->
+  await Character_Ally.sync({ force: true });
 })();
-
-
-// db.sync({ force: true });
-
-// Try Promise.all() --> Array of syncs?

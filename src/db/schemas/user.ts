@@ -24,8 +24,4 @@ const User = db.define('user', {
   }
 });
 
-// User.sync({force:true})
-//   .then(()=>console.log('user table synced'))
-//   .catch(()=>console.error('failed to create users table.'))
-
 export default User;

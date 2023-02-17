@@ -98,8 +98,4 @@ const Character = db.define('character', {
   },
 })
 
-// Character.sync({ force: true })
-//   .then(() => console.log('Character table created'))
-//   .catch(err => console.log('Failed to create Character Table', err));
-
 export default Character;

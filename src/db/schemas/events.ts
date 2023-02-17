@@ -40,8 +40,4 @@ const Event = db.define('event', {
   }
 })
 
-// Event.sync({ force: true })
-//   .then(() => console.log('Event table created'))
-//   .catch(err => console.log('Events table failed to create', err));
-
 export default Event;

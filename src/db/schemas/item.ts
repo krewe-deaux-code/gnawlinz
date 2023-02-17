@@ -30,8 +30,4 @@ const Item = db.define('item', {
   }
 })
 
-// await Item.sync({ force: true })
-//   .then(() => console.log('Item table created'))
-//   .catch((err: any) => console.log('Item table failed to create', err));
-
 export default Item;
