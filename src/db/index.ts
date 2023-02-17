@@ -12,6 +12,7 @@ export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
   host: DATABASE_URL,
   dialect: 'postgres',
   protocol: 'postgres',
+  logging: false
   // dialectOptions: {
   //   ssl: {
   //     require: true,
@@ -41,17 +42,24 @@ import Character_Ally from './schemas/character_ally';
 //import iconSeeder from './seed/iconSeeder';
 import Icon from './seed/icon';
 
-(async () => {
-  await Story.sync({ force: true });
-  await Enemy.sync({ force: true });
-  await Ally.sync({ force: true });
-  await Item.sync({ force: true });
-  await Location.sync({ force: true });
-  await Character.sync({ force: true });
-  await User.sync({ force: true });
-  await Choice.sync({ force: true });
-  await Event.sync({ force: true });
-  await Character_Ally.sync({ force: true });
-  await Icon.sync({ force: true })
-  //iconSeeder();
-})();
+const modelSync = async (dropTables = false) => {
+  const options = {
+    force: dropTables
+  };
+  await Story.sync(options);
+  await Enemy.sync(options);
+  await Ally.sync(options);
+  await Item.sync(options);
+  await Location.sync(options);
+  await Character.sync(options);
+  await User.sync(options);
+  await Choice.sync(options);
+  await Event.sync(options);
+  await Character_Ally.sync(options);
+};
+
+// <-- WILL DROP ALL TABLES -->
+// modelSync(true);
+
+// <-- WON'T DROP TABLES -->
+modelSync();

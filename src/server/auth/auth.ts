@@ -17,7 +17,11 @@ passport.use(new GoogleStrategy({
 },
   (accessToken, refreshToken, profile: any, cb) => {
     User.findOrCreate({
-      where: { google_Id: profile.id, name: profile.name.givenName }
+      where: {
+        google_id: profile.id,
+        name: profile.name.givenName,
+        google_avatar: profile.photos[0].value
+      }
     })
       .then((user) => {
         return cb(null, user) // <-- serializeUser called here
@@ -31,10 +35,10 @@ Auth.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 Auth.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/' }),
   (req, res) => {
     // Successful authentication, redirect home.
-    res.redirect('/'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
+    res.redirect('/menu'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
   });
 
 // <-- If User needs Local Strategy -->
