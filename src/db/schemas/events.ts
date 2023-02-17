@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 import Choice from './choice';
 
-const Event = db.define('character', {
+const Event = db.define('event', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -14,33 +14,30 @@ const Event = db.define('character', {
     type: DataTypes.INTEGER,
     references: {
       model: Choice,
-      key: 'id'
+      key: '_id'
     }
   },
   choice1: {
     type: DataTypes.INTEGER,
     references: {
       model: Choice,
-      key: 'id'
+      key: '_id'
     }
   },
   choice2: {
     type: DataTypes.INTEGER,
     references: {
       model: Choice,
-      key: 'id'
+      key: '_id'
     }
   },
   choice3: {
     type: DataTypes.INTEGER,
     references: {
       model: Choice,
-      key: 'id'
+      key: '_id'
     }
   }
 })
-
-Event.sync({ force: true })
-  .then(() => console.log('Event table created'));
 
 export default Event;

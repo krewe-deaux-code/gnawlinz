@@ -10,7 +10,7 @@ const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 
 const app = express();
 
-// middleware
+// <-- middleware -->
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
@@ -37,10 +37,6 @@ app.use('/auth', Auth);
 // ***********************
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(DIST_DIR, 'index.html'));
-});
-
-app.get('/typescript', (req, res) => {
   res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
 

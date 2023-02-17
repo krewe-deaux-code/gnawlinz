@@ -1,8 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Ally from './ally';
-//import Enemy form './enemy';
-const Location = db.define('character', {
+
+const Location = db.define('location', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -28,22 +27,6 @@ const Location = db.define('character', {
   graffitiMsg:{
     type: DataTypes.STRING
   },
-  allies_id:{
-    type: DataTypes.INTEGER,
-    references: {
-      model: Ally,
-      key: 'id'
-    }
-  },
-  enemies_id:{
-    type: DataTypes.INTEGER,
-    references: {
-      //model: Enemy,
-      key: 'id'
-    }
-  },
-
 })
-Location.sync({ force: true })
-  .then(() => console.log('Location table created'));
+
 export default Location;
