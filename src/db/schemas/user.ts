@@ -9,7 +9,10 @@ const User = db.define('user', {
     allowNull: true,
     primaryKey: true
   },
-  googleId: {
+  google_id: {
+    type: DataTypes.STRING
+  },
+  google_avatar: {
     type: DataTypes.STRING
   },
   name: {
