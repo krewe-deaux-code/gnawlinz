@@ -5,23 +5,26 @@ const TitleContainer = styled.div`
   height: 100vh;
   color: white;
 
-grid-template-rows: 0.1fr .8fr 0.1fr;
+grid-template-rows: 0.1fr .8fr 0.2fr;
 grid-template-areas:
-    "nav nav nav nav"
+    "top top top top"
     "main main main main"
     "footer footer footer footer";
 text-align: center;
-grid-gap: 0.25rem;
+/* grid-gap: 0.25rem; */
 `;
 
 const TopBar = styled.nav`
+  display: flex;
   background: #3a3a55;
-  grid-area: nav;
+  grid-area: top;
   padding: 0.25rem;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Main = styled.main`
-  background: #1f2128;
+  background: black;
   color: white;
   grid-area: main;
   padding: 0.25rem;
@@ -35,25 +38,20 @@ const Main = styled.main`
 //   grid-area: content;
 //   justify-content: center;
 // `;
-// const Content1 = styled.div`
-//   background: #a6b8b9;
-//   padding: 0.25rem;
-//   width: 100%;
-//   height: 100%;
-// `;
-// const Content2 = styled(Content1)``;
-// const Content3 = styled(Content1)``;
+const Content1 = styled.div`
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+`;
+const Content2 = styled(Content1)``;
+const Content3 = styled(Content1)``;
 const Footer = styled.footer`
-  background: #ff9637;
+  background: black;
   grid-area: footer;
   padding: 0.25rem;
 `;
 
-const Item = styled.div`
-  background-color: #f2f2f2;
-  padding: 20px;
-  text-align: center;
-`;
-export {TitleContainer, Item, TopBar, Main,
-  // ContentBox, Content1, Content2, Content3,
+export {TitleContainer, TopBar, Main,
+  // ContentBox,
+  Content1, Content2, Content3,
   Footer};
