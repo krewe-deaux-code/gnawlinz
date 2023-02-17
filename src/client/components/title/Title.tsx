@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } from './Styled';
+import GameView from '../gameView/GameView';
 
 // Need logo - top left, title image - center, possibly login pic - top right
 // Clock above title image, start button bottom center
@@ -43,6 +45,7 @@ const Title: React.FC = () => {
         <button>
           <a href="/auth/google">Start</a>
         </button>
+        <Link to="/gameView">GameView</Link>
       </Footer>
     </TitleContainer>
   )
