@@ -1,22 +1,28 @@
-const iconsData = require('../seederObjects/icons');
-const Icon  = require ('../../schemas/gameAssets/icons.ts');
+//import iconsData from '../seederObjects/icons.json';
+import Icon from '../../schemas/gameAssets/icons';
 
+// const iconsData = [
+//   {
+//     "name": "heartIcon",
+//     "imageUrl": "https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png"
+//   }
+// ];
 
-async function iconSeeder() {
-  try {
-    // Iterate over the icons in the JSON file
-    for (const iconData of iconsData.icons) {
-      // Create a new icon instance with the data from the JSON file
-      const icon = await Icon.create({
-        name: iconData.name,
-        imageUrl: iconData.imageUrl
-      });
+const iconSeeder = () => {
+  // Iterate over the icons in the JSON file
+  const iconsData = [
+    {
+      "name": "heartIcon",
+      "imageUrl": "https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png"
     }
-
-    console.log('icons seeded successfully');
-  } catch (err) {
-    console.error('Error seeding icons:', err);
+  ];
+  for (let i = 0; i < iconsData.length; i++) {
+    // Create a new icon instance with the data from the JSON file
+    Icon.create({
+      name: iconsData[i].name,
+      imageUrl: iconsData[i].imageUrl
+    });
   }
 }
 
-iconSeeder();
+export default iconSeeder;

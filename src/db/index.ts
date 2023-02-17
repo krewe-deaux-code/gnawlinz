@@ -27,7 +27,7 @@ db.authenticate()
 // *******************
 // *** MODEL SYNCS ***
 // *******************
-
+import Icon from './schemas/gameAssets/icons';
 import Ally from './schemas/ally';
 import Character from './schemas/character';
 import Choice from './schemas/choice';
@@ -38,7 +38,7 @@ import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
-
+import iconSeeder from './seeders/seederFunctions/iconSeeder';
 (async () => {
   await Story.sync({ force: true });
   await Enemy.sync({ force: true });
@@ -50,4 +50,6 @@ import Character_Ally from './schemas/character_ally';
   await Choice.sync({ force: true });
   await Event.sync({ force: true });
   await Character_Ally.sync({ force: true });
+  await Icon.sync({ force: true });
+  iconSeeder();
 })();
