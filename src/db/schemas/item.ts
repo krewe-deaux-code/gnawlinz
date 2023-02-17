@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 
 
-const Item = db.define('character', {
+const Item = db.define('item', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -29,8 +29,5 @@ const Item = db.define('character', {
     type: DataTypes.INTEGER
   }
 })
-
-Item.sync({ force: true })
-  .then(() => console.log('Item table created'));
 
 export default Item;
