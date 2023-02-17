@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } from './Styled';
 //import GameView from '../gameView/GameView';
@@ -10,8 +10,9 @@ import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } fr
 const Title: React.FC = () => {
 
   // dayjs 72 hour function
+  let daysLeft = 3;
   const startTime = dayjs();
-  const endTime = startTime.add(72, 'hour');
+  const endTime = startTime.add( daysLeft, 'day').startOf('day');
   const [remainingTime, setRemainingTime] = useState<string>('');
 
   function calculateRemainingTime() {
@@ -45,7 +46,6 @@ const Title: React.FC = () => {
         <button>
           <a href="/auth/google">Start</a>
         </button>
-        <Link to="/gameView">GameView</Link>
       </Footer>
     </TitleContainer>
   )

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, NavBar, Main, Content1, Content2, Content3, Footer, TopContent1, TopContent2,
-TopContent3, ChoicesContainer, TopChoice1, BottomChoice1, /* ContentBox */ } from './Styled';
+  TopContent3, ChoicesContainer, TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
 
 const GameView: React.FC = () => {
   return (
