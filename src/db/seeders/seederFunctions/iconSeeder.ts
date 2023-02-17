@@ -18,9 +18,12 @@ const iconSeeder = () => {
   ];
   for (let i = 0; i < iconsData.length; i++) {
     // Create a new icon instance with the data from the JSON file
-    Icon.create({
+    Icon.findOrCreate(
+      {
+     where: {
       name: iconsData[i].name,
       imageUrl: iconsData[i].imageUrl
+     }
     });
   }
 }
