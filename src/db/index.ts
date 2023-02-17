@@ -1,12 +1,11 @@
-//import path from 'path';
-//import passport from 'passport';
-//import GoogleStrategy from 'passport-google-oauth20';
-//import { Sequelize } from 'sequelize-typescript'; //UNINSTALL ME?
 import 'dotenv/config';
-import 'postgresql'; // ???
+import 'postgresql';
 import { Sequelize } from 'sequelize';
-//import User from './schemas/user';
-// import { DataTypes } from 'sequelize';
+
+// *********************
+// *** DB CONNECTION ***
+// *********************
+
 const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
 //uncomment second sequelize call for using external db
 export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
@@ -25,45 +24,30 @@ db.authenticate()
   .then(() => console.log('Connection has been established successfully.'))
   .catch((error) => console.error('Unable to connect to the database:', error));
 
+// *******************
+// *** MODEL SYNCS ***
+// *******************
 
-//import Character from './character';
-// export const User = db.define('users', {
-//   user_id: {
-//     type: DataTypes.INTEGER,
-//     autoIncrement: true,
-//     allowNull: false,
-//     primaryKey: true
-//   },
-//   googleId: {
-//     type: DataTypes.STRING
-//   },
-//   name: {
-//     type: DataTypes.STRING
-//   },
-//   avatar: {
-//     type: DataTypes.STRING
-//   },
-//   char0: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       //model: Character,
-//       key: 'id'
-//     }
-//   },
-//   char1: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       //model: Character,
-//       key: 'id'
-//     }
-//   },
-//   char2: {
-//     type: DataTypes.INTEGER,
-//     references: {
-//       //model: Character,
-//       key: 'id'
-//     }
-//   }
-// });
+import Ally from './schemas/ally';
+import Character from './schemas/character';
+import Choice from './schemas/choice';
+import Enemy from './schemas/enemy';
+import Event from './schemas/events';
+import Item from './schemas/item';
+import Location from './schemas/location';
+import Story from './schemas/story';
+import User from './schemas/user';
+import Character_Ally from './schemas/character_ally';
 
-
+(async () => {
+  await Story.sync({ force: true });
+  await Enemy.sync({ force: true });
+  await Ally.sync({ force: true });
+  await Item.sync({ force: true });
+  await Location.sync({ force: true });
+  await Character.sync({ force: true });
+  await User.sync({ force: true });
+  await Choice.sync({ force: true });
+  await Event.sync({ force: true });
+  await Character_Ally.sync({ force: true });
+})();

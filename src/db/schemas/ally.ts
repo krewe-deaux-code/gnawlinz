@@ -1,8 +1,11 @@
-import { DataTypes } from 'sequelize';
+import { DataTypes } from 'sequelize'; // import Model
 import { db } from '../index';
-import Character from './character';
 
-const Ally = db.define('character', {
+// *******************************************************
+// *** All possible allies in current instance of game ***
+// *******************************************************
+
+const Ally = db.define('ally', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -13,25 +16,15 @@ const Ally = db.define('character', {
   image: {
     type: DataTypes.STRING
   },
-  weapon1: {
+  strength: {
+    type: DataTypes.INTEGER
+  },
+  endurance: {
+    type: DataTypes.INTEGER
+  },
+  alignment: {
     type: DataTypes.STRING
   },
-  location:{
-    type: DataTypes.STRING,
-    references: {
-      model: Character,
-      key: 'id'
-    }
-  },
-  char_id:{
-    type: DataTypes.INTEGER,
-    references: {
-      model: Character,
-      key: 'id'
-    }
-  },
 })
-Ally.sync({ force: true })
-  .then(() => console.log('Ally table created'));
 
 export default Ally;

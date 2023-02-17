@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 import Item from './item'
 import Location from './location';
+
 const Character = db.define('character', {
   _id: {
     type: DataTypes.INTEGER,
@@ -12,6 +13,7 @@ const Character = db.define('character', {
   },
   name:{
     type: DataTypes.STRING,
+    unique: true
   },
   image:{
     type: DataTypes.STRING,
@@ -20,56 +22,56 @@ const Character = db.define('character', {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot1:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot2:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot3:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot4:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot5:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot6:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   slot7:{
     type: DataTypes.INTEGER,
     references: {
       model: Item,
-      key: 'id'
+      key: '_id'
     }
   },
   health:{
@@ -88,15 +90,12 @@ const Character = db.define('character', {
     type: DataTypes.INTEGER,
     references: {
       model: Location,
-      key: 'id'
+      key: '_id'
     }
   },
   ally_count:{
     type: DataTypes.INTEGER
   },
 })
-
-Character.sync({ force: true })
-  .then(() => console.log('Character table created'));
 
 export default Character;
