@@ -7,6 +7,8 @@ import passport from 'passport';
 
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
+const DIST_DIR_LOGIN = path.resolve(__dirname, '..', '..', 'dist', 'login');
+
 
 const app = express();
 
@@ -14,6 +16,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
+
 
 // <-- session -->
 app.use(session({
@@ -37,9 +40,12 @@ app.use('/auth', Auth);
 // ***********************
 
 app.get('/', (req, res) => {
-  res.sendFile(path.resolve(DIST_DIR, 'index.html'));
+  res.sendFile(path.resolve(DIST_DIR_LOGIN, 'index.html'));
 });
 
+app.get('/menu', (req, res) => {
+  res.sendFile(path.resolve(DIST_DIR, 'index.html'));
+});
 // ***********************
 // *** LISTEN/WILDCARD ***
 // ***********************

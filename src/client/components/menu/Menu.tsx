@@ -1,4 +1,5 @@
-import React, { useState, createContext, useContext } from "react";
+import React, { useState } from "react";//createContext, useContext
+import { Link} from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 // import axios from 'axios';
 
@@ -6,8 +7,6 @@ const Menu: React.FC = () => {
 
 
   //axios request to server to retrieve avatar
-  //// <-- use routes -->
-  //import create context and useContext from React and use Interface
   //set google id to a string
 
   const [active, setActive] = useState(0);
@@ -49,6 +48,8 @@ const Menu: React.FC = () => {
           <span><b>Be State:</b></span><br />
         </Content>
       </>
+      <Link to="/gameView">GameView</Link>
+
     </Body >
   )
 };

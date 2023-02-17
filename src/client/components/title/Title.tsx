@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Link } from 'react-router-dom';
+//import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } from './Styled';
 //import GameView from '../gameView/GameView';
@@ -46,8 +46,6 @@ const Title: React.FC = () => {
         <button>
           <a href="/auth/google">Start</a>
         </button>
-        <Link to="/gameView">GameView</Link>
-        <Link to="/menu">Menu</Link>
       </Footer>
     </TitleContainer>
   )
