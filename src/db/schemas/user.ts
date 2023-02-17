@@ -1,10 +1,12 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-const User = db.define('users', {
+import Character from './character';
+
+const User = db.define('user', {
   user_id: {
     type: DataTypes.INTEGER,
     autoIncrement: true,
-    allowNull: false,
+    allowNull: true,
     primaryKey: true
   },
   googleId: {
@@ -12,11 +14,18 @@ const User = db.define('users', {
   },
   name: {
     type: DataTypes.STRING
+  },
+  char0: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Character,
+      key: '_id'
+    }
   }
 });
 
-User.sync({force:true})
-  .then(()=>console.log('user table synced'))
-  .catch(()=>console.error('failed to create users table.'))
+// User.sync({force:true})
+//   .then(()=>console.log('user table synced'))
+//   .catch(()=>console.error('failed to create users table.'))
 
 export default User;

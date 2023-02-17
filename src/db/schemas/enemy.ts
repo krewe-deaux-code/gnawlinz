@@ -1,8 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Location from './location';
 
-const Enemy = db.define('character', {
+const Enemy = db.define('enemy', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -16,16 +15,18 @@ const Enemy = db.define('character', {
   weapon1: {
     type: DataTypes.STRING
   },
-  location:{
-    type: DataTypes.STRING,
-    references: {
-      model: Location,
-      key: 'id'
-    }
-  },
 })
 
-Enemy.sync({ force: true })
-  .then(() => console.log('Enemy table created'));
+// await Enemy.sync({ force: true })
+//   .then(() => console.log('Enemy table created'))
+//   .catch((err: any) => console.log('Enemy table failed to create', err));
 
 export default Enemy;
+
+// location:{
+//   type: DataTypes.STRING,
+//   references: {
+//     model: Location,
+//     key: '_id'
+//   }
+// },

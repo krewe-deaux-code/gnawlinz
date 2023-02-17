@@ -1,7 +1,11 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
+import Story from './story';
+import Enemy from './enemy';
+import Ally from './ally';
+import Item from './item';
 
-const Choice = db.define('character', {
+const Choice = db.define('choice', {
   _id: {
     type: DataTypes.INTEGER,
     primaryKey: true
@@ -11,11 +15,44 @@ const Choice = db.define('character', {
   },
   flavor_text1: {
     type: DataTypes.STRING
-  }
-  // benefits and detriments?
+  },
+  story_effect: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Story,
+      key: '_id'
+    },
+  },
+  enemy_effect: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Enemy,
+      key: '_id'
+    }
+  },
+  ally_effect: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Ally,
+      key: '_id'
+    }
+  },
+  item_effect: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Item,
+      key: '_id'
+    }
+  },
 })
 
-Choice.sync({ force: true })
-  .then(() => console.log('Choice table created'));
+
+
+
+
+
+
+// Choice.sync({ force: true })
+//   .then(() => console.log('Choice table created'));
 
 export default Choice;
