@@ -1,4 +1,4 @@
-const iconsData = require('./icons.json');
+const iconsData = require('../seederObjects/icons');
 const Icon  = require ('../../schemas/gameAssets/icons.ts');
 
 
