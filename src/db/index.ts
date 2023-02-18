@@ -56,7 +56,7 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await Character_Ally.sync(options);
-  await Icon.sync({force: true});
+  await Icon.sync(options);
   iconSeeder();
 };
 
