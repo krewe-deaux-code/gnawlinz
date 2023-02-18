@@ -8,13 +8,14 @@ import Item from './item';
 const Choice = db.define('choice', {
   _id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   flavor_text0: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   flavor_text1: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   story_effect: {
     type: DataTypes.INTEGER,

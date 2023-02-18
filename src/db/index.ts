@@ -1,6 +1,9 @@
 import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
+// BEGIN DATABASE SEED DATA IMPORTS //
+import { iconSeed } from '../db/seeders/seedData/iconSeed'
+// END DATABASE SEED DATA IMPORTS //
 
 // *********************
 // *** DB CONNECTION ***
@@ -33,12 +36,14 @@ import Ally from './schemas/ally';
 import Character from './schemas/character';
 import Choice from './schemas/choice';
 import Enemy from './schemas/enemy';
-import Event from './schemas/events';
+import Event from './schemas/event';
 import Item from './schemas/item';
 import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
+import Icon from './schemas/gameAssets/icon';
+import iconSeeder from './seeders/iconSeeder';
 
 const modelSync = async (dropTables = false) => {
   const options = {
@@ -54,6 +59,10 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await Character_Ally.sync(options);
+  await Icon.sync(options);
+  // ↑↑↑ Tables Synced ↑↑↑
+  // ↓↓↓  Seed Tables  ↓↓↓
+  await iconSeeder(iconSeed);
 };
 
 // <-- WILL DROP ALL TABLES -->
@@ -61,3 +70,6 @@ const modelSync = async (dropTables = false) => {
 
 // <-- WON'T DROP TABLES -->
 modelSync();
+
+
+// Await seed functions should eventually migrate to own file and be called via npm script

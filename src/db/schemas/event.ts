@@ -5,10 +5,11 @@ import Choice from './choice';
 const Event = db.define('event', {
   _id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   initial_text: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   choice0: {
     type: DataTypes.INTEGER,
