@@ -39,8 +39,8 @@ import Location from './schemas/location';
 import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
-import Icon from './seed/icon';
-import iconSeeder from './seed/iconSeeder';
+import Icon from './schemas/gameAssets/icon';
+import iconSeeder from './seeders/iconSeeder';
 
 const modelSync = async (dropTables = false) => {
   const options = {
