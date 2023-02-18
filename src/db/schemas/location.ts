@@ -26,7 +26,7 @@ const Location = db.define('location', {
     type: DataTypes.STRING
   },
   graffiti_msg:{
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
 })
 

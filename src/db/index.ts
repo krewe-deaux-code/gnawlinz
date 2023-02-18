@@ -90,7 +90,7 @@ const modelSync = async (dropTables = false) => {
   await iconSeeder(iconSeed);
   await allySeeder(allySeed);
   // await characterAllySeeder(characterAllySeed);
-  // await characterSeeder(characterSeed);
+  await characterSeeder(characterSeed);
   // await choiceSeeder(choiceSeed);
   // await enemySeeder(enemySeed);
   // await eventSeeder(eventSeed);
