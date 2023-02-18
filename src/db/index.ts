@@ -2,7 +2,18 @@ import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
 // BEGIN DATABASE SEED DATA IMPORTS //
-import { iconSeed } from '../db/seeders/seedData/iconSeed'
+
+import { iconSeed } from '../db/seeders/seedData/iconSeed';
+import { allySeed } from './seeders/seedData/allySeed';
+// import { characterAllySeed } from './seeders/seedData/allySeed';
+import { characterSeed } from './seeders/seedData/characterSeed';
+// import { choiceSeed } from './seeders/seedData/choiceSeed';
+// import { enemySeed } from './seeders/seedData/enemySeed';
+// import { eventSeed } from './seeders/seedData/eventSeed';
+// import { itemSeed } from './seeders/seedData/itemSeed';
+// import { locationSeed } from './seeders/seedData/locationSeed';
+// import { storySeed } from './seeders/seedData/storySeed';
+
 // END DATABASE SEED DATA IMPORTS //
 
 // *********************
@@ -43,7 +54,21 @@ import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
 import Icon from './schemas/gameAssets/icon';
+
+// *************************
+// *** Seeder Fn Imports ***
+// *************************
+
 import iconSeeder from './seeders/iconSeeder';
+import allySeeder from './seeders/allySeeder';
+// import characterAllySeeder from './seeders/characterAllySeeder';
+import characterSeeder from './seeders/characterSeeder';
+// import choiceSeeder from './seeders/choiceSeeder';
+// import enemySeeder from './seeders/enemySeeder';
+// import eventSeeder from './seeders/eventSeeder';
+// import itemSeeder from './seeders/itemSeeder';
+// import locationSeeder from './seeders/locationSeeder';
+// import storySeeder from './seeders/storySeeder';
 
 const modelSync = async (dropTables = false) => {
   const options = {
@@ -63,6 +88,15 @@ const modelSync = async (dropTables = false) => {
   // ↑↑↑ Tables Synced ↑↑↑
   // ↓↓↓  Seed Tables  ↓↓↓
   await iconSeeder(iconSeed);
+  await allySeeder(allySeed);
+  // await characterAllySeeder(characterAllySeed);
+  // await characterSeeder(characterSeed);
+  // await choiceSeeder(choiceSeed);
+  // await enemySeeder(enemySeed);
+  // await eventSeeder(eventSeed);
+  // await itemSeeder(itemSeed);
+  // await locationSeeder(locationSeed);
+  // await storySeeder(storySeed);
 };
 
 // <-- WILL DROP ALL TABLES -->

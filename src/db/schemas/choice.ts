@@ -17,6 +17,15 @@ const Choice = db.define('choice', {
   flavor_text1: {
     type: DataTypes.STRING
   },
+  alignment0: {
+    type: DataTypes.STRING
+  },
+  alignment1: {
+    type: DataTypes.STRING
+  },
+  alignment2: {
+    type: DataTypes.STRING
+  },
   story_effect: {
     type: DataTypes.INTEGER,
     references: {
