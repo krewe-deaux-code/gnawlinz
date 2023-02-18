@@ -10,7 +10,8 @@ import Ally from './ally';
 const Character_Ally = db.define('character_ally', {
   _id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   char_id:{
     type: DataTypes.INTEGER,

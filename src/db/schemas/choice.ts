@@ -8,7 +8,8 @@ import Item from './item';
 const Choice = db.define('choice', {
   _id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   flavor_text0: {
     type: DataTypes.STRING
