@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Story from './story';
 import Enemy from './enemy';
 import Ally from './ally';
 import Item from './item';
@@ -25,13 +24,6 @@ const Choice = db.define('choice', {
   },
   alignment2: {
     type: DataTypes.STRING
-  },
-  story_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Story,
-      key: '_id'
-    },
   },
   enemy_effect: {
     type: DataTypes.INTEGER,

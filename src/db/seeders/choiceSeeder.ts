@@ -8,7 +8,9 @@ const choiceSeeder = async (choiceArr: any) => {
      where: {
       flavor_text0: choiceArr[i].flavor_text0,
       flavor_text1: choiceArr[i].flavor_text1,
-      story_effect: choiceArr[i].story_effect,
+      alignment0: choiceArr[i].alignment0,
+      alignment1: choiceArr[i].alignment1,
+      alignment2: choiceArr[i].alignment2,
       enemy_effect: choiceArr[i].enemy_effect,
       ally_effect: choiceArr[i].ally_effect,
       item_effect: choiceArr[i].item_effect,

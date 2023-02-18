@@ -12,7 +12,7 @@ import { enemySeed } from './seeders/seedData/enemySeed';
 import { eventSeed } from './seeders/seedData/eventSeed';
 import { itemSeed } from './seeders/seedData/itemSeed';
 import { locationSeed } from './seeders/seedData/locationSeed';
-// import { storySeed } from './seeders/seedData/storySeed';
+import { storySeed } from './seeders/seedData/storySeed';
 
 // END DATABASE SEED DATA IMPORTS //
 
@@ -68,7 +68,7 @@ import enemySeeder from './seeders/enemySeeder';
 import eventSeeder from './seeders/eventSeeder';
 import itemSeeder from './seeders/itemSeeder';
 import locationSeeder from './seeders/locationSeeder';
-// import storySeeder from './seeders/storySeeder';
+import storySeeder from './seeders/storySeeder';
 
 const modelSync = async (dropTables = false) => {
   const options = {
@@ -95,7 +95,7 @@ const modelSync = async (dropTables = false) => {
   await choiceSeeder(choiceSeed);
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
-  // await storySeeder(storySeed);
+  await storySeeder(storySeed);
   await iconSeeder(iconSeed);
 };
 
