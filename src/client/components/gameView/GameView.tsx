@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   Container, NavBar, Main, Content1,
   Content2, Content3, Footer, TopContent1,

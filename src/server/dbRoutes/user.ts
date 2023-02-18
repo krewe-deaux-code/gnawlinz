@@ -2,6 +2,9 @@ import express from 'express';
 import { Router } from 'express';
 
 
+
+
+
 const userRouter = Router();
 
 // <-- Unsure if we need these -->
@@ -20,14 +23,13 @@ userRouter.use(express.urlencoded({ extended: true }));
 // *** DB Queries ***
 // ******************
 
-userRouter.get('/find/:googleId', (req, res) => {
-  console.log('/user endpoint hit');
-  const { googleId } = req.params;
+userRouter.get('/find', (req, res) => {
+  console.log('************************************/user endpoint hit');
   console.log(req.params)
-  User.findOne({
-      where: {
-        google_id: googleId
-        }
+  User.findAll({
+      limit: 1,
+      order: [['updatedAt', 'DESC']]
+
       }).then((user) => {
           console.log('USER?', user);
           res.send(user);
