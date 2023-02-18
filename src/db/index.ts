@@ -35,7 +35,7 @@ import Ally from './schemas/ally';
 import Character from './schemas/character';
 import Choice from './schemas/choice';
 import Enemy from './schemas/enemy';
-import Event from './schemas/events';
+import Event from './schemas/event';
 import Item from './schemas/item';
 import Location from './schemas/location';
 import Story from './schemas/story';

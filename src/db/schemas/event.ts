@@ -8,7 +8,7 @@ const Event = db.define('event', {
     primaryKey: true
   },
   initial_text: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   choice0: {
     type: DataTypes.INTEGER,

@@ -9,12 +9,18 @@ const Enemy = db.define('enemy', {
   name: {
     type: DataTypes.STRING
   },
-  image: {
+  image_url: {
     type: DataTypes.STRING
   },
   weapon1: {
     type: DataTypes.STRING
   },
+  strength: {
+    type: DataTypes.INTEGER
+  },
+  health:{
+    type: DataTypes.INTEGER
+  }
 })
 
 export default Enemy;
