@@ -12,10 +12,10 @@ const Choice = db.define('choice', {
     autoIncrement: true
   },
   flavor_text0: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   flavor_text1: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   story_effect: {
     type: DataTypes.INTEGER,
