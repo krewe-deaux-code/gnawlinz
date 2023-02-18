@@ -26,6 +26,7 @@ passport.use(new GoogleStrategy({
       .then((user) => {
         return cb(null, user) // <-- serializeUser called here
       }).catch((err) => {
+        console.log('Error User Model Google Verify CB', err);
         return cb(err);
       })
   }
@@ -45,7 +46,7 @@ Auth.get('/google/callback',
 //passport.use(User.createStrategy());
 
 passport.serializeUser((user: any, done) => {
-  console.log('SERIALIZE', user);
+  // console.log('SERIALIZE', user);
   const [ userCookie ] = user;
   const { dataValues } = userCookie;
   console.log('DATA VALUES --> COOKIE', dataValues);

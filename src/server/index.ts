@@ -5,12 +5,10 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 
-import User  from '../db/schemas/user'
 
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 const DIST_DIR_LOGIN = path.resolve(__dirname, '..', '..', 'dist', 'login');
-
 
 const app = express();
 
@@ -33,9 +31,29 @@ app.use(passport.session()); // 18 - 26 ***
 
 // <-- express router -->
 import Auth from './auth/auth'
+import allyRouter from './dbRoutes/ally';
+import charAllyRouter from './dbRoutes/character_ally';
+import characterRouter from './dbRoutes/character';
+import choiceRouter from './dbRoutes/choice';
+import enemyRouter from './dbRoutes/enemy';
+import eventRouter from './dbRoutes/event';
+import itemRouter from './dbRoutes/item';
+import locationRouter from './dbRoutes/location';
+import storyRouter from './dbRoutes/story';
+import userRouter from './dbRoutes/user';
 
 // <-- use routes -->
 app.use('/auth', Auth);
+app.use('/ally', allyRouter);
+app.use('/charAlly', charAllyRouter);
+app.use('/character', characterRouter);
+app.use('/choice', choiceRouter);
+app.use('/enemy', enemyRouter);
+app.use('/event', eventRouter);
+app.use('/item', itemRouter);
+app.use('/location', locationRouter);
+app.use('/story', storyRouter);
+app.use('/user', userRouter);
 
 // ***********************
 // ****** ENDPOINTS ******
