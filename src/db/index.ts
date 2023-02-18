@@ -1,7 +1,9 @@
 import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
-
+// BEGIN DATABASE SEED DATA IMPORTS //
+import { iconSeed } from '../db/seeders/seedData/iconSeed' 
+// END DATABASE SEED DATA IMPORTS //
 // *********************
 // *** DB CONNECTION ***
 // *********************
@@ -57,7 +59,7 @@ const modelSync = async (dropTables = false) => {
   await Event.sync(options);
   await Character_Ally.sync(options);
   await Icon.sync(options);
-  iconSeeder();
+  await iconSeeder(iconSeed);
 };
 
 // <-- WILL DROP ALL TABLES -->
