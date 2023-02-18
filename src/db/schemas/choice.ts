@@ -1,6 +1,5 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Story from './story';
 import Enemy from './enemy';
 import Ally from './ally';
 import Item from './item';
@@ -17,12 +16,14 @@ const Choice = db.define('choice', {
   flavor_text1: {
     type: DataTypes.TEXT
   },
-  story_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Story,
-      key: '_id'
-    },
+  alignment0: {
+    type: DataTypes.STRING
+  },
+  alignment1: {
+    type: DataTypes.STRING
+  },
+  alignment2: {
+    type: DataTypes.STRING
   },
   enemy_effect: {
     type: DataTypes.INTEGER,

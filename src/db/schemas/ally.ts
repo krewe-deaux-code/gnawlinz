@@ -14,7 +14,7 @@ const Ally = db.define('ally', {
   name: {
     type: DataTypes.STRING
   },
-  image: {
+  image_url: {
     type: DataTypes.STRING
   },
   strength: {

@@ -2,7 +2,18 @@ import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
 // BEGIN DATABASE SEED DATA IMPORTS //
-import { iconSeed } from '../db/seeders/seedData/iconSeed'
+
+import { iconSeed } from '../db/seeders/seedData/iconSeed';
+import { allySeed } from './seeders/seedData/allySeed';
+// import { characterAllySeed } from './seeders/seedData/allySeed';
+import { characterSeed } from './seeders/seedData/characterSeed';
+import { choiceSeed } from './seeders/seedData/choiceSeed';
+import { enemySeed } from './seeders/seedData/enemySeed';
+import { eventSeed } from './seeders/seedData/eventSeed';
+import { itemSeed } from './seeders/seedData/itemSeed';
+import { locationSeed } from './seeders/seedData/locationSeed';
+import { storySeed } from './seeders/seedData/storySeed';
+
 // END DATABASE SEED DATA IMPORTS //
 
 // *********************
@@ -43,13 +54,26 @@ import Story from './schemas/story';
 import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
 import Icon from './schemas/gameAssets/icon';
+
+// *************************
+// *** Seeder Fn Imports ***
+// *************************
+
 import iconSeeder from './seeders/iconSeeder';
+import allySeeder from './seeders/allySeeder';
+// import characterAllySeeder from './seeders/characterAllySeeder';
+import characterSeeder from './seeders/characterSeeder';
+import choiceSeeder from './seeders/choiceSeeder';
+import enemySeeder from './seeders/enemySeeder';
+import eventSeeder from './seeders/eventSeeder';
+import itemSeeder from './seeders/itemSeeder';
+import locationSeeder from './seeders/locationSeeder';
+import storySeeder from './seeders/storySeeder';
 
 const modelSync = async (dropTables = false) => {
   const options = {
     force: dropTables
   };
-  await Story.sync(options);
   await Enemy.sync(options);
   await Ally.sync(options);
   await Item.sync(options);
@@ -59,17 +83,27 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await Character_Ally.sync(options);
+  await Story.sync(options);
   await Icon.sync(options);
   // ↑↑↑ Tables Synced ↑↑↑
   // ↓↓↓  Seed Tables  ↓↓↓
+  await enemySeeder(enemySeed);
+  await allySeeder(allySeed);
+  await itemSeeder(itemSeed);
+  await locationSeeder(locationSeed);
+  await characterSeeder(characterSeed);
+  await choiceSeeder(choiceSeed);
+  await eventSeeder(eventSeed);
+  // await characterAllySeeder(characterAllySeed);
+  await storySeeder(storySeed);
   await iconSeeder(iconSeed);
 };
 
 // <-- WILL DROP ALL TABLES -->
-// modelSync(true);
+modelSync(true);
 
 // <-- WON'T DROP TABLES -->
-modelSync();
+// modelSync();
 
 
 // Await seed functions should eventually migrate to own file and be called via npm script

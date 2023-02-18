@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
+import Character from './character';
 
 const Story = db.define('story', {
   _id: {
@@ -7,7 +8,17 @@ const Story = db.define('story', {
     autoIncrement: true,
     allowNull: true,
     primaryKey: true,
-  }
+  },
+  character_id: {
+    type: DataTypes.INTEGER,
+    references: {
+      model: Character,
+      key: '_id'
+    }
+  },
+  char_choices: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER)
+  },
 });
 
 export default Story;
