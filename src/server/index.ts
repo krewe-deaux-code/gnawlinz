@@ -5,6 +5,8 @@ import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 
+import User  from '../db/schemas/user'
+
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 const DIST_DIR_LOGIN = path.resolve(__dirname, '..', '..', 'dist', 'login');
@@ -46,6 +48,8 @@ app.get('/', (req, res) => {
 app.get('/menu', (req, res) => {
   res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
+
+
 // ***********************
 // *** LISTEN/WILDCARD ***
 // ***********************

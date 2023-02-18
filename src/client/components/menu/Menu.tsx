@@ -1,11 +1,25 @@
-import React, { useState } from "react";//createContext, useContext
+import React, { useState, createContext, useContext } from "react";
 import { Link} from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
-// import axios from 'axios';
+import axios from 'axios';
+
+
 
 const Menu: React.FC = () => {
 
 
+interface AuthContextType {
+  googleId: string | null,
+  avatar: string | null
+}
+const AuthContext = createContext<AuthContextType> ({
+  googleId: null,
+  avatar: null
+});
+
+const getAvatar = () => {
+  axios.get('/')
+}
   //axios request to server to retrieve avatar
   //set google id to a string
 
