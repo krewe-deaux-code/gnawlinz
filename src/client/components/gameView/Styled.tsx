@@ -1,8 +1,6 @@
 import styled from 'styled-components';
 
-
-
-const Container = styled.div`
+export const Container = styled.div`
   display: grid;
   height: 100vh;
   grid-template-rows: 0.05fr .70fr 0.25fr;
@@ -26,7 +24,8 @@ const Container = styled.div`
   }
   color: white;
 `;
-const ContentBox = styled.div`
+
+export const ContentBox = styled.div`
   display: flex;
   gap: 0.25rem;
   padding: 0.25rem;
@@ -37,7 +36,8 @@ const ContentBox = styled.div`
     flex-direction: column;
   }
 `;
-const NavBar = styled.nav`
+
+export const NavBar = styled.nav`
   background: #ffb700;
   grid-area: nav;
   padding: 0.25rem;
@@ -49,7 +49,8 @@ const NavBar = styled.nav`
     flex-direction: column;
   }
 `;
-const Main = styled.main`
+
+export const Main = styled.main`
   background: #1f2128;
   color: white;
   grid-area: main;
@@ -62,15 +63,18 @@ const Main = styled.main`
 // `;
 
 
-const Content1 = styled.div`
+export const Content1 = styled.div`
   background: #4f004f;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
-const Content2 = styled(Content1)``;
-const Content3 = styled(Content1)``;
-const Footer = styled.footer`
+
+export const Content2 = styled(Content1)``;
+
+export const Content3 = styled(Content1)``;
+
+export const Footer = styled.footer`
   background: black;
   grid-area: footer;
   padding: 0.25rem;
@@ -82,16 +86,19 @@ const Footer = styled.footer`
     flex-direction: column;
   }
 `;
-const TopContent1 = styled.div`
+
+export const TopContent1 = styled.div`
   padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
-const TopContent2 = styled(TopContent1)``;
-const TopContent3 = styled(TopContent1)``;
+
+export const TopContent2 = styled(TopContent1)``;
+
+export const TopContent3 = styled(TopContent1)``;
 
 // choice grid
-const ChoicesContainer = styled.div`
+export const ChoicesContainer = styled.div`
   display: grid;
   grid-template-rows: 0.5fr 0.5fr;
   grid-template-areas:
@@ -109,16 +116,15 @@ const ChoicesContainer = styled.div`
   }
   color: white;
 `;
-const TopChoice1 = styled.div`
+
+export const TopChoice1 = styled.div`
   padding: 0.25rem;
   width: 100%;
   height: 100%;
 `;
-const BottomChoice1 = styled.div`
+
+export const BottomChoice1 = styled.div`
 padding: 0.25rem;
 width: 100%;
 height: 100%;
 `;
-
-export {Container, NavBar, Main, ContentBox,
-  Content1, Content2, Content3, Footer, TopContent1, TopContent2, TopContent3, ChoicesContainer, TopChoice1, BottomChoice1};
