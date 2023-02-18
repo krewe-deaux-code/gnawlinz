@@ -2,8 +2,9 @@ import 'dotenv/config';
 import 'postgresql';
 import { Sequelize } from 'sequelize';
 // BEGIN DATABASE SEED DATA IMPORTS //
-import { iconSeed } from '../db/seeders/seedData/iconSeed' 
+import { iconSeed } from '../db/seeders/seedData/iconSeed'
 // END DATABASE SEED DATA IMPORTS //
+
 // *********************
 // *** DB CONNECTION ***
 // *********************
@@ -59,6 +60,8 @@ const modelSync = async (dropTables = false) => {
   await Event.sync(options);
   await Character_Ally.sync(options);
   await Icon.sync(options);
+  // ↑↑↑ Tables Synced ↑↑↑
+  // ↓↓↓  Seed Tables  ↓↓↓
   await iconSeeder(iconSeed);
 };
 
@@ -67,3 +70,6 @@ const modelSync = async (dropTables = false) => {
 
 // <-- WON'T DROP TABLES -->
 modelSync();
+
+
+// Await seed functions should eventually migrate to own file and be called via npm script

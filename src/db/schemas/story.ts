@@ -6,7 +6,7 @@ const Story = db.define('story', {
     type: DataTypes.INTEGER,
     autoIncrement: true,
     allowNull: true,
-    primaryKey: true
+    primaryKey: true,
   }
 });
 
