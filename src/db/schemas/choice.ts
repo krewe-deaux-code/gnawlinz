@@ -17,13 +17,6 @@ const Choice = db.define('choice', {
   flavor_text1: {
     type: DataTypes.TEXT
   },
-  story_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Story,
-      key: '_id'
-    },
-  },
   enemy_effect: {
     type: DataTypes.INTEGER,
     references: {
