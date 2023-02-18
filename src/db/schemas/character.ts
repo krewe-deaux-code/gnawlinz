@@ -6,7 +6,8 @@ import Location from './location';
 const Character = db.define('character', {
   _id: {
     type: DataTypes.INTEGER,
-    primaryKey: true
+    primaryKey: true,
+    autoIncrement: true
   },
   handle_id: {
     type: DataTypes.INTEGER

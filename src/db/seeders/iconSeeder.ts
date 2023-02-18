@@ -13,7 +13,7 @@ const iconSeeder = async (iconArr) => {
     })
     .then((success) =>
     console.log('Icon.findOrCreate successful: ', success))
-    .catch((err) => 
+    .catch((err) =>
     console.error('Error Icon.findOrCreate error in src/db/seeferFunctions/iconSeeder.ts: ', err))
   }
 }
