@@ -6,7 +6,7 @@ const allySeeder = async (allyArr: any) => {
       {
      where: {
       name: allyArr[i].name,
-      image_url: allyArr[i].image,
+      image_url: allyArr[i].image_url,
       strength: allyArr[i].strength,
       endurance: allyArr[i].endurance,
       alignment: allyArr[i].alignment

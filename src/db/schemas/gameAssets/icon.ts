@@ -11,7 +11,7 @@ const Icon = db.define('icon', {
   name: {
     type: DataTypes.STRING,
   },
-  imageUrl: {
+  image_url: {
     type: DataTypes.STRING,
   }
 });
