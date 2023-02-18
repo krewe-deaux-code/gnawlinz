@@ -1,5 +1,6 @@
 import React, { useState } from "react";//createContext, useContext
-import { Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 // import axios from 'axios';
 import CharacterStats from './CharacterStats';
@@ -18,7 +19,9 @@ const Menu: React.FC = () => {
     }
   };
 
-  
+  // const getCurrentCharacter = () => {
+  //   axios.get()
+  // };
 
   return (
     <Body >
