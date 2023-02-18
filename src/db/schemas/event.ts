@@ -9,7 +9,7 @@ const Event = db.define('event', {
     autoIncrement: true
   },
   initial_text: {
-    type: DataTypes.STRING
+    type: DataTypes.TEXT
   },
   choice0: {
     type: DataTypes.INTEGER,

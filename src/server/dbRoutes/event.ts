@@ -9,7 +9,7 @@ const eventRouter = Router();
 // import '../auth/auth';
 
 // <-- DB Model -->
-// import Event from '../../db/schemas/events';
+// import Event from '../../db/schemas/event';
 
 // <-- middleware -->
 eventRouter.use(express.json());
