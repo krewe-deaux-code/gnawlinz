@@ -2,7 +2,7 @@ import React, { useState } from "react";//createContext, useContext
 import { Link} from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 // import axios from 'axios';
-
+import CharacterStats from './CharacterStats';
 const Menu: React.FC = () => {
 
 
@@ -17,6 +17,8 @@ const Menu: React.FC = () => {
       setActive(index);
     }
   };
+
+  
 
   return (
     <Body >
@@ -33,13 +35,23 @@ const Menu: React.FC = () => {
       </InfoContainer>
       <>
         <Content active={active === 0}>
-          <h1>Character Details:</h1>
+          <h1>Character Story:</h1>
           <span><b>Name:</b></span><span> Jean Valgene</span><br />
           <span><b>Age:</b></span><span> 31</span><br />
-          <span><b>Background:</b></span><span> Jono do my bidding...</span><br />
+          <span><b>Background:</b><br /></span>
+          <span> Jono do my bidding...</span><br />
+          <span><b>Current Alignment:</b><br />
+          Evil/Old</span><br />
+          <span>
+          <b>Jean Valgene's Story:</b><br />
+          Jean Valgene decided to take a walk down to Chompitoulas Street<br />
+          Jean Valgene decided to look under a trash can<br />
+          Jean Valgene found a stray cat<br />
+          Jean Valgene decided to eat stray cat providing +1 temporary health and strength 
+          </span>
         </Content>
         <Content active={active === 1}>
-          <h1>Character Stats:</h1>
+          <CharacterStats/>
         </Content>
         <Content active={active === 2}>
           <h1>Items</h1>
