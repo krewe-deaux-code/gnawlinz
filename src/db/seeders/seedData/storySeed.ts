@@ -3,4 +3,4 @@ export const storySeed = [{
   char_choices: [
     2, 3, 7, 8, 10, 1
   ]
-}] 
+}]

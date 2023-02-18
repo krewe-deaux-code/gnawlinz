@@ -7,7 +7,7 @@ const iconSeeder = async (iconArr: any) => {
       {
      where: {
       name: iconArr[i].name,
-      imageUrl: iconArr[i].imageUrl
+      image_url: iconArr[i].image_url
      }
     })
     .then((success) =>

@@ -10,7 +10,6 @@ const storySeeder = async (storyArr: any) => {
           char_choices: storyArr[i].char_choices
         }
       })
-      
     .then((success) =>
     console.log('Story.findOrCreate successful: ', success))
     .catch((err) =>
