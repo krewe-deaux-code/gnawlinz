@@ -24,7 +24,7 @@ const GameView: React.FC = () => {
   return (
     <Container>
       <NavBar>
-        <TopContent1>Logo</TopContent1>
+        <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
         <TopContent2>Clock</TopContent2>
         <TopContent3>Google User</TopContent3>
       </NavBar>
