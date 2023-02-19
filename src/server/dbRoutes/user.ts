@@ -13,7 +13,7 @@ const userRouter = Router();
 // import '../auth/auth';
 
 // <-- DB Model -->
-//import User from '../../db/schemas/user';
+import User from '../../db/schemas/user';
 
 // <-- middleware -->
 userRouter.use(express.json());
@@ -24,20 +24,18 @@ userRouter.use(express.urlencoded({ extended: true }));
 // ******************
 
 
-// userRouter.get('/find', (req, res) => {
-//   //console.log('************************************/user endpoint hit');
-//   console.log('********************',req)
-//   User.findAll({
-//       limit: 1,
-//       order: [['updatedAt', 'DESC']]
-
-//       }).then((user) => {
-//           console.log('USER?', user);
-//           res.send(user);
-//       }).catch((err) => {
-//         console.log(err);
-//         })
-
-// });
+userRouter.get('/find/:sessionID', (req, res) => {
+  const {sessionID} = req.params;
+  User.findOne({
+      where: {
+        session_id: sessionID
+      }
+      }).then((user) => {
+          console.log('USER?', user);
+          res.status(200).send(user);
+      }).catch((err) => {
+        console.log(err);
+        })
+});
 
 export default userRouter;

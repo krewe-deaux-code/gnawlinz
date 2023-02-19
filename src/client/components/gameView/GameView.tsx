@@ -4,6 +4,8 @@ import {
   Content2, Content3, Footer, TopContent1,
   TopContent2, TopContent3, ChoicesContainer,
   TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
+
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const GameView: React.FC = () => {

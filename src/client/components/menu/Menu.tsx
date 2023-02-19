@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react"; //useContext
 import { Link } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
-//import axios from 'axios';
+import axios from 'axios';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
@@ -9,37 +9,38 @@ import { Body, InfoContainer, Tab, Content } from './Styled';
 
 const Menu: React.FC = () => {
 
-  // type AuthContextType = {
-  //   avatar: string | null
-  // }
 
-  // const AuthContext = React.createContext<AuthContextType>({
-  //   avatar: null
-  // })
+  const [avatar, setAvatar] = useState('');
   const [stateSession, setStateSession] = useState('');
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    console.log('just the cookie', document.cookie.split('; ')[0].split('=')[1])
     const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
     setStateSession(sessionID);
-    console.log(stateSession);
-}, []);
+    axios.get(`user/find/${sessionID}`)
+      .then((result) => {
+        const { google_avatar } = result.data
+        setAvatar(google_avatar);
+      }).catch((err) => {
+        console.error(err)
+      })
 
-console.log('floating state session', stateSession);
+  }, []);
 
-const handleClick = (e) => {
-  const index = parseInt(e.target.id, 0);
-  if (index !== active) {
-    setActive(index);
-  }
-};
+  const handleClick = (e) => {
+    const index = parseInt(e.target.id, 0);
+    if (index !== active) {
+      setActive(index);
+    }
+  };
 
-return (
-  <>
+
+  ////add this -->  <img src={avatar} />    <-- somewhere in JSX
+  return (
+    <>
       <Body >
+        <img src={avatar} />
         <InfoContainer >
-          <div>Here {stateSession} </div>
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Details
           </Tab>
@@ -70,8 +71,8 @@ return (
         <Link to="/gameView">GameView</Link>
 
       </Body >
-  </>
-)
+    </>
+  )
 };
 
 export default Menu;
