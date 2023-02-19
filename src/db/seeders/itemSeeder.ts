@@ -17,9 +17,9 @@ const itemSeeder = async (itemArr: any) => {
      }
     })
     .then((success) =>
-    console.log('Item.findOrCreate successful: ', success))
+    console.log('Item.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error Item.findOrCreate error in src/db/seeders/itemSeeder.ts: ', err))
+    console.error('Error Item.findOrCreate error in src/db/seeders/itemSeeder.ts: '))
   }
 }
 

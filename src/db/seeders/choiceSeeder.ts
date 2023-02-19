@@ -17,9 +17,9 @@ const choiceSeeder = async (choiceArr: any) => {
      }
     })
     .then((success) =>
-    console.log('Choice.findOrCreate successful: ', success))
+    console.log('Choice.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error Choice.findOrCreate error in src/db/seeders/choiceSeeder.ts: ', err))
+    console.error('Error Choice.findOrCreate error in src/db/seeders/choiceSeeder.ts: '))
   }
 }
 
