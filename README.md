@@ -45,3 +45,11 @@ back in VSCode terminal: git remote add upstream <URLorganization.git>
 - Animations: Framer
 - Continuous Integration: Github Actions
 - Testing: Jest
+
+## Game Assets Creator Credit 
+
+- "profile" icon by Bakunetsu Kaito from https://thenounproject.com/icon/profile-1094753/ CC BY 3.0
+- "chat" icon by Bakunetsu Kaito from https://thenounproject.com/icon/chat-1094743/ CC BY 3.0
+- "Death" icon by Bakunetsu Kaito from https://thenounproject.com/icon/death-1094768/ CC BY 3.0
+- "Trophy" icon by Bakunetsu Kaito from https://thenounproject.com/icon/trophy-1097545/ CC BY 3.0
+- "Heart pixel" by tulpahn from https://thenounproject.com/icon/heart-pixel-2651784/ CC BY 3.0

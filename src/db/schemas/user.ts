@@ -18,6 +18,9 @@ const User = db.define('user', {
   name: {
     type: DataTypes.STRING
   },
+  session_id: {
+    type: DataTypes.STRING
+  },
   char0: {
     type: DataTypes.INTEGER,
     references: {

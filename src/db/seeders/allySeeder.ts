@@ -13,9 +13,9 @@ const allySeeder = async (allyArr: any) => {
      }
     })
     .then((success) =>
-    console.log('Ally.findOrCreate successful: ', success))
+    console.log('Ally.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error Ally.findOrCreate error in src/db/seeders/allySeeder.ts: ', err))
+    console.error('Error Ally.findOrCreate error in src/db/seeders/allySeeder.ts: '))
   }
 }
 
