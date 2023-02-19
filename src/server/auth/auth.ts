@@ -20,14 +20,16 @@ passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID!,
   clientSecret: GOOGLE_CLIENT_SECRET!,
   callbackURL: "http://localhost:8080/auth/google/callback",
+  passReqToCallback: true
 },
-  (accessToken, refreshToken, profile: any, cb) => {
-    console.log('profile',  profile);
+  (req, accessToken, refreshToken, profile: any, cb) => {
+    console.log('profile', req);
     User.findOrCreate({
       where: {
         google_id: profile.id,
         name: profile.name.givenName,
-        google_avatar: profile.photos[0].value
+        google_avatar: profile.photos[0].value,
+        session_id: req.sessionID
       }
     })
       .then((user) => {
@@ -43,6 +45,7 @@ Auth.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 Auth.get('/google/callback', (req, res) => {
+  // console.log('FOUND GOOGLE CALLBACK', req);
   passport.authenticate('google', { failureRedirect: '/' },
   async () => {
     res.cookie('session_id', req.sessionID);
