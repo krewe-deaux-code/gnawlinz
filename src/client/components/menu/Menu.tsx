@@ -40,7 +40,6 @@ const Menu: React.FC = () => {
   return (
     <>
       <Body >
-        <img src={avatar} />
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Details
