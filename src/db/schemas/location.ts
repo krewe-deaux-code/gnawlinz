@@ -1,5 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
+import Item from './item';
 
 const Location = db.define('location', {
   _id: {
@@ -20,7 +21,11 @@ const Location = db.define('location', {
     type: DataTypes.STRING
   },
   drop_item_slot:{
-    type: DataTypes.STRING
+    type: DataTypes.INTEGER,
+    references: {
+      model: Item,
+      key: '_id'
+    }
   },
   graffiti:{
     type: DataTypes.STRING
