@@ -16,7 +16,7 @@ const enemySeeder = async (enemyArr: any) => {
     .then((success) =>
     console.log('Enemy.findOrCreate successful: ', success))
     .catch((err) =>
-    console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: ', err))
+    console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: '))
   }
 }
 

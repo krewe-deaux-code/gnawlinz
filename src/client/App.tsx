@@ -1,5 +1,6 @@
 import React, { Suspense, lazy, createContext, useState } from "react"; //lazy
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; //Routes, Route, Navigate
+import { GlobalStyle } from "./GlobalStyled";
 import dayjs from 'dayjs';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -32,7 +33,9 @@ const App = () => {
   return (
     <ClockContext.Provider value={{remainingTime, setRemainingTime, calculateRemainingTime}} >
       <BrowserRouter>
+   <GlobalStyle/>
         <Suspense fallback={<div>LOADING...</div>}>
+
 
           <Routes>
             <Route path='/' element={<Title />} />

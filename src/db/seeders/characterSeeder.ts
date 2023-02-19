@@ -24,9 +24,9 @@ const characterSeeder = async (characterArr: any) => {
     }
   })
     .then((success) =>
-    console.log('Character.findOrCreate successful: ', success))
+    console.log('Character.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error character.findOrCreate error in src/db/seeders/characterSeeder.ts: ', err))
+    console.error('Error character.findOrCreate error in src/db/seeders/characterSeeder.ts: '))
   }
 }
 
