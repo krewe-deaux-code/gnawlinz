@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, NavBar, Main, Content1,
   Content2, Content3, Footer, TopContent1,
   TopContent2, TopContent3, ChoicesContainer,
   TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
 import axios from 'axios';
+import { ClockContext } from "../../App";
+import { Link  } from 'react-router-dom';
 
 const GameView: React.FC = () => {
+
+  const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
 
   const [location, setLocation] = useState({});
 
@@ -19,13 +23,16 @@ const GameView: React.FC = () => {
       .catch(err => console.log('Axios fail useEffect Location grab', err));
     };
 
-  useEffect(fetchLocation, []);
+  useEffect(() => {
+    fetchLocation();
+    calculateRemainingTime();
+  }, []);
 
   return (
     <Container>
       <NavBar>
         <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
-        <TopContent2>Clock</TopContent2>
+        <TopContent2>{remainingTime}</TopContent2>
         <TopContent3>Google User</TopContent3>
       </NavBar>
       <Main>
