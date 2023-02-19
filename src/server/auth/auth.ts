@@ -6,11 +6,12 @@ import User from '../../db/schemas/user';
 import { Router } from 'express';
 const Auth = Router();
 
-declare module 'express-session' {
-  interface SessionData {
-    sessionID: any;
-  }
-}
+
+// declare module 'express-session' {
+//   interface SessionData {
+//     sessionID: any;
+//   }
+// }
 
 // <-- Strategy -->
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
@@ -45,7 +46,6 @@ Auth.get('/google',
 Auth.get('/google/callback', (req, res) => {
   passport.authenticate('google', { failureRedirect: '/' },
   async () => {
-    console.log('reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeq', req.sessionStore);
     res.cookie('session_id', req.sessionID);
     res.redirect('/menu');
   })(req, res);
@@ -59,9 +59,9 @@ Auth.get('/google/callback', (req, res) => {
 passport.serializeUser((user: any, done) => {
  //console.log('SERIALIZE', user);
   const [userCookie] = user;
-  console.log('cooooooookie', userCookie);
+  //console.log('cooooooookie', userCookie);
   const { dataValues } = userCookie;
-  console.log('DATA VALUES --> COOKIE', dataValues);
+  //console.log('DATA VALUES --> COOKIE', dataValues);
   done(null, dataValues);
 });
 
