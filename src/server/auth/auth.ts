@@ -6,6 +6,13 @@ import User from '../../db/schemas/user';
 import { Router } from 'express';
 const Auth = Router();
 
+// <-- may need to define these types -->
+// declare module 'express-session' {
+//   interface SessionData {
+//     sessionID: any;
+//   }
+// }
+
 // <-- Strategy -->
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
@@ -14,13 +21,15 @@ passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID!,
   clientSecret: GOOGLE_CLIENT_SECRET!,
   callbackURL: "http://localhost:8080/auth/google/callback",
+  passReqToCallback: true
 },
-  (accessToken, refreshToken, profile: any, cb) => {
+  (req, accessToken, refreshToken, profile: any, cb) => {
     User.findOrCreate({
       where: {
         google_id: profile.id,
         name: profile.name.givenName,
-        google_avatar: profile.photos[0].value
+        google_avatar: profile.photos[0].value,
+        session_id: req.sessionID
       }
     })
       .then((user) => {
@@ -35,15 +44,20 @@ passport.use(new GoogleStrategy({
 Auth.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-Auth.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('/menu'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
-  });
+Auth.get('/google/callback', (req, res) => {
+  passport.authenticate('google', { failureRedirect: '/' },
+  async () => {
+    res.cookie('session_id', req.sessionID);
+    res.redirect('/menu');
+  })(req, res);
+})
 
-// <-- If User needs Local Strategy -->
-//passport.use(User.createStrategy());
+// Auth.get('/google/callback',
+//   passport.authenticate('google', { failureRedirect: '/' }),
+//   (req, res) => {
+//     // Successful authentication, redirect home.
+//     res.redirect('/menu'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
+//   });
 
 passport.serializeUser((user: any, done) => {
   // console.log('SERIALIZE', user);
@@ -59,26 +73,3 @@ passport.deserializeUser((user: any, done) => {
 });
 
 export default Auth;
-
-//
-// <-- IF DESERIALIZING NEEDS TO ACCESS DB -->
-//
-// const [ profile ] = response;
-// const { googleId } = profile;
-// User.findOne({
-//   where: {
-//     googleId
-//   }
-// }).then((user) => {
-//   console.log('USER?', user);
-//   done(null, user);
-// }).catch((err) => {
-//   done(err);
-// })
-
-
-
-
-
-
-
