@@ -16,7 +16,7 @@ const Character = db.define('character', {
     type: DataTypes.STRING,
     unique: true
   },
-  image:{
+  image_url:{
     type: DataTypes.STRING,
   },
   slot0:{

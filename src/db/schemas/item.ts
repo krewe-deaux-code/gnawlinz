@@ -11,17 +11,23 @@ const Item = db.define('item', {
   name: {
     type: DataTypes.STRING
   },
-  image: {
+  image_url: {
     type: DataTypes.STRING
   },
   consumable:{
     type: DataTypes.BOOLEAN
   },
-  modified_stat: {
+  modified_stat0: {
     type: DataTypes.STRING
   },
-  modifier: {
+  modified_stat1: {
     type: DataTypes.STRING
+  },
+  modifier0: {
+    type: DataTypes.INTEGER
+  },
+  modifier1: {
+    type: DataTypes.INTEGER
   },
   buy_price:{
     type: DataTypes.INTEGER
