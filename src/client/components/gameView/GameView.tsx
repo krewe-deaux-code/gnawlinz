@@ -6,6 +6,7 @@ import {
   TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
 import axios from 'axios';
 import { ClockContext } from "../../App";
+import { Link  } from 'react-router-dom';
 
 const GameView: React.FC = () => {
 
