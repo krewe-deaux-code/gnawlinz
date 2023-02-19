@@ -1,22 +1,28 @@
+import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, NavBar, Main, Content1,
   Content2, Content3, Footer, TopContent1,
   TopContent2, TopContent3, ChoicesContainer,
-  TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
-import axios from 'axios';
+  TopChoice1, BottomChoice1 } from './Styled';
+
 import { ClockContext } from "../../App";
 import { Link  } from 'react-router-dom';
+
+interface LocationData {
+  data: object;
+  image_url: string;
+};
 
 const GameView: React.FC = () => {
 
   const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
 
-  const [location, setLocation] = useState({});
+  const [location, setLocation] = useState({} as LocationData);
 
   const fetchLocation = () => {
-    axios.get('/location/random')
-      .then((location: object) => {
+    axios.get<LocationData>('/location/random')
+      .then((location) => {
         console.log('Location from DB', location);
         setLocation(location.data);
       })
