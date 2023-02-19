@@ -7,11 +7,7 @@ import {
   TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-  TopChoice1, BottomChoice1 } from './Styled';
-
 import { ClockContext } from "../../App";
-import { Link  } from 'react-router-dom';
 
 interface LocationData {
   data: object;
