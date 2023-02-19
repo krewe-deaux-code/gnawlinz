@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import dayjs from 'dayjs';
 import { TitleContainer, TopBar, Main, Content1, Content2, Content3, Footer } from './Styled';
 //import GameView from '../gameView/GameView';
-import axios from 'axios';
+//import axios from 'axios';
 
 // Need logo - top left, title image - center, possibly login pic - top right
 // Clock above title image, start button bottom center
@@ -15,7 +15,7 @@ const Title: React.FC = () => {
   const startTime = dayjs();
   const endTime = startTime.add(daysLeft, 'day').startOf('day');
   const [remainingTime, setRemainingTime] = useState<string>('');
-  const [setLoggedInUserData] = useState<any>('');
+  //const [setLoggedInUserData] = useState<any>('');
   function calculateRemainingTime() {
     const remainingTime = endTime.diff(dayjs(), 'millisecond');
     const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));

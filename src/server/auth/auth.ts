@@ -6,6 +6,12 @@ import User from '../../db/schemas/user';
 import { Router } from 'express';
 const Auth = Router();
 
+declare module 'express-session' {
+  interface SessionData {
+    sessionID: any;
+  }
+}
+
 // <-- Strategy -->
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
@@ -35,34 +41,41 @@ passport.use(new GoogleStrategy({
 Auth.get('/google',
   passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-Auth.get('/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    // Successful authentication, redirect home.
-    res.redirect('/menu'); // res.redirect('/~' + req.user.name); --> FOR FUTURE user specific render
-  });
+Auth.get('/google/callback', (req, res) => {
+  passport.authenticate('google', { failureRedirect: '/' },
+  async () => {
+    res.cookie('session_id', req.sessionID);
+
+    res.redirect('/menu');
+  })(req, res);
+})
+
+
 
 // <-- If User needs Local Strategy -->
 //passport.use(User.createStrategy());
 
 passport.serializeUser((user: any, done) => {
-  // console.log('SERIALIZE', user);
-  const [ userCookie ] = user;
+ //console.log('SERIALIZE', user);
+  const [userCookie] = user;
+  console.log(userCookie);
   const { dataValues } = userCookie;
   console.log('DATA VALUES --> COOKIE', dataValues);
   done(null, dataValues);
 });
+
 
 passport.deserializeUser((user: any, done) => {
   console.log('DESERIALIZE USER', user);
   done(null, user);
 });
 
+
 export default Auth;
 
-//
+
 // <-- IF DESERIALIZING NEEDS TO ACCESS DB -->
-//
+
 // const [ profile ] = response;
 // const { googleId } = profile;
 // User.findOne({

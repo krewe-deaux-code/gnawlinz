@@ -1,34 +1,32 @@
 import React, { useState, useEffect } from "react"; //useContext
 import { Link } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
-import axios from 'axios';
+//import axios from 'axios';
+//import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
 
 
 const Menu: React.FC = () => {
 
-  type AuthContextType = {
-    avatar: string | null
-  }
+  // type AuthContextType = {
+  //   avatar: string | null
+  // }
 
-  const AuthContext = React.createContext<AuthContextType>({
-    avatar: null
-  })
-  const [avatar, setAvatar] = useState('');
+  // const AuthContext = React.createContext<AuthContextType>({
+  //   avatar: null
+  // })
+  const [stateSession, setStateSession] = useState('');
+  const [active, setActive] = useState(0);
 
   useEffect(() => {
-    axios.get('user/find')
-    .then(user => {
-      console.log(user.data);
-      //setAvatar(user.data.avatar);
-    }).catch(err => {
-      console.error('Error fetching User Avatar from req.user (server)', err);
-    });
+    console.log('just the cookie', document.cookie.split('; ')[0].split('=')[1])
+    const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
+    setStateSession(sessionID);
+    console.log(stateSession);
 }, []);
 
-
-const [active, setActive] = useState(0);
+console.log('floating state session', stateSession);
 
 const handleClick = (e) => {
   const index = parseInt(e.target.id, 0);
@@ -39,10 +37,9 @@ const handleClick = (e) => {
 
 return (
   <>
-    <AuthContext.Provider value={{ avatar }}>
       <Body >
         <InfoContainer >
-          <div>Here {avatar} </div>
+          <div>Here {stateSession} </div>
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Details
           </Tab>
@@ -73,7 +70,6 @@ return (
         <Link to="/gameView">GameView</Link>
 
       </Body >
-    </AuthContext.Provider>
   </>
 )
 };
