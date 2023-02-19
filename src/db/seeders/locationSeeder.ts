@@ -17,9 +17,9 @@ const locationSeeder = async (locationArr) => {
      }
     })
     .then((success) =>
-    console.log('Location.findOrCreate successful: ', success))
+    console.log('Location.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error Location.findOrCreate error in src/db/seeder/locationSeeder.ts: ', err))
+    console.error('Error Location.findOrCreate error in src/db/seeder/locationSeeder.ts: '))
   }
 }
 
