@@ -26,9 +26,9 @@ export const itemSeed = [
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744724/gnawlinzItems/91vfo-advWL._AC_UX569__wjwyyp.jpg',
     consumable: false,
     modified_stat0: 'strength',
-    modified_stat1: null,
+    modified_stat1: 'mood',
     modifier0: 1,
-    modifier1: null,
+    modifier1: 2,
     buy_price: 2,
     sell_price: 1
   },
