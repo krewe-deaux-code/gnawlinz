@@ -62,7 +62,6 @@ Auth.get('/google/callback', (req, res) => {
 passport.serializeUser((user: any, done) => {
  //console.log('SERIALIZE', user);
   const [userCookie] = user;
-  console.log('cooooooookie', userCookie);
   const { dataValues } = userCookie;
   //console.log('DATA VALUES --> COOKIE', dataValues);
   done(null, dataValues);
