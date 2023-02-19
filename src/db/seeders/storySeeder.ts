@@ -11,9 +11,9 @@ const storySeeder = async (storyArr: any) => {
         }
       })
     .then((success) =>
-    console.log('Story.findOrCreate successful: ', success))
+    console.log('Story.findOrCreate successful: '))
     .catch((err) =>
-    console.error('Error Story.findOrCreate error in src/db/seeders/storySeeder.ts: ', err))
+    console.error('Error Story.findOrCreate error in src/db/seeders/storySeeder.ts: '))
   }
 }
 
