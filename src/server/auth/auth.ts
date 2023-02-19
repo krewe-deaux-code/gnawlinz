@@ -22,6 +22,7 @@ passport.use(new GoogleStrategy({
   callbackURL: "http://localhost:8080/auth/google/callback",
 },
   (accessToken, refreshToken, profile: any, cb) => {
+    console.log('profile',  profile);
     User.findOrCreate({
       where: {
         google_id: profile.id,
@@ -45,7 +46,6 @@ Auth.get('/google/callback', (req, res) => {
   passport.authenticate('google', { failureRedirect: '/' },
   async () => {
     res.cookie('session_id', req.sessionID);
-
     res.redirect('/menu');
   })(req, res);
 })
@@ -58,7 +58,7 @@ Auth.get('/google/callback', (req, res) => {
 passport.serializeUser((user: any, done) => {
  //console.log('SERIALIZE', user);
   const [userCookie] = user;
-  console.log(userCookie);
+  console.log('cooooooookie', userCookie);
   const { dataValues } = userCookie;
   console.log('DATA VALUES --> COOKIE', dataValues);
   done(null, dataValues);
