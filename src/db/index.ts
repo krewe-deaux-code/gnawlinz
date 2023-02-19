@@ -74,9 +74,9 @@ const modelSync = async (dropTables = false) => {
   const options = {
     force: dropTables
   };
+  await Item.sync(options);
   await Enemy.sync(options);
   await Ally.sync(options);
-  await Item.sync(options);
   await Location.sync(options);
   await Character.sync(options);
   await User.sync(options);
@@ -87,9 +87,9 @@ const modelSync = async (dropTables = false) => {
   await Icon.sync(options);
   // ↑↑↑ Tables Synced ↑↑↑
   // ↓↓↓  Seed Tables  ↓↓↓
+  await itemSeeder(itemSeed);
   await enemySeeder(enemySeed);
   await allySeeder(allySeed);
-  await itemSeeder(itemSeed);
   await locationSeeder(locationSeed);
   await characterSeeder(characterSeed);
   await choiceSeeder(choiceSeed);
