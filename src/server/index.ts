@@ -82,7 +82,7 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`G'nawlinZ server listening on port http://localhost:${PORT}`);
+  console.log(`G'nawlinZ server listening @ http://localhost:${PORT}`);
 })
 // fix the EADDRINUSE error
 .on("error", (err) => {

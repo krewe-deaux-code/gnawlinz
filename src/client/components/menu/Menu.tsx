@@ -11,8 +11,8 @@ import axios from 'axios';
 const Menu: React.FC = () => {
 
 
-  const [avatar, setAvatar] = useState('');
-  const [stateSession, setStateSession] = useState('');
+  const [/*avatar*/, setAvatar] = useState('');
+  const [/*stateSession*/, setStateSession] = useState('');
   const [active, setActive] = useState(0);
 
   useEffect(() => {

@@ -29,11 +29,8 @@ storyRouter.get('/ending/:charID', (req, res) => {
       //build ending text to return in .send()
       let storyArr: Number[] = storyResponse.char_choices;
       console.log('choices array: ', storyArr);
-      let choiceArr: String[] = storyArr.map((choiceId: Number) => {
-        return Choice.findOne({where:{_id: choiceId}})
-          .then((choiceResponse: any) => {
-            
-          })
+      let choiceArr: any = storyArr.map((choiceId: Number) => {
+         return Choice.findOne({where:{_id: choiceId}})
       })
       console.log('Choices Text Array: ', choiceArr);
       // for (let i = 0; i < storyResponse.char_choices.length; i++) {
