@@ -2,6 +2,7 @@ import 'dotenv/config';
 import passport from 'passport';
 
 import User from '../../db/schemas/user';
+import { Model } from 'sequelize';
 
 import { Router } from 'express';
 const Auth = Router();
@@ -28,12 +29,20 @@ passport.use(new GoogleStrategy({
       where: {
         google_id: profile.id,
         name: profile.name.givenName,
-        google_avatar: profile.photos[0].value,
-        session_id: req.sessionID
+        google_avatar: profile.photos[0].value
+        // session_id: req.sessionID
       }
     })
-      .then((user) => {
-        return cb(null, user) // <-- serializeUser called here
+      .then(([user, created]: [Model, boolean]) => {
+        user.update({
+          session_id: req.sessionID
+        })
+          .then((user) => cb(null, user)) // <-- serializeUser called here
+          .catch((err) => {
+            console.error('Instance update failed', err);
+            return cb(err);
+          });
+        // return cb(null, user) // <-- serializeUser called here
       }).catch((err) => {
         console.log('Error User Model Google Verify CB', err);
         return cb(err);
@@ -46,10 +55,10 @@ Auth.get('/google',
 
 Auth.get('/google/callback', (req, res) => {
   passport.authenticate('google', { failureRedirect: '/' },
-  async () => {
-    res.cookie('session_id', req.sessionID);
-    res.redirect('/menu');
-  })(req, res);
+    async () => {
+      res.cookie('session_id', req.sessionID);
+      res.redirect('/menu');
+    })(req, res);
 })
 
 // Auth.get('/google/callback',
@@ -60,7 +69,7 @@ Auth.get('/google/callback', (req, res) => {
 //   });
 
 passport.serializeUser((user: any, done) => {
- //console.log('SERIALIZE', user);
+  //console.log('SERIALIZE', user);
   const [userCookie] = user;
   const { dataValues } = userCookie;
   //console.log('DATA VALUES --> COOKIE', dataValues);

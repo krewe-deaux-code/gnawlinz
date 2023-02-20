@@ -13,7 +13,7 @@ export const characterSeed = [
     slot7: null,
     health: 10,
     strength: 5,
-    endurance: 3,
+    endurance: 2,
     mood: 9,
     location: null,
     ally_count: 0
