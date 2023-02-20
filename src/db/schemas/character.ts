@@ -2,6 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 import Item from './item'
 import Location from './location';
+// import User from './user';
 
 const Character = db.define('character', {
   _id: {
@@ -10,7 +11,11 @@ const Character = db.define('character', {
     autoIncrement: true
   },
   handle_id: {
-    type: DataTypes.INTEGER
+    type: DataTypes.STRING,
+    // references: {
+    //   model: User,
+    //   key: 'user_id'
+    // }
   },
   name:{
     type: DataTypes.STRING,

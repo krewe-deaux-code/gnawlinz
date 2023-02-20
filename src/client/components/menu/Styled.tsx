@@ -1,4 +1,7 @@
+import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
+
+import 'bootstrap/dist/css/bootstrap.css';
 
 export const Body = styled.div`
   text-align: center;
@@ -32,3 +35,20 @@ export const Tab = styled.button`
 export const Content = styled.div`
   ${props => (props.active ? "" : "display:none")}
 `;
+
+export const StyledCarousel = styled(Carousel)`
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+`;
+
+export const StyledCarouselItem = styled(Carousel.Item)`
+  // custom styles go here
+`;
+
+export const StyledCarouselCaption = styled(Carousel.Caption)`
+  // custom styles go here
+`;
+

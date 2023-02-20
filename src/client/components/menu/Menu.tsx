@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; //useContext
+import React, { useState, useEffect, createContext } from "react"; //useContext
 import { Link  } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
@@ -6,11 +6,11 @@ import axios from 'axios';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
-
+export const UserContext = createContext<any>('');
 
 const Menu: React.FC = () => {
 
-
+  const [activeUser, setActiveUser] = useState({});
   const [avatar, setAvatar] = useState('');
   const [stateSession, setStateSession] = useState('');
   const [active, setActive] = useState(0);
@@ -20,7 +20,9 @@ const Menu: React.FC = () => {
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
       .then((result) => {
+        console.log('USER', result);
         const { google_avatar } = result.data
+        setActiveUser(result.data);
         setAvatar(google_avatar);
       }).catch((err) => {
         console.error(err)
@@ -34,11 +36,11 @@ const Menu: React.FC = () => {
       setActive(index);
     }
   };
-
-
+  console.log('activeUser', activeUser);
+  console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
-    <>
+    <UserContext.Provider value={{activeUser, stateSession, avatar}}>
       <Body >
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
@@ -81,7 +83,7 @@ const Menu: React.FC = () => {
         <Link to="/gameView">GameView</Link>
 
       </Body >
-    </>
+    </UserContext.Provider>
   )
 };
 
