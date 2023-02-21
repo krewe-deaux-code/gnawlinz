@@ -23,32 +23,42 @@ storyRouter.use(express.urlencoded({ extended: true }));
 // ******************
 
 storyRouter.get('/ending/:charID', (req, res) => {
-  Story.findOne({ where: { character_id: req.params.charID } })
-    .then((storyResponse: any) => {
-      console.log('story object retrieved from db: ', storyResponse);
-      //build ending text to return in .send()
-      let storyArr: Number[] = storyResponse.char_choices;
-      console.log('choices array: ', storyArr);
-      let choiceArr: any[] = [];
-      const choiceGrab = async (choiceId: Number) => {
-        await Choice.findOne({where:{_id: choiceId}})
-        .then((choice: any) => {
-          console.log('choice object retrieved from db: ', choice);
-          
-          choiceArr.push(choice)
-        })
-      }
-      
-      console.log('log to appease TS: ', choiceGrab)
-      console.log('Choices Text Array: ', choiceArr);
-
-      res.status(200).send(storyArr); //return array
-    })
-    .catch((err) => {
-      console.error(err, 'server failed to retrieve story from DB');
-    })
-  })
   
+  const getStory: Function = async(id: Number) => {
+    Story.findOne({ where: { character_id: id } })
+      .then((storyResponse: any) =>{
+        //build ending text to return in .send()
+        //let storyArr: Number[] = storyResponse.char_choices;
+        let story = storyResponse;
+        let choiceArr: String[] = [];
+        console.log('story object retrieved from db: ', story);
+      for(let i = 0; i < story.char_choices.length; i++){
+        Choice.findOne({ where: { _id: story.char_choices[i]}})
+          .then((choice: any) => { console.log(choice.flavor_text1); choiceArr[i] = choice.flavor_text1 })
+          .catch((err) => console.error('choiceGrab.failHard: ', err))
+          console.log(choiceArr);
+      }
+      res.status(200).send(choiceArr);
+  })
+  // const getStory: Function = async (id: Number) => {
+  //   let story = await Story.findOne({ where: { character_id: id } })
+  //     .then((storyResponse: any) => storyResponse)
+  //    console.log('story object retrieved from db: ', story);
+  //     //build ending text to return in .send()
+  //     //let storyArr: Number[] = storyResponse.char_choices;
+  //     let choiceArr: String[] = [];
+  //     for(let i = 0; i < story.char_choices.length; i++){
+  //       await Choice.findOne({ where: { _id: story.char_choices[i]}})
+  //         .then((choice: any) => { console.log(choice.flavor_text1); choiceArr[i] = choice.flavor_text1 })
+  //         .catch((err) => console.error('choiceGrab.failHard: ', err))
+  //         console.log(choiceArr);
+  //     }
+  //   res.status(200).send(choiceArr);
+  // }
+  }
+  getStory(req.params.charID);  
+})
+
   export default storyRouter;
   
   // for (let i = 0; i < storyResponse.char_choices.length; i++) {
@@ -60,3 +70,26 @@ storyRouter.get('/ending/:charID', (req, res) => {
   //     })
   //     .catch((err) => console.error('choiceGrab.failHard: ', err))
   // }
+
+      // let choiceArr: any[] = [];
+      // const choiceGrab = async (choiceId: Number) => {
+      //   await Choice.findOne({where:{_id: choiceId}})
+      //   .then((choice: any) => {
+      //     console.log('choice object retrieved from db: ', choice);
+          
+      //     choiceArr.push(choice)
+      //   })
+      // }
+      // for(let i = 0; i < storyArr.length; i++){
+      //   choiceArr.push(choiceGrab(storyArr[i]));
+      // }
+
+      // console.log('log to appease TS: ', choiceGrab)
+      // console.log('Choices Text Array: ', choiceArr);
+
+//       const choiceIds = story.char_choices; // assuming story.char_choices is an array of choice IDs
+// const choices = await Choice.findAll({
+//   where: {
+//     _id: { [Sequelize.Op.in]: choiceIds }
+//   }
+// });
