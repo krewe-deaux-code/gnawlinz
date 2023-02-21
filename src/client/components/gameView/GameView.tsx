@@ -6,7 +6,7 @@ import {
   TopContent2, TopContent3, HudButton } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { ClockContext } from "../../App";
+import { ClockContext, UserContext } from "../../App";
 
 interface LocationData {
   data: object;
@@ -17,6 +17,7 @@ interface LocationData {
 const GameView: React.FC = () => {
 
   const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
+  const {currentChar} = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
 
@@ -33,7 +34,7 @@ const GameView: React.FC = () => {
     fetchLocation();
     calculateRemainingTime();
   }, []);
-console.log("Anything you want. Like, a string");
+  console.log('CURRENT CHAR', currentChar);
   return (
     <Container>
       <NavBar>
@@ -54,7 +55,9 @@ console.log("Anything you want. Like, a string");
           <HudButton>Inventory</HudButton>
         </Content1>
         <Content2>
-          <div>Character Avatar</div>
+          <div>
+            <img src={currentChar.image_url} />
+          </div>
           <div>Character Stats</div>
         </Content2>
         <Content3>
