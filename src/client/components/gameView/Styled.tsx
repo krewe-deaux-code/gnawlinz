@@ -7,7 +7,6 @@ export const Container = styled.div`
   grid-template-areas:
     "nav nav nav nav"
     "main main main main"
-    /* "content content content content" */
     "footer footer footer footer";
   text-align: center;
   grid-gap: 0.25rem;
@@ -68,11 +67,22 @@ export const Content1 = styled.div`
   padding: 0.25rem;
   width: 100%;
   height: 100%;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-rows: auto auto auto;
 `;
 
-export const Content2 = styled(Content1)``;
+export const Content2 = styled.div`
+  background: #4f004f;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-columns: auto auto;
+`;
 
-export const Content3 = styled(Content1)``;
+export const Content3 = styled(Content2)``;
 
 export const Footer = styled.footer`
   background: black;
@@ -97,34 +107,11 @@ export const TopContent2 = styled(TopContent1)``;
 
 export const TopContent3 = styled(TopContent1)``;
 
-// choice grid
-export const ChoicesContainer = styled.div`
-  display: grid;
-  grid-template-rows: 0.5fr 0.5fr;
-  grid-template-areas:
-    "top top"
-    "bottom bottom";
-  text-align: center;
-  grid-gap: 0.25rem;
-  transition: all 0.25s ease-in-out;
-  @media (max-width: 550px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
-    grid-template-areas:
-      "top"
-      "bottom";
-  }
-  color: white;
+export const HudButton = styled.button`
+ font-family: 'Edit Undo BRK', sans-serif;
+ font-size: 1.5em;
+ background-color: black;
+ color: white;
+ padding: .5rem;
 `;
 
-export const TopChoice1 = styled.div`
-  padding: 0.25rem;
-  width: 100%;
-  height: 100%;
-`;
-
-export const BottomChoice1 = styled.div`
-padding: 0.25rem;
-width: 100%;
-height: 100%;
-`;

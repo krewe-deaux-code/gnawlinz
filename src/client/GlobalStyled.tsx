@@ -1,9 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
-const GlobalStyle = createGlobalStyle`
+export const GlobalStyle = createGlobalStyle`
   body {
-    font-family: 'Edit Undo BRK', sans-serif;
+    font-family: 'Edit Undo BRK', sans-serif !important;
   }
 `;
 
-export { GlobalStyle };

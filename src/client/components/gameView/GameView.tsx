@@ -3,8 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, NavBar, Main, Content1,
   Content2, Content3, Footer, TopContent1,
-  TopContent2, TopContent3, ChoicesContainer,
-  TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
+  TopContent2, TopContent3, HudButton } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { ClockContext, UserContext } from "../../App";
@@ -50,15 +49,20 @@ const GameView: React.FC = () => {
         </div>
       </Main>
       <Footer>
-        <Content1>Investigate</Content1>
-        <Content2>User Stats</Content2>
+        <Content1>
+          <HudButton>Move</HudButton>
+          <HudButton>Investigate</HudButton>
+          <HudButton>Inventory</HudButton>
+        </Content1>
+        <Content2>
+          <div>Character Avatar</div>
+          <div>Character Stats</div>
+        </Content2>
         <Content3>
-          <ChoicesContainer>
-            <TopChoice1>Choice1</TopChoice1>
-            <TopChoice1>Choice2</TopChoice1>
-            <BottomChoice1>Choice3</BottomChoice1>
-            <BottomChoice1>Choice4</BottomChoice1>
-          </ChoicesContainer>
+          <HudButton>Choice 1</HudButton>
+          <HudButton>Choice 2</HudButton>
+          <HudButton>Choice 3</HudButton>
+          <HudButton>Choice 4</HudButton>
         </Content3>
       </Footer>
     </Container>
