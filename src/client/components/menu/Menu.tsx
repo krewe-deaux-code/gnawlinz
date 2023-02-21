@@ -7,27 +7,6 @@ import axios from 'axios';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
-// export interface Character {
-//   _id: number;
-//   handle_id: number;
-//   name: string;
-//   image_url: string;
-//   slot0: number;
-//   slot1: number;
-//   slot2: number;
-//   slot3: number;
-//   slot4: number;
-//   slot5: number;
-//   slot6: number;
-//   slot7: number;
-//   health: number;
-//   strength: number;
-//   endurance: number;
-//   mood: number;
-//   location: number;
-//   ally_count: number;
-// }
-
 // export const UserContext = createContext<any>('');
 import { UserContext } from "../../App";
 
