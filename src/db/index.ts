@@ -44,14 +44,14 @@ db.authenticate()
 // *******************
 
 import Ally from './schemas/ally';
+import Item from './schemas/item';
+import Location from './schemas/location';
 import Character from './schemas/character';
+import User from './schemas/user';
 import Choice from './schemas/choice';
 import Enemy from './schemas/enemy';
 import Event from './schemas/event';
-import Item from './schemas/item';
-import Location from './schemas/location';
 import Story from './schemas/story';
-import User from './schemas/user';
 import Character_Ally from './schemas/character_ally';
 import Icon from './schemas/gameAssets/icon';
 
@@ -78,10 +78,10 @@ const modelSync = async (dropTables = false) => {
   await Enemy.sync(options);
   await Ally.sync(options);
   await Location.sync(options);
-  await Character.sync(options);
-  await User.sync(options);
   await Choice.sync(options);
   await Event.sync(options);
+  await Character.sync(options).then(() => console.log('Char Table Created')).catch((err) => console.log('char table err', err));
+  await User.sync(options);
   await Character_Ally.sync(options);
   await Story.sync(options);
   await Icon.sync(options);
