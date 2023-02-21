@@ -2,12 +2,14 @@ import express from 'express';
 import { Router } from 'express';
 //import { TEXT } from 'sequelize';
 import Choice from '../../db/schemas/choice';
+import { Op } from 'sequelize';
+
 
 const storyRouter = Router();
 
 // <-- Unsure if we need these -->
 
-//import { Sequelize } from 'sequelize';
+
 // import { db } from '../../db/index';
 // import '../auth/auth';
 
@@ -23,38 +25,17 @@ storyRouter.use(express.urlencoded({ extended: true }));
 // ******************
 
 storyRouter.get('/ending/:charID', (req, res) => {
-  
-  const getStory: Function = async(id: Number) => {
-    Story.findOne({ where: { character_id: id } })
-      .then((storyResponse: any) =>{
-        //build ending text to return in .send()
-        //let storyArr: Number[] = storyResponse.char_choices;
-        let story = storyResponse;
-        let choiceArr: String[] = [];
-        console.log('story object retrieved from db: ', story);
-      for(let i = 0; i < story.char_choices.length; i++){
-        Choice.findOne({ where: { _id: story.char_choices[i]}})
-          .then((choice: any) => { console.log(choice.flavor_text1); choiceArr[i] = choice.flavor_text1 })
-          .catch((err) => console.error('choiceGrab.failHard: ', err))
-          console.log(choiceArr);
+  const getStory: Function = async (id: Number) => {
+    let story = await Story.findOne({ where: { character_id: id } })
+      .then((storyResponse: any) => storyResponse)
+      console.log('story object retrieved from db: ', story);
+    const choices = await Choice.findAll({
+      where: {
+        _id: { [Op.in]: story.char_choices }
       }
-      res.status(200).send(choiceArr);
-  })
-  // const getStory: Function = async (id: Number) => {
-  //   let story = await Story.findOne({ where: { character_id: id } })
-  //     .then((storyResponse: any) => storyResponse)
-  //    console.log('story object retrieved from db: ', story);
-  //     //build ending text to return in .send()
-  //     //let storyArr: Number[] = storyResponse.char_choices;
-  //     let choiceArr: String[] = [];
-  //     for(let i = 0; i < story.char_choices.length; i++){
-  //       await Choice.findOne({ where: { _id: story.char_choices[i]}})
-  //         .then((choice: any) => { console.log(choice.flavor_text1); choiceArr[i] = choice.flavor_text1 })
-  //         .catch((err) => console.error('choiceGrab.failHard: ', err))
-  //         console.log(choiceArr);
-  //     }
-  //   res.status(200).send(choiceArr);
-  // }
+    });
+    let choiceArr: String[] = choices.map((choice: any) => choice.flavor_text1)
+    res.status(200).send(choiceArr);
   }
   getStory(req.params.charID);  
 })
@@ -93,3 +74,11 @@ storyRouter.get('/ending/:charID', (req, res) => {
 //     _id: { [Sequelize.Op.in]: choiceIds }
 //   }
 // });
+
+// for(let i = 0; i < story.char_choices.length; i++){
+//   await Choice.findOne({ where: { _id: story.char_choices[i]}})
+//     .then((choice: any) => { console.log(choice.flavor_text1); choiceArr[i] = choice.flavor_text1 })
+//     .catch((err) => console.error('choiceGrab.failHard: ', err))
+//     console.log(choiceArr);
+// }
+
