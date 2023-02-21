@@ -1,18 +1,27 @@
-import React, { useState, useEffect, createContext } from "react"; //useContext
+import React, { useState, useEffect, useContext } from "react"; //useContext
 import { Link  } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
+
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
-export const UserContext = createContext<any>('');
+// export const UserContext = createContext<any>('');
+import { UserContext } from "../../App";
 
 const Menu: React.FC = () => {
 
-  const [activeUser, setActiveUser] = useState({});
-  const [avatar, setAvatar] = useState('');
-  const [stateSession, setStateSession] = useState('');
+  // const [userChars, setUserChars] = useState<Character[]>([]);
+  // const [currentChar, setCurrentChar] = useState<Character | null>(null);
+  // const [activeUser, setActiveUser] = useState({});
+  // const [stateSession, setStateSession] = useState('');
+  // const [avatar, setAvatar] = useState('');
+  const {
+    userChars, setUserChars, currentChar, setCurrentChar,
+    activeUser, setActiveUser, stateSession, setStateSession,
+    avatar, setAvatar } = useContext(UserContext);
+
   const [active, setActive] = useState(0);
 
   useEffect(() => {
@@ -36,11 +45,11 @@ const Menu: React.FC = () => {
       setActive(index);
     }
   };
-  console.log('activeUser', activeUser);
+
   console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
-    <UserContext.Provider value={{activeUser, stateSession, avatar}}>
+    <UserContext.Provider value={{activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
       <Body >
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>

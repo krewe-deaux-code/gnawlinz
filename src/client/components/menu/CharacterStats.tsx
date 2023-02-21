@@ -1,48 +1,28 @@
-import React, { useState, useEffect, /*useContext*/ } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from 'axios';
 
 import { StyledCarousel } from "./Styled";
 import Carousel from 'react-bootstrap/Carousel';
 
-// import { UserContext } from "./Menu"; // <-- holds User object
-
-interface Character {
-  _id: number;
-  handle_id: number;
-  name: string;
-  image_url: string;
-  slot0: number;
-  slot1: number;
-  slot2: number;
-  slot3: number;
-  slot4: number;
-  slot5: number;
-  slot6: number;
-  slot7: number;
-  health: number;
-  strength: number;
-  endurance: number;
-  mood: number;
-  location: number;
-  ally_count: number;
-}
+import { UserContext, Character } from "../../App"; // <-- holds User object
 
 const CharacterStats: React.FC = () => {
 
-  // const { activeUser } = useContext(UserContext); // <-- NEED to get user chars below
-  const [ userChars, setUserChars ] = useState<Character[]>([]);
-  const [ currentCharacter, setCurrentCharacter ] = useState<Character | null>(null);
+  const { userChars, setUserChars, currentChar, setCurrentChar, /*activeUser*/ } = useContext(UserContext); // <-- NEED to get user chars below
+  // const [ userChars, setUserChars ] = useState<Character[]>([]);
+  // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex ] = useState(0);
 
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
+    setCurrentChar(userChars[selectedIndex]);
   };
 
-  const getCurrentCharacter = () => {
+  const getCurrentChar = () => {
     const _id = 1;
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
-        setCurrentCharacter(data))
+        setCurrentChar(data))
       .catch((err) =>
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err))
   };
@@ -61,15 +41,15 @@ const CharacterStats: React.FC = () => {
 
   useEffect(() => {
     fetchUserChars();
-    getCurrentCharacter();
+    getCurrentChar();
   }, []);
 
-  if (!currentCharacter) {
+  if (!currentChar) {
     return <div>Loading...</div>;
   }
 
-  console.log('CHARS AFTER FETCH', userChars);
-
+  // console.log('CHARS AFTER FETCH', userChars);
+  // console.log('test', currentChar);
   return (
     <>
       <div>

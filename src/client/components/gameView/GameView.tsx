@@ -5,7 +5,8 @@ import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton } from './Styled'; //ContentBox
 
-import { UserContext } from "../../App";
+import { Link } from 'react-router-dom';
+import { ClockContext, UserContext } from "../../App";
 
 interface LocationData {
   data: object;
@@ -15,7 +16,8 @@ interface LocationData {
 
 const GameView: React.FC = () => {
 
-  const  { currentChar } = useContext(UserContext);
+  const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
+  const {currentChar} = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
 
