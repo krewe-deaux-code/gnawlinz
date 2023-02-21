@@ -7,11 +7,14 @@ export const Body = styled.div`
   text-align: center;
   width: 100%;
   height: 100%;
+  background-color: black;
+  color: white;
 `;
 export const InfoContainer = styled.div`
   overflow: hidden;
-  background: #fff;
+  background: black;
   height: 3em;
+
 `;
 export const Tab = styled.button`
   border: none;
@@ -22,9 +25,9 @@ export const Tab = styled.button`
 
   margin-right: 0.1em;
   font-size: 1em;
-  border: ${props => (props.active ? "1px solid #ccc" : "")};
+  border: ${props => (props.active ? "1px solid black" : "")};
   border-bottom: ${props => (props.active ? "none" : "")};
-  background-color: ${props => (props.active ? "white" : "lightgray")};
+  background-color: ${props => (props.active ? "gray" : "lightgray")};
   height: ${props => (props.active ? "3em" : "2.6em; top:.4em")};
   transition: background-color 0.5s ease-in-out;
 

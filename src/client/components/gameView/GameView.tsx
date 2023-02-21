@@ -11,6 +11,7 @@ import { ClockContext } from "../../App";
 interface LocationData {
   data: object;
   image_url: string;
+  name: string;
 };
 
 const GameView: React.FC = () => {
@@ -41,7 +42,7 @@ const GameView: React.FC = () => {
         <TopContent3>Google User</TopContent3>
       </NavBar>
       <Main>
-        <p>Main</p>
+        <h2>{location.name}</h2>
         <div>
           <img src={location.image_url}></img>
         </div>
