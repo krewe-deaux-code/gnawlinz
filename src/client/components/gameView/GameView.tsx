@@ -33,7 +33,7 @@ const GameView: React.FC = () => {
     fetchLocation();
     calculateRemainingTime();
   }, []);
-
+console.log("Anything you want. Like, a string");
   return (
     <Container>
       <NavBar>
