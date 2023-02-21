@@ -1,12 +1,11 @@
 import axios from 'axios';
+import Nav from '../nav/NavBar';
 import React, { useEffect, useState, useContext } from 'react';
 import {
-  Container, NavBar, Main, Content1,
-  Content2, Content3, Footer, TopContent1,
-  TopContent2, TopContent3, HudButton } from './Styled'; //ContentBox
+  Container, Main, Content1,
+  Content2, Content3, Footer, HudButton } from './Styled'; //ContentBox
 
-import { Link } from 'react-router-dom';
-import { ClockContext } from "../../App";
+import { UserContext } from "../../App";
 
 interface LocationData {
   data: object;
@@ -16,7 +15,7 @@ interface LocationData {
 
 const GameView: React.FC = () => {
 
-  const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
+  const  { currentChar } = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
 
@@ -31,16 +30,11 @@ const GameView: React.FC = () => {
 
   useEffect(() => {
     fetchLocation();
-    calculateRemainingTime();
   }, []);
-console.log("Anything you want. Like, a string");
+  console.log('CURRENT CHAR', currentChar);
   return (
     <Container>
-      <NavBar>
-        <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
-        <TopContent2>{remainingTime}</TopContent2>
-        <TopContent3>Google User</TopContent3>
-      </NavBar>
+      <Nav/ >
       <Main>
         <h2>{location.name}</h2>
         <div>
@@ -54,7 +48,9 @@ console.log("Anything you want. Like, a string");
           <HudButton>Inventory</HudButton>
         </Content1>
         <Content2>
-          <div>Character Avatar</div>
+          <div>
+            <img src={currentChar.image_url} />
+          </div>
           <div>Character Stats</div>
         </Content2>
         <Content3>

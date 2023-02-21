@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
 const GameView = lazy(() => import('./components/gameView/GameView'));
-
+//const NavBar  = lazy(() => import('./components/nav/NavBar));
 export const ClockContext = createContext<any>('')
 
 const App = () => {
