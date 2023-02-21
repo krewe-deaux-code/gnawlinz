@@ -7,16 +7,18 @@ import {
   TopChoice1, BottomChoice1 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { ClockContext } from "../../App";
+import { ClockContext, UserContext } from "../../App";
 
 interface LocationData {
   data: object;
   image_url: string;
+  name: string;
 };
 
 const GameView: React.FC = () => {
 
   const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
+  const {currentChar} = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
 
@@ -33,7 +35,7 @@ const GameView: React.FC = () => {
     fetchLocation();
     calculateRemainingTime();
   }, []);
-
+  console.log('CURRENT CHAR', currentChar);
   return (
     <Container>
       <NavBar>
@@ -42,7 +44,7 @@ const GameView: React.FC = () => {
         <TopContent3>Google User</TopContent3>
       </NavBar>
       <Main>
-        <p>Main</p>
+        <h2>{location.name}</h2>
         <div>
           <img src={location.image_url}></img>
         </div>
