@@ -66,7 +66,7 @@ const Menu: React.FC = () => {
       setActive(index);
     }
   };
-  console.log('activeUser', activeUser);
+
   console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (

@@ -55,7 +55,9 @@ const GameView: React.FC = () => {
           <HudButton>Inventory</HudButton>
         </Content1>
         <Content2>
-          <div>Character Avatar</div>
+          <div>
+            <img src={currentChar.image_url} />
+          </div>
           <div>Character Stats</div>
         </Content2>
         <Content3>
