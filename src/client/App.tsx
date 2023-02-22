@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
 const GameView = lazy(() => import('./components/gameView/GameView'));
-
+const Result = lazy(() => import('./components/result/Result'));
 export interface Character {
   _id: number;
   handle_id: number;
@@ -70,6 +70,7 @@ const App = () => {
               <Route path='/' element={<Title />} />
               <Route path='menu' element={<Menu />} />
               <Route path='gameView' element={<GameView />} />
+              <Route path='result' element={<Result />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
 

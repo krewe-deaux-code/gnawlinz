@@ -7,6 +7,8 @@ import {
 
 import { Link } from 'react-router-dom';
 import { ClockContext, UserContext } from "../../App";
+import { NONE } from 'sequelize';
+
 
 interface LocationData {
   data: object;
@@ -35,6 +37,8 @@ const GameView: React.FC = () => {
     calculateRemainingTime();
   }, []);
   console.log('CURRENT CHAR', currentChar);
+
+
   return (
     <Container>
       <NavBar>
@@ -50,7 +54,11 @@ const GameView: React.FC = () => {
       </Main>
       <Footer>
         <Content1>
-          <HudButton>Move</HudButton>
+          <Link to="/result" style={{textDecoration:'none'}}>
+            <Content1>
+              <HudButton>Continue</HudButton>
+            </Content1>
+          </Link>
           <HudButton>Investigate</HudButton>
           <HudButton>Inventory</HudButton>
         </Content1>
