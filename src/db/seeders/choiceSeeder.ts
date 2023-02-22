@@ -6,8 +6,9 @@ const choiceSeeder = async (choiceArr: any) => {
     await Choice.findOrCreate(
       {
      where: {
-      flavor_text0: choiceArr[i].flavor_text0,
-      flavor_text1: choiceArr[i].flavor_text1,
+      flavor_text: choiceArr[i].flavor_text,
+      success: choiceArr[i].success,
+      failure: choiceArr[i].failure,
       alignment0: choiceArr[i].alignment0,
       alignment1: choiceArr[i].alignment1,
       alignment2: choiceArr[i].alignment2,

@@ -1,5 +1,5 @@
 // To be implemented in a future build
-// Will serve as a Join Table between Locaiton and 
+// Will serve as a Join Table between Locaiton and
 // Event tables to create relationship between the entries of each
 
 import { DataTypes } from 'sequelize';
