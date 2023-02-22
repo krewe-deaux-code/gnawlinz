@@ -5,7 +5,7 @@ import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton } from './Styled'; //ContentBox
 
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
 
 interface LocationData {
@@ -34,6 +34,8 @@ const GameView: React.FC = () => {
     fetchLocation();
   }, []);
   console.log('CURRENT CHAR', currentChar);
+
+
   return (
     <Container>
       <Nav />
@@ -45,7 +47,11 @@ const GameView: React.FC = () => {
       </Main>
       <Footer>
         <Content1>
-          <HudButton>Move</HudButton>
+          <Link to="/result" style={{textDecoration:'none'}}>
+            <Content1>
+              <HudButton>Continue</HudButton>
+            </Content1>
+          </Link>
           <HudButton>Investigate</HudButton>
           <HudButton>Inventory</HudButton>
         </Content1>
