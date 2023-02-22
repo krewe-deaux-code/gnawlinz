@@ -10,10 +10,13 @@ const Choice = db.define('choice', {
     primaryKey: true,
     autoIncrement: true
   },
-  flavor_text0: {
+  flavor_text: {
     type: DataTypes.TEXT
   },
-  flavor_text1: {
+  success: {
+    type: DataTypes.TEXT
+  },
+  failure: {
     type: DataTypes.TEXT
   },
   alignment0: {

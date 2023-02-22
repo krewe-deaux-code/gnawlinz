@@ -3,7 +3,8 @@ import Nav from '../nav/NavBar';
 import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
-  Content2, Content3, Footer, HudButton } from './Styled'; //ContentBox
+  Content2, Content3, Footer, HudButton
+} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
@@ -14,27 +15,92 @@ interface LocationData {
   name: string;
 };
 
+interface EventData {
+  _id: number;
+  initial_text: string;
+  choice0: number;
+  choice1: number;
+  choice2: number;
+  choice3: number;
+};
+
+interface ChoiceData {
+  _id: number;
+  flavor_text: string;
+  success: string;
+  failure: string;
+  alignment0: string;
+  alignment1: string;
+  alignment2: string;
+  enemy_effect: number;
+  ally_effect: number;
+  item_effect: number;
+};
+
 const GameView: React.FC = () => {
 
   //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
-  const {currentChar} = useContext(UserContext);
+  const { currentChar } = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
+  const [/*event*/, setEvent] = useState({} as EventData);
+  const [/*selectedChoice*/, /*setSelectedChoice*/] = useState({} as ChoiceData);
+  const [/*choices*/, setChoices] = useState({
+    engage: 0,
+    evade: 0,
+    evacuate: 0,
+    wildcard: 0
+  });
+
+  const fetchEvent = () => {
+    axios.get<EventData>('/event/random')
+      .then(event => {
+        console.log('EVENT', event);
+        setEvent(event.data);
+        setChoices({
+          engage: event.data.choice0,
+          evade: event.data.choice1,
+          evacuate: event.data.choice2,
+          wildcard: event.data.choice3
+        });
+      })
+      .catch(err => {
+        console.log('RANDOM EVENT FETCH FAILED', err);
+      });
+  };
 
   const fetchLocation = () => {
     axios.get<LocationData>('/location/random')
       .then((location) => {
         console.log('Location from DB', location);
         setLocation(location.data);
+        fetchEvent();
       })
       .catch(err => console.log('Axios fail useEffect Location grab', err));
-    };
+  };
+
+  // const fetchChoice = (index) => {
+  //   axios.get<ChoiceData>(`/choice/selected/:${index}`)
+  //     .then(choiceResponse => {
+  //       setSelectedChoice(choiceResponse.data);
+  //       // display selectedChoice.flavor_text
+  //       // <-- computation for success check: -->
+  //       // currentChar.health || currentChar.endurance
+  //       // || currentChar.strength || currentChar.mood
+  //       // as needed against simulated d10 roll
+  //         // pull corresponding result text from
+  //         // selectedChoice.success || selectedChoice.failure
+  //     })
+  //     .catch(err => {
+  //       console.error('Failed setting selectedChoice State', err);
+  //     })
+  // };
 
   useEffect(() => {
     fetchLocation();
   }, []);
-  console.log('CURRENT CHAR', currentChar);
 
+  console.log('CURRENT CHAR', currentChar);
 
   return (
     <Container>
@@ -47,7 +113,7 @@ const GameView: React.FC = () => {
       </Main>
       <Footer>
         <Content1>
-          <Link to="/result" style={{textDecoration:'none'}}>
+          <Link to="/result" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton>Continue</HudButton>
             </Content1>
@@ -69,7 +135,6 @@ const GameView: React.FC = () => {
         </Content3>
       </Footer>
     </Container>
-
   )
 };
 
