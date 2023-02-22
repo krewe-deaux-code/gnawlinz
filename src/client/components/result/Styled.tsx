@@ -3,21 +3,13 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-rows: 0.2fr 1fr;
+  grid-template-rows: 0.1fr 1fr;
   grid-template-areas:
     "nav nav"
     "end  story";
   text-align: center;
   grid-gap: 0.25rem;
   transition: all 0.25s ease-in-out;
-  @media (max-width: 550px) {
-    grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
-    grid-template-areas:
-      "nav"
-      "end"
-      "story";
-  }
   color: white;
 `;
 
@@ -35,15 +27,19 @@ export const NavBar = styled.nav`
   }
 `;
 export const Story = styled.main`
-  background: #1f2128;
+  background: #9aaab7;
   color: white;
   grid-area: story;
   padding: 0.25rem;
+
 `;
 export const End = styled.div`
   background: #9aaab7;
   grid-area: end;
   padding: 0.25rem;
+
+
+
 `;
 
 // export const ContentBox = styled.div`
