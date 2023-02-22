@@ -8,6 +8,7 @@ const Menu = lazy(() => import('./components/menu/Menu'));
 const GameView = lazy(() => import('./components/gameView/GameView'));
 //const NavBar  = lazy(() => import('./components/nav/NavBar'));
 const Result = lazy(() => import('./components/result/Result'));
+
 export interface Character {
   _id: number;
   handle_id: number;
