@@ -3,7 +3,7 @@ import { Link  } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
-
+import Nav from '../nav/NavBar';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
@@ -51,6 +51,7 @@ const Menu: React.FC = () => {
   return (
     <UserContext.Provider value={{activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
       <Body >
+        <Nav />
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Details
