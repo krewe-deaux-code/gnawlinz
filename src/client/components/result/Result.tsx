@@ -9,7 +9,7 @@ import axios from 'axios';
 
 const Result: React.FC = () => {
 
-  const { currentChar, } = useContext(UserContext); // <-- NEED to get user chars below
+  const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
 
   const [ story, setStory ] = useState([]);
 
@@ -18,21 +18,24 @@ const Result: React.FC = () => {
   useEffect(() => {
     axios.get(`story/ending/${currentChar._id}`)
       .then((results) => {
+        console.log(results.data);
         setStory(results.data)
-        console.log('here>>>>>>>>>>>', results.data)
       }).catch((err) => {
         console.error(err);
       });
 
   }, []);
 
-  console.log('and here>>>>>>>>>>>>', story);
-
   return (
     <Container>
       <NavBar>NavBar</NavBar>
-      <Story>{ story }</Story>
-      <End>Win/Lose</End>
+      <Story><h2>User Story</h2>
+      { story.map((sentence, index) => (
+        <div key={index} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
+          <p>{sentence}</p>
+        </div>
+      ))}</Story>
+      <End><h2>Win Or Lose</h2> ****************************Stats Go Here******************************</End>
     </Container>
   )
 };
