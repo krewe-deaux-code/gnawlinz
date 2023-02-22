@@ -5,7 +5,7 @@ import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton } from './Styled'; //ContentBox
 
-//import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
 
 interface LocationData {
