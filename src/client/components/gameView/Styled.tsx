@@ -108,7 +108,6 @@ export const TopContent2 = styled(TopContent1)``;
 export const TopContent3 = styled(TopContent1)``;
 
 export const HudButton = styled.button`
- font-family: 'Edit Undo BRK', sans-serif;
  font-size: 1.5em;
  background-color: black;
  color: white;
