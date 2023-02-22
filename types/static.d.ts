@@ -21,7 +21,7 @@ declare module '*.module.scss' {
 /* CSS */
 declare module '*.css';
 declare module '*.scss';
-
+declare module 'styled-components';
 
 /* IMAGES */
 declare module '*.svg' {
