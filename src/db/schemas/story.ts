@@ -17,7 +17,8 @@ const Story = db.define('story', {
     }
   },
   char_choices: {
-    type: DataTypes.ARRAY(DataTypes.TEXT)
+    type: DataTypes.ARRAY(DataTypes.TEXT),
+    defaultValue: []
   },
 });
 

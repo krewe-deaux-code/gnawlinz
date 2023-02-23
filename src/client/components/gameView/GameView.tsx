@@ -4,11 +4,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText,
-  StatContainer} from './Styled'; //ContentBox
+  EventText, StatContainer} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext } from "../../App";
+import { UserContext } from '../../App';
+
+import { statCheck } from '../../utility/gameUtils';
 
 interface LocationData {
   data: object;
@@ -43,10 +44,11 @@ const GameView: React.FC = () => {
   //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
   const { currentChar } = useContext(UserContext);
 
+  const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationData);
   const [event, setEvent] = useState({} as EventData);
-  const [/*selectedChoice*/, /*setSelectedChoice*/] = useState({} as ChoiceData);
-  const [/*choices*/, setChoices] = useState({
+  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
+  const [choices, setChoices] = useState({
     engage: 0,
     evade: 0,
     evacuate: 0,
@@ -80,40 +82,62 @@ const GameView: React.FC = () => {
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
 
-  // const fetchChoice = (index) => {
-  //   axios.get<ChoiceData>(`/choice/selected/:${index}`)
-  //     .then(choiceResponse => {
-  //       setSelectedChoice(choiceResponse.data);
-  //       // display selectedChoice.flavor_text
-  //       // <-- computation for success check: -->
-  //       // currentChar.health || currentChar.endurance
-  //       // || currentChar.strength || currentChar.mood
-  //       // as needed against simulated d10 roll
-  //         // pull corresponding result text from
-  //         // selectedChoice.success || selectedChoice.failure
-  //     })
-  //     .catch(err => {
-  //       console.error('Failed setting selectedChoice State', err);
-  //     })
-  // };
+  const fetchChoice = (index: number, stat: number) => {
+    axios.get<ChoiceData>(`/choice/selected/${index}`)
+      .then(choiceResponse => {
+        setSelectedChoice(choiceResponse.data);
+        // display selectedChoice.flavor_text
+        // <-- computation for success check: -->
+        let choiceOutcome = statCheck(stat);
+        setOutcome(choiceOutcome);
+        console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
+        axios.post(`story/ending/${currentChar._id}`, 
+          {
+            result: choiceResponse.data[choiceOutcome]
+          })
+          .then(response => console.log('story obj: ', response));
+          // currentChar.health || currentChar.endurance
+        // || currentChar.strength || currentChar.mood
+        // as needed against simulated d10 roll
+        // pull corresponding result text from
+        // selectedChoice.success || selectedChoice.failure
+        // change useEffect dependencies to re-render based on success/fail ??
+      })
+      .catch(err => {
+        console.error('Failed setting selectedChoice State', err);
+      })
+  };
 
   useEffect(() => {
     fetchLocation();
   }, []);
 
   console.log('CURRENT CHAR', currentChar);
-
+  console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
     <Container>
       <Nav />
       <Main>
         <h2>{location.name}</h2>
         <div>
-        <EventText>
+          <EventText>
             {
               Object.entries(event).length
-              ? <>{event.initial_text}</>
-              : <></>
+                ? <>{event.initial_text}</>
+                : <></>
+            }
+            {
+              Object.entries(selectedChoice).length
+                ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
+                : <>
+                    <p style={{ margin: '1rem' }}>What do you do?</p>
+                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                  </>
+            }
+            {
+              outcome.length
+                ? <p style={{margin: '1rem'}}>{selectedChoice[outcome]}</p>
+                : <></>
             }
           </EventText>
           <img src={location.image_url}></img>
@@ -126,8 +150,12 @@ const GameView: React.FC = () => {
               <HudButton>Continue</HudButton>
             </Content1>
           </Link>
+          <Content1>
           <HudButton>Investigate</HudButton>
+          </Content1>
+          <Content1>
           <HudButton>Inventory</HudButton>
+          </Content1>
         </Content1>
         <Content2>
           <div>
@@ -142,10 +170,10 @@ const GameView: React.FC = () => {
           </StatContainer>
         </Content2>
         <Content3>
-          <HudButton>Choice 1</HudButton> {/* // <-- choice.flavor_text ? */}
-          <HudButton>Choice 2</HudButton> {/* // <-- Object.keys(choices) ? */}
-          <HudButton>Choice 3</HudButton>
-          <HudButton>Choice 4</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.engage, currentChar.strength)}>Engage</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.evade, currentChar.endurance)}>Evade</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.evacuate, 0)}>Evacuate</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.wildcard, currentChar.mood)}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>

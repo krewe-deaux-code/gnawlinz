@@ -41,11 +41,11 @@ storyRouter.post('/ending/:charID', (req, res) => {
       console.log('story response char_choices: ', storyResponse[0].dataValues.char_choices);
       storyResponse[0].dataValues.char_choices.push(req.body.result);
       
-      storyResponse[0].update({
-        char_choices: storyResponse.char_choices
+      Story.update({
+        char_choices: storyResponse[0].dataValues.char_choices
         }, 
         { where: { character_id: req.params.charID }}
-          ).then((story: any) => {res.status(201).send(story)})    
+          ).then((rowsUpdated: any) => {res.status(201).send(rowsUpdated)})    
     })
 })
 
