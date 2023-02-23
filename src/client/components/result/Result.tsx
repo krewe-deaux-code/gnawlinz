@@ -56,7 +56,7 @@ const Result: React.FC = () => {
         <div>
           <img src={image} />
         </div>
-        <ResultButton onClick={handleClick}>I am a Winner</ResultButton>
+        <ResultButton onClick={handleClick}>Toggle W/L</ResultButton>
         <Link to="/" >
         <ResultButton>Play Again</ResultButton>
         </Link>
