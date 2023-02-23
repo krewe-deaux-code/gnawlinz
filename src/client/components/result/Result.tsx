@@ -20,13 +20,13 @@ const Result: React.FC = () => {
   useEffect(() => {
     axios.get(`story/ending/${currentChar._id}`)
       .then((results) => {
-        console.log(results.data);
+        console.log('result from story query:', results.data);
         setStory(results.data)
       }).catch((err) => {
         console.error(err);
       });
 
-  }, []);
+  }, [story]);
 
 
   const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
@@ -41,7 +41,7 @@ const Result: React.FC = () => {
       setResultText('you died!');
     }
   }
-
+  console.log('result from story query:', story);
   return (
     <Container>
       <Nav />

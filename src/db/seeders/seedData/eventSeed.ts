@@ -1,3 +1,12 @@
+/**
+ * when adding new events, please follow the template of the existing events:
+ * initial text: what the user will see upon drawing that event 
+ * choice0: choice_id, // engage: fight or otherwise confront the subject of the event
+ * choice1: choice_id, // evade: attempt stealth to proceed through area without detection
+ * choice2: choice_id, // evacuate: flee the scene to a new location
+ * choice3: choice_id, // wildcard: an option that seems random or eccentric
+ * */ 
+
 export const eventSeed = [
   {
     initial_text: "You turn a corner, and hear the loudest sound you've ever heard. In you peripheral vision you catch a glimpse of a huge dark shape roaring through the air toward you!",
