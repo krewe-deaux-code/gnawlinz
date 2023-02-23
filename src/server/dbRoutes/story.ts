@@ -1,8 +1,8 @@
 import express from 'express';
 import { Router } from 'express';
 //import { TEXT } from 'sequelize';
-import Choice from '../../db/schemas/choice';
-import { Op } from 'sequelize';
+//import Choice from '../../db/schemas/choice';
+//import { Op } from 'sequelize';
 
 
 const storyRouter = Router();
@@ -25,23 +25,30 @@ storyRouter.use(express.urlencoded({ extended: true }));
 // ******************
 
 storyRouter.get('/ending/:charID', (req, res) => {
-  const getStory: Function = async (id: Number) => {
-    let story = await Story.findOne({ where: { character_id: id } })
-      .then((storyResponse: any) => storyResponse)
-      console.log('story object retrieved from db: ', story);
-    const choices = await Choice.findAll({
-      where: {
-        _id: { [Op.in]: story.char_choices }
-      }
-    });
-    let choiceArr: String[] = choices.map((choice: any) => choice.flavor_text1)
-    res.status(200).send(choiceArr);
-  }
-  getStory(req.params.charID);  
-})
-
+  Story.findOne({ where: { character_id: req.params.charID } })
+    .then((storyResponse: any) =>{
+    console.log('story object retrieved from db: ', storyResponse);
+    res.status(200).send(storyResponse);
+    })  
+  })
   export default storyRouter;
+
   
+  // const getStory: Function = async (id: Number) => {
+  //   let story = await Story.findOne({ where: { character_id: id } })
+  //     .then((storyResponse: any) => storyResponse)
+  //     console.log('story object retrieved from db: ', story);
+  //   const choices = await Choice.findAll({
+  //     where: {
+  //       _id: { [Op.in]: story.char_choices }
+  //     }
+  //   });
+  //   let choiceArr: String[] = choices.map((choice: any) => choice.)
+  //   res.status(200).send(choiceArr);
+  // }
+  // getStory(req.params.charID);  
+
+
   // for (let i = 0; i < storyResponse.char_choices.length; i++) {
   //   Choice.findOne({ where: { _id: storyResponse.char_choices[i] } })
   //     .then((choiceResponse: any) => {
