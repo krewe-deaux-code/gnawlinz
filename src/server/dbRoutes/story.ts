@@ -27,8 +27,9 @@ storyRouter.use(express.urlencoded({ extended: true }));
 storyRouter.get('/ending/:charID', (req, res) => {
   Story.findOne({ where: { character_id: req.params.charID } })
     .then((storyResponse: any) =>{
-    console.log('story object retrieved from db: ', storyResponse);
-    res.status(200).send(storyResponse);
+      console.log('story object retrieved from db: ', storyResponse);
+      let choiceArr = storyResponse.char_choices; 
+      res.status(200).send(choiceArr);
     })  
   })
 
@@ -36,8 +37,8 @@ storyRouter.post('/ending/:charID', (req, res) => {
   Story.findOrCreate({ where: { character_id: req.params.charID } })
     .then((storyResponse: any) =>{
       console.log('story object retrieved from db: ', storyResponse);
-      storyResponse.
-      res.status(200).send(storyResponse);
+      let choiceArr = storyResponse.char_choices; 
+      res.status(200).send(choiceArr);
     })  
 })
   export default storyRouter;
