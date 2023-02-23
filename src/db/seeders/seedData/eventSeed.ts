@@ -7,7 +7,7 @@ export const eventSeed = [
     choice3: 3, // attempt contact
   },
   {
-    initial_text: "You've come across a creature that makes you question your sanity. It seems to be an undead banana-peel.  Tall as a man, with vacant eyes and bared teeth, it moves like a octopus out of water. It is a thing that should not be.",
+    initial_text: "You've come across a creature that makes you question your sanity. It seems to be an undead banana-peel. Tall as a man, with vacant eyes and bared teeth, it moves like a octopus out of water. It is a thing that should not be.",
     choice0: 2, // fight the zombie
     choice1: 7, // flee the scene
     choice2: 6, // attempt stealth
