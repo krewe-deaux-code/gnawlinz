@@ -27,9 +27,8 @@ const Title: React.FC = () => {
   // </TopBar>
 
   return (
-    <>
-      <Nav />
-      <TitleContainer>
+    <TitleContainer>
+          <Nav />
         <Main>Title Image</Main>
         <Footer>
           <button>
@@ -37,7 +36,7 @@ const Title: React.FC = () => {
           </button>
         </Footer>
       </TitleContainer>
-    </>
+
   )
 };
 

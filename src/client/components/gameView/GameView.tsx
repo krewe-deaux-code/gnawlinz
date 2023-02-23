@@ -150,8 +150,12 @@ const GameView: React.FC = () => {
               <HudButton>Continue</HudButton>
             </Content1>
           </Link>
+          <Content1>
           <HudButton>Investigate</HudButton>
+          </Content1>
+          <Content1>
           <HudButton>Inventory</HudButton>
+          </Content1>
         </Content1>
         <Content2>
           <div>
