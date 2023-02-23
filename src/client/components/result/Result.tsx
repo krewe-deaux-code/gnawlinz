@@ -32,7 +32,7 @@ const Result: React.FC = () => {
       <Nav />
       <Story><h2>User Story</h2>
       { story.map((sentence, index) => (
-        <div key={index} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
+        <div key={index} style={{ border: "1px solid black", margin: "10px" }}>
           <p>{sentence}</p>
         </div>
       ))}

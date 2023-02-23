@@ -38,7 +38,7 @@ const Nav: React.FC = () => {
       <NavBar>
         <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
         <TopContent2>{remainingTime}</TopContent2>
-        <TopContent3><img src={avatar} ></img></TopContent3>
+        <TopContent3><img src={avatar} width='18 px' height='18 px' ></img></TopContent3>
       </NavBar>
   )
 
