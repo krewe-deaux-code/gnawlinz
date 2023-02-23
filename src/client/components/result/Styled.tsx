@@ -31,35 +31,27 @@ export const Story = styled.main`
   color: white;
   grid-area: story;
   padding: 0.25rem;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
 
 `;
 export const End = styled.div`
   background: #9aaab7;
   grid-area: end;
   padding: 0.25rem;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-rows: auto auto auto;
+  justify-content: center;
+`;
 
+export const ResultButton = styled.button`
+ font-size: 1.5em;
+ background-color: black;
+ color: white;
+ padding: .25rem;
 
 
 `;
-
-// export const ContentBox = styled.div`
-//   display: flex;
-//   gap: 0.25rem;
-//   padding: 0.25rem;
-//   align-items: center;
-//   grid-area: content;
-//   justify-content: center;
-// `;
-// export const Content1 = styled.div`
-//   background: #a6b8b9;
-//   padding: 0.25rem;
-//   width: 100%;
-//   height: 100%;
-// `;
-// export const Content2 = styled(Content1)``;
-// export const Content3 = styled(Content1)``;
-// export const Footer = styled.footer`
-//   background: #ff9637;
-//   grid-area: footer;
-//   padding: 0.25rem;
-// `;
