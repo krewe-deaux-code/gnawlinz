@@ -1,6 +1,6 @@
 export const eventSeed = [
   {
-    initial_text: "You turn a corner, and hear the loudest sound you've ever heard. In you peripheral vision you catch a glimpse of a huge dark shape roaring through the air toward you!  What do you do?",
+    initial_text: "You turn a corner, and hear the loudest sound you've ever heard. In you peripheral vision you catch a glimpse of a huge dark shape roaring through the air toward you!",
     choice0: 1, // fight the shadow
     choice1: 7, // flee the scene
     choice2: 5, // attempt stealth

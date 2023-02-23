@@ -4,7 +4,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText } from './Styled'; //ContentBox
+  EventText
+} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
@@ -44,8 +45,8 @@ const GameView: React.FC = () => {
 
   const [location, setLocation] = useState({} as LocationData);
   const [event, setEvent] = useState({} as EventData);
-  const [/*selectedChoice*/, /*setSelectedChoice*/] = useState({} as ChoiceData);
-  const [/*choices*/, setChoices] = useState({
+  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
+  const [choices, setChoices] = useState({
     engage: 0,
     evade: 0,
     evacuate: 0,
@@ -79,22 +80,23 @@ const GameView: React.FC = () => {
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
 
-  // const fetchChoice = (index) => {
-  //   axios.get<ChoiceData>(`/choice/selected/:${index}`)
-  //     .then(choiceResponse => {
-  //       setSelectedChoice(choiceResponse.data);
-  //       // display selectedChoice.flavor_text
-  //       // <-- computation for success check: -->
-  //       // currentChar.health || currentChar.endurance
-  //       // || currentChar.strength || currentChar.mood
-  //       // as needed against simulated d10 roll
-  //         // pull corresponding result text from
-  //         // selectedChoice.success || selectedChoice.failure
-  //     })
-  //     .catch(err => {
-  //       console.error('Failed setting selectedChoice State', err);
-  //     })
-  // };
+  const fetchChoice = (index: number) => {
+    axios.get<ChoiceData>(`/choice/selected/${index}`)
+      .then(choiceResponse => {
+        setSelectedChoice(choiceResponse.data);
+        // display selectedChoice.flavor_text
+        // <-- computation for success check: -->
+        // currentChar.health || currentChar.endurance
+        // || currentChar.strength || currentChar.mood
+        // as needed against simulated d10 roll
+        // pull corresponding result text from
+        // selectedChoice.success || selectedChoice.failure
+        // change useEffect dependencies to re-render based on success/fail ??
+      })
+      .catch(err => {
+        console.error('Failed setting selectedChoice State', err);
+      })
+  };
 
   useEffect(() => {
     fetchLocation();
@@ -108,11 +110,19 @@ const GameView: React.FC = () => {
       <Main>
         <h2>{location.name}</h2>
         <div>
-        <EventText>
+          <EventText>
             {
               Object.entries(event).length
-              ? <>{event.initial_text}</>
-              : <></>
+                ? <>{event.initial_text}</>
+                : <></>
+            }
+            {
+              Object.entries(selectedChoice).length
+                ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
+                : <>
+                    <p style={{ margin: '1rem' }}>What do you do?</p>
+                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                  </>
             }
           </EventText>
           <img src={location.image_url}></img>
@@ -135,10 +145,10 @@ const GameView: React.FC = () => {
           <div>Character Stats</div>
         </Content2>
         <Content3>
-          <HudButton>Choice 1</HudButton> {/* // <-- choice.flavor_text ? */}
-          <HudButton>Choice 2</HudButton> {/* // <-- Object.keys(choices) ? */}
-          <HudButton>Choice 3</HudButton>
-          <HudButton>Choice 4</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.engage)}>Engage</HudButton> {/* // <-- choice.flavor_text ? */}
+          <HudButton onClick={() => fetchChoice(choices.evade)}>Evade</HudButton>   {/* // <-- Object.keys(choices) ? */}
+          <HudButton onClick={() => fetchChoice(choices.evacuate)}>Evacuate</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.wildcard)}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>
@@ -146,3 +156,13 @@ const GameView: React.FC = () => {
 };
 
 export default GameView;
+
+// <-- to display choices in EventText -->
+{/* {
+    Object.entries(choices).length
+    ? Object.keys(choices).map((choice, i) => {
+      console.log(choice);
+      return <p style={{margin: '1rem'}} key={i}>{`Choice ${i + 1}: ${choice}`}</p>
+    })
+    : <></>
+  } */}
