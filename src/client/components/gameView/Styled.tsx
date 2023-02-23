@@ -54,6 +54,7 @@ export const Main = styled.main`
   color: white;
   grid-area: main;
   padding: 0.25rem;
+  position: relative;
 `;
 // const SideBar = styled.div`
 //   background: #9aaab7;
@@ -108,9 +109,23 @@ export const TopContent2 = styled(TopContent1)``;
 export const TopContent3 = styled(TopContent1)``;
 
 export const HudButton = styled.button`
- font-size: 1.5em;
- background-color: black;
- color: white;
- padding: .5rem;
+  font-size: 1.5em;
+  background-color: black;
+  color: white;
+  padding: .5rem;
 `;
 
+export const EventText = styled.div`
+  z-index: 1;
+  background-color: #808080a6;
+  color: white;
+  padding: .25em;
+  margin: auto;
+  text-align: center;
+  border: 1px solid;
+  position: absolute;
+  height: 65%;
+  width: 50%;
+  top: 15%;
+  left: 25%;
+`;
