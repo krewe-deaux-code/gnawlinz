@@ -22,8 +22,8 @@ export const choiceSeed = [
     item_effect: null,
    },
    { // talk to jet 3
-    flavor_text: 'You wave your hand to get the attention of the flying object. The object lows and hovers above you, revealing itself as a Lockheed Martin F-35 Lightning II. The pilot responds by opening up the canopy of his vehicle and tossing out a care package of supplies!  Wordlessly, he reseals the cockpit and flies off into the distance.',
-    success: 'You made contact with the mysterious pilot of an F-35C who generously shared some supplies with you. You know it was the C variant due to it\'s hover capabilities, and that it is a variant deployed almost exclusively by the US Marine Corps.',
+    flavor_text: 'You wave your hand to get the attention of the flying object.',
+    success: 'The object slows and hovers above you, revealing itself as a Lockheed Martin F-35 Lightning II. The pilot responds by opening up the canopy of his vehicle and tossing out a care package of supplies! Wordlessly, he reseals the cockpit and flies off into the distance. You know it was the C variant due to it\'s hover capabilities, and that it is a variant deployed almost exclusively by the US Marine Corps.',
     failure: 'The pilot of the aircraft did not respond to your attempted communication, and the craft screamed off into the distance.',
     alignment0: null,
     alignment1: null,

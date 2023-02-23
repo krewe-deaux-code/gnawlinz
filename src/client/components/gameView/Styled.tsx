@@ -133,8 +133,8 @@ export const EventText = styled.div`
   text-align: center;
   border: 1px solid;
   position: absolute;
-  height: 65%;
+  height: 25%;
   width: 50%;
-  top: 15%;
+  top: 72%;
   left: 25%;
 `;
