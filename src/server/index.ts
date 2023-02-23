@@ -41,7 +41,7 @@ import itemRouter from './dbRoutes/item';
 import locationRouter from './dbRoutes/location';
 import storyRouter from './dbRoutes/story';
 import userRouter from './dbRoutes/user';
-import iconRouter from './dbRoutes/icon';
+//import iconRouter from './dbRoutes/icon';
 
 // <-- use routes -->
 app.use('/auth', Auth);
@@ -55,7 +55,7 @@ app.use('/item', itemRouter);
 app.use('/location', locationRouter);
 app.use('/story', storyRouter);
 app.use('/user', userRouter);
-app.use('/icon', iconRouter);
+//app.use('/icon', iconRouter);
 
 // ***********************
 // ****** ENDPOINTS ******
