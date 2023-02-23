@@ -6,6 +6,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext, Character } from "../../App"; // <-- holds User object
 
+
 const CharacterStats: React.FC = () => {
 
   const { userChars, setUserChars, currentChar, setCurrentChar, /*activeUser*/ } = useContext(UserContext); // <-- NEED to get user chars below
@@ -18,8 +19,9 @@ const CharacterStats: React.FC = () => {
     setCurrentChar(userChars[selectedIndex]);
   };
 
-  const getCurrentChar = () => {
-    const _id = 1;
+
+  const getCurrentChar = (_id = 1) => {
+    
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
         setCurrentChar(data))
@@ -39,6 +41,7 @@ const CharacterStats: React.FC = () => {
       });
   };
 
+  
   useEffect(() => {
     fetchUserChars();
     getCurrentChar();
@@ -56,11 +59,11 @@ const CharacterStats: React.FC = () => {
         <h1>Character Stats:</h1>
         <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {
-            userChars.map((char: Character, i) => {
+            userChars.map((char: Character, i: React.Key | null | undefined) => {
               return <Carousel.Item key={i}>
                 <img src={char.image_url}/>
                 <h5>Name: {char.name}</h5>
-                <h5>Health: {char.health}</h5>
+              <h5>Health: {char.health}</h5>
                 <h5>Strength: {char.strength}</h5>
                 <h5>Endurance: {char.endurance}</h5>
                 <h5>Location: {char.location}</h5>
