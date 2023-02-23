@@ -28,10 +28,10 @@ const Menu: React.FC = () => {
     const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
-      .then((result) => {
+      .then(({ data }) => {
         //console.log('USER', result);
-        const { google_avatar } = result.data
-        setActiveUser(result.data);
+        const { google_avatar } = data;
+        setActiveUser(data);
         setAvatar(google_avatar);
       }).catch((err) => {
         console.error(err)
