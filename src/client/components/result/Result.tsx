@@ -1,6 +1,7 @@
 import React from "react";//createContext, useContext, useEffect, useState
 // import { Link } from 'react-router-dom';
 import { Container, NavBar, Story, End, ResultButton } from './Styled';
+import Nav from '../nav/NavBar';
 
 // import { UserContext } from "../../App"; // <-- holds User object
 
@@ -28,7 +29,7 @@ const Result: React.FC = () => {
 
   return (
     <Container>
-      <NavBar>NavBar</NavBar>
+      <Nav />
       <Story><h2>User Story</h2>
       {/* { story.map((sentence, index) => (
         <div key={index} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>

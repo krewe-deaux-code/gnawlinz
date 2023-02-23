@@ -1,13 +1,14 @@
 //import axios from 'axios';
-import React, { useEffect, useState } from 'react'; //useState, 
+import React, { useEffect, useState, useContext } from 'react'; //useState,
 import { NavBar, TopContent1, TopContent2, TopContent3 } from './Styled'; //ContentBox
-
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+import { UserContext } from "../../App";
+
 const Nav: React.FC = () => {
   //do stuff
-
+  const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<any>('');
 
   function calculateRemainingTime() {
@@ -37,7 +38,7 @@ const Nav: React.FC = () => {
       <NavBar>
         <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
         <TopContent2>{remainingTime}</TopContent2>
-        <TopContent3>Google User</TopContent3>
+        <TopContent3><img src={avatar} ></img></TopContent3>
       </NavBar>
   )
 
