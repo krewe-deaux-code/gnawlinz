@@ -28,7 +28,7 @@ const Menu: React.FC = () => {
     const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
-      .then((result) => {
+      .then(({ data }) => {
         //console.log('USER', result);
         const { google_avatar } = result.data
         setActiveUser(result.data);
