@@ -4,11 +4,12 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText,
-  StatContainer} from './Styled'; //ContentBox
+  EventText, StatContainer} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext } from "../../App";
+import { UserContext } from '../../App';
+
+import { statCheck } from '../../utility/gameUtils';
 
 interface LocationData {
   data: object;
@@ -43,6 +44,7 @@ const GameView: React.FC = () => {
   //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
   const { currentChar } = useContext(UserContext);
 
+  const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationData);
   const [event, setEvent] = useState({} as EventData);
   const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
@@ -80,12 +82,13 @@ const GameView: React.FC = () => {
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
 
-  const fetchChoice = (index: number) => {
+  const fetchChoice = (index: number, stat: number) => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // display selectedChoice.flavor_text
         // <-- computation for success check: -->
+        setOutcome(statCheck(stat));
         // currentChar.health || currentChar.endurance
         // || currentChar.strength || currentChar.mood
         // as needed against simulated d10 roll
@@ -103,7 +106,7 @@ const GameView: React.FC = () => {
   }, []);
 
   console.log('CURRENT CHAR', currentChar);
-
+  console.log('SELECTED CHOICE STATE IN RE-RENDER', selectedChoice);
   return (
     <Container>
       <Nav />
@@ -123,6 +126,11 @@ const GameView: React.FC = () => {
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
                   </>
+            }
+            {
+              outcome.length
+                ? <p style={{margin: '1rem'}}>{selectedChoice[outcome]}</p>
+                : <></>
             }
           </EventText>
           <img src={location.image_url}></img>
@@ -151,10 +159,10 @@ const GameView: React.FC = () => {
           </StatContainer>
         </Content2>
         <Content3>
-          <HudButton onClick={() => fetchChoice(choices.engage)}>Engage</HudButton> {/* // <-- choice.flavor_text ? */}
-          <HudButton onClick={() => fetchChoice(choices.evade)}>Evade</HudButton>   {/* // <-- Object.keys(choices) ? */}
-          <HudButton onClick={() => fetchChoice(choices.evacuate)}>Evacuate</HudButton>
-          <HudButton onClick={() => fetchChoice(choices.wildcard)}>Wildcard</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.engage, currentChar.strength)}>Engage</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.evade, currentChar.endurance)}>Evade</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.evacuate, 0)}>Evacuate</HudButton>
+          <HudButton onClick={() => fetchChoice(choices.wildcard, currentChar.mood)}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>
@@ -162,13 +170,3 @@ const GameView: React.FC = () => {
 };
 
 export default GameView;
-
-// <-- to display choices in EventText -->
-{/* {
-    Object.entries(choices).length
-    ? Object.keys(choices).map((choice, i) => {
-      console.log(choice);
-      return <p style={{margin: '1rem'}} key={i}>{`Choice ${i + 1}: ${choice}`}</p>
-    })
-    : <></>
-  } */}
