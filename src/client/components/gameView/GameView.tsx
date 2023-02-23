@@ -91,7 +91,12 @@ const GameView: React.FC = () => {
         let choiceOutcome = statCheck(stat);
         setOutcome(choiceOutcome);
         console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
-        // currentChar.health || currentChar.endurance
+        axios.post(`story/ending/${currentChar._id}`, 
+          {
+            result: choiceResponse.data[choiceOutcome]
+          })
+          .then(response => console.log('story obj: ', response));
+          // currentChar.health || currentChar.endurance
         // || currentChar.strength || currentChar.mood
         // as needed against simulated d10 roll
         // pull corresponding result text from
