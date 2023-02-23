@@ -35,12 +35,20 @@ storyRouter.get('/ending/:charID', (req, res) => {
 
 storyRouter.post('/ending/:charID', (req, res) => {
   Story.findOrCreate({ where: { character_id: req.params.charID } })
-    .then((storyResponse: any) =>{
+    .then((storyResponse: any) => {
       console.log('story object retrieved from db: ', storyResponse);
-      let choiceArr = storyResponse.char_choices;
-      res.status(200).send(choiceArr);
+      console.log('req body: ', req.body)
+      console.log('story response char_choices: ', storyResponse[0].dataValues.char_choices);
+      storyResponse[0].dataValues.char_choices.push(req.body.result);
+      
+      storyResponse[0].update({
+        char_choices: storyResponse.char_choices
+        }, 
+        { where: { character_id: req.params.charID }}
+          ).then((story: any) => {res.status(201).send(story)})    
     })
 })
+
   export default storyRouter;
 
 

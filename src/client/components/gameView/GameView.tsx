@@ -3,8 +3,8 @@ import Nav from '../nav/NavBar';
 import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
-  Content2, Content3, Footer, HudButton
-} from './Styled'; //ContentBox
+  Content2, Content3, Footer, HudButton,
+  EventText } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
@@ -43,7 +43,7 @@ const GameView: React.FC = () => {
   const { currentChar } = useContext(UserContext);
 
   const [location, setLocation] = useState({} as LocationData);
-  const [/*event*/, setEvent] = useState({} as EventData);
+  const [event, setEvent] = useState({} as EventData);
   const [/*selectedChoice*/, /*setSelectedChoice*/] = useState({} as ChoiceData);
   const [/*choices*/, setChoices] = useState({
     engage: 0,
@@ -58,9 +58,9 @@ const GameView: React.FC = () => {
         console.log('EVENT', event);
         setEvent(event.data);
         setChoices({
-          engage: event.data.choice0,
-          evade: event.data.choice1,
-          evacuate: event.data.choice2,
+          engage: event.data.choice0,    // <-- these need to turn into...
+          evade: event.data.choice1,     // <-- strings from a db query...
+          evacuate: event.data.choice2,  // <-- choice.flavor_text ?
           wildcard: event.data.choice3
         });
       })
@@ -108,6 +108,13 @@ const GameView: React.FC = () => {
       <Main>
         <h2>{location.name}</h2>
         <div>
+        <EventText>
+            {
+              Object.entries(event).length
+              ? <>{event.initial_text}</>
+              : <></>
+            }
+          </EventText>
           <img src={location.image_url}></img>
         </div>
       </Main>
@@ -132,8 +139,8 @@ const GameView: React.FC = () => {
           <div>Mood: {currentChar.mood}</div>
         </Content2>
         <Content3>
-          <HudButton>Choice 1</HudButton>
-          <HudButton>Choice 2</HudButton>
+          <HudButton>Choice 1</HudButton> {/* // <-- choice.flavor_text ? */}
+          <HudButton>Choice 2</HudButton> {/* // <-- Object.keys(choices) ? */}
           <HudButton>Choice 3</HudButton>
           <HudButton>Choice 4</HudButton>
         </Content3>

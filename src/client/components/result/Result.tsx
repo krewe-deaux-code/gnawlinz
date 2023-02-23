@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";//
 // import { Link } from 'react-router-dom';
-import { Container, NavBar, Story, End, ResultButton } from './Styled';
+import { Container,  Story, End, ResultButton } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 
  import { UserContext } from "../../App"; // <-- holds User object
