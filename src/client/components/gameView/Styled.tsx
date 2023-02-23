@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   display: grid;
   height: 100vh;
-  grid-template-rows: 0.05fr .70fr 0.25fr;
+  grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
     "nav nav nav nav"
     "main main main main"
@@ -92,9 +92,10 @@ export const Footer = styled.footer`
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
-  @media (max-width: 550px) {
+  /* @media (max-width: 550px) {
     flex-direction: column;
-  }
+  } */
+  height: 100%;
 `;
 
 export const TopContent1 = styled.div`
