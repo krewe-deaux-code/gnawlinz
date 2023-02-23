@@ -52,6 +52,14 @@ export const ResultButton = styled.button`
  background-color: black;
  color: white;
  padding: .25rem;
-
-
 `;
+
+export const Content1 = styled.div`
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-rows: auto auto;
+`;
+

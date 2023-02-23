@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1 } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 
 import { UserContext } from "../../App"; // <-- holds User object
@@ -56,10 +56,18 @@ const Result: React.FC = () => {
         <div>
           <img src={image} />
         </div>
+        <Content1>
+          <Content1>
         <ResultButton onClick={handleClick}>Toggle W/L</ResultButton>
-        <Link to="/" >
+          </Content1>
+        </Content1>
+        <Content1>
+        <Link to="/" style={{ textDecoration: 'none' }} >
+          <Content1>
         <ResultButton>Play Again</ResultButton>
+          </Content1>
         </Link>
+        </Content1>
       </End>
     </Container>
   )
