@@ -88,7 +88,9 @@ const GameView: React.FC = () => {
         setSelectedChoice(choiceResponse.data);
         // display selectedChoice.flavor_text
         // <-- computation for success check: -->
-        setOutcome(statCheck(stat));
+        let choiceOutcome = statCheck(stat);
+        setOutcome(choiceOutcome);
+        console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
         // currentChar.health || currentChar.endurance
         // || currentChar.strength || currentChar.mood
         // as needed against simulated d10 roll
@@ -106,7 +108,7 @@ const GameView: React.FC = () => {
   }, []);
 
   console.log('CURRENT CHAR', currentChar);
-  console.log('SELECTED CHOICE STATE IN RE-RENDER', selectedChoice);
+  console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
     <Container>
       <Nav />
