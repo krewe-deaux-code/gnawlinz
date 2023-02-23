@@ -1,5 +1,5 @@
 export const choiceSeed = [
-  { //fight jet 1
+  { // fight jet 1
     flavor_text: 'You stand you ground and are engaged by a Lockheed Martin F-35 Lightning II.',
     success: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     failure: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.',
@@ -21,7 +21,7 @@ export const choiceSeed = [
     ally_effect: null,
     item_effect: null,
    },
-   { //talk to jet 3
+   { // talk to jet 3
     flavor_text: 'You wave your hand to get the attention of the flying object. The object lows and hovers above you, revealing itself as a Lockheed Martin F-35 Lightning II. The pilot responds by opening up the canopy of his vehicle and tossing out a care package of supplies!  Wordlessly, he reseals the cockpit and flies off into the distance.',
     success: 'You made contact with the mysterious pilot of an F-35C who generously shared some supplies with you. You know it was the C variant due to it\'s hover capabilities, and that it is a variant deployed almost exclusively by the US Marine Corps.',
     failure: 'The pilot of the aircraft did not respond to your attempted communication, and the craft screamed off into the distance.',
@@ -32,10 +32,10 @@ export const choiceSeed = [
     ally_effect: null,
     item_effect: null,
    },
-   { //talk to ZB 4
+   { // talk to ZB 4
     flavor_text: 'You attempt to make contact with the entity.',
-    success: 'It slides grotesquely toward you with, gritting its bared teeth. It responds to you only with a low growl and violence.',
-    failure: 'It slides grotesquely toward you with, gritting its bared teeth. It responds to you only with a low growl and violence.',
+    success: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
+    failure: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
@@ -45,8 +45,8 @@ export const choiceSeed = [
    },
    { // fail jet stealth 5
     flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
-    success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected our presence.',
-    failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily track you!',
+    success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected your presence.',
+    failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily tracked you!',
     alignment0: null,
     alignment1: null,
     alignment2: null,
@@ -57,7 +57,7 @@ export const choiceSeed = [
    { // pass ZB stealth 6
     flavor_text: 'You attempt to explore the area without disturbing the entity.',
     success: 'You wisely avoid contact with the nightmare entity that resembles an animate, zombified banana peel with a disturbing human face. You\'ll see that thing behind your eyelids till the day you die.',
-    failure: 'The Banana-Zombie spoted you! It grinds its teach and slithers towards you with unnatural speed!',
+    failure: 'The Banana-Zombie spotted you! It grinds its teeth and slithers towards you with unnatural speed!',
     alignment0: null,
     alignment1: null,
     alignment2: null,
