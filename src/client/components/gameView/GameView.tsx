@@ -4,8 +4,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText
-} from './Styled'; //ContentBox
+  EventText,
+  StatContainer} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from "../../App";
@@ -142,7 +142,13 @@ const GameView: React.FC = () => {
           <div>
             <img src={currentChar.image_url} />
           </div>
+          <StatContainer>
           <div>Character Stats</div>
+          <div>Health: {currentChar.health}</div>
+          <div>Strength: {currentChar.strength}</div>
+          <div>Endurance: {currentChar.endurance}</div>
+          <div>Mood: {currentChar.mood}</div>
+          </StatContainer>
         </Content2>
         <Content3>
           <HudButton onClick={() => fetchChoice(choices.engage)}>Engage</HudButton> {/* // <-- choice.flavor_text ? */}

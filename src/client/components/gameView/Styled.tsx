@@ -83,6 +83,14 @@ export const Content2 = styled.div`
   grid-template-columns: auto auto;
 `;
 
+export const StatContainer = styled.div`
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  width: 100%;
+  height: 100%;
+  align-content: space-evenly;
+`;
+
 export const Content3 = styled(Content2)``;
 
 export const Footer = styled.footer`
