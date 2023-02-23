@@ -27,7 +27,8 @@ const Nav: React.FC = () => {
     }, 1000);
     return () => clearInterval(interval);
   };
-  const googleAvatar = avatar ? avatar : 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png'
+  const defaultAvatar = 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png';
+  const googleAvatar = avatar ? avatar : defaultAvatar;
 
   //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
   useEffect(() => {
