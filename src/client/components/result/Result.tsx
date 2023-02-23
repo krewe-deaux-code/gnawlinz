@@ -1,11 +1,12 @@
-import React, { useContext, useEffect, useState } from "react";//createContext, useContext
+import React, { useContext, useEffect, useState } from "react";//
 // import { Link } from 'react-router-dom';
-import { Container, NavBar, Story, End } from './Styled';
+import { Container,  Story, End, ResultButton } from './Styled';//NavBar,
+import Nav from '../nav/NavBar';
 
-import { UserContext } from "../../App"; // <-- holds User object
+ import { UserContext } from "../../App"; // <-- holds User object
 
 
-import axios from 'axios';
+ import axios from 'axios';
 
 const Result: React.FC = () => {
 
@@ -28,14 +29,21 @@ const Result: React.FC = () => {
 
   return (
     <Container>
-      <NavBar>NavBar</NavBar>
+      <Nav />
       <Story><h2>User Story</h2>
       { story.map((sentence, index) => (
-        <div key={index} style={{ border: "1px solid black", padding: "10px", margin: "10px" }}>
+        <div key={index} style={{ border: "1px solid black", margin: "10px" }}>
           <p>{sentence}</p>
         </div>
-      ))}</Story>
-      <End><h2>Win Or Lose</h2> ****************************Stats Go Here******************************</End>
+      ))}
+      </Story>
+      <End><h2>You Died</h2>
+      <div>
+      <img src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXlDmfBOSYmvhTaQ8O0PdFuY4ZB0N0Pv5OWg&usqp=CAU'></img>
+      </div>
+      <ResultButton>More Stuff</ResultButton>
+      <ResultButton>Words</ResultButton>
+      </End>
     </Container>
   )
 };

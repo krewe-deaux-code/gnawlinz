@@ -1,4 +1,4 @@
-import React from "react"; // { useEffect, useContext } 
+import React from "react"; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from "../nav/NavBar";
 import { TitleContainer, Main, Footer } from './Styled';
@@ -33,7 +33,7 @@ const Title: React.FC = () => {
         <Main>Title Image</Main>
         <Footer>
           <button>
-            <a href="/auth/google">start</a>
+            <a href="/auth/google">Sign In</a>
           </button>
         </Footer>
       </TitleContainer>

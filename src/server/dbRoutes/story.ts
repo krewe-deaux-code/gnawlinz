@@ -27,13 +27,31 @@ storyRouter.use(express.urlencoded({ extended: true }));
 storyRouter.get('/ending/:charID', (req, res) => {
   Story.findOne({ where: { character_id: req.params.charID } })
     .then((storyResponse: any) =>{
-    console.log('story object retrieved from db: ', storyResponse);
-    res.status(200).send(storyResponse);
-    })  
+      console.log('story object retrieved from db: ', storyResponse);
+      let choiceArr = storyResponse.char_choices;
+      res.status(200).send(choiceArr);
+    })
   })
+
+storyRouter.post('/ending/:charID', (req, res) => {
+  Story.findOrCreate({ where: { character_id: req.params.charID } })
+    .then((storyResponse: any) => {
+      console.log('story object retrieved from db: ', storyResponse);
+      console.log('req body: ', req.body)
+      console.log('story response char_choices: ', storyResponse[0].dataValues.char_choices);
+      storyResponse[0].dataValues.char_choices.push(req.body.result);
+      
+      storyResponse[0].update({
+        char_choices: storyResponse.char_choices
+        }, 
+        { where: { character_id: req.params.charID }}
+          ).then((story: any) => {res.status(201).send(story)})    
+    })
+})
+
   export default storyRouter;
 
-  
+
   // const getStory: Function = async (id: Number) => {
   //   let story = await Story.findOne({ where: { character_id: id } })
   //     .then((storyResponse: any) => storyResponse)
@@ -46,7 +64,7 @@ storyRouter.get('/ending/:charID', (req, res) => {
   //   let choiceArr: String[] = choices.map((choice: any) => choice.)
   //   res.status(200).send(choiceArr);
   // }
-  // getStory(req.params.charID);  
+  // getStory(req.params.charID);
 
 
   // for (let i = 0; i < storyResponse.char_choices.length; i++) {
@@ -64,7 +82,7 @@ storyRouter.get('/ending/:charID', (req, res) => {
       //   await Choice.findOne({where:{_id: choiceId}})
       //   .then((choice: any) => {
       //     console.log('choice object retrieved from db: ', choice);
-          
+
       //     choiceArr.push(choice)
       //   })
       // }
