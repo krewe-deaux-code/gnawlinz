@@ -30,8 +30,8 @@ const Menu: React.FC = () => {
     axios.get(`user/find/${sessionID}`)
       .then(({ data }) => {
         //console.log('USER', result);
-        const { google_avatar } = result.data
-        setActiveUser(result.data);
+        const { google_avatar } = data;
+        setActiveUser(data);
         setAvatar(google_avatar);
       }).catch((err) => {
         console.error(err)
