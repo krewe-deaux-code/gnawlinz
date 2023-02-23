@@ -12,8 +12,8 @@ const CharacterStats: React.FC = () => {
   const { userChars, setUserChars, currentChar, setCurrentChar, /*activeUser*/ } = useContext(UserContext); // <-- NEED to get user chars below
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
-  const [ /*index*/, setIndex ] = useState(0);
-
+  const [ /*index*/, setIndex] = useState(0);
+  //const [items, setItems] = useState([]);
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
     setCurrentChar(userChars[selectedIndex]);
@@ -21,7 +21,7 @@ const CharacterStats: React.FC = () => {
 
 
   const getCurrentChar = (_id = 1) => {
-    
+
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
         setCurrentChar(data))
@@ -41,11 +41,10 @@ const CharacterStats: React.FC = () => {
       });
   };
 
-  
   useEffect(() => {
     fetchUserChars();
     getCurrentChar();
-  }, []);
+  }, [currentChar]);
 
   if (!currentChar) {
     return <div>Loading...</div>;
@@ -61,21 +60,21 @@ const CharacterStats: React.FC = () => {
           {
             userChars.map((char: Character, i: React.Key | null | undefined) => {
               return <Carousel.Item key={i}>
-                <img src={char.image_url}/>
+                <img src={char.image_url} />
                 <StatName>Name: {char.name}</StatName>
-              <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
-              <IconContainer><IconImg src ="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
-              <IconContainer><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-              <IconContainer><StatName>Location: {char.location}</StatName></IconContainer>
-              <IconContainer><StatName>Mood: {char.mood}</StatName></IconContainer>
-              <IconContainer><StatName>Item Slot 1: {char.slot0}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 2: {char.slot1}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 3: {char.slot2}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 4: {char.slot3}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 5: {char.slot4}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 6: {char.slot5}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 7: {char.slot6}</StatName></IconContainer>
-                <IconContainer><StatName>Item Slot 8: {char.slot7}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195328/gnawlinzIcons/noun-map-marker-White291627_honeq7.png" /><StatName>Location: {char.location}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 1: {`${char.slot0 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 2: {`${char.slot1 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 3: {`${char.slot2 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 4: {`${char.slot3 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 5: {`${char.slot4 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 6: {`${char.slot5 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 7: {`${char.slot6 || "Empty"}`}</StatName></IconContainer>
+                <IconContainer><StatName>Item Slot 8: {`${char.slot7 || "Empty"}`}</StatName></IconContainer>
               </Carousel.Item>
             })
           }

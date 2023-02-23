@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export const StatName = styled.h5`
   font-size: 1.5em;
+  color: white;
   text-align: center;
   margin: auto;
   `;
