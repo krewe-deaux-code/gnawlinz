@@ -29,7 +29,7 @@ const Menu: React.FC = () => {
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
       .then((result) => {
-        console.log('USER', result);
+        //console.log('USER', result);
         const { google_avatar } = result.data
         setActiveUser(result.data);
         setAvatar(google_avatar);
@@ -46,7 +46,7 @@ const Menu: React.FC = () => {
     }
   };
 
-  console.log(avatar, stateSession);
+  //console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
     <UserContext.Provider value={{activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>

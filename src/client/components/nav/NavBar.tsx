@@ -27,8 +27,7 @@ const Nav: React.FC = () => {
     }, 1000);
     return () => clearInterval(interval);
   };
-
-
+  const googleAvatar = avatar ? avatar : 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png'
 
   //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
   useEffect(() => {
@@ -38,7 +37,8 @@ const Nav: React.FC = () => {
       <NavBar>
         <TopContent1><Link to="/menu" >LOGO</Link></TopContent1>
         <TopContent2>{remainingTime}</TopContent2>
-        <TopContent3><img src={avatar} width='18 px' height='18 px' ></img></TopContent3>
+        <TopContent3>
+          <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
       </NavBar>
   )
 
