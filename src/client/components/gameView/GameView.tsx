@@ -126,6 +126,10 @@ const GameView: React.FC = () => {
             <img src={currentChar.image_url} />
           </div>
           <div>Character Stats</div>
+          <div>Health: {currentChar.health}</div>
+          <div>Strength: {currentChar.strength}</div>
+          <div>Endurance: {currentChar.endurance}</div>
+          <div>Mood: {currentChar.mood}</div>
         </Content2>
         <Content3>
           <HudButton>Choice 1</HudButton>
