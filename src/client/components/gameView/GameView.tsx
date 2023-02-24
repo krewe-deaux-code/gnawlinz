@@ -150,9 +150,11 @@ const GameView: React.FC = () => {
               <HudButton>Continue</HudButton>
             </Content1>
           </Link>
+          <Link to="/gameView" style={{ textDecoration: 'none' }}>
           <Content1>
-          <HudButton>Investigate</HudButton>
+          <HudButton>New Location</HudButton> {/**previously Investigate*/}
           </Content1>
+          </Link>
           <Content1>
           <HudButton>Inventory</HudButton>
           </Content1>
