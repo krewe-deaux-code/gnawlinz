@@ -121,7 +121,7 @@ const GameView: React.FC = () => {
   console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
     <Container>
-      <Nav />
+      <Nav isActive={true} />
       <Main>
         <h2>{location.name}</h2>
         <div>
