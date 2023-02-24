@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1 } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 
 import { UserContext } from "../../App"; // <-- holds User object
@@ -20,13 +20,13 @@ const Result: React.FC = () => {
   useEffect(() => {
     axios.get(`story/ending/${currentChar._id}`)
       .then((results) => {
-        console.log(results.data);
+        console.log('result from story query:', results.data);
         setStory(results.data)
       }).catch((err) => {
         console.error(err);
       });
 
-  }, []);
+  }, [story]);
 
 
   const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
@@ -41,7 +41,7 @@ const Result: React.FC = () => {
       setResultText('you died!');
     }
   }
-
+  console.log('result from story query:', story);
   return (
     <Container>
       <Nav />
@@ -56,10 +56,18 @@ const Result: React.FC = () => {
         <div>
           <img src={image} />
         </div>
-        <ResultButton onClick={handleClick}>I am a Winner</ResultButton>
-        <Link to="/" >
+        <Content1>
+          <Content1>
+        <ResultButton onClick={handleClick}>Toggle W/L</ResultButton>
+          </Content1>
+        </Content1>
+        <Content1>
+        <Link to="/" style={{ textDecoration: 'none' }} >
+          <Content1>
         <ResultButton>Play Again</ResultButton>
+          </Content1>
         </Link>
+        </Content1>
       </End>
     </Container>
   )

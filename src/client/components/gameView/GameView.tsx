@@ -91,6 +91,17 @@ const GameView: React.FC = () => {
         let choiceOutcome = statCheck(stat);
         setOutcome(choiceOutcome);
         console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
+        axios.post(`story/ending/${currentChar._id}`,
+          {
+            result: choiceResponse.data[choiceOutcome]
+          })
+          .then(response => console.log('story obj: ', response));
+          // currentChar.health || currentChar.endurance
+        // || currentChar.strength || currentChar.mood
+        // as needed against simulated d10 roll
+        // pull corresponding result text from
+        // selectedChoice.success || selectedChoice.failure
+        // change useEffect dependencies to re-render based on success/fail ??
       })
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
@@ -139,8 +150,12 @@ const GameView: React.FC = () => {
               <HudButton>Continue</HudButton>
             </Content1>
           </Link>
+          <Content1>
           <HudButton>Investigate</HudButton>
+          </Content1>
+          <Content1>
           <HudButton>Inventory</HudButton>
+          </Content1>
         </Content1>
         <Content2>
           <div>
