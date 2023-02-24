@@ -48,7 +48,7 @@ const Result: React.FC = () => {
   console.log('result from story query:', story);
   return (
     <Container>
-      <Nav />
+      <Nav isActive={true}/>
       <Story><h2>User Story</h2>
         {story.map((sentence, index) => (
           <div key={index} style={{ border: "1px solid black", margin: "10px" }}>

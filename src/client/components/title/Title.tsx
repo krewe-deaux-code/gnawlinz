@@ -28,7 +28,7 @@ const Title: React.FC = () => {
 
   return (
     <TitleContainer>
-          <Nav />
+          <Nav isActive={false} />
         <Main>Title Image</Main>
         <Footer>
           <button>
