@@ -26,7 +26,7 @@ const Result: React.FC = () => {
         console.error(err);
       });
 
-  }, [story]);
+  }, []);
 
 
   const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');

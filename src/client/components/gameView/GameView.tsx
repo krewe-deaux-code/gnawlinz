@@ -42,8 +42,7 @@ interface ChoiceData {
 
 const GameView: React.FC = () => {
 
-  //const {remainingTime, calculateRemainingTime} = useContext(ClockContext);
-  const { currentChar } = useContext(UserContext);
+  const { currentChar, setCurrentChar } = useContext(UserContext);
 
   const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationData);
@@ -83,26 +82,32 @@ const GameView: React.FC = () => {
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
 
-  const fetchChoice = (index: number, stat: number) => {
+  const resolveChoice = (index: number, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
         let choiceOutcome = statCheck(stat);
         setOutcome(choiceOutcome);
-        console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
         axios.post(`story/ending/${currentChar._id}`,
           {
             result: choiceResponse.data[choiceOutcome]
           })
-          .then(response => console.log('story obj: ', response));
-          // currentChar.health || currentChar.endurance
-        // || currentChar.strength || currentChar.mood
-        // as needed against simulated d10 roll
-        // pull corresponding result text from
-        // selectedChoice.success || selectedChoice.failure
-        // change useEffect dependencies to re-render based on success/fail ??
-      })
+          .then(() => {
+            console.log('penalty: ', penalty);
+            if (choiceOutcome === 'failure') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] - 2
+              }));
+            } else if (choiceOutcome === 'success' && penalty === 'mood') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
+              }));
+            }
+          });
+      }) // <-- maybe another .then() to update the currentChar in DB with updated stats ?? -->
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
       })
@@ -170,10 +175,10 @@ const GameView: React.FC = () => {
           </StatContainer>
         </Content2>
         <Content3>
-          <HudButton onClick={() => fetchChoice(choices.engage, currentChar.strength)}>Engage</HudButton>
-          <HudButton onClick={() => fetchChoice(choices.evade, currentChar.endurance)}>Evade</HudButton>
-          <HudButton onClick={() => fetchChoice(choices.evacuate, 0)}>Evacuate</HudButton>
-          <HudButton onClick={() => fetchChoice(choices.wildcard, currentChar.mood)}>Wildcard</HudButton>
+          <HudButton onClick={() => resolveChoice(choices.engage, currentChar.strength, 'health')}>Engage</HudButton>
+          <HudButton onClick={() => resolveChoice(choices.evade, currentChar.endurance)}>Evade</HudButton>
+          <HudButton onClick={() => resolveChoice(choices.evacuate, 0)}>Evacuate</HudButton>
+          <HudButton onClick={() => resolveChoice(choices.wildcard, currentChar.mood, 'mood')}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>
