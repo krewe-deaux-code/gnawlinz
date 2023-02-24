@@ -23,7 +23,7 @@ interface ItemSlotsProps {
 
 const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   const [items, setItems] = useState<Item[]>([]);
-console.log('char!!!!!!!!!!!!!!!!!!!!', char);
+
 
 
 
@@ -39,7 +39,6 @@ useEffect(() => {
     );
     const results = await Promise.all(promises);
     const itemsData = results.map((result) => result.data);
-    console.log('itemDATA!!!', itemsData);
     setItems(itemsData);
    
   }
