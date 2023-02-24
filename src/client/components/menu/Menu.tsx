@@ -51,7 +51,7 @@ const Menu: React.FC = () => {
   return (
     <UserContext.Provider value={{activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
       <Body >
-        <Nav />
+        <Nav isActive={false}/>
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Details
@@ -90,7 +90,9 @@ const Menu: React.FC = () => {
             <span><b>Be State:</b></span><br />
           </Content>
         </>
-        <Link to="/gameView">GameView</Link>
+        <button>
+        <Link to="/gameView">Start Game</Link>
+        </button>
 
       </Body >
     </UserContext.Provider>

@@ -10,6 +10,7 @@ export const Container = styled.div`
   text-align: center;
   grid-gap: 0.25rem;
   transition: all 0.25s ease-in-out;
+  grid-template-columns: .5fr .5fr;
   color: white;
 `;
 
@@ -35,7 +36,7 @@ export const Story = styled.main`
   align-content: space-evenly;
   grid-template-rows: auto auto auto;
   justify-content: center;
-
+  overflow: auto;
 `;
 export const End = styled.div`
   background: #9aaab7;
@@ -45,6 +46,7 @@ export const End = styled.div`
   align-content: space-evenly;
   grid-template-rows: auto auto auto;
   justify-content: center;
+  overflow: auto;
 `;
 
 export const ResultButton = styled.button`
