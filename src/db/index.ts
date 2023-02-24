@@ -108,7 +108,7 @@ const modelSync = async (dropTables = false) => {
 modelSync(true);
 
 // <-- WON'T DROP TABLES -->
-// modelSync();
+ //modelSync();
 
 
 // Await seed functions should eventually migrate to own file and be called via npm script
