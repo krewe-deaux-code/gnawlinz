@@ -48,7 +48,7 @@ const Result: React.FC = () => {
   console.log('result from story query:', story);
   return (
     <Container>
-      <Nav />
+      <Nav isActive={true}/>
       <Story><h2>User Story</h2>
         {story.map((sentence, index) => (
           <div key={index} style={{ border: "1px solid black", margin: "10px" }}>
@@ -61,16 +61,16 @@ const Result: React.FC = () => {
           <img src={image} />
         </div>
         <Content1>
-          <Content1>
-        {/* <ResultButton onClick={handleClick}>Toggle W/L</ResultButton> */}
-          </Content1>
-        </Content1>
-        <Content1>
         <Link to="/" style={{ textDecoration: 'none' }} >
           <Content1>
         <ResultButton>Play Again</ResultButton>
           </Content1>
         </Link>
+        </Content1>
+        <Content1>
+          <Content1>
+        {/* <ResultButton onClick={handleClick}>Toggle W/L</ResultButton> */}
+          </Content1>
         </Content1>
       </End>
     </Container>
