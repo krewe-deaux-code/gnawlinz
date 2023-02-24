@@ -16,7 +16,7 @@ function Nav({ isActive }: LinkProps) {
 
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<any>('');
-  
+
   // clock function
   function calculateRemainingTime() {
     let interval = setInterval(() => {
@@ -48,9 +48,9 @@ function Nav({ isActive }: LinkProps) {
       <NavBar>
         <TopContent1>
           {isActive ? (
-          <Link to="/menu" className='active-link' >LOGO</Link>
+          <Link to="/menu" className='active-link' >GNAWLINZ</Link>
           ) : (
-            <span className='inactive-link'>LOGO</span>
+            <span className='inactive-link'>GNAWLINZ</span>
           )}
         </TopContent1>
         <TopContent2>{remainingTime}</TopContent2>

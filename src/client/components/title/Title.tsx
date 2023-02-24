@@ -28,8 +28,11 @@ const Title: React.FC = () => {
 
   return (
     <TitleContainer>
-          <Nav isActive={false} />
-        <Main>Title Image</Main>
+        <Nav isActive={false} />
+        <Main>
+          <h1>GNAWLINZ</h1>
+          <img src='https://media.discordapp.net/attachments/1054143394194149408/1075618769109528656/TitleScreenV4.png'/>
+        </Main>
         <Footer>
           <button>
             <a href="/auth/google">Sign In</a>

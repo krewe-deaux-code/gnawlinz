@@ -61,16 +61,16 @@ const Result: React.FC = () => {
           <img src={image} />
         </div>
         <Content1>
-          <Content1>
-        {/* <ResultButton onClick={handleClick}>Toggle W/L</ResultButton> */}
-          </Content1>
-        </Content1>
-        <Content1>
         <Link to="/" style={{ textDecoration: 'none' }} >
           <Content1>
         <ResultButton>Play Again</ResultButton>
           </Content1>
         </Link>
+        </Content1>
+        <Content1>
+          <Content1>
+        {/* <ResultButton onClick={handleClick}>Toggle W/L</ResultButton> */}
+          </Content1>
         </Content1>
       </End>
     </Container>
