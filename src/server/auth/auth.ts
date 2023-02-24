@@ -16,12 +16,12 @@ const Auth = Router();
 
 // <-- Strategy -->
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
-const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } = process.env;
+const { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, CALLBACK_URL } = process.env;
 
 passport.use(new GoogleStrategy({
   clientID: GOOGLE_CLIENT_ID!,
   clientSecret: GOOGLE_CLIENT_SECRET!,
-  callbackURL: "http://localhost:8080/auth/google/callback",
+  callbackURL: CALLBACK_URL!,
   passReqToCallback: true
 },
   (req, accessToken, refreshToken, profile: any, cb) => {
