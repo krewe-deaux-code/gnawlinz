@@ -3,6 +3,25 @@ import styled from 'styled-components';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
+export const StatName = styled.h5`
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+  margin: auto;
+  `;
+
+export const IconContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  grid-gap: 1em;
+  `;
+
+export const IconImg = styled.img`
+  padding: 5px;
+  width: 4em;
+`;
+
 export const Body = styled.div`
   text-align: center;
   width: 100%;
