@@ -1,10 +1,11 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
 import React, { useEffect, useState, useContext } from 'react';
+
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer} from './Styled'; //ContentBox
+  EventText, StatContainer } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -61,9 +62,9 @@ const GameView: React.FC = () => {
         console.log('EVENT', event);
         setEvent(event.data);
         setChoices({
-          engage: event.data.choice0,    // <-- these need to turn into...
-          evade: event.data.choice1,     // <-- strings from a db query...
-          evacuate: event.data.choice2,  // <-- choice.flavor_text ?
+          engage: event.data.choice0,
+          evade: event.data.choice1,
+          evacuate: event.data.choice2,
           wildcard: event.data.choice3
         });
       })
@@ -86,17 +87,10 @@ const GameView: React.FC = () => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
-        // display selectedChoice.flavor_text
         // <-- computation for success check: -->
         let choiceOutcome = statCheck(stat);
         setOutcome(choiceOutcome);
         console.log('TEST OUTCOME IN FETCHCHOICE/AXIOS', outcome);
-        // currentChar.health || currentChar.endurance
-        // || currentChar.strength || currentChar.mood
-        // as needed against simulated d10 roll
-        // pull corresponding result text from
-        // selectedChoice.success || selectedChoice.failure
-        // change useEffect dependencies to re-render based on success/fail ??
       })
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
