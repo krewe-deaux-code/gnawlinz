@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
 import { StyledCarousel, IconImg, IconContainer, StatName } from "./Styled";
@@ -15,12 +15,12 @@ const CharacterStats: React.FC = () => {
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex] = useState(0);
- 
-  
+
+
   const handleSelect = (selectedIndex, e) => {
     setIndex(selectedIndex);
     setCurrentChar(userChars[selectedIndex]);
-  
+
   };
 
 
@@ -30,7 +30,7 @@ const CharacterStats: React.FC = () => {
       .then(({ data }) =>
         setCurrentChar(data))
       .catch((err) =>
-        console.error('Error in getCurrentCharacter in Menu.tsx: ', err))
+        console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
   const fetchUserChars = () => {
@@ -55,15 +55,15 @@ const CharacterStats: React.FC = () => {
   if (!currentChar) {
     return <div>Loading...</div>;
   }
-  
+
 
   // console.log('CHARS AFTER FETCH', userChars);
   // console.log('test', currentChar);
-  
+
   return (
     <>
       <div>
-       
+
         <h1>Character Stats:</h1>
         <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {

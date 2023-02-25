@@ -1,9 +1,9 @@
-import React, { useContext, useEffect, useState } from "react";//
+import React, { useContext, useEffect, useState } from 'react';//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1 } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1, ScrollableContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 
-import { UserContext } from "../../App"; // <-- holds User object
+import { UserContext } from '../../App'; // <-- holds User object
 
 
 import axios from 'axios';
@@ -22,7 +22,7 @@ const Result: React.FC = () => {
     axios.get(`story/ending/${currentChar._id}`)
       .then((results) => {
         console.log('result from story query:', results.data);
-        setStory(results.data)
+        setStory(results.data);
       }).catch((err) => {
         console.error(err);
       });
@@ -50,22 +50,24 @@ const Result: React.FC = () => {
     <Container>
       <Nav isActive={true}/>
       <Story><h2>User Story</h2>
+      <ScrollableContainer>
         {story.map((sentence, index) => (
-          <div key={index} style={{ border: "1px solid black", margin: "10px" }}>
+          <div key={index} style={{ border: '1px solid black', margin: '10px' }}>
             <p>{sentence}</p>
           </div>
         ))}
+      </ScrollableContainer>
       </Story>
       <End><h2>{resultText}</h2>
         <div>
           <img src={image} />
         </div>
         <Content1>
-        <Link to="/" style={{ textDecoration: 'none' }} >
-          <Content1>
-        <ResultButton>Play Again</ResultButton>
-          </Content1>
-        </Link>
+          <Link to="/" style={{ textDecoration: 'none' }} >
+            <Content1>
+              <ResultButton>Play Again</ResultButton>
+            </Content1>
+          </Link>
         </Content1>
         <Content1>
           <Content1>
@@ -74,7 +76,7 @@ const Result: React.FC = () => {
         </Content1>
       </End>
     </Container>
-  )
+  );
 };
 
 export default Result;

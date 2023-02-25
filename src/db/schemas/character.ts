@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Item from './item'
+import Item from './item';
 import Location from './location';
 // import User from './user';
 
@@ -17,91 +17,91 @@ const Character = db.define('character', {
     //   key: 'user_id'
     // }
   },
-  name:{
+  name: {
     type: DataTypes.STRING,
     unique: true
   },
-  image_url:{
+  image_url: {
     type: DataTypes.STRING,
   },
-  slot0:{
+  slot0: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot1:{
+  slot1: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot2:{
+  slot2: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot3:{
+  slot3: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot4:{
+  slot4: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot5:{
+  slot5: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot6:{
+  slot6: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  slot7:{
+  slot7: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  health:{
+  health: {
     type: DataTypes.INTEGER
   },
-  strength:{
+  strength: {
     type: DataTypes.INTEGER
   },
-  endurance:{
+  endurance: {
     type: DataTypes.INTEGER
   },
-  mood:{
+  mood: {
     type: DataTypes.INTEGER
   },
-  location:{
+  location: {
     type: DataTypes.INTEGER,
     references: {
       model: Location,
       key: '_id'
     }
   },
-  ally_count:{
+  ally_count: {
     type: DataTypes.INTEGER
   },
-})
+});
 
 export default Character;

@@ -4,7 +4,7 @@ import { NavBar, TopContent1, TopContent2, TopContent3 } from './Styled'; //Cont
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
-import { UserContext } from "../../App";
+import { UserContext } from '../../App';
 
 // Logo link props
 type LinkProps = {
@@ -17,18 +17,17 @@ function Nav({ isActive }: LinkProps) {
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<any>('');
 
-  // clock function
-  function calculateRemainingTime() {
-    let interval = setInterval(() => {
-      let daysLeft = 3;
-      let startTime = dayjs();
-      let endTime = startTime.add( daysLeft, 'day').startOf('day');
-      let remainingTime = endTime.diff(dayjs(), 'millisecond');
-      let remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
-      let remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-      let remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+  const calculateRemainingTime = () => {
+    const interval = setInterval(() => {
+      const daysLeft = 3;
+      const startTime = dayjs();
+      const endTime = startTime.add( daysLeft, 'day').startOf('day');
+      const remainingTime = endTime.diff(dayjs(), 'millisecond');
+      const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
+      const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+      const remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-      let formattedTime = `${remainingHours} hours, ${remainingMinutes} minutes, ${remainingSeconds} seconds`;
+      const formattedTime = `${remainingHours} hours, ${remainingMinutes} minutes, ${remainingSeconds} seconds`;
       setRemainingTime(formattedTime);
 
     }, 1000);
@@ -59,6 +58,6 @@ function Nav({ isActive }: LinkProps) {
       </NavBar>
   )
 
-}
+};
 
 export default Nav;

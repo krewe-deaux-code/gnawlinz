@@ -128,7 +128,7 @@ export const EventText = styled.div`
   z-index: 1;
   background-color: #808080a6;
   color: white;
-  padding: .25em;
+  padding: .4em;
   margin: auto;
   text-align: center;
   border: 1px solid;
@@ -137,4 +137,5 @@ export const EventText = styled.div`
   width: 50%;
   top: 72%;
   left: 25%;
+  overflow: auto;
 `;
