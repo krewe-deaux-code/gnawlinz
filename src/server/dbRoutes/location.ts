@@ -33,7 +33,6 @@ locationRouter.get('/random', (req, res) => {
     });
 });
 
-
 locationRouter.get('/allLocations', (req, res) => {
   Location.findAll({ order: Sequelize.literal('RANDOM()')})
     .then((locations) => {
