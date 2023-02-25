@@ -170,10 +170,11 @@ const GameView: React.FC = () => {
         </Content1>
         <Content2>
           <div>
+            <h4>{currentChar.name}</h4>
             <img src={currentChar.image_url} />
           </div>
           <StatContainer>
-            <div>Character Stats</div>
+            <div style={{ textDecoration: 'underline' }}>Status</div>
             <div>Health: {currentChar.health}</div>
             <div>Strength: {currentChar.strength}</div>
             <div>Endurance: {currentChar.endurance}</div>

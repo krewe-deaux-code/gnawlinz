@@ -80,7 +80,7 @@ export const Content2 = styled.div`
   height: 100%;
   display: grid;
   align-content: space-evenly;
-  grid-template-columns: auto auto;
+  grid-template-columns: .5fr .5fr;
 `;
 
 export const StatContainer = styled.div`
