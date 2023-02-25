@@ -64,7 +64,7 @@ const CharacterStats: React.FC = () => {
     <>
       <div>
 
-        <h1>Character Stats:</h1>
+        <h1>Character Select:</h1>
         <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {
             userChars.map((char: Character, i: React.Key | null | undefined) => {

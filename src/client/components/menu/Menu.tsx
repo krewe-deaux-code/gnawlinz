@@ -54,10 +54,10 @@ const Menu: React.FC = () => {
         <Nav isActive={false}/>
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
-            Character Details
+            Character Select
           </Tab>
           <Tab onClick={handleClick} active={active === 1} id={1}>
-            Character Stats
+            Character Details
           </Tab>
           <Tab onClick={handleClick} active={active === 2} id={2}>
             Inventory
@@ -65,6 +65,9 @@ const Menu: React.FC = () => {
         </InfoContainer>
         <>
           <Content active={active === 0}>
+            <CharacterStats />
+          </Content>
+          <Content active={active === 1}>
             <h1>Character Story:</h1>
             <span><b>Name:</b></span><span> Jean Valgene</span><br />
             <span><b>Age:</b></span><span> 31</span><br />
@@ -80,9 +83,6 @@ const Menu: React.FC = () => {
             Jean Valgene decided to eat stray cat providing +1 temporary health and strength
             </span>
           </Content>
-          <Content active={active === 1}>
-            <CharacterStats />
-          </Content>
           <Content active={active === 2}>
             <h1>Items</h1>
             <span><b>This:</b></span><br />
@@ -91,7 +91,7 @@ const Menu: React.FC = () => {
           </Content>
         </>
         <button>
-        <Link to="/gameView">Start Game</Link>
+          <Link to="/gameView">Start Game</Link>
         </button>
 
       </Body >
