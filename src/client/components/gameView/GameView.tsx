@@ -6,7 +6,8 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer } from './Styled'; //ContentBox
+  EventText, StatContainer
+} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -61,7 +62,7 @@ const GameView: React.FC = () => {
     wildcard: 0
   });
   const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  // const [visited, setVisited] = useState<LocationData[]>([]);
+  const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random')
@@ -98,6 +99,7 @@ const GameView: React.FC = () => {
     axios.get('/location/allLocations')
       .then(locations => {
         setLocation(locations.data[0]);
+        setVisited([locations.data[0]]);
         setAllLocations(locations.data.slice(1));
         fetchEvent();
       })
@@ -107,8 +109,14 @@ const GameView: React.FC = () => {
   };
 
   const handleLocationChange = () => {
-    setAllLocations(prevLocations => prevLocations.slice(1));
-    setLocation(allLocations[0]);
+    if (allLocations.length) {
+      setAllLocations(prevLocations => prevLocations.slice(1));
+      setLocation(allLocations[0]);
+      setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+    } else {
+      const randomNum = Math.floor(Math.random() * (visited.length));
+      setLocation(visited[randomNum]);
+    }
     fetchEvent();
   };
 
@@ -149,8 +157,9 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
-    return <div><Result/></div>;
+    return <div><Result /></div>;
   }
+  console.log('visited array', visited);
   console.log('CURRENT CHAR', currentChar);
   console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
@@ -168,7 +177,7 @@ const GameView: React.FC = () => {
             }
             {
               Object.entries(selectedChoice).length
-                ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
+                ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                 : <>
                   <p style={{ margin: '1rem' }}>What do you do?</p>
                   <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -176,7 +185,7 @@ const GameView: React.FC = () => {
             }
             {
               outcome.length
-                ? <p style={{margin: '1rem'}}>{selectedChoice[outcome]}</p>
+                ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
                 : <></>
             }
           </EventText>
