@@ -60,8 +60,8 @@ const GameView: React.FC = () => {
     evacuate: 0,
     wildcard: 0
   });
-  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  const [visited, setVisited] = useState<LocationData[]>([]);
+  // const [allLocations, setAllLocations] = useState<LocationData[]>([]);
+  // const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random')
