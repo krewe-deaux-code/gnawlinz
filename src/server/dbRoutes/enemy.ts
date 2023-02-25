@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const enemyRouter = Router();
@@ -12,8 +12,8 @@ const enemyRouter = Router();
 // import Enemy from '../../db/schemas/enemy';
 
 // <-- middleware -->
-enemyRouter.use(express.json());
-enemyRouter.use(express.urlencoded({ extended: true }));
+// enemyRouter.use(express.json());
+// enemyRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
