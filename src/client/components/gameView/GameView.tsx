@@ -1,13 +1,13 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
-
 import React, { useEffect, useState, useContext } from 'react';
 
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer } from './Styled'; //ContentBox
+  EventText, StatContainer, ScrollableContainer
+} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -150,11 +150,6 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
-  // const PerfNavigationTiming: any = window.performance.getEntriesByType('navigation')[0];
-  // console.log(PerformanceNavigationTiming);
-  // if (PerfNavigationTiming.type === 'reload') {
-  //   console.log('Trrrrrrruuuuuuuuuuuuuuuuue');
-  // }
 
   useEffect(() => {
     getAllLocations();
@@ -162,8 +157,9 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
-    return <div><Result/></div>;
+    return <div><Result /></div>;
   }
+  console.log('visited array', visited);
   console.log('CURRENT CHAR', currentChar);
   console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
@@ -174,24 +170,26 @@ const GameView: React.FC = () => {
         <h2>{location.name}</h2>
         <div>
           <EventText>
-            {
-              Object.entries(event).length
-                ? <p>{event.initial_text}</p>
-                : <></>
-            }
-            {
-              Object.entries(selectedChoice).length
-                ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
-                : <>
-                  <p style={{ margin: '1rem' }}>What do you do?</p>
-                  <p style={{ margin: '1rem' }}>Select an option below...</p>
-                </>
-            }
-            {
-              outcome.length
-                ? <p style={{margin: '1rem'}}>{selectedChoice[outcome]}</p>
-                : <></>
-            }
+            <ScrollableContainer>
+              {
+                Object.entries(event).length
+                  ? <p>{event.initial_text}</p>
+                  : <></>
+              }
+              {
+                Object.entries(selectedChoice).length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  : <>
+                    <p style={{ margin: '1rem' }}>What do you do?</p>
+                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                  </>
+              }
+              {
+                outcome.length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                  : <></>
+              }
+            </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
         </div>
