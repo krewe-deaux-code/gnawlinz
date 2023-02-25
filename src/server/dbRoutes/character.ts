@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const characterRouter = Router();
@@ -12,8 +12,8 @@ const characterRouter = Router();
 import Character from '../../db/schemas/character';
 
 // <-- middleware -->
-characterRouter.use(express.json());
-characterRouter.use(express.urlencoded({ extended: true }));
+// characterRouter.use(express.json());
+// characterRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
@@ -48,6 +48,18 @@ characterRouter.get('/user/:google_id', (req, res) => {
     })
     .catch((err) => {
       console.error('Error Character.findAll google_id', err);
+    });
+});
+
+
+characterRouter.patch('/update/:char_id', (req, res) => {
+  console.log(req.body);
+  Character.update(req.body, { where: { _id: req.params.char_id } })
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(`Error Character.update @character/stats/${req.params.char_id}`, err);
     });
 });
 

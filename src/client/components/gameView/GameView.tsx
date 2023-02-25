@@ -14,9 +14,14 @@ import { UserContext } from '../../App';
 import { statCheck } from '../../utility/gameUtils';
 
 interface LocationData {
-  data: object;
-  image_url: string;
+  _id: number;
   name: string;
+  image_url: string;
+  random_item_spot1: string;
+  random_item_spot2: string;
+  drop_item_slot: number;
+  graffiti: string;
+  graffiti_msg: string;
 }
 
 interface EventData {
@@ -55,6 +60,8 @@ const GameView: React.FC = () => {
     evacuate: 0,
     wildcard: 0
   });
+  // const [allLocations, setAllLocations] = useState<LocationData[]>([]);
+  // const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random')
@@ -73,15 +80,24 @@ const GameView: React.FC = () => {
       });
   };
 
+  //separate func for update char location via axios request to character/location endpoint
+
   const fetchLocation = () => {
     axios.get<LocationData>('/location/random')
       .then((location) => {
         console.log('Location from DB', location);
         setLocation(location.data);
         fetchEvent();
+        //update character location axios to server
       })
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
+  // fetch locations /locations/all
+  // axios fetch locations
+    // query db to find Locations.findAll
+    // res.send (allLocations)
+  // axios fetch locations then
+  // set locations pass in all locations from res.send
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
@@ -117,7 +133,9 @@ const GameView: React.FC = () => {
   useEffect(() => {
     fetchLocation();
   }, []);
-  if (currentChar.health < 1) {
+
+  // conditional for character loss involving health or mood reaching 0
+  if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result/></div>;
   }
   console.log('CURRENT CHAR', currentChar);
@@ -161,7 +179,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton>New Location</HudButton> {/**previously Investigate*/}
+              <HudButton onClick={() => fetchLocation()}>New Location</HudButton> {/**previously Investigate*/}
             </Content1>
           </Link>
           <Content1>
@@ -170,10 +188,11 @@ const GameView: React.FC = () => {
         </Content1>
         <Content2>
           <div>
+            <h4>{currentChar.name}</h4>
             <img src={currentChar.image_url} />
           </div>
           <StatContainer>
-            <div>Character Stats</div>
+            <div style={{ textDecoration: 'underline' }}>Status</div>
             <div>Health: {currentChar.health}</div>
             <div>Strength: {currentChar.strength}</div>
             <div>Endurance: {currentChar.endurance}</div>

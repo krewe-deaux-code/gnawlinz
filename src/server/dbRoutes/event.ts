@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const eventRouter = Router();
@@ -12,8 +12,8 @@ import { Sequelize } from 'sequelize';
 import Event from '../../db/schemas/event';
 
 // <-- middleware -->
-eventRouter.use(express.json());
-eventRouter.use(express.urlencoded({ extended: true }));
+// eventRouter.use(express.json());
+// eventRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
