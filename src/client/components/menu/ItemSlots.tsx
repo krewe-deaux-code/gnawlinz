@@ -34,7 +34,6 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
     <div>
       {items.map((item, i: React.Key | null | undefined) => (
         <IconContainer key={i}><IconImg src={item.image_url || ''}/><StatName>Item Slot {`${i}`}: {item.name || 'Empty'}</StatName></IconContainer>
-        // Render the item however you want
       ))}
     </div>
   );
