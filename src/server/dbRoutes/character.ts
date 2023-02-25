@@ -55,8 +55,8 @@ characterRouter.get('/user/:google_id', (req, res) => {
 characterRouter.patch('/update/:char_id', (req, res) => {
   console.log(req.body);
   Character.update(req.body, { where: { _id: req.params.char_id } })
-    .then(() => {
-      res.sendStatus(200);
+    .then((response) => {
+      res.status(200).send(response);
     })
     .catch((err) => {
       console.error(`Error Character.update @character/stats/${req.params.char_id}`, err);
