@@ -39,6 +39,6 @@ const Event = db.define('event', {
       key: '_id'
     }
   }
-})
+});
 
 export default Event;

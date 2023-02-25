@@ -21,10 +21,11 @@ import { storySeed } from './seeders/seedData/storySeed';
 // *** DB CONNECTION ***
 // *********************
 
-const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
+const { DB_USER, DATABASE_URL, DB, DBPW, DB_PORT } = process.env;
 //uncomment second sequelize call for using external db
-export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
+export const db = new Sequelize(DB as string, DB_USER as string, DBPW as string, {
   host: DATABASE_URL,
+  port: Number(DB_PORT),
   dialect: 'postgres',
   protocol: 'postgres',
   logging: false
@@ -54,7 +55,7 @@ import Enemy from './schemas/enemy';
 import Event from './schemas/event';
 import Story from './schemas/story';
 import Character_Ally from './schemas/character_ally';
-import Location_Event from './schemas/location_event'
+import Location_Event from './schemas/location_event';
 import Icon from './schemas/gameAssets/icon';
 
 // *************************

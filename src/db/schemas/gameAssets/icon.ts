@@ -1,5 +1,5 @@
 //icons.ts
-import { DataTypes } from'sequelize';
+import { DataTypes } from 'sequelize';
 import { db } from '../../index';
 
 const Icon = db.define('icon', {

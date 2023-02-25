@@ -49,6 +49,6 @@ const Choice = db.define('choice', {
       key: '_id'
     }
   },
-})
+});
 
 export default Choice;

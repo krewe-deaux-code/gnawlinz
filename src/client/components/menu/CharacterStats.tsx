@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { StyledCarousel } from "./Styled";
+import { StyledCarousel } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
-import { UserContext, Character } from "../../App"; // <-- holds User object
+import { UserContext, Character } from '../../App'; // <-- holds User object
 
 const CharacterStats: React.FC = () => {
 
@@ -24,7 +24,7 @@ const CharacterStats: React.FC = () => {
       .then(({ data }) =>
         setCurrentChar(data))
       .catch((err) =>
-        console.error('Error in getCurrentCharacter in Menu.tsx: ', err))
+        console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
   const fetchUserChars = () => {
@@ -73,7 +73,7 @@ const CharacterStats: React.FC = () => {
                 <h5>Item Slot 6: {char.slot5}</h5>
                 <h5>Item Slot 7: {char.slot6}</h5>
                 <h5>Item Slot 8: {char.slot7}</h5>
-              </Carousel.Item>
+              </Carousel.Item>;
             })
           }
         </StyledCarousel>

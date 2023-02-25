@@ -1,6 +1,6 @@
-import React from "react"; // { useEffect, useContext }
+import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
-import Nav from "../nav/NavBar";
+import Nav from '../nav/NavBar';
 import { TitleContainer, Main, Footer } from './Styled';
 //import GameView from '../gameView/GameView';
 //import axios from 'axios';
@@ -28,16 +28,16 @@ const Title: React.FC = () => {
 
   return (
     <TitleContainer>
-          <Nav />
-        <Main>Title Image</Main>
-        <Footer>
-          <button>
-            <a href="/auth/google">Sign In</a>
-          </button>
-        </Footer>
-      </TitleContainer>
+      <Nav />
+      <Main>Title Image</Main>
+      <Footer>
+        <button>
+          <a href="/auth/google">Sign In</a>
+        </button>
+      </Footer>
+    </TitleContainer>
 
-  )
+  );
 };
 
 export default Title;

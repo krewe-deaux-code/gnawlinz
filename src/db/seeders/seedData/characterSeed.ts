@@ -1,8 +1,8 @@
 export const characterSeed = [
   {
-    handle_id: "420",
-    name: "Mr. Okra",
-    image_url: "https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png",
+    handle_id: '420',
+    name: 'Mr. Okra',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
     slot0: null,
     slot1: null,
     slot2: null,
@@ -19,9 +19,9 @@ export const characterSeed = [
     ally_count: 0
   },
   {
-    handle_id: "420",
-    name: "Morgus",
-    image_url: "https://res.cloudinary.com/de0mhjdfg/image/upload/v1676922567/gnawlinzAllies/MorgusPxl_sz0c7h.png",
+    handle_id: '420',
+    name: 'Morgus',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676922567/gnawlinzAllies/MorgusPxl_sz0c7h.png',
     slot0: null,
     slot1: null,
     slot2: null,
@@ -38,9 +38,9 @@ export const characterSeed = [
     ally_count: 0
   },
   {
-    handle_id: "420",
-    name: "Morris Bart",
-    image_url: "https://res.cloudinary.com/de0mhjdfg/image/upload/v1676932653/gnawlinzAllies/MorrisBartPxl_mhl3tg.png",
+    handle_id: '420',
+    name: 'Morris Bart',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676932653/gnawlinzAllies/MorrisBartPxl_mhl3tg.png',
     slot0: null,
     slot1: null,
     slot2: null,

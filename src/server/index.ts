@@ -30,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // 18 - 26 ***
 
 // <-- express router -->
-import Auth from './auth/auth'
+import Auth from './auth/auth';
 import allyRouter from './dbRoutes/ally';
 import charAllyRouter from './dbRoutes/character_ally';
 import characterRouter from './dbRoutes/character';
@@ -85,15 +85,15 @@ app.listen(PORT, () => {
   console.log(`G'nawlinZ server listening @ http://localhost:${PORT}`);
 })
 // fix the EADDRINUSE error
-.on("error", (err) => {
-  process.once("SIGUSR2", () => {
-    process.kill(process.pid, "SIGUSR2");
-  });
-  process.on("SIGINT", () => {
+  .on('error', (err) => {
+    process.once('SIGUSR2', () => {
+      process.kill(process.pid, 'SIGUSR2');
+    });
+    process.on('SIGINT', () => {
     // this is only called on ctrl+c, not restart
-    process.kill(process.pid, "SIGINT");
+      process.kill(process.pid, 'SIGINT');
+    });
   });
-});
 
 
 

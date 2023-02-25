@@ -1,6 +1,6 @@
-import React, { Suspense, lazy, createContext, useState } from "react"; //lazy
+import React, { Suspense, lazy, createContext, useState } from 'react'; //lazy
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; //Routes, Route, Navigate
-import { GlobalStyle } from "./GlobalStyled";
+import { GlobalStyle } from './GlobalStyled';
 //import dayjs from 'dayjs';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -59,29 +59,29 @@ const App = () => {
   //   }, 1000);
   //   return () => clearInterval(interval);
   // };
-  console.log('back in 60 seconds')
+  console.log('back in 60 seconds');
   return (
     //<ClockContext.Provider value={{remainingTime, setRemainingTime, calculateRemainingTime}} >
-      <UserContext.Provider value={{activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession }}>
-        <BrowserRouter>
+    <UserContext.Provider value={{activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession }}>
+      <BrowserRouter>
         <GlobalStyle/>
-          <Suspense fallback={<div>LOADING...</div>}>
+        <Suspense fallback={<div>LOADING...</div>}>
 
 
-            <Routes>
-              <Route path='/' element={<Title />} />
-              <Route path='menu' element={<Menu />} />
-              <Route path='gameView' element={<GameView />} />
-              <Route path='result' element={<Result />} />
-              <Route path='*' element={<Navigate to='/' replace />} />
-            </Routes>
+          <Routes>
+            <Route path='/' element={<Title />} />
+            <Route path='menu' element={<Menu />} />
+            <Route path='gameView' element={<GameView />} />
+            <Route path='result' element={<Result />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
+          </Routes>
 
-            {/* <Menu /> */}
-            {/* <a href="/auth/google">authenticate that typescript is great</a> */}
-          </Suspense>
-        </BrowserRouter>
-      </UserContext.Provider>
+          {/* <Menu /> */}
+          {/* <a href="/auth/google">authenticate that typescript is great</a> */}
+        </Suspense>
+      </BrowserRouter>
+    </UserContext.Provider>
     //</ClockContext.Provider>
-)
+  );
 };
 export default App;

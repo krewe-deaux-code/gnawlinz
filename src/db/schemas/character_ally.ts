@@ -13,14 +13,14 @@ const Character_Ally = db.define('character_ally', {
     primaryKey: true,
     autoIncrement: true
   },
-  char_id:{
+  char_id: {
     type: DataTypes.INTEGER,
     references: {
       model: Character,
       key: '_id'
     }
   },
-  ally_id:{
+  ally_id: {
     type: DataTypes.INTEGER,
     references: {
       model: Ally,
@@ -36,6 +36,6 @@ const Character_Ally = db.define('character_ally', {
   weapon1: {
     type: DataTypes.STRING
   },
-})
+});
 
 export default Character_Ally;

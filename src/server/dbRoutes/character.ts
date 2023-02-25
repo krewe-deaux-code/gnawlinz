@@ -27,13 +27,13 @@ characterRouter.get('/:_id', (req, res) => {
     }
   })
     .then((character) => {
-    console.log('This is character in Character.findOne', character);
-    res.status(200).send(character)
-  })
+      console.log('This is character in Character.findOne', character);
+      res.status(200).send(character);
+    })
     .catch((err) => {
-    console.error('Error Character.findOne failed - src/db/dbRoutes/character.ts: ', err);
-    res.sendStatus(500);
-  });
+      console.error('Error Character.findOne failed - src/db/dbRoutes/character.ts: ', err);
+      res.sendStatus(500);
+    });
 });
 
 characterRouter.get('/user/:google_id', (req, res) => {
@@ -43,12 +43,12 @@ characterRouter.get('/user/:google_id', (req, res) => {
       handle_id: google_id // <-- THIS NEEDS TO BE ADDED EACH TIME CHAR CREATED -->
     }
   })
-  .then((characters) => {
-    res.status(201).send(characters);
-  })
-  .catch((err) => {
-    console.error('Error Character.findAll google_id', err);
-  });
+    .then((characters) => {
+      res.status(201).send(characters);
+    })
+    .catch((err) => {
+      console.error('Error Character.findAll google_id', err);
+    });
 });
 
 export default characterRouter;
