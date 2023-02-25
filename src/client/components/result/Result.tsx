@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1 } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1, ScrollableContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 
 import { UserContext } from "../../App"; // <-- holds User object
@@ -50,11 +50,13 @@ const Result: React.FC = () => {
     <Container>
       <Nav isActive={true}/>
       <Story><h2>User Story</h2>
+      <ScrollableContainer>
         {story.map((sentence, index) => (
           <div key={index} style={{ border: "1px solid black", margin: "10px" }}>
             <p>{sentence}</p>
           </div>
         ))}
+      </ScrollableContainer>
       </Story>
       <End><h2>{resultText}</h2>
         <div>
