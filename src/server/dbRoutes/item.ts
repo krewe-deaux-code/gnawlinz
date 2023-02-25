@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const itemRouter = Router();
@@ -12,8 +12,8 @@ const itemRouter = Router();
  import Item from '../../db/schemas/item';
 
 // <-- middleware -->
-itemRouter.use(express.json());
-itemRouter.use(express.urlencoded({ extended: true }));
+// itemRouter.use(express.json());
+// itemRouter.use(express.urlencoded({ extended: true }));
 
 const getItem = async (req: { params: { _id: any; }; }) => {
     try {

@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 //import { TEXT } from 'sequelize';
 //import Choice from '../../db/schemas/choice';
@@ -17,8 +17,8 @@ const storyRouter = Router();
 import Story from '../../db/schemas/story';
 
 // <-- middleware -->
-storyRouter.use(express.json());
-storyRouter.use(express.urlencoded({ extended: true }));
+// storyRouter.use(express.json());
+// storyRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***

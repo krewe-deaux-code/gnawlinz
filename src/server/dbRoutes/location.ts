@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const locationRouter = Router();
@@ -15,8 +15,8 @@ import Location from '../../db/schemas/location';
 
 // <-- middleware -->
 
-locationRouter.use(express.json());
-locationRouter.use(express.urlencoded({ extended: true }));
+// locationRouter.use(express.json());
+// locationRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***

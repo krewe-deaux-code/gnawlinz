@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const characterRouter = Router();
@@ -12,8 +12,8 @@ const characterRouter = Router();
 import Character from '../../db/schemas/character';
 
 // <-- middleware -->
-characterRouter.use(express.json());
-characterRouter.use(express.urlencoded({ extended: true }));
+// characterRouter.use(express.json());
+// characterRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***

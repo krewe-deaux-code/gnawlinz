@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const allyRouter = Router();
@@ -12,8 +12,8 @@ const allyRouter = Router();
 // import Ally from '../../db/schemas/ally';
 
 // <-- middleware -->
-allyRouter.use(express.json());
-allyRouter.use(express.urlencoded({ extended: true }));
+// allyRouter.use(express.json());
+// allyRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***

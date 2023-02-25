@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 
@@ -16,8 +16,8 @@ const userRouter = Router();
 import User from '../../db/schemas/user';
 
 // <-- middleware -->
-userRouter.use(express.json());
-userRouter.use(express.urlencoded({ extended: true }));
+// userRouter.use(express.json());
+// userRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***

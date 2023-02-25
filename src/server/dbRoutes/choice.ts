@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const choiceRouter = Router();
@@ -12,8 +12,8 @@ const choiceRouter = Router();
 import Choice from '../../db/schemas/choice';
 
 // <-- middleware -->
-choiceRouter.use(express.json());
-choiceRouter.use(express.urlencoded({ extended: true }));
+// choiceRouter.use(express.json());
+// choiceRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
