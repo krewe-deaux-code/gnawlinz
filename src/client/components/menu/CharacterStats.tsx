@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 
-import { StyledCarousel, IconImg, IconContainer, StatName } from "./Styled";
+import { StyledCarousel, IconImg, IconContainer, StatName } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
-import { UserContext, Character } from "../../App"; // <-- holds User object
+import { UserContext, Character } from '../../App'; // <-- holds User object
 
-import  ItemSlots  from "./ItemSlots";
+import ItemSlots from './ItemSlots';
 
 const CharacterStats: React.FC = () => {
 
@@ -17,7 +17,7 @@ const CharacterStats: React.FC = () => {
   const [ /*index*/, setIndex] = useState(0);
 
 
-  const handleSelect = (selectedIndex, e) => {
+  const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
     setCurrentChar(userChars[selectedIndex]);
 
@@ -77,7 +77,7 @@ const CharacterStats: React.FC = () => {
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195328/gnawlinzIcons/noun-map-marker-White291627_honeq7.png" /><StatName>Location: {char.location}</StatName></IconContainer>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
                 <ItemSlots char={char} />
-              </Carousel.Item>
+              </Carousel.Item>;
             })
           }
         </StyledCarousel>

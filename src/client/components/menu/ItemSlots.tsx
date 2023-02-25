@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-//import { IconContainer, StatName } from "./Styled";
+import { IconContainer, StatName } from './Styled';
 //import CharacterStats from './CharacterStats';
 import { Character } from '../../App';
 
@@ -48,7 +48,7 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   return (
     <div>
       {items.map((item, i) => (
-        <h5 key={i}>Item Slot {`${i}`}: {item.name || 'Empty'}</h5>
+        <IconContainer><StatName key={i}>Item Slot {`${i}`}: {item.name || 'Empty'}</StatName></IconContainer>
         // Render the item however you want
       ))}
     </div>
