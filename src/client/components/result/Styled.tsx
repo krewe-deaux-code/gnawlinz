@@ -10,6 +10,7 @@ export const Container = styled.div`
   text-align: center;
   grid-gap: 0.25rem;
   transition: all 0.25s ease-in-out;
+  grid-template-columns: .5fr .5fr;
   color: white;
 `;
 
@@ -35,7 +36,7 @@ export const Story = styled.main`
   align-content: space-evenly;
   grid-template-rows: auto auto auto;
   justify-content: center;
-
+  overflow: auto;
 `;
 export const End = styled.div`
   background: #9aaab7;
@@ -45,6 +46,7 @@ export const End = styled.div`
   align-content: space-evenly;
   grid-template-rows: auto auto auto;
   justify-content: center;
+  overflow: auto;
 `;
 
 export const ResultButton = styled.button`
@@ -63,3 +65,30 @@ export const Content1 = styled.div`
   grid-template-rows: auto auto;
 `;
 
+export const ScrollableContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    &::-webkit-scrollbar {
+        /* height: 10px; */
+        width: 30px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+      /* Set the background color of the scrollbar */
+  &&::-webkit-scrollbar-track {
+    background: black;
+    border-radius: 5px;
+  }
+
+  /* Set the color and shape of the scrollbar thumb */
+  &&::-webkit-scrollbar-thumb {
+    background-color: black;
+    border-radius: 5px;
+    /* background-size: 100%; */
+    background: url('https://toppng.com/uploads/preview/zombie-pixel-art-zombie-hand-pixel-art-115630797224fcuwmxj8h.png') no-repeat;
+    background-size: 30px 50px;
+
+  }
+`;

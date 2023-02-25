@@ -3,7 +3,7 @@ import 'postgresql';
 import { Sequelize } from 'sequelize';
 // BEGIN DATABASE SEED DATA IMPORTS //
 
-import { iconSeed } from '../db/seeders/seedData/iconSeed';
+//import { iconSeed } from '../db/seeders/seedData/iconSeed';
 import { allySeed } from './seeders/seedData/allySeed';
 import { characterSeed } from './seeders/seedData/characterSeed';
 import { choiceSeed } from './seeders/seedData/choiceSeed';
@@ -55,14 +55,14 @@ import Enemy from './schemas/enemy';
 import Event from './schemas/event';
 import Story from './schemas/story';
 import Character_Ally from './schemas/character_ally';
-import Location_Event from './schemas/location_event';
-import Icon from './schemas/gameAssets/icon';
+import Location_Event from './schemas/location_event'
+//import Icon from './schemas/gameAssets/icon';
 
 // *************************
 // *** Seeder Fn Imports ***
 // *************************
 
-import iconSeeder from './seeders/iconSeeder';
+//import iconSeeder from './seeders/iconSeeder';
 import allySeeder from './seeders/allySeeder';
 import characterSeeder from './seeders/characterSeeder';
 import choiceSeeder from './seeders/choiceSeeder';
@@ -89,7 +89,7 @@ const modelSync = async (dropTables = false) => {
   await Character_Ally.sync(options);
   await Location_Event.sync(options);
   await Story.sync(options);
-  await Icon.sync(options);
+  //await Icon.sync(options);
   // ↑↑↑ Tables Synced ↑↑↑
   // ↓↓↓  Seed Tables  ↓↓↓
   await itemSeeder(itemSeed);
@@ -101,14 +101,14 @@ const modelSync = async (dropTables = false) => {
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
   await storySeeder(storySeed);
-  await iconSeeder(iconSeed);
+  //await iconSeeder(iconSeed);
 };
 
 // <-- WILL DROP ALL TABLES -->
 modelSync(true);
 
 // <-- WON'T DROP TABLES -->
-// modelSync();
+ //modelSync();
 
 
 // Await seed functions should eventually migrate to own file and be called via npm script
