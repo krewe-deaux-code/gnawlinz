@@ -60,7 +60,7 @@ const GameView: React.FC = () => {
     evacuate: 0,
     wildcard: 0
   });
-  // const [allLocations, setAllLocations] = useState<LocationData[]>([]);
+  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
   // const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
@@ -82,22 +82,35 @@ const GameView: React.FC = () => {
 
   //separate func for update char location via axios request to character/location endpoint
 
-  const fetchLocation = () => {
-    axios.get<LocationData>('/location/random')
-      .then((location) => {
-        console.log('Location from DB', location);
-        setLocation(location.data);
+  // const fetchLocation = () => {
+  //   axios.get<LocationData>('/location/random')
+  //     .then((location) => {
+  //       console.log('Location from DB', location);
+  //       setLocation(location.data);
+  //       fetchEvent();
+  //       //update character location axios to server
+  //     })
+  //     .catch(err => console.log('Axios fail useEffect Location grab', err));
+  // };
+
+
+  const getAllLocations = () => {
+    axios.get('/location/allLocations')
+      .then(locations => {
+        setLocation(locations.data[0]);
+        setAllLocations(locations.data.slice(1));
         fetchEvent();
-        //update character location axios to server
       })
-      .catch(err => console.log('Axios fail useEffect Location grab', err));
+      .catch((err) => {
+        console.error('Failed to retrieve all locations: ', err);
+      });
   };
-  // fetch locations /locations/all
-  // axios fetch locations
-    // query db to find Locations.findAll
-    // res.send (allLocations)
-  // axios fetch locations then
-  // set locations pass in all locations from res.send
+
+  const handleLocationChange = () => {
+    setAllLocations(prevLocations => prevLocations.slice(1));
+    setLocation(allLocations[0]);
+    fetchEvent();
+  };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
@@ -131,7 +144,7 @@ const GameView: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchLocation();
+    getAllLocations();
   }, []);
 
   // conditional for character loss involving health or mood reaching 0
@@ -179,7 +192,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={() => fetchLocation()}>New Location</HudButton> {/**previously Investigate*/}
+              <HudButton onClick={handleLocationChange}>New Location</HudButton> {/**previously Investigate*/}
             </Content1>
           </Link>
           <Content1>
