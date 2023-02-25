@@ -1,7 +1,7 @@
-import React, { Suspense, lazy, createContext, useState } from 'react'; //lazy
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'; //Routes, Route, Navigate
+import React, { Suspense, lazy, createContext, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
-//import dayjs from 'dayjs';
+import axios from 'axios';
 
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
@@ -30,43 +30,30 @@ export interface Character {
   ally_count: number;
 }
 
-//export const ClockContext = createContext<any>('')
 export const UserContext = createContext<any>('');
 
 const App = () => {
 
   const [userChars, setUserChars] = useState<Character[]>([]);
-  const [currentChar, setCurrentChar] = useState<Character | null>(null);
+  const [currentChar, setCurrentChar] = useState<Character>({} as Character);
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
 
-  // const [remainingTime, setRemainingTime] = useState<any>('');
+  const characterUpdate = () => {
+    axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
+      .then(() => console.log('success'))
+      .catch((err) => console.error('error update from axios front end', err));
+  };
 
-  // function calculateRemainingTime() {
-  //   let interval = setInterval(() => {
-  //     let daysLeft = 3;
-  //     let startTime = dayjs();
-  //     let endTime = startTime.add( daysLeft, 'day').startOf('day');
-  //     let remainingTime = endTime.diff(dayjs(), 'millisecond');
-  //     let remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
-  //     let remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-  //     let remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+  characterUpdate();
 
-  //     let formattedTime = `${remainingHours} hours, ${remainingMinutes} minutes, ${remainingSeconds} seconds`;
-  //     setRemainingTime(formattedTime);
-
-  //   }, 1000);
-  //   return () => clearInterval(interval);
-  // };
-  console.log('back in 60 seconds');
   return (
-    //<ClockContext.Provider value={{remainingTime, setRemainingTime, calculateRemainingTime}} >
-    <UserContext.Provider value={{activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession }}>
-      <BrowserRouter>
-        <GlobalStyle/>
-        <Suspense fallback={<div>LOADING...</div>}>
 
+    <UserContext.Provider value={{ activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession }}>
+      <BrowserRouter>
+        <GlobalStyle />
+        <Suspense fallback={<div>LOADING...</div>}>
 
           <Routes>
             <Route path='/' element={<Title />} />
@@ -76,12 +63,10 @@ const App = () => {
             <Route path='*' element={<Navigate to='/' replace />} />
           </Routes>
 
-          {/* <Menu /> */}
-          {/* <a href="/auth/google">authenticate that typescript is great</a> */}
         </Suspense>
       </BrowserRouter>
     </UserContext.Provider>
-    //</ClockContext.Provider>
+
   );
 };
 export default App;
