@@ -33,4 +33,16 @@ locationRouter.get('/random', (req, res) => {
     });
 });
 
+
+locationRouter.get('/allLocations', (req, res) => {
+  Location.findAll({ order: Sequelize.literal('RANDOM()')})
+    .then((locations) => {
+      console.log('ALL LOCATIONS FOUND', locations);
+      res.status(201).send(locations);
+    })
+    .catch((err) => {
+      console.error('Error from /location/allLocations: ', err);
+    });
+});
+
 export default locationRouter;

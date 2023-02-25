@@ -1,12 +1,14 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
+
 import React, { useEffect, useState, useContext } from 'react';
 
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer } from './Styled'; //ContentBox
+  EventText, StatContainer
+} from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
@@ -113,15 +115,24 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
+  // const PerfNavigationTiming: any = window.performance.getEntriesByType('navigation')[0];
+  // console.log(PerformanceNavigationTiming);
+  // if (PerfNavigationTiming.type === 'reload') {
+  //   console.log('Trrrrrrruuuuuuuuuuuuuuuuue');
+  // }
 
   useEffect(() => {
-    fetchLocation();
-  }, []);
+    fetchLocation();// if !localStorage.length, then fire fetch location
+  }, []);// currentChar dependency update local storage, currentChar
   if (currentChar.health < 1) {
-    return <div><Result/></div>;
+    return <div><Result /></div>;
   }
-  console.log('CURRENT CHAR', currentChar);
-  console.log('OUTCOME OUTSIDE FUNCTION', outcome);
+
+  // if localStorage.length, then setCurrentChar(prevStats) => ...prevStats, localStorage.stats
+  if (!currentChar) {
+    return <div>Loading...</div>;
+  }
+
   return (
 
     <Container>
@@ -137,7 +148,7 @@ const GameView: React.FC = () => {
             }
             {
               Object.entries(selectedChoice).length
-                ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
+                ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                 : <>
                   <p style={{ margin: '1rem' }}>What do you do?</p>
                   <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -145,7 +156,7 @@ const GameView: React.FC = () => {
             }
             {
               outcome.length
-                ? <p style={{margin: '1rem'}}>{selectedChoice[outcome]}</p>
+                ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
                 : <></>
             }
           </EventText>
