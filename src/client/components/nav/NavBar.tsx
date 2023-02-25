@@ -11,17 +11,17 @@ type LinkProps = {
   isActive: boolean;
 };
 
-function Nav({ isActive }: LinkProps) {
+const Nav = ({ isActive }: LinkProps) => {
   //do stuff
 
   const { avatar } = useContext(UserContext);
-  const [remainingTime, setRemainingTime] = useState<any>('');
+  const [remainingTime, setRemainingTime] = useState<string>('');
 
   const calculateRemainingTime = () => {
     const interval = setInterval(() => {
       const daysLeft = 3;
       const startTime = dayjs();
-      const endTime = startTime.add( daysLeft, 'day').startOf('day');
+      const endTime = startTime.add(daysLeft, 'day').startOf('day');
       const remainingTime = endTime.diff(dayjs(), 'millisecond');
       const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
       const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
@@ -44,19 +44,19 @@ function Nav({ isActive }: LinkProps) {
 
   // logic to make logo active/inactive depending on where it is being rendered
   return (
-      <NavBar>
-        <TopContent1>
-          {isActive ? (
+    <NavBar>
+      <TopContent1>
+        {isActive ? (
           <Link to="/menu" className='active-link' >GNAWLINZ</Link>
-          ) : (
-            <span className='inactive-link'>GNAWLINZ</span>
-          )}
-        </TopContent1>
-        <TopContent2>{remainingTime}</TopContent2>
-        <TopContent3>
-          <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
-      </NavBar>
-  )
+        ) : (
+          <span className='inactive-link'>GNAWLINZ</span>
+        )}
+      </TopContent1>
+      <TopContent2>{remainingTime}</TopContent2>
+      <TopContent3>
+        <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
+    </NavBar>
+  );
 
 };
 
