@@ -17,7 +17,7 @@ interface LocationData {
   data: object;
   image_url: string;
   name: string;
-};
+}
 
 interface EventData {
   _id: number;
@@ -26,7 +26,7 @@ interface EventData {
   choice1: number;
   choice2: number;
   choice3: number;
-};
+}
 
 interface ChoiceData {
   _id: number;
@@ -39,7 +39,7 @@ interface ChoiceData {
   enemy_effect: number;
   ally_effect: number;
   item_effect: number;
-};
+}
 
 const GameView: React.FC = () => {
 
@@ -88,7 +88,7 @@ const GameView: React.FC = () => {
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        let choiceOutcome = statCheck(stat);
+        const choiceOutcome = statCheck(stat);
         setOutcome(choiceOutcome);
         axios.post(`story/ending/${currentChar._id}`,
           {
@@ -111,14 +111,14 @@ const GameView: React.FC = () => {
       }) // <-- maybe another .then() to update the currentChar in DB with updated stats ?? -->
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
-      })
+      });
   };
 
   useEffect(() => {
     fetchLocation();
   }, []);
-  if(currentChar.health < 1){
-    return <div><Result/></div>
+  if (currentChar.health < 1) {
+    return <div><Result/></div>;
   }
   console.log('CURRENT CHAR', currentChar);
   console.log('OUTCOME OUTSIDE FUNCTION', outcome);
@@ -139,9 +139,9 @@ const GameView: React.FC = () => {
               Object.entries(selectedChoice).length
                 ? <p style={{margin: '1rem'}}>{selectedChoice.flavor_text}</p>
                 : <>
-                    <p style={{ margin: '1rem' }}>What do you do?</p>
-                    <p style={{ margin: '1rem' }}>Select an option below...</p>
-                  </>
+                  <p style={{ margin: '1rem' }}>What do you do?</p>
+                  <p style={{ margin: '1rem' }}>Select an option below...</p>
+                </>
             }
             {
               outcome.length
@@ -159,11 +159,13 @@ const GameView: React.FC = () => {
               <HudButton>Continue</HudButton>
             </Content1>
           </Link>
+          <Link to="/gameView" style={{ textDecoration: 'none' }}>
+            <Content1>
+              <HudButton>New Location</HudButton> {/**previously Investigate*/}
+            </Content1>
+          </Link>
           <Content1>
-          <HudButton>Investigate</HudButton>
-          </Content1>
-          <Content1>
-          <HudButton>Inventory</HudButton>
+            <HudButton>Inventory</HudButton>
           </Content1>
         </Content1>
         <Content2>
@@ -171,11 +173,11 @@ const GameView: React.FC = () => {
             <img src={currentChar.image_url} />
           </div>
           <StatContainer>
-          <div>Character Stats</div>
-          <div>Health: {currentChar.health}</div>
-          <div>Strength: {currentChar.strength}</div>
-          <div>Endurance: {currentChar.endurance}</div>
-          <div>Mood: {currentChar.mood}</div>
+            <div>Character Stats</div>
+            <div>Health: {currentChar.health}</div>
+            <div>Strength: {currentChar.strength}</div>
+            <div>Endurance: {currentChar.endurance}</div>
+            <div>Mood: {currentChar.mood}</div>
           </StatContainer>
         </Content2>
         <Content3>
@@ -186,7 +188,7 @@ const GameView: React.FC = () => {
         </Content3>
       </Footer>
     </Container>
-  )
+  );
 };
 
 export default GameView;

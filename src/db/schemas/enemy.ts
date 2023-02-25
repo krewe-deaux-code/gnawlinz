@@ -19,9 +19,9 @@ const Enemy = db.define('enemy', {
   strength: {
     type: DataTypes.INTEGER
   },
-  health:{
+  health: {
     type: DataTypes.INTEGER
   }
-})
+});
 
 export default Enemy;

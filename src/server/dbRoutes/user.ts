@@ -27,15 +27,15 @@ userRouter.use(express.urlencoded({ extended: true }));
 userRouter.get('/find/:sessionID', (req, res) => {
   const {sessionID} = req.params;
   User.findOne({
-      where: {
-        session_id: sessionID
-      }
-      }).then((user) => {
-          console.log('USER?', user);
-          res.status(200).send(user);
-      }).catch((err) => {
-        console.log(err);
-        })
+    where: {
+      session_id: sessionID
+    }
+  }).then((user) => {
+    console.log('USER?', user);
+    res.status(200).send(user);
+  }).catch((err) => {
+    console.log(err);
+  });
 });
 
 export default userRouter;

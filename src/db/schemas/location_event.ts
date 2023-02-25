@@ -21,11 +21,11 @@ const Location_Event = db.define('location_event', {
   },
   location_id: {
     type: DataTypes.INTEGER,
-      references: {
-        model: Location,
-        key: '_id'
-      }
+    references: {
+      model: Location,
+      key: '_id'
+    }
   }
-})
+});
 
-export default Location_Event
+export default Location_Event;

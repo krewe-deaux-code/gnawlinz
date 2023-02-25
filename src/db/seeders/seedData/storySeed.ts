@@ -7,4 +7,4 @@ export const storySeed = [{
     'The space seemed like it had been picked mostly clean, but you did find one item worth taking with you.',
     'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.'
   ]
-}]
+}];

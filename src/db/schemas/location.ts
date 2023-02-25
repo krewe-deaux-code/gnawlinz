@@ -8,31 +8,31 @@ const Location = db.define('location', {
     primaryKey: true,
     autoIncrement: true
   },
-  name:{
+  name: {
     type: DataTypes.STRING
   },
-  image_url:{
+  image_url: {
     type: DataTypes.STRING
   },
-  random_item_spot1:{
+  random_item_spot1: {
     type: DataTypes.STRING
   },
-  random_item_spot2:{
+  random_item_spot2: {
     type: DataTypes.STRING
   },
-  drop_item_slot:{
+  drop_item_slot: {
     type: DataTypes.INTEGER,
     references: {
       model: Item,
       key: '_id'
     }
   },
-  graffiti:{
+  graffiti: {
     type: DataTypes.STRING
   },
-  graffiti_msg:{
+  graffiti_msg: {
     type: DataTypes.TEXT
   },
-})
+});
 
 export default Location;

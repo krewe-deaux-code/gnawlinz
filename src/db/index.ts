@@ -23,9 +23,9 @@ import { storySeed } from './seeders/seedData/storySeed';
 
 const { DB_USER, DATABASE_URL, DB, DBPW, DB_PORT } = process.env;
 //uncomment second sequelize call for using external db
-export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
+export const db = new Sequelize(DB as string, DB_USER as string, DBPW as string, {
   host: DATABASE_URL,
-  port: DB_PORT as any * 1,
+  port: Number(DB_PORT),
   dialect: 'postgres',
   protocol: 'postgres',
   logging: false
