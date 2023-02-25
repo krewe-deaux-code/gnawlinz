@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
+import Result from '../result/Result';
 import React, { useEffect, useState, useContext } from 'react';
 
 import {
@@ -116,10 +117,13 @@ const GameView: React.FC = () => {
   useEffect(() => {
     fetchLocation();
   }, []);
-
+  if(currentChar.health < 1){
+    return <div><Result/></div>
+  }
   console.log('CURRENT CHAR', currentChar);
   console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
+
     <Container>
       <Nav isActive={true} />
       <Main>

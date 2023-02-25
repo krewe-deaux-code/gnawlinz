@@ -21,10 +21,11 @@ import { storySeed } from './seeders/seedData/storySeed';
 // *** DB CONNECTION ***
 // *********************
 
-const { DB_USER, DATABASE_URL, DB, DBPW } = process.env;
+const { DB_USER, DATABASE_URL, DB, DBPW, DB_PORT } = process.env;
 //uncomment second sequelize call for using external db
 export const db = new Sequelize(DB!, DB_USER!, DBPW!, {
   host: DATABASE_URL,
+  port: DB_PORT as any * 1,
   dialect: 'postgres',
   protocol: 'postgres',
   logging: false
@@ -107,7 +108,7 @@ const modelSync = async (dropTables = false) => {
 modelSync(true);
 
 // <-- WON'T DROP TABLES -->
-// modelSync();
+ //modelSync();
 
 
 // Await seed functions should eventually migrate to own file and be called via npm script
