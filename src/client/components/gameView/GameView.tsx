@@ -128,7 +128,7 @@ const GameView: React.FC = () => {
           <EventText>
             {
               Object.entries(event).length
-                ? <>{event.initial_text}</>
+                ? <p>{event.initial_text}</p>
                 : <></>
             }
             {
