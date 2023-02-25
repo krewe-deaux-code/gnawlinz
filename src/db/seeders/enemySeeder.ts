@@ -5,19 +5,19 @@ const enemySeeder = async (enemyArr: any) => {
     // Create a new Enemy instance with the data from the JSON file
     await Enemy.findOrCreate(
       {
-     where: {
-      name: enemyArr[i].name,
-      image_url: enemyArr[i].image_url,
-      weapon1: enemyArr[i].weapon1,
-      strength:enemyArr[i].strength,
-      health: enemyArr[i].health
-     }
-    })
-    .then((success) =>
-    console.log('Enemy.findOrCreate successful: '))
-    .catch((err) =>
-    console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: '))
+        where: {
+          name: enemyArr[i].name,
+          image_url: enemyArr[i].image_url,
+          weapon1: enemyArr[i].weapon1,
+          strength: enemyArr[i].strength,
+          health: enemyArr[i].health
+        }
+      })
+      .then((success) =>
+        console.log('Enemy.findOrCreate successful: '))
+      .catch((err) =>
+        console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: '));
   }
-}
+};
 
 export default enemySeeder;

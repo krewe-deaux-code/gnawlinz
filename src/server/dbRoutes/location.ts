@@ -26,7 +26,7 @@ locationRouter.get('/random', (req, res) => {
   Location.findOne({ order: Sequelize.literal('RANDOM()'), limit: 1 })
     .then((location) => {
       console.log('LOCATION RANDOM FOUND', location);
-      res.status(201).send(location)
+      res.status(201).send(location);
     })
     .catch((err) => {
       console.error('Error from Location.findall /location/random: ', err);

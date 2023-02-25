@@ -14,7 +14,7 @@ const Item = db.define('item', {
   image_url: {
     type: DataTypes.STRING
   },
-  consumable:{
+  consumable: {
     type: DataTypes.BOOLEAN
   },
   modified_stat0: {
@@ -29,12 +29,12 @@ const Item = db.define('item', {
   modifier1: {
     type: DataTypes.INTEGER
   },
-  buy_price:{
+  buy_price: {
     type: DataTypes.INTEGER
   },
-  sell_price:{
+  sell_price: {
     type: DataTypes.INTEGER
   }
-})
+});
 
 export default Item;

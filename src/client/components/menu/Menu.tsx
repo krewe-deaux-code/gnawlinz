@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from "react"; //useContext
-import { Link  } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from 'react'; //useContext
+import { Link } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
@@ -8,7 +8,7 @@ import Nav from '../nav/NavBar';
 //export const AuthContext = React.createContext(null);
 
 // export const UserContext = createContext<any>('');
-import { UserContext } from "../../App";
+import { UserContext } from '../../App';
 
 const Menu: React.FC = () => {
 
@@ -34,8 +34,8 @@ const Menu: React.FC = () => {
         setActiveUser(data);
         setAvatar(google_avatar);
       }).catch((err) => {
-        console.error(err)
-      })
+        console.error(err);
+      });
 
   }, []);
 
@@ -69,17 +69,17 @@ const Menu: React.FC = () => {
             <span><b>Name:</b></span><span> Jean Valgene</span><br />
             <span><b>Age:</b></span><span> 31</span><br />
             <span><b>Background:</b><br /></span>
-          <span> Jono do my bidding...</span><br />
+            <span> Jono do my bidding...</span><br />
             <span><b>Current Alignment:</b><br />
             Evil/Old</span><br />
-          <span>
-            <b>Jean Valgene's Story:</b><br />
+            <span>
+              <b>Jean Valgene's Story:</b><br />
             Jean Valgene decided to take a walk down to Chompitoulas Street<br />
             Jean Valgene decided to look under a trash can<br />
             Jean Valgene found a stray cat<br />
             Jean Valgene decided to eat stray cat providing +1 temporary health and strength
-          </span>
-        </Content>
+            </span>
+          </Content>
           <Content active={active === 1}>
             <CharacterStats />
           </Content>
@@ -96,7 +96,7 @@ const Menu: React.FC = () => {
 
       </Body >
     </UserContext.Provider>
-  )
+  );
 };
 
 export default Menu;

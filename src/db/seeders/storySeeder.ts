@@ -10,11 +10,11 @@ const storySeeder = async (storyArr: any) => {
           char_choices: storyArr[i].char_choices
         }
       })
-    .then((success) =>
-    console.log('Story.findOrCreate successful: '))
-    .catch((err) =>
-    console.error('Error Story.findOrCreate error in src/db/seeders/storySeeder.ts: '))
+      .then((success) =>
+        console.log('Story.findOrCreate successful: '))
+      .catch((err) =>
+        console.error('Error Story.findOrCreate error in src/db/seeders/storySeeder.ts: '));
   }
-}
+};
 
 export default storySeeder;

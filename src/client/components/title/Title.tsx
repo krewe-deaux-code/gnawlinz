@@ -1,6 +1,6 @@
-import React from "react"; // { useEffect, useContext }
+import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
-import Nav from "../nav/NavBar";
+import Nav from '../nav/NavBar';
 import { TitleContainer, Main, Footer } from './Styled';
 //import GameView from '../gameView/GameView';
 //import axios from 'axios';
@@ -25,7 +25,7 @@ const Title: React.FC = () => {
         </Footer>
       </TitleContainer>
 
-  )
+  );
 };
 
 export default Title;
