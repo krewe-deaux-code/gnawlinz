@@ -6,7 +6,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer
+  EventText, StatContainer, ScrollableContainer
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -170,24 +170,26 @@ const GameView: React.FC = () => {
         <h2>{location.name}</h2>
         <div>
           <EventText>
-            {
-              Object.entries(event).length
-                ? <p>{event.initial_text}</p>
-                : <></>
-            }
-            {
-              Object.entries(selectedChoice).length
-                ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
-                : <>
-                  <p style={{ margin: '1rem' }}>What do you do?</p>
-                  <p style={{ margin: '1rem' }}>Select an option below...</p>
-                </>
-            }
-            {
-              outcome.length
-                ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
-                : <></>
-            }
+            <ScrollableContainer>
+              {
+                Object.entries(event).length
+                  ? <p>{event.initial_text}</p>
+                  : <></>
+              }
+              {
+                Object.entries(selectedChoice).length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  : <>
+                    <p style={{ margin: '1rem' }}>What do you do?</p>
+                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                  </>
+              }
+              {
+                outcome.length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                  : <></>
+              }
+            </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
         </div>
