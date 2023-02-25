@@ -80,12 +80,15 @@ const GameView: React.FC = () => {
       });
   };
 
+  //separate func for update char location via axios request to character/location endpoint
+
   const fetchLocation = () => {
     axios.get<LocationData>('/location/random')
       .then((location) => {
         console.log('Location from DB', location);
         setLocation(location.data);
         fetchEvent();
+        //update character location axios to server
       })
       .catch(err => console.log('Axios fail useEffect Location grab', err));
   };
