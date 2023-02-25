@@ -24,7 +24,7 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   const [items, setItems] = useState<Item[]>([]);
 
   useEffect(() => {
-    fetchItemsArray([1, char.slot1, char.slot2, char.slot3, char.slot4, char.slot5, char.slot6, char.slot7])
+    fetchItemsArray([char.slot0, char.slot1, char.slot2, char.slot3, char.slot4, char.slot5, char.slot6, char.slot7])
       .then((itemsData) =>
         setItems(itemsData))
       .catch((err) =>
