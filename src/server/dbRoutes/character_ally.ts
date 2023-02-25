@@ -1,4 +1,4 @@
-import express from 'express';
+// import express from 'express';
 import { Router } from 'express';
 
 const charAllyRouter = Router();
@@ -12,8 +12,8 @@ const charAllyRouter = Router();
 // import Character_Ally from '../../db/schemas/character_ally';
 
 // <-- middleware -->
-charAllyRouter.use(express.json());
-charAllyRouter.use(express.urlencoded({ extended: true }));
+// charAllyRouter.use(express.json());
+// charAllyRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
