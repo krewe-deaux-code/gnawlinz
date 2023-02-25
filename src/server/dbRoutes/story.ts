@@ -26,7 +26,7 @@ import Story from '../../db/schemas/story';
 
 storyRouter.get('/ending/:charID', (req, res) => {
   Story.findOne({ where: { character_id: req.params.charID } })
-    .then((storyResponse: any) =>{
+    .then((storyResponse: any) => {
       console.log('story object retrieved from db: ', storyResponse);
       const choiceArr = storyResponse.char_choices;
       res.status(200).send(choiceArr);
@@ -40,12 +40,12 @@ storyRouter.post('/ending/:charID', (req, res) => {
       console.log('req body: ', req.body);
       console.log('story response char_choices: ', storyResponse[0].dataValues.char_choices);
       storyResponse[0].dataValues.char_choices.push(req.body.result);
-      
+
       Story.update({
         char_choices: storyResponse[0].dataValues.char_choices
-      }, 
-      { where: { character_id: req.params.charID }}
-      ).then((rowsUpdated: any) => { res.status(201).send(rowsUpdated); });    
+      },
+      { where: { character_id: req.params.charID } }
+      ).then((rowsUpdated: any) => { res.status(201).send(rowsUpdated); });
     });
 });
 
