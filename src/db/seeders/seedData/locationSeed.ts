@@ -1,7 +1,7 @@
 export const locationSeed = [
   {
     name: 'Chompitoulas Street',
-    image_url: 'https://i0.wp.com/beneworleans.com/wp-content/uploads/2018/10/tchoup.jpg?fit=640%2C480&ssl=1',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_fit,h_460,w_690/v1677291106/gnawlinzLocations/ChompitoulasPxl_owbcth.png',
     random_item_spot1: 'Behind the trash can',
     random_item_spot2: 'Under the car',
     drop_item_slot: 1,
@@ -10,7 +10,7 @@ export const locationSeed = [
   },
   {
     name: 'Lake Chompin\' Brain',
-    image_url: 'https://c8.alamy.com/zooms/6/c5ca75e620df470abfd875c73b4b15b8/2aappm4.jpg',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677290241/gnawlinzLocations/LakeFrontPxl_y3uxzu.png',
     random_item_spot1: 'In the water',
     random_item_spot2: 'Behind the trash can',
     drop_item_slot: 6,
@@ -19,7 +19,7 @@ export const locationSeed = [
   },
   {
     name: 'Cafe Dead Mon',
-    image_url: 'https://www.louisianatravel.com/sites/default/files/styles/listing_slideshow/public/listing_images/profile/961/dsc_0023.jpg?itok=t2f7R7QA',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677290836/gnawlinzLocations/CafeDuMondePxl_bivhei.png',
     random_item_spot1: 'Behind the counter',
     random_item_spot2: 'Under a table',
     drop_item_slot: 4,
