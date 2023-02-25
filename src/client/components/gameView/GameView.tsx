@@ -91,7 +91,7 @@ const GameView: React.FC = () => {
   };
   // fetch locations /locations/all
   // axios fetch locations
-    // query db to find Locations.findall
+    // query db to find Locations.findAll
     // res.send (allLocations)
   // axios fetch locations then
   // set locations pass in all locations from res.send

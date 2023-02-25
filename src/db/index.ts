@@ -55,7 +55,7 @@ import Enemy from './schemas/enemy';
 import Event from './schemas/event';
 import Story from './schemas/story';
 import Character_Ally from './schemas/character_ally';
-import Location_Event from './schemas/location_event'
+import Location_Event from './schemas/location_event';
 //import Icon from './schemas/gameAssets/icon';
 
 // *************************
@@ -108,7 +108,7 @@ const modelSync = async (dropTables = false) => {
 modelSync(true);
 
 // <-- WON'T DROP TABLES -->
- //modelSync();
+//modelSync();
 
 
 // Await seed functions should eventually migrate to own file and be called via npm script
