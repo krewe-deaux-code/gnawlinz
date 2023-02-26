@@ -25,7 +25,7 @@ const Menu: React.FC = () => {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
+    const sessionID: unknown = document.cookie.split('; ')[0].split('=')[1];
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
       .then(({ data }) => {
