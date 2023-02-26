@@ -6,7 +6,7 @@ export const GlobalStyle = createGlobalStyle`
     background-color: black;
     background-size: cover;
   }
-  .bNAGeS {
+  .jAUhHI {
     background-color: black;
     background-size: cover;
   }

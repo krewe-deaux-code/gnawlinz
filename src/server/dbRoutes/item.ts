@@ -15,7 +15,7 @@ import Item from '../../db/schemas/item';
 // itemRouter.use(express.json());
 // itemRouter.use(express.urlencoded({ extended: true }));
 
-const getItem = async (req: { params: { _id: any; }; }) => {
+const getItem = async (req: { params: { _id: unknown; }; }) => {
   try {
     const data = await Item.findOne({
       where: { _id: req.params._id }
