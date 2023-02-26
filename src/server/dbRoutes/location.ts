@@ -46,7 +46,7 @@ locationRouter.get('/random', (req, res) => {
 });
 
 locationRouter.get('/allLocations', (req, res) => {
-  Location.findAll({ order: Sequelize.literal('RANDOM()')})
+  Location.findAll({ order: Sequelize.literal('RANDOM()') })
     .then((locations) => {
       console.log('ALL LOCATIONS FOUND', locations);
       res.status(201).send(locations);
@@ -56,10 +56,10 @@ locationRouter.get('/allLocations', (req, res) => {
     });
 });
 
-locationRouter.put('/:_id', async (req: LocationUpdateRequest, res: Response) => {
+locationRouter.put('/drop_item_slot/:_id', async (req: LocationUpdateRequest, res: Response) => {
   try {
-    const {_id} = req.params;
-    const {drop_item_slot} = req.body;
+    const { _id } = req.params;
+    const { drop_item_slot } = req.body;
 
     // Find the location by _id and update the drop_item_slot
     const [rowsUpdated, [updatedLocation]] = await Location.update(
@@ -77,4 +77,18 @@ locationRouter.put('/:_id', async (req: LocationUpdateRequest, res: Response) =>
     res.status(500).send('Server error');
   }
 });
+
+locationRouter.get('/:_id', async (req: Request, res: Response) => {
+  Location.findOne({ where: { _id: req.params._id } })
+    .then((location) =>
+      res.status(200).send(location))
+    .catch((err) => {
+      console.error('Error in locationRouter.get enpoint /:_id--src/server/dbRoutes/location.ts', err);
+      res.status(500).send('Server error');
+    });
+});
+
+
+
+
 export default locationRouter;

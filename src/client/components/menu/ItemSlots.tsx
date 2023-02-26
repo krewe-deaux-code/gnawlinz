@@ -4,7 +4,7 @@ import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
 import { Character } from '../../App';
 import { fetchItemsArray } from '../../utility/itemUtils';
-export interface Item {
+interface Item {
   _id: number;
   name: string;
   image_url: string;
