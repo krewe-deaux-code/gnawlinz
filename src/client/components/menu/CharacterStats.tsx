@@ -56,7 +56,6 @@ const CharacterStats: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-
   // console.log('CHARS AFTER FETCH', userChars);
   // console.log('test', currentChar);
 

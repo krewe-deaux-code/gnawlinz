@@ -1,5 +1,5 @@
 // import express from 'express';
-import express, { Router, Request, Response } from 'express';
+import { Router, Request, Response } from 'express';
 
 const locationRouter = Router();
 
@@ -21,8 +21,8 @@ import Location from '../../db/schemas/location';
 
 // <-- middleware -->
 
-locationRouter.use(express.json());
-locationRouter.use(express.urlencoded({ extended: true }));
+// locationRouter.use(express.json());
+// locationRouter.use(express.urlencoded({ extended: true }));
 
 
 
@@ -42,6 +42,17 @@ locationRouter.get('/random', (req, res) => {
     })
     .catch((err) => {
       console.error('Error from Location.findall /location/random: ', err);
+    });
+});
+
+locationRouter.get('/allLocations', (req, res) => {
+  Location.findAll({ order: Sequelize.literal('RANDOM()')})
+    .then((locations) => {
+      console.log('ALL LOCATIONS FOUND', locations);
+      res.status(201).send(locations);
+    })
+    .catch((err) => {
+      console.error('Error from /location/allLocations: ', err);
     });
 });
 
