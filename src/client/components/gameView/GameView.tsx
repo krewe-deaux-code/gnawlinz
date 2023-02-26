@@ -115,7 +115,15 @@ const GameView: React.FC = () => {
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
     } else {
       const randomNum = Math.floor(Math.random() * (visited.length));
-      setLocation(visited[randomNum]);
+      if (location !== visited[randomNum]) {
+        setLocation(visited[randomNum]);
+      } else {
+        if (visited[randomNum + 1]) {
+          setLocation(visited[randomNum + 1]);
+        } else {
+          setLocation(visited[randomNum - 1]);
+        }
+      }
     }
     fetchEvent();
   };
