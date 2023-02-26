@@ -20,14 +20,14 @@ import Character from '../../db/schemas/character';
 // ******************
 characterRouter.get('/:_id', (req, res) => {
   const { _id } = req.params;
-  console.log('_id in Character Router.get : ', _id);
+  // console.log('_id in Character Router.get : ', _id);
   Character.findOne({
     where: {
       _id: _id
     }
   })
     .then((character) => {
-      console.log('This is character in Character.findOne', character);
+      // console.log('This is character in Character.findOne', character);
       res.status(200).send(character);
     })
     .catch((err) => {
@@ -53,7 +53,7 @@ characterRouter.get('/user/:google_id', (req, res) => {
 
 
 characterRouter.patch('/update/:char_id', (req, res) => {
-  console.log(req.body);
+  //console.log(req.body);
   Character.update(req.body, { where: { _id: req.params.char_id } })
     .then((response) => {
       res.status(200).send(response);

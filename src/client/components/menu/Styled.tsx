@@ -18,6 +18,7 @@ export const IconContainer = styled.div`
   `;
 
 export const IconImg = styled.img`
+  cursor: pointer;
   padding: 5px;
   width: 4em;
 `;
