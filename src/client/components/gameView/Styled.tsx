@@ -139,3 +139,29 @@ export const EventText = styled.div`
   left: 25%;
   overflow: auto;
 `;
+
+export const ScrollableContainer = styled.div`
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    position: relative;
+    &::-webkit-scrollbar {
+        /* height: 10px; */
+        width: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+      /* Set the background color of the scrollbar */
+  &&::-webkit-scrollbar-track {
+    background: black;
+    border-radius: 5px;
+  }
+
+  /* Set the color and shape of the scrollbar thumb */
+  &&::-webkit-scrollbar-thumb {
+    background-color: #f0ac00;
+    border-radius: 5px;
+    background-size: 100%;
+
+  }
+`;

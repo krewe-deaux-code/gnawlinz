@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { IconContainer, StatName, IconImg } from './Styled';
+import { IconContainer, StatName } from './Styled';
+import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
 import { Character } from '../../App';
 import { fetchItemsArray } from '../../utility/itemUtils';
 interface Item {
-  _id: string;
+  _id: number;
   name: string;
   image_url: string;
   consumables: boolean;
@@ -32,8 +33,8 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   }, []);
   return (
     <div>
-      {items.map((item, i: React.Key | null | undefined) => (
-        <IconContainer key={i}><IconImg src={item.image_url || ''}/><StatName>Item Slot {`${i}`}: {item.name || 'Empty'}</StatName></IconContainer>
+      {items.map((item, i: number) => (
+        <IconContainer key={i}><ItemDrop itemId={item._id} charLocation={char.location} imageUrl={item.image_url} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
       ))}
     </div>
   );

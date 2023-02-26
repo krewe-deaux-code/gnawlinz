@@ -7,7 +7,7 @@ import Carousel from 'react-bootstrap/Carousel';
 import { UserContext, Character } from '../../App'; // <-- holds User object
 
 import ItemSlots from './ItemSlots';
-
+import CharacterLocation from './CharacterLocation';
 const CharacterStats: React.FC = () => {
 
 
@@ -71,7 +71,7 @@ const CharacterStats: React.FC = () => {
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195328/gnawlinzIcons/noun-map-marker-White291627_honeq7.png" /><StatName>Location: {char.location}</StatName></IconContainer>
+                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195328/gnawlinzIcons/noun-map-marker-White291627_honeq7.png" /><CharacterLocation locationId={char.location} /></IconContainer>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
                 <ItemSlots char={char} />
               </Carousel.Item>;

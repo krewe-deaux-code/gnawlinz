@@ -7,7 +7,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer
+  EventText, StatContainer, ScrollableContainer
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -15,7 +15,6 @@ import { UserContext } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge } from '../../utility/sounds';
-
 
 interface LocationData {
   _id: number;
@@ -64,8 +63,8 @@ const GameView: React.FC = () => {
     evacuate: 0,
     wildcard: 0
   });
-  // const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  // const [visited, setVisited] = useState<LocationData[]>([]);
+  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
+  const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random')
@@ -86,22 +85,42 @@ const GameView: React.FC = () => {
 
   //separate func for update char location via axios request to character/location endpoint
 
-  const fetchLocation = () => {
-    axios.get<LocationData>('/location/random')
-      .then((location) => {
-        console.log('Location from DB', location);
-        setLocation(location.data);
+  // const fetchLocation = () => {
+  //   axios.get<LocationData>('/location/random')
+  //     .then((location) => {
+  //       console.log('Location from DB', location);
+  //       setLocation(location.data);
+  //       fetchEvent();
+  //       //update character location axios to server
+  //     })
+  //     .catch(err => console.log('Axios fail useEffect Location grab', err));
+  // };
+
+
+  const getAllLocations = () => {
+    axios.get('/location/allLocations')
+      .then(locations => {
+        setLocation(locations.data[0]);
+        setVisited([locations.data[0]]);
+        setAllLocations(locations.data.slice(1));
         fetchEvent();
-        //update character location axios to server
       })
-      .catch(err => console.log('Axios fail useEffect Location grab', err));
+      .catch((err) => {
+        console.error('Failed to retrieve all locations: ', err);
+      });
   };
-  // fetch locations /locations/all
-  // axios fetch locations
-  // query db to find Locations.findAll
-  // res.send (allLocations)
-  // axios fetch locations then
-  // set locations pass in all locations from res.send
+
+  const handleLocationChange = () => {
+    if (allLocations.length) {
+      setAllLocations(prevLocations => prevLocations.slice(1));
+      setLocation(allLocations[0]);
+      setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+    } else {
+      const randomNum = Math.floor(Math.random() * (visited.length));
+      setLocation(visited[randomNum]);
+    }
+    fetchEvent();
+  };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
@@ -135,15 +154,18 @@ const GameView: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchLocation();
+    getAllLocations();
   }, []);
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
-  console.log('CURRENT CHAR', currentChar);
-  console.log('OUTCOME OUTSIDE FUNCTION', outcome);
+  console.log('LOCATIONS', allLocations);
+  console.log('LOCATION', location);
+  console.log('visited array', visited);
+  // console.log('CURRENT CHAR', currentChar);
+  // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
 
     <Container>
@@ -152,24 +174,26 @@ const GameView: React.FC = () => {
         <h2>{location.name}</h2>
         <div>
           <EventText>
-            {
-              Object.entries(event).length
-                ? <p>{event.initial_text}</p>
-                : <></>
-            }
-            {
-              Object.entries(selectedChoice).length
-                ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
-                : <>
-                  <p style={{ margin: '1rem' }}>What do you do?</p>
-                  <p style={{ margin: '1rem' }}>Select an option below...</p>
-                </>
-            }
-            {
-              outcome.length
-                ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
-                : <></>
-            }
+            <ScrollableContainer>
+              {
+                Object.entries(event).length
+                  ? <p>{event.initial_text}</p>
+                  : <></>
+              }
+              {
+                Object.entries(selectedChoice).length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  : <>
+                    <p style={{ margin: '1rem' }}>What do you do?</p>
+                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                  </>
+              }
+              {
+                outcome.length
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                  : <></>
+              }
+            </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
         </div>
@@ -183,7 +207,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={() => fetchLocation()}>New Location</HudButton> {/**previously Investigate*/}
+              <HudButton onClick={handleLocationChange}>New Location</HudButton> {/**previously Investigate*/}
             </Content1>
           </Link>
           <Content1>
