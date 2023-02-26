@@ -20,11 +20,10 @@ const CharacterStats: React.FC = () => {
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex);
     setCurrentChar(userChars[selectedIndex]);
-
   };
 
 
-  const getCurrentChar = (_id = 1) => {
+  const getCurrentChar = (_id = 1) => { // this happens on useEffect, hardcoded to re-select Okra
 
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
@@ -38,14 +37,13 @@ const CharacterStats: React.FC = () => {
     // axios.get(`/character/user/${activeUser.google_id}`)
     axios.get(`/character/user/${handle_id}`)
       .then(({ data }) => {
+        console.log(data);
         setUserChars(data);
       })
       .catch((err) => {
         console.error('Front End side fetchUserChars from server', err);
       });
   };
-
-
 
   useEffect(() => {
     fetchUserChars();
@@ -56,7 +54,7 @@ const CharacterStats: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  // console.log('CHARS AFTER FETCH', userChars);
+  console.log('CHARS AFTER FETCH', userChars);
   // console.log('test', currentChar);
 
   return (
@@ -66,7 +64,7 @@ const CharacterStats: React.FC = () => {
         <h1>Character Select:</h1>
         <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {
-            userChars.map((char: Character, i: React.Key | null | undefined) => {
+            userChars.map((char: Character, i: number) => {
               return <Carousel.Item key={i}>
                 <img src={char.image_url} />
                 <StatName>Name: {char.name}</StatName>

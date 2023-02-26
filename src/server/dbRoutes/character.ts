@@ -36,14 +36,14 @@ characterRouter.get('/:_id', (req, res) => {
     });
 });
 
-characterRouter.get('/user/:google_id', (req, res) => {
+characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize order
   const { google_id } = req.params;
   Character.findAll({
     where: {
       handle_id: google_id // <-- THIS NEEDS TO BE ADDED EACH TIME CHAR CREATED -->
     }
   })
-    .then((characters) => {
+    .then((characters) => { // sort order of characters for currChar to be first
       res.status(201).send(characters);
     })
     .catch((err) => {
