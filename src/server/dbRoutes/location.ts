@@ -49,13 +49,13 @@ locationRouter.get('/allLocations', (req, res) => {
   Location.findAll({ order: Sequelize.literal('RANDOM()') })
     .then((locations) => {
       console.log('ALL LOCATIONS FOUND', locations);
-      res.status(201).send(locations);
+      res.status(200).send(locations);
     })
     .catch((err) => {
       console.error('Error from /location/allLocations: ', err);
     });
 });
-
+// below should be patch?
 locationRouter.put('/drop_item_slot/:_id', async (req: LocationUpdateRequest, res: Response) => {
   try {
     const { _id } = req.params;
