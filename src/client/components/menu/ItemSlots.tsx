@@ -33,8 +33,8 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   }, []);
   return (
     <div>
-      {items.map((item, i: React.Key | null | undefined) => (
-        <IconContainer key={i}><ItemDrop itemId={item._id} charLocation={char.location} imageUrl={item.image_url} /><StatName>Item Slot {`${i}`}: {item.name || 'Empty'}</StatName></IconContainer>
+      {items.map((item, i: number) => (
+        <IconContainer key={i}><ItemDrop itemId={item._id} charLocation={char.location} imageUrl={item.image_url} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
       ))}
     </div>
   );
