@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
+
 import React, { useEffect, useState, useContext } from 'react';
 
 import {
@@ -13,6 +14,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
+import { complete, hit, dodge } from '../../utility/sounds';
 
 interface LocationData {
   _id: number;
@@ -167,9 +169,11 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
+  console.log('LOCATIONS', allLocations);
+  console.log('LOCATION', location);
   console.log('visited array', visited);
-  console.log('CURRENT CHAR', currentChar);
-  console.log('OUTCOME OUTSIDE FUNCTION', outcome);
+  // console.log('CURRENT CHAR', currentChar);
+  // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
 
     <Container>
@@ -206,7 +210,7 @@ const GameView: React.FC = () => {
         <Content1>
           <Link to="/result" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton>Continue</HudButton>
+              <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
@@ -232,8 +236,14 @@ const GameView: React.FC = () => {
           </StatContainer>
         </Content2>
         <Content3>
-          <HudButton onClick={() => resolveChoice(choices.engage, currentChar.strength, 'health')}>Engage</HudButton>
-          <HudButton onClick={() => resolveChoice(choices.evade, currentChar.endurance)}>Evade</HudButton>
+          <HudButton onClick={() => {
+            hit.play();
+            resolveChoice(choices.engage, currentChar.strength, 'health');
+          }}>Engage</HudButton>
+          <HudButton onClick={() => {
+            dodge.play();
+            resolveChoice(choices.evade, currentChar.endurance);
+          }}>Evade</HudButton>
           <HudButton onClick={() => resolveChoice(choices.evacuate, 0)}>Evacuate</HudButton>
           <HudButton onClick={() => resolveChoice(choices.wildcard, currentChar.mood, 'mood')}>Wildcard</HudButton>
         </Content3>
