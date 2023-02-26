@@ -25,7 +25,7 @@ const Menu: React.FC = () => {
   const [active, setActive] = useState(0);
 
   useEffect(() => {
-    const sessionID: any = document.cookie.split('; ')[0].split('=')[1];
+    const sessionID: string = document.cookie.split('; ')[0].split('=')[1];
     setStateSession(sessionID);
     axios.get(`user/find/${sessionID}`)
       .then(({ data }) => {
@@ -57,7 +57,7 @@ const Menu: React.FC = () => {
             Character Select
           </Tab>
           <Tab onClick={handleClick} active={active === 1} id={1}>
-            Character Details
+            Character Creation
           </Tab>
           <Tab onClick={handleClick} active={active === 2} id={2}>
             Inventory
@@ -68,8 +68,10 @@ const Menu: React.FC = () => {
             <CharacterStats />
           </Content>
           <Content active={active === 1}>
-            <h1>Character Story:</h1>
-            <span><b>Name:</b></span><span> Jean Valgene</span><br />
+            <h1>Character Creation:</h1>
+            <p>To be implemented in a future build</p>
+            {/* <CharacterCreation/> */}
+            {/* <span><b>Name:</b></span><span> Jean Valgene</span><br />
             <span><b>Age:</b></span><span> 31</span><br />
             <span><b>Background:</b><br /></span>
             <span> Jono do my bidding...</span><br />
@@ -81,7 +83,7 @@ const Menu: React.FC = () => {
             Jean Valgene decided to look under a trash can<br />
             Jean Valgene found a stray cat<br />
             Jean Valgene decided to eat stray cat providing +1 temporary health and strength
-            </span>
+            </span> */}
           </Content>
           <Content active={active === 2}>
             <h1>Items</h1>

@@ -11,7 +11,7 @@ import { enemySeed } from './seeders/seedData/enemySeed';
 import { eventSeed } from './seeders/seedData/eventSeed';
 import { itemSeed } from './seeders/seedData/itemSeed';
 import { locationSeed } from './seeders/seedData/locationSeed';
-import { storySeed } from './seeders/seedData/storySeed';
+//import { storySeed } from './seeders/seedData/storySeed';
 // import { characterAllySeed } from './seeders/seedData/characterAllySeed';
 // import { locationEventSeed } from './seeders/seedData/locationEventSeed';
 
@@ -70,7 +70,7 @@ import enemySeeder from './seeders/enemySeeder';
 import eventSeeder from './seeders/eventSeeder';
 import itemSeeder from './seeders/itemSeeder';
 import locationSeeder from './seeders/locationSeeder';
-import storySeeder from './seeders/storySeeder';
+// import storySeeder from './seeders/storySeeder';
 // import characterAllySeeder from './seeders/characterAllySeeder';
 // import locationEventSeeder from './seeders/locationEventSeeder';
 
@@ -100,8 +100,8 @@ const modelSync = async (dropTables = false) => {
   await choiceSeeder(choiceSeed);
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
-  await storySeeder(storySeed);
-  //await iconSeeder(iconSeed);
+  // await storySeeder(storySeed);
+  // await iconSeeder(iconSeed);
 };
 
 // <-- WILL DROP ALL TABLES -->
