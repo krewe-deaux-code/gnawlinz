@@ -65,6 +65,24 @@ export const Content1 = styled.div`
   grid-template-rows: auto auto;
 `;
 
+export const CharacterStatContainer = styled.div`
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: space-evenly;
+  grid-template-columns: .5fr .5fr;
+`;
+
+
+export const StatContainer = styled.div`
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  width: 100%;
+  height: 100%;
+  align-content: space-evenly;
+`;
+
 export const ScrollableContainer = styled.div`
     width: 100%;
     height: 100%;
