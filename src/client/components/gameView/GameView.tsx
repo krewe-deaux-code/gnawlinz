@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
-import { complete, hit, dodge } from '../../utility/sounds';
+import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 interface LocationData {
   _id: number;
@@ -244,8 +244,14 @@ const GameView: React.FC = () => {
             dodge.play();
             resolveChoice(choices.evade, currentChar.endurance);
           }}>Evade</HudButton>
-          <HudButton onClick={() => resolveChoice(choices.evacuate, 0)}>Evacuate</HudButton>
-          <HudButton onClick={() => resolveChoice(choices.wildcard, currentChar.mood, 'mood')}>Wildcard</HudButton>
+          <HudButton onClick={() => {
+            evacuate.play();
+            resolveChoice(choices.evacuate, 0);
+          }}>Evacuate</HudButton>
+          <HudButton onClick={() => {
+            wildCard.play();
+            resolveChoice(choices.wildcard, currentChar.mood, 'mood');
+          }}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>

@@ -99,6 +99,66 @@ const dodgeSound = {
   'sample_size': 8
 };
 
+const evacuateSound = {
+  'oldParams': true,
+  'wave_type': 0,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.3332047155982645,
+  'p_env_punch': 0,
+  'p_env_decay': 0.265313020026675,
+  'p_base_freq': 0.36430960298809556,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.20630654229945344,
+  'p_freq_dramp': -0.31,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0.11399599462626381,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0.17088982164722222,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.012,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const wildCardSound = {
+  'oldParams': true,
+  'wave_type': 0,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.12975759808014056,
+  'p_env_punch': 0,
+  'p_env_decay': 0.4366670390268864,
+  'p_base_freq': 0.26150843740474156,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.22123755074333254,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0.5395903671219403,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.4229457144736907,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.019,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
 /*
   ***********************************
   **********************************
@@ -110,6 +170,8 @@ const dodgeSound = {
 const completeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677436049/sounds/pickupCoin_uwwaos.wav';
 const hitUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677436361/sounds/hit_xznp0f.wav';
 const dodgeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677444831/sounds/evade_mlgwsf.wav';
+const evacuateUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466224/sounds/evacuate_mcndzl.wav';
+const wildCardUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466376/sounds/wildcard_ndvygk.wav';
 
 /*
   *******************************
@@ -120,15 +182,28 @@ const dodgeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677444831/
 */
 
 export const complete = new Howl({
-  src: [completeUrl]
+  src: [completeUrl],
+  volume: 1.0
 });
 
 export const hit = new Howl({
-  src: [hitUrl]
+  src: [hitUrl],
+  volume: 1.0
 });
 
 export const dodge = new Howl({
-  src: [dodgeUrl]
+  src: [dodgeUrl],
+  volume: 1.0
 });
 
-Howler.volume(0.3);
+export const evacuate = new Howl({
+  src: [evacuateUrl],
+  volume: 0.7
+});
+
+export const wildCard = new Howl({
+  src: [wildCardUrl],
+  volume: 0.9
+});
+
+Howler.volume(0.6);
