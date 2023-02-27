@@ -203,7 +203,7 @@ export const evacuate = new Howl({
 
 export const wildCard = new Howl({
   src: [wildCardUrl],
-  volume: 0.9
+  volume: 1.0
 });
 
-Howler.volume(0.6);
+Howler.volume(0.7);
