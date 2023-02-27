@@ -83,7 +83,7 @@ locationRouter.get('/:_id', async (req: Request, res: Response) => {
     .then((location) =>
       res.status(200).send(location))
     .catch((err) => {
-      console.error('Error in locationRouter.get enpoint /:_id--src/server/dbRoutes/location.ts', err);
+      console.error('Error in locationRouter.get endpoint /:_id--src/server/dbRoutes/location.ts', err);
       res.status(500).send('Server error');
     });
 });

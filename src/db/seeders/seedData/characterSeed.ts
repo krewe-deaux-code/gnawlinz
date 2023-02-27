@@ -39,7 +39,7 @@ export const characterSeed = [
   },
   {
     handle_id: '420',
-    name: 'Morris Bart',
+    name: 'Borris Fart',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676932653/gnawlinzAllies/MorrisBartPxl_mhl3tg.png',
     slot0: 5,
     slot1: 6,
