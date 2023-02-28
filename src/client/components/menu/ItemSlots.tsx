@@ -3,7 +3,9 @@ import { IconContainer, StatName } from './Styled';
 import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
 import { Character } from '../../App';
-import { fetchItemsArray } from '../../utility/itemUtils';
+
+import axios from 'axios';
+
 interface Item {
   _id: number;
   name: string;
@@ -23,6 +25,18 @@ interface ItemSlotsProps {
 
 const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   const [items, setItems] = useState<Item[]>([]);
+
+  const fetchItemsArray = async (itemArray: unknown[]) => {
+    const passToDB = itemArray.filter(el => {
+      return el !== null;
+    });
+    const promises = passToDB.map((slotValue) =>
+      axios.get(`/item/${slotValue}`)
+    );
+    const results = await Promise.all(promises);
+    const itemsData = results.map((result) => result.data);
+    return itemsData;
+  };
 
   useEffect(() => {
     fetchItemsArray([char.slot0, char.slot1, char.slot2, char.slot3, char.slot4, char.slot5, char.slot6, char.slot7])
