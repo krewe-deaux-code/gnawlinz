@@ -10,7 +10,7 @@ interface ItemDropProps {
   imageUrl: string;
 }
 
-const ItemDrop: React.FC<ItemDropProps> = ({ itemId, charLocation, /*imageUrl*/ }) => {
+const ItemDrop: React.FC<ItemDropProps> = ({ itemId, charLocation, imageUrl }) => {
   const handleClick = async () => {
     try {
       await axios.put(`/location/drop_item_slot/${charLocation}`, { drop_item_slot: itemId });
@@ -19,7 +19,7 @@ const ItemDrop: React.FC<ItemDropProps> = ({ itemId, charLocation, /*imageUrl*/ 
     }
   };
 
-  return <IconImg src={/*imageUrl || */''} onClick={handleClick} />;
+  return <IconImg src={imageUrl || ''} onClick={handleClick} />;
 };
 
 export default ItemDrop;
