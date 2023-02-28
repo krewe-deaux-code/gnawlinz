@@ -30,10 +30,9 @@ const Result: React.FC = () => {
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
         setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
-        // setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
         setResultText('you survived!');
       } else {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
+        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
         setResultText('you died!');
       }
     };
