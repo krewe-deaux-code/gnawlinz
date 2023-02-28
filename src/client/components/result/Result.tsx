@@ -28,7 +28,7 @@ const Result: React.FC = () => {
       });
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
-      if (currentChar.health > 0) {
+      if (currentChar.health > 0) { // && currentChar.mood > 0
         setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
         setResultText('you survived!');
       } else {

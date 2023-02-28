@@ -25,13 +25,13 @@ import User from '../../db/schemas/user';
 
 
 userRouter.get('/find/:sessionID', (req, res) => {
-  const {sessionID} = req.params;
+  const { sessionID } = req.params;
   User.findOne({
     where: {
       session_id: sessionID
     }
   }).then((user) => {
-    console.log('USER?', user);
+    // console.log('USER?', user);
     res.status(200).send(user);
   }).catch((err) => {
     console.log(err);
