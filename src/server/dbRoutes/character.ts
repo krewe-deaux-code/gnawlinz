@@ -41,7 +41,8 @@ characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize ord
   Character.findAll({
     where: {
       handle_id: google_id // <-- THIS NEEDS TO BE ADDED EACH TIME CHAR CREATED -->
-    }
+    },
+    order: [['_id', 'ASC']]
   })
     .then((characters) => { // sort order of characters for currChar to be first
       res.status(201).send(characters);
@@ -56,6 +57,7 @@ characterRouter.patch('/update/:char_id', (req, res) => {
   //console.log(req.body);
   Character.update(req.body, { where: { _id: req.params.char_id } })
     .then((response) => {
+      console.log('RESPONSE CHAR UPDATE', response);
       res.status(200).send(response);
     })
     .catch((err) => {

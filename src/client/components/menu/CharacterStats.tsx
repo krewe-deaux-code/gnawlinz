@@ -8,10 +8,10 @@ import { UserContext, Character } from '../../App'; // <-- holds User object
 
 import ItemSlots from './ItemSlots';
 import CharacterLocation from './CharacterLocation';
+
 const CharacterStats: React.FC = () => {
 
-
-  const { userChars, setUserChars, currentChar, setCurrentChar, /*activeUser*/ } = useContext(UserContext); // <-- NEED to get user chars below
+  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex] = useState(0);
@@ -24,7 +24,7 @@ const CharacterStats: React.FC = () => {
 
 
   const getCurrentChar = (_id = 1) => { // this happens on useEffect, hardcoded to re-select Okra
-
+    _id = currentChar._id || 1;
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
         setCurrentChar(data))
@@ -32,12 +32,19 @@ const CharacterStats: React.FC = () => {
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
-  const fetchUserChars = () => {
-    const handle_id = '420';
+  const fetchUserChars = (handle_id = '420') => {
+    // handle_id = activeUser.google_id || '420';
+    // console.log('here handle_id change', handle_id);
+    // console.log('ACTIVE USER GOOGLE ID', activeUser.google_id);
+    // const handle_id = '420';
+    // if (activeUser.google_id === '103981305262482746711') {
+    //   handle_id = activeUser.google_id;
+    //   console.log('here handle_id change', handle_id);
+    // }
     // axios.get(`/character/user/${activeUser.google_id}`)
     axios.get(`/character/user/${handle_id}`)
       .then(({ data }) => {
-        console.log(data);
+        // console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
         setUserChars(data);
       })
       .catch((err) => {
@@ -46,21 +53,23 @@ const CharacterStats: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchUserChars();
-    getCurrentChar();
+    console.log('INSIDE USE EFFECT', activeUser);
+    fetchUserChars(); // activeUser.google_id as arg
+    getCurrentChar(currentChar._id);
   }, []);
 
   if (!currentChar) {
     return <div>Loading...</div>;
   }
 
-  console.log('CHARS AFTER FETCH', userChars);
-  // console.log('test', currentChar);
+  // console.log('CHARS AFTER FETCH', userChars);
+  console.log('CURRENT CHAR', currentChar);
+  console.log('ACTIVE USER', activeUser);
+  console.log('USER CHARS -->', userChars);
 
   return (
     <>
       <div>
-
         <h1>Character Select:</h1>
         <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {

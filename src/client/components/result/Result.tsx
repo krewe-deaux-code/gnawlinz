@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1, ScrollableContainer } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer, LeaderBoardTrophy } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
-
+import LeaderBoard from './LeaderBoard';
 import { UserContext } from '../../App'; // <-- holds User object
 
 
@@ -28,11 +28,11 @@ const Result: React.FC = () => {
       });
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
-      if (currentChar.health > 0) {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
+      if (currentChar.health > 0 && currentChar.mood > 0) {
+        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
         setResultText('you survived!');
       } else {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
+        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
         setResultText('you died!');
       }
     };
@@ -63,9 +63,23 @@ const Result: React.FC = () => {
         </ScrollableContainer>
       </Story>
       <End><h2>{resultText}</h2>
+
         <div>
           <img src={image} />
         </div>
+        <CharacterStatContainer>
+          <div>
+            <h4>{currentChar.name}</h4>
+            <img src={currentChar.image_url} />
+          </div>
+          <StatContainer>
+            <div style={{ textDecoration: 'underline' }}>Status</div>
+            <div>Health: {currentChar.health}</div>
+            <div>Strength: {currentChar.strength}</div>
+            <div>Endurance: {currentChar.endurance}</div>
+            <div>Mood: {currentChar.mood}</div>
+          </StatContainer>
+        </CharacterStatContainer>
         <Content1>
           <Link to="/" style={{ textDecoration: 'none' }} >
             <Content1>
@@ -73,11 +87,8 @@ const Result: React.FC = () => {
             </Content1>
           </Link>
         </Content1>
-        <Content1>
-          <Content1>
-            {/* <ResultButton onClick={handleClick}>Toggle W/L</ResultButton> */}
-          </Content1>
-        </Content1>
+        <h4>LeaderBoard</h4>
+        <LeaderBoard />
       </End>
     </Container>
   );

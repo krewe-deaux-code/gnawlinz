@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, createContext, useState } from 'react';
+import React, { Suspense, lazy, createContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
@@ -46,7 +46,9 @@ const App = () => {
       .catch((err) => console.error('error update from axios front end', err));
   };
 
-  characterUpdate();
+  useEffect(() => {
+    characterUpdate();
+  }, [currentChar]);
 
   return (
 

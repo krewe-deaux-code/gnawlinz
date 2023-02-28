@@ -14,7 +14,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
-import { complete, hit, dodge } from '../../utility/sounds';
+import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 interface LocationData {
   _id: number;
@@ -96,11 +96,18 @@ const GameView: React.FC = () => {
   //     .catch(err => console.log('Axios fail useEffect Location grab', err));
   // };
 
+  // const updateLocationDB = () => {
+
+  // };
 
   const getAllLocations = () => {
     axios.get('/location/allLocations')
       .then(locations => {
         setLocation(locations.data[0]);
+        setCurrentChar(prevStats => ({
+          ...prevStats,
+          location: locations.data[0]._id
+        }));
         setVisited([locations.data[0]]);
         setAllLocations(locations.data.slice(1));
         fetchEvent();
@@ -114,16 +121,32 @@ const GameView: React.FC = () => {
     if (allLocations.length) {
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
+      setCurrentChar(prevStats => ({
+        ...prevStats,
+        location: allLocations[0]._id
+      }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
     } else {
       const randomNum = Math.floor(Math.random() * (visited.length));
       if (location !== visited[randomNum]) {
         setLocation(visited[randomNum]);
+        setCurrentChar(prevStats => ({
+          ...prevStats,
+          location: visited[randomNum]._id
+        }));
       } else {
         if (visited[randomNum + 1]) {
           setLocation(visited[randomNum + 1]);
+          setCurrentChar(prevStats => ({
+            ...prevStats,
+            location: visited[randomNum + 1]._id
+          }));
         } else {
           setLocation(visited[randomNum - 1]);
+          setCurrentChar(prevStats => ({
+            ...prevStats,
+            location: visited[randomNum - 1]._id
+          }));
         }
       }
     }
@@ -244,8 +267,14 @@ const GameView: React.FC = () => {
             dodge.play();
             resolveChoice(choices.evade, currentChar.endurance);
           }}>Evade</HudButton>
-          <HudButton onClick={() => resolveChoice(choices.evacuate, 0)}>Evacuate</HudButton>
-          <HudButton onClick={() => resolveChoice(choices.wildcard, currentChar.mood, 'mood')}>Wildcard</HudButton>
+          <HudButton onClick={() => {
+            evacuate.play();
+            resolveChoice(choices.evacuate, 0);
+          }}>Evacuate</HudButton>
+          <HudButton onClick={() => {
+            wildCard.play();
+            resolveChoice(choices.wildcard, currentChar.mood, 'mood');
+          }}>Wildcard</HudButton>
         </Content3>
       </Footer>
     </Container>

@@ -31,9 +31,6 @@ import Location from '../../db/schemas/location';
 // ******************
 
 
-
-
-
 locationRouter.get('/random', (req, res) => {
   Location.findOne({ order: Sequelize.literal('RANDOM()'), limit: 1 })
     .then((location) => {
