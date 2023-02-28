@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
+import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer, LeaderBoardTrophy } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
-
+import LeaderBoard from './LeaderBoard';
 import { UserContext } from '../../App'; // <-- holds User object
 
 
@@ -29,7 +29,8 @@ const Result: React.FC = () => {
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
+        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
+        // setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
         setResultText('you survived!');
       } else {
         setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
@@ -63,6 +64,7 @@ const Result: React.FC = () => {
         </ScrollableContainer>
       </Story>
       <End><h2>{resultText}</h2>
+
         <div>
           <img src={image} />
         </div>
@@ -86,6 +88,8 @@ const Result: React.FC = () => {
             </Content1>
           </Link>
         </Content1>
+        <h4>LeaderBoard</h4>
+        <LeaderBoard />
       </End>
     </Container>
   );
