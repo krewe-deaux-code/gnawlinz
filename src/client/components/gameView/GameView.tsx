@@ -11,7 +11,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../App';
+import { UserContext, EventData, ChoiceData } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -27,42 +27,11 @@ interface LocationData {
   graffiti_msg: string;
 }
 
-interface EventData {
-  _id: number;
-  initial_text: string;
-  choice0: number;
-  choice1: number;
-  choice2: number;
-  choice3: number;
-}
-
-interface ChoiceData {
-  _id: number;
-  flavor_text: string;
-  success: string;
-  failure: string;
-  alignment0: string;
-  alignment1: string;
-  alignment2: string;
-  enemy_effect: number;
-  ally_effect: number;
-  item_effect: number;
-}
-
 const GameView: React.FC = () => {
 
-  const { currentChar, setCurrentChar } = useContext(UserContext);
+  const { currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome } = useContext(UserContext);
 
-  const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationData);
-  const [event, setEvent] = useState({} as EventData);
-  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
-  const [choices, setChoices] = useState({
-    engage: 0,
-    evade: 0,
-    evacuate: 0,
-    wildcard: 0
-  });
   const [allLocations, setAllLocations] = useState<LocationData[]>([]);
   const [visited, setVisited] = useState<LocationData[]>([]);
 
@@ -101,21 +70,26 @@ const GameView: React.FC = () => {
   // };
 
   const getAllLocations = () => {
+    console.log('Current Event on State: ', event);
     axios.get('/location/allLocations')
       .then(locations => {
-        setLocation(locations.data[0]);
-        setCurrentChar(prevStats => ({
-          ...prevStats,
-          location: locations.data[0]._id
-        }));
-        setVisited([locations.data[0]]);
-        setAllLocations(locations.data.slice(1));
-        fetchEvent();
+        console.log('current location: ', currentChar.location);
+        // setCurrentChar(prevStats => ({
+        //   ...prevStats,
+        //   location: locations.data[0]._id
+        setVisited(locations.data.filter((current) => current._id === currentChar.location));
+        setAllLocations(locations.data.filter((current) => current._id !== currentChar.location));
+        setLocation(locations.data.filter((current) => current._id === currentChar.location)[0]);
+        if (!Object.entries(event).length) {
+          fetchEvent();
+        }
       })
       .catch((err) => {
         console.error('Failed to retrieve all locations: ', err);
       });
   };
+
+
 
   const handleLocationChange = () => {
     if (allLocations.length) {
@@ -282,3 +256,21 @@ const GameView: React.FC = () => {
 };
 
 export default GameView;
+
+// const getAllLocations = () => {
+//   axios.get('/location/allLocations')
+//     .then(locations => {
+//       setLocation(locations.data[0]);
+//       setCurrentChar(prevStats => ({
+//         ...prevStats,
+//         location: locations.data[0]._id
+//       }));
+//       setVisited([locations.data[0]]);
+//       //remove current location
+//       setAllLocations(locations.data.slice(1));
+//       fetchEvent();
+//     })
+//     .catch((err) => {
+//       console.error('Failed to retrieve all locations: ', err);
+//     });
+// };
