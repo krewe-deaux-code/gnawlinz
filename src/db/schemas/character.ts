@@ -102,6 +102,10 @@ const Character = db.define('character', {
   ally_count: {
     type: DataTypes.INTEGER
   },
+  score: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0
+  }
 });
 
 export default Character;
