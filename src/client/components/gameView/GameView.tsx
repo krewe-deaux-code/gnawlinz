@@ -18,11 +18,11 @@ import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 const GameView: React.FC = () => {
 
-  const { visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
+  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
 
   const fetchEvent = () => {
-    axios.get<EventData>('/event/random')
+    axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         console.log('EVENT', event);
         setEvent(event.data);
@@ -32,21 +32,17 @@ const GameView: React.FC = () => {
           evacuate: event.data.choice2,
           wildcard: event.data.choice3
         });
+        setPrevEventId(event.data._id);
       })
       .catch(err => {
         console.log('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
-
-
-
-
   const handleClickButt = () => {
     setInvestigateDisabled(true);
     console.log('button pressed');
   };
-
 
   //separate func for update char location via axios request to character/location endpoint
 

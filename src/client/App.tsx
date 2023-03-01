@@ -88,6 +88,8 @@ const App = () => {
   const [visited, setVisited] = useState<LocationData[]>([]);
   const [investigateDisabled, setInvestigateDisabled] = useState(false);
 
+  const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
+
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
       .then(() => console.log('success'))
@@ -100,7 +102,7 @@ const App = () => {
 
   return (
 
-    <UserContext.Provider value={{ visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled}}>
+    <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
       <BrowserRouter>
         <GlobalStyle />
         <Suspense fallback={<div>LOADING...</div>}>
