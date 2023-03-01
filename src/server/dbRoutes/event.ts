@@ -4,7 +4,7 @@ import { Router } from 'express';
 const eventRouter = Router();
 
 // <-- Unsure if we need these -->
-import { Sequelize } from 'sequelize';
+import { Sequelize, Op } from 'sequelize';
 // import { db } from '../../db/index';
 // import '../auth/auth';
 
@@ -20,7 +20,10 @@ import Event from '../../db/schemas/event';
 // ******************
 
 eventRouter.get('/random', (req, res) => {
-  Event.findOne({ order: Sequelize.literal('RANDOM()'), limit: 1 })
+  console.log('REQ PARAMS NULL???', req.query.excludeEventId);
+  const excludeEventId = req.query.excludeEventId; // to get from sent params
+  const where = excludeEventId ? { _id: { [Op.ne]: excludeEventId } } : {}; // Operator Not Equal...
+  Event.findOne({ where, order: Sequelize.literal('RANDOM()'), limit: 1 })
     .then((event) => {
       // console.log('EVENT RANDOM FOUND', event);
       res.status(200).send(event);

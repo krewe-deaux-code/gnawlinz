@@ -2,7 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import {
   Container, Main, Content1,
@@ -11,63 +11,18 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext } from '../../App';
+import { UserContext, EventData, ChoiceData } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
-interface LocationData {
-  _id: number;
-  name: string;
-  image_url: string;
-  random_item_spot1: string;
-  random_item_spot2: string;
-  drop_item_slot: number;
-  graffiti: string;
-  graffiti_msg: string;
-}
-
-interface EventData {
-  _id: number;
-  initial_text: string;
-  choice0: number;
-  choice1: number;
-  choice2: number;
-  choice3: number;
-}
-
-interface ChoiceData {
-  _id: number;
-  flavor_text: string;
-  success: string;
-  failure: string;
-  alignment0: string;
-  alignment1: string;
-  alignment2: string;
-  enemy_effect: number;
-  ally_effect: number;
-  item_effect: number;
-}
-
 const GameView: React.FC = () => {
 
-  const { currentChar, setCurrentChar } = useContext(UserContext);
+  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
-  const [outcome, setOutcome] = useState('');
-  const [location, setLocation] = useState({} as LocationData);
-  const [event, setEvent] = useState({} as EventData);
-  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
-  const [choices, setChoices] = useState({
-    engage: 0,
-    evade: 0,
-    evacuate: 0,
-    wildcard: 0
-  });
-  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  const [visited, setVisited] = useState<LocationData[]>([]);
 
   const fetchEvent = () => {
-    axios.get<EventData>('/event/random')
+    axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         console.log('EVENT', event);
         setEvent(event.data);
@@ -77,10 +32,16 @@ const GameView: React.FC = () => {
           evacuate: event.data.choice2,
           wildcard: event.data.choice3
         });
+        setPrevEventId(event.data._id);
       })
       .catch(err => {
         console.log('RANDOM EVENT FETCH FAILED', err);
       });
+  };
+
+  const handleClickButt = () => {
+    setInvestigateDisabled(true);
+    console.log('button pressed');
   };
 
   //separate func for update char location via axios request to character/location endpoint
@@ -101,24 +62,31 @@ const GameView: React.FC = () => {
   // };
 
   const getAllLocations = () => {
+    console.log('Current Event on State: ', event);
     axios.get('/location/allLocations')
       .then(locations => {
-        setLocation(locations.data[0]);
-        setCurrentChar(prevStats => ({
-          ...prevStats,
-          location: locations.data[0]._id
-        }));
-        setVisited([locations.data[0]]);
-        setAllLocations(locations.data.slice(1));
-        fetchEvent();
+        console.log('current location: ', currentChar.location);
+        // setCurrentChar(prevStats => ({
+        //   ...prevStats,
+        //   location: locations.data[0]._id
+        setVisited(locations.data.filter((current) => current._id === currentChar.location));
+        setAllLocations(locations.data.filter((current) => current._id !== currentChar.location));
+        setLocation(locations.data.filter((current) => current._id === currentChar.location)[0]);
+        if (!Object.entries(event).length) {
+          fetchEvent();
+        }
       })
       .catch((err) => {
         console.error('Failed to retrieve all locations: ', err);
       });
   };
 
+
+
   const handleLocationChange = () => {
     if (allLocations.length) {
+      setSelectedChoice({} as ChoiceData);
+      setOutcome('');
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
       setCurrentChar(prevStats => ({
@@ -183,8 +151,17 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
+  // call state setter func set investigate ability
+  // watches when current location changes, boolean changes
+  // new use effect based on new location
+  useEffect(() => {
+    console.log('enable button function');
+    setInvestigateDisabled(false);
+  }, [location]);
+
 
   useEffect(() => {
+    console.log('this is the use effect');
     getAllLocations();
   }, []);
 
@@ -192,9 +169,9 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
-  console.log('LOCATIONS', allLocations);
-  console.log('LOCATION', location);
-  console.log('visited array', visited);
+  // console.log('LOCATIONS', allLocations);
+  // console.log('LOCATION', location);
+  // console.log('visited array', visited);
   // console.log('CURRENT CHAR', currentChar);
   // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
@@ -242,7 +219,7 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton>Inventory</HudButton>
+            <HudButton onClick={() => { handleClickButt(); fetchEvent(); }} disabled={investigateDisabled}>Investigate</HudButton>
           </Content1>
         </Content1>
         <Content2>
@@ -282,3 +259,21 @@ const GameView: React.FC = () => {
 };
 
 export default GameView;
+
+// const getAllLocations = () => {
+//   axios.get('/location/allLocations')
+//     .then(locations => {
+//       setLocation(locations.data[0]);
+//       setCurrentChar(prevStats => ({
+//         ...prevStats,
+//         location: locations.data[0]._id
+//       }));
+//       setVisited([locations.data[0]]);
+//       //remove current location
+//       setAllLocations(locations.data.slice(1));
+//       fetchEvent();
+//     })
+//     .catch((err) => {
+//       console.error('Failed to retrieve all locations: ', err);
+//     });
+// };
