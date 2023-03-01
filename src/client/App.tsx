@@ -64,6 +64,8 @@ export interface LocationData {
 }
 
 export const UserContext = createContext<any>('');
+// export const InvestigateContext = createContext<boolean>(false);
+
 
 const App = () => {
 
@@ -84,6 +86,7 @@ const App = () => {
   const [location, setLocation] = useState({} as LocationData);
   const [allLocations, setAllLocations] = useState<LocationData[]>([]);
   const [visited, setVisited] = useState<LocationData[]>([]);
+  const [investigateDisabled, setInvestigateDisabled] = useState(false);
 
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
@@ -97,7 +100,7 @@ const App = () => {
 
   return (
 
-    <UserContext.Provider value={{ visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome}}>
+    <UserContext.Provider value={{ visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled}}>
       <BrowserRouter>
         <GlobalStyle />
         <Suspense fallback={<div>LOADING...</div>}>
