@@ -123,6 +123,7 @@ const GameView: React.FC = () => {
       }
     }
     fetchEvent();
+    setInvestigateDisabled(false);
   };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
@@ -158,10 +159,10 @@ const GameView: React.FC = () => {
   // call state setter func set investigate ability
   // watches when current location changes, boolean changes
   // new use effect based on new location
-  useEffect(() => {
-    console.log('enable button function');
-    setInvestigateDisabled(false);
-  }, [location]);
+  // useEffect(() => {
+  //   console.log('enable button function use effect');
+  //   setInvestigateDisabled(false);
+  // }, [location]);
 
 
   useEffect(() => {
