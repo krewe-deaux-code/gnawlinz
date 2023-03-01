@@ -52,6 +52,17 @@ export interface ChoiceData {
   item_effect: number;
 }
 
+export interface LocationData {
+  _id: number;
+  name: string;
+  image_url: string;
+  random_item_spot1: string;
+  random_item_spot2: string;
+  drop_item_slot: number;
+  graffiti: string;
+  graffiti_msg: string;
+}
+
 export const UserContext = createContext<any>('');
 
 const App = () => {
@@ -70,7 +81,9 @@ const App = () => {
     wildcard: 0
   });
   const [outcome, setOutcome] = useState('');
-
+  const [location, setLocation] = useState({} as LocationData);
+  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
+  const [visited, setVisited] = useState<LocationData[]>([]);
 
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
@@ -84,7 +97,7 @@ const App = () => {
 
   return (
 
-    <UserContext.Provider value={{ activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome}}>
+    <UserContext.Provider value={{ visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome}}>
       <BrowserRouter>
         <GlobalStyle />
         <Suspense fallback={<div>LOADING...</div>}>

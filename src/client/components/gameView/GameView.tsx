@@ -2,7 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 
 import {
   Container, Main, Content1,
@@ -16,24 +16,11 @@ import { UserContext, EventData, ChoiceData } from '../../App';
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
-interface LocationData {
-  _id: number;
-  name: string;
-  image_url: string;
-  random_item_spot1: string;
-  random_item_spot2: string;
-  drop_item_slot: number;
-  graffiti: string;
-  graffiti_msg: string;
-}
-
 const GameView: React.FC = () => {
 
-  const { currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome } = useContext(UserContext);
+  const { visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome } = useContext(UserContext);
 
-  const [location, setLocation] = useState({} as LocationData);
-  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  const [visited, setVisited] = useState<LocationData[]>([]);
+
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random')
@@ -93,6 +80,8 @@ const GameView: React.FC = () => {
 
   const handleLocationChange = () => {
     if (allLocations.length) {
+      setSelectedChoice({} as ChoiceData);
+      setOutcome('');
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
       setCurrentChar(prevStats => ({
