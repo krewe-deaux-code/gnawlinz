@@ -83,6 +83,16 @@ const GameView: React.FC = () => {
       });
   };
 
+
+
+  const [investigateDisabled, setInvestigateDisabled] = useState(false);
+
+  const handleClickButt = () => {
+    setInvestigateDisabled(true);
+    console.log('button pressed');
+  };
+
+
   //separate func for update char location via axios request to character/location endpoint
 
   // const fetchLocation = () => {
@@ -160,6 +170,12 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
+  // call state setter func set investigate ability
+  // watches when current location changes, boolean changes
+  // new use effect based on new location
+  useEffect(() => {
+    setInvestigateDisabled(false);
+  }, [location]);
 
   useEffect(() => {
     getAllLocations();
@@ -219,7 +235,7 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton>Inventory</HudButton>
+            <HudButton onClick={() => { handleClickButt(); fetchEvent(); }} disabled={investigateDisabled}>Investigate</HudButton>
           </Content1>
         </Content1>
         <Content2>
