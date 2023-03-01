@@ -18,8 +18,7 @@ import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 const GameView: React.FC = () => {
 
-  const { visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome } = useContext(UserContext);
-
+  const { visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
 
   const fetchEvent = () => {
@@ -38,6 +37,16 @@ const GameView: React.FC = () => {
         console.log('RANDOM EVENT FETCH FAILED', err);
       });
   };
+
+
+
+
+
+  const handleClickButt = () => {
+    setInvestigateDisabled(true);
+    console.log('button pressed');
+  };
+
 
   //separate func for update char location via axios request to character/location endpoint
 
@@ -146,8 +155,17 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
+  // call state setter func set investigate ability
+  // watches when current location changes, boolean changes
+  // new use effect based on new location
+  useEffect(() => {
+    console.log('enable button function');
+    setInvestigateDisabled(false);
+  }, [location]);
+
 
   useEffect(() => {
+    console.log('this is the use effect');
     getAllLocations();
   }, []);
 
@@ -155,9 +173,9 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
-  console.log('LOCATIONS', allLocations);
-  console.log('LOCATION', location);
-  console.log('visited array', visited);
+  // console.log('LOCATIONS', allLocations);
+  // console.log('LOCATION', location);
+  // console.log('visited array', visited);
   // console.log('CURRENT CHAR', currentChar);
   // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
@@ -205,7 +223,7 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton>Inventory</HudButton>
+            <HudButton onClick={() => { handleClickButt(); fetchEvent(); }} disabled={investigateDisabled}>Investigate</HudButton>
           </Content1>
         </Content1>
         <Content2>
