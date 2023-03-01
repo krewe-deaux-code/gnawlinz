@@ -18,6 +18,7 @@ import Character from '../../db/schemas/character';
 // ******************
 // *** DB Queries ***
 // ******************
+//get a single character based on the character's id
 characterRouter.get('/:_id', (req, res) => {
   const { _id } = req.params;
   // console.log('_id in Character Router.get : ', _id);
@@ -36,6 +37,7 @@ characterRouter.get('/:_id', (req, res) => {
     });
 });
 
+//get all the characters for a given user
 characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize order
   const { google_id } = req.params;
   Character.findAll({
