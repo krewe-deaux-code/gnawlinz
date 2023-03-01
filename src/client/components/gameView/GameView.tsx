@@ -183,10 +183,10 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} /></div>
-        <div>Strength<ProgressBar variant={strength < 30 ? 'danger' : strength < 70 ? 'warning' : 'success'} now={strength} label={`${strength}%`} /></div>
-        <div>Endurance<ProgressBar variant={endurance < 30 ? 'danger' : endurance < 70 ? 'warning' : 'success'} now={endurance} label={`${endurance}%`}/></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`}/></div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{backgroundColor: 'grey'}} /></div>
+        {/* <div>Strength<ProgressBar variant={strength < 30 ? 'danger' : strength < 70 ? 'warning' : 'success'} now={strength} label={`${strength}%`} /></div>
+        <div>Endurance<ProgressBar variant={endurance < 30 ? 'danger' : endurance < 70 ? 'warning' : 'success'} now={endurance} label={`${endurance}%`} /></div> */}
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{backgroundColor: 'grey'}} /></div>
       </div>
     );
   };
