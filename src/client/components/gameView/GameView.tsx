@@ -103,6 +103,7 @@ const GameView: React.FC = () => {
   const getAllLocations = () => {
     axios.get('/location/allLocations')
       .then(locations => {
+        console.log('HOW MANY TIMES', locations.data[0]);
         setLocation(locations.data[0]);
         setCurrentChar(prevStats => ({
           ...prevStats,
@@ -192,9 +193,9 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
-  console.log('LOCATIONS', allLocations);
-  console.log('LOCATION', location);
-  console.log('visited array', visited);
+  // console.log('LOCATIONS', allLocations);
+  // console.log('LOCATION', location);
+  // console.log('visited array', visited);
   // console.log('CURRENT CHAR', currentChar);
   // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
   return (
