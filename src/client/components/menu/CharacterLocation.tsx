@@ -19,7 +19,7 @@ const CharacterLocation: React.FC<CharacterLocationProps> = ({ locationId }) => 
   };
   useEffect(() => {
     getLocationById(locationId);
-  }, []);
+  });
 
   return (
 

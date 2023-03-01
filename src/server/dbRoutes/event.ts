@@ -22,7 +22,7 @@ import Event from '../../db/schemas/event';
 eventRouter.get('/random', (req, res) => {
   Event.findOne({ order: Sequelize.literal('RANDOM()'), limit: 1 })
     .then((event) => {
-      console.log('EVENT RANDOM FOUND', event);
+      // console.log('EVENT RANDOM FOUND', event);
       res.status(200).send(event);
     })
     .catch((err) => {
