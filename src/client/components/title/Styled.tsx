@@ -12,6 +12,7 @@ const TitleContainer = styled.div`
   /* grid-gap: 0.25rem; */
   transition: all 0.25s ease-in-out;
   color: white;
+  background-color: black;
 `;
 
 const NavBar = styled.nav`
