@@ -1,6 +1,8 @@
 import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -17,13 +19,14 @@ import { UserContext, EventData, ChoiceData } from '../../App';
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
+
 const GameView: React.FC = () => {
 
-  const { visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
+  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
 
   const fetchEvent = () => {
-    axios.get<EventData>('/event/random')
+    axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         console.log('EVENT', event);
         setEvent(event.data);
@@ -33,21 +36,17 @@ const GameView: React.FC = () => {
           evacuate: event.data.choice2,
           wildcard: event.data.choice3
         });
+        setPrevEventId(event.data._id);
       })
       .catch(err => {
         console.log('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
-
-
-
-
   const handleClickButt = () => {
     setInvestigateDisabled(true);
     console.log('button pressed');
   };
-
 
   //separate func for update char location via axios request to character/location endpoint
 
@@ -164,10 +163,31 @@ const GameView: React.FC = () => {
     getAllLocations();
   }, []);
 
+
+
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <div><Result /></div>;
   }
+
+  const StatusBars = () => {
+    const health: number = currentChar.health * 10;
+    // const strength: number = currentChar.strength * 10;
+    // const endurance: number = currentChar.endurance * 10;
+    const mood: number = currentChar.mood * 10;
+
+    return (
+      <div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{backgroundColor: 'grey'}} /></div>
+        {/* <div>Strength<ProgressBar variant={strength < 30 ? 'danger' : strength < 70 ? 'warning' : 'success'} now={strength} label={`${strength}%`} /></div>
+        <div>Endurance<ProgressBar variant={endurance < 30 ? 'danger' : endurance < 70 ? 'warning' : 'success'} now={endurance} label={`${endurance}%`} /></div> */}
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{backgroundColor: 'grey'}} /></div>
+      </div>
+    );
+  };
+
+
+
 
   // state & functions for investigate modal
   const [show, setShow] = useState(false);
@@ -253,10 +273,7 @@ const GameView: React.FC = () => {
           </div>
           <StatContainer>
             <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div>Health: {currentChar.health}</div>
-            <div>Strength: {currentChar.strength}</div>
-            <div>Endurance: {currentChar.endurance}</div>
-            <div>Mood: {currentChar.mood}</div>
+            <div>{StatusBars()}</div>
           </StatContainer>
         </Content2>
         <Content3>
