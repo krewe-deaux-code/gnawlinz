@@ -17,7 +17,7 @@ const ItemDrop: React.FC<ItemDropProps> = ({ itemId, imageUrl, itemSlot }) => {
   const handleClick = async () => {
     try {
       await axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemId });
-      await axios.patch(`/character/update/${currentChar._id}`, {[`slot${itemSlot}`]: null});
+      // await axios.patch(`/character/update/${currentChar._id}`, {[`slot${itemSlot}`]: null});
     } catch (err) {
       console.error('Error updating location in handleClick--src/client/component/menu/ItemDrop.tsx: ', err);
     }

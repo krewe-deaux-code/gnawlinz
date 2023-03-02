@@ -4,6 +4,7 @@ import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
 import Nav from '../nav/NavBar';
+import ItemSlots from './ItemSlots';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
@@ -49,9 +50,9 @@ const Menu: React.FC = () => {
   //console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
-    <UserContext.Provider value={{activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
+    <UserContext.Provider value={{ activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
       <Body >
-        <Nav isActive={false}/>
+        <Nav isActive={false} />
         <InfoContainer >
           <Tab onClick={handleClick} active={active === 0} id={0}>
             Character Select
@@ -86,10 +87,7 @@ const Menu: React.FC = () => {
             </span> */}
           </Content>
           <Content active={active === 2}>
-            <h1>Items</h1>
-            <span><b>This:</b></span><br />
-            <span><b>Will:</b></span><br />
-            <span><b>Be State:</b></span><br />
+            <ItemSlots />
           </Content>
         </>
         <button>
