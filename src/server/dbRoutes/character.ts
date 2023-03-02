@@ -55,9 +55,11 @@ characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize ord
     });
 });
 
-// get all the characters from the DB
+// get all the characters from the DB ordered by score
 characterRouter.get('/characters/getall', (req, res) => {
-  Character.findAll()
+  Character.findAll({
+    order: [['score', 'DESC']]
+  })
     .then((allChars) => {
       res.status(200).send(allChars);
     })
@@ -69,9 +71,8 @@ characterRouter.get('/characters/getall', (req, res) => {
 // get all the characters from the DB, joined with the User that created them
 characterRouter.get('/characters/allWithUsers', (req, res) => {
   Character.findAll({
-    include: [{
-      model: User
-    }]
+    include: [{ model: User }],
+    order: [['score', 'DESC']]
   })
     .then((allChars) => {
       res.status(200).send(allChars);
