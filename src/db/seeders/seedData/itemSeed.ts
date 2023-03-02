@@ -1,5 +1,16 @@
 export const itemSeed = [
   {
+    name: 'Empty',
+    image_url: 'https://i.imgur.com/ItdPsA0.png',
+    consumable: true,
+    modified_stat0: 'none',
+    modified_stat1: null,
+    modifier0: 0,
+    modifier1: null,
+    buy_price: 0,
+    sell_price: 0
+  },
+  {
     name: 'Banana',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744463/gnawlinzItems/184060007_oirkki.webp',
     consumable: true,
