@@ -56,6 +56,8 @@ export interface LocationData {
   graffiti_msg: string;
 }
 
+
+
 export const UserContext = createContext<any>('');
 
 
