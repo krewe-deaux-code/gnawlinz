@@ -75,6 +75,7 @@ locationRouter.put('/drop_item_slot/:_id', async (req: LocationUpdateRequest, re
   }
 });
 
+//gets a single location by _id
 locationRouter.get('/:_id', async (req: Request, res: Response) => {
   Location.findOne({ where: { _id: req.params._id } })
     .then((location) =>
@@ -85,6 +86,19 @@ locationRouter.get('/:_id', async (req: Request, res: Response) => {
     });
 });
 
+
+// update any number of fields on a single location in the db
+locationRouter.patch('/update/:_id', (req, res) => {
+  //console.log(req.body);
+  Location.update(req.body, { where: { _id: req.params._id } })
+    .then((response) => {
+      console.log('RESPONSE LOCATION UPDATE', response);
+      res.status(200).send(response);
+    })
+    .catch((err) => {
+      console.error(`Error Location.update @Location/update/${req.params._id}`, err);
+    });
+});
 
 
 

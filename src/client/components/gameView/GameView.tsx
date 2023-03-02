@@ -51,7 +51,7 @@ const GameView: React.FC = () => {
   //separate func for update char location via axios request to character/location endpoint
 
   // const fetchLocation = () => {
-  //   axios.get<LocationData>('/location/random')
+  //   axios.get<LocationData>(`/location/${location._id}`)
   //     .then((location) => {
   //       console.log('Location from DB', location);
   //       setLocation(location.data);
@@ -63,7 +63,7 @@ const GameView: React.FC = () => {
 
   // const updateLocationDB = () => {
 
-  // };
+  //
 
   const getAllLocations = () => {
     console.log('Current Event on State: ', event);
@@ -230,7 +230,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={handleLocationChange}>New Location</HudButton> {/**previously Investigate*/}
+              <HudButton onClick={handleLocationChange}>New Location</HudButton>
             </Content1>
           </Link>
           <Content1>
@@ -241,22 +241,22 @@ const GameView: React.FC = () => {
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton>
+              <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 Choose from the options below:
+                Choose from the options below:
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
+                {modalText}
               </Modal.Body>
               <Modal.Footer>
                 <Button>Choice 1</Button>
-                <Button variant="primary">Choice 2</Button>
-                <Button>Choice 3</Button>
-                {/* <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button> */}
+                <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
+                <Button onClick={handleTextBoxClick}>Choice 3</Button>
+                {showTextBox && <input type="text" />}
               </Modal.Footer>
             </Modal>
           </Content1>
