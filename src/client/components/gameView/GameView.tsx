@@ -177,8 +177,8 @@ const GameView: React.FC = () => {
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
-    const strength: number = currentChar.strength * 10;
-    const endurance: number = currentChar.endurance * 10;
+    // const strength: number = currentChar.strength * 10;
+    // const endurance: number = currentChar.endurance * 10;
     const mood: number = currentChar.mood * 10;
 
     return (
