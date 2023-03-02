@@ -7,7 +7,7 @@ const bossRouter = Router();
 bossRouter.get('/:id', (req, res) => {
   Boss.findOne({ where: { _id: req.params.id } })
     .then((response: any) => {
-      //console.log(response.dataValues);
+      console.log(response.dataValues);
       res.status(200).send(response.dataValues);
     })
     .catch((err) => {
