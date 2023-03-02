@@ -51,7 +51,7 @@ const GameView: React.FC = () => {
   //separate func for update char location via axios request to character/location endpoint
 
   // const fetchLocation = () => {
-  //   axios.get<LocationData>('/location/random')
+  //   axios.get<LocationData>(`/location/${location._id}`)
   //     .then((location) => {
   //       console.log('Location from DB', location);
   //       setLocation(location.data);
@@ -63,7 +63,7 @@ const GameView: React.FC = () => {
 
   // const updateLocationDB = () => {
 
-  // };
+  //
 
   const getAllLocations = () => {
     console.log('Current Event on State: ', event);
@@ -178,10 +178,10 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{backgroundColor: 'grey'}} /></div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
         {/* <div>Strength<ProgressBar variant={strength < 30 ? 'danger' : strength < 70 ? 'warning' : 'success'} now={strength} label={`${strength}%`} /></div>
         <div>Endurance<ProgressBar variant={endurance < 30 ? 'danger' : endurance < 70 ? 'warning' : 'success'} now={endurance} label={`${endurance}%`} /></div> */}
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{backgroundColor: 'grey'}} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -193,6 +193,17 @@ const GameView: React.FC = () => {
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [modalText, setModalText] = useState('');
+
+  // const getMessage = () => {
+  //   // setShowTextBox(true);
+  //   return (
+  //     <div>
+  //       {location.graffiti_msg}
+  //     </div>
+  //   );
+  // };
 
   return (
 
@@ -235,7 +246,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={handleLocationChange}>New Location</HudButton> {/**previously Investigate*/}
+              <HudButton onClick={handleLocationChange}>New Location</HudButton>
             </Content1>
           </Link>
           <Content1>
@@ -250,14 +261,15 @@ const GameView: React.FC = () => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-               Choose from the options below:
+                Choose from the options below:
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
+                {modalText}
               </Modal.Body>
               <Modal.Footer>
                 <Button>Choice 1</Button>
-                <Button variant="primary">Choice 2</Button>
+                <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
                 <Button>Choice 3</Button>
                 {/* <Button variant="secondary" onClick={handleClose}>
                   Close
