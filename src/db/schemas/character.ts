@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Item from './item';
+// import Item from './item';
 import Location from './location';
 // import User from './user';
 
@@ -24,61 +24,9 @@ const Character = db.define('character', {
   image_url: {
     type: DataTypes.STRING,
   },
-  slot0: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot1: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot2: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot3: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot4: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot5: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot6: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
-  },
-  slot7: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
+  inventory: {
+    type: DataTypes.ARRAY(DataTypes.INTEGER),
+    defaultValue: []
   },
   health: {
     type: DataTypes.INTEGER
