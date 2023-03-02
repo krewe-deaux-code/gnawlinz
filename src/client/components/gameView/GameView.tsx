@@ -3,9 +3,10 @@ import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
-
-import React, { useEffect, useContext } from 'react';
-
+// import Investigate from './Investigate';
+import React, { useEffect, useContext, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
@@ -122,6 +123,7 @@ const GameView: React.FC = () => {
       }
     }
     fetchEvent();
+    setInvestigateDisabled(false);
   };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
@@ -154,13 +156,6 @@ const GameView: React.FC = () => {
         console.error('Failed setting selectedChoice State', err);
       });
   };
-  // call state setter func set investigate ability
-  // watches when current location changes, boolean changes
-  // new use effect based on new location
-  useEffect(() => {
-    console.log('enable button function');
-    setInvestigateDisabled(false);
-  }, [location]);
 
 
   useEffect(() => {
@@ -193,11 +188,12 @@ const GameView: React.FC = () => {
 
 
 
-  // console.log('LOCATIONS', allLocations);
-  // console.log('LOCATION', location);
-  // console.log('visited array', visited);
-  // console.log('CURRENT CHAR', currentChar);
-  // console.log('OUTCOME OUTSIDE FUNCTION', outcome);
+
+  // state & functions for investigate modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
 
     <Container>
@@ -243,7 +239,31 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton onClick={() => { handleClickButt(); fetchEvent(); }} disabled={investigateDisabled}>Investigate</HudButton>
+            <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
+            <Modal
+              show={show}
+              onHide={handleClose}
+              backdrop="static"
+              keyboard={false}
+            >
+              <Modal.Header closeButton>
+                <Modal.Title>You investigated the area.</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+               Choose from the options below:
+                <p>1: Look for items</p>
+                <p>2: Look for graffiti</p>
+                <p>3: Write graffiti</p>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button>Choice 1</Button>
+                <Button variant="primary">Choice 2</Button>
+                <Button>Choice 3</Button>
+                {/* <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button> */}
+              </Modal.Footer>
+            </Modal>
           </Content1>
         </Content1>
         <Content2>
@@ -281,20 +301,3 @@ const GameView: React.FC = () => {
 
 export default GameView;
 
-// const getAllLocations = () => {
-//   axios.get('/location/allLocations')
-//     .then(locations => {
-//       setLocation(locations.data[0]);
-//       setCurrentChar(prevStats => ({
-//         ...prevStats,
-//         location: locations.data[0]._id
-//       }));
-//       setVisited([locations.data[0]]);
-//       //remove current location
-//       setAllLocations(locations.data.slice(1));
-//       fetchEvent();
-//     })
-//     .catch((err) => {
-//       console.error('Failed to retrieve all locations: ', err);
-//     });
-// };
