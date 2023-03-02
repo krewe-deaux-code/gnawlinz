@@ -128,6 +128,7 @@ export const Th = styled.th`
 export const Td = styled.td`
   border: 1px solid #ddd;
   padding: 8px;
+  color: 'red';
 `;
 
 export const TableRow = styled.tr`
