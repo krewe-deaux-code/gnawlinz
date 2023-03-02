@@ -10,6 +10,7 @@ const characterRouter = Router();
 
 // <-- DB Model -->
 import Character from '../../db/schemas/character';
+import User from '../../db/schemas/user';
 
 // <-- middleware -->
 // characterRouter.use(express.json());
@@ -57,6 +58,21 @@ characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize ord
 // get all the characters from the DB
 characterRouter.get('/characters/getall', (req, res) => {
   Character.findAll()
+    .then((allChars) => {
+      res.status(200).send(allChars);
+    })
+    .catch((err) => {
+      console.error('Error getting all characters: ', err);
+    });
+});
+
+// get all the characters from the DB, joined with the User that created them
+characterRouter.get('/characters/allWithUsers', (req, res) => {
+  Character.findAll({
+    include: [{
+      model: User
+    }]
+  })
     .then((allChars) => {
       res.status(200).send(allChars);
     })
