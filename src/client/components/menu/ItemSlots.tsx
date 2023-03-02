@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { IconContainer, StatName } from './Styled';
-import ItemDrop from './ItemDrop';
+import { IconImg } from './Styled';
+// import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
-import { UserContext } from '../../App';
+import { UserContext, Character } from '../../App';
 import axios from 'axios';
 
 interface Item {
@@ -18,39 +18,111 @@ interface Item {
   sell_price: number;
 }
 
-
 const ItemSlots: React.FC = () => {
 
-  const {currentChar} = useContext(UserContext);
-  const [items, setItems] = useState<Item[]>([]);
+  const { currentChar, setCurrentChar } = useContext(UserContext);
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
 
-  const fetchItemsArray = async (itemArray: unknown[]) => {
-    const passToDB = itemArray.filter(el => {
-      return el !== null;
-    });
-    const promises = passToDB.map((slotValue) =>
-      axios.get(`/item/${slotValue}`)
-    );
-    const results = await Promise.all(promises);
-    const itemsData = results.map((result) => result.data);
-    return itemsData;
+  const fetchItems = () => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        console.log('EMPTY???', character.data.inventory);
+      });
   };
 
-  useEffect(() => {
-    fetchItemsArray([currentChar.slot0, currentChar.slot1, currentChar.slot2, currentChar.slot3, currentChar.slot4, currentChar.slot5, currentChar.slot6, currentChar.slot7])
-      .then((itemsData) =>
-        setItems(itemsData))
-      .catch((err) =>
-        console.error('Error in fetchItemsArray call--src/client/components/menu/ItemSlots.tsx', err));
-  }, []);
+  // const handleDrop = () => {
+
+  // };
+
+  // below function fire upon "inventory" tab click ??
+  const handleItemLookup = () => {
+    currentChar.inventory.forEach(item => {
+      axios.get(`/item/${item}`)
+        .then((item: any) => {
+          console.log('ITEM???', item.data);
+          setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item]);
+        })
+        .catch(err => console.error('error fetching from ITEM router', err));
+    });
+  };
+
+  const handleDropItem = (itemID) => {
+    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.delete('/character/inventory/delete', {
+      data: {
+        charID: currentChar._id,
+        itemID: itemID,
+      }
+    })
+      .then(() => fetchItems())
+      .catch(err => console.error('fetch after delete ERROR', err));
+    // needs then and catches for both axios... call fetchItems?
+    // fetchItems();
+  };
+
+  // causing problems... ??
+  // useEffect(() => {
+  //   currentChar.inventory.forEach(item => {
+  //     axios.get(`/item/${item}`)
+  //       .then((item: any) => {
+  //         console.log('ITEM???', item);
+  //         setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item as Item]);
+  //       })
+  //       .catch(err => console.error('error fetching from ITEM router', err));
+  //   });
+  // }, []);
+
+  console.log('FETCHED INV', fetchedInventory);
   return (
     <div>
-      {items.map((item, i: number) => (
-        <IconContainer key={i}><ItemDrop itemId={item._id} imageUrl={item.image_url} charId={currentChar._id} itemSlot={i} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
-      ))}
+      <button onClick={fetchItems}></button>
+      <div>{currentChar.inventory}</div>
+      <button onClick={handleItemLookup}></button>
+      {
+        fetchedInventory.map((item: Item, i) => {
+          return <div
+            key={i}
+            onClick={() => handleDropItem(item._id)}
+          >{item.name}<IconImg src={item.image_url}></IconImg></div>;
+        })
+      }
     </div>
   );
 
-};
 
+};
 export default ItemSlots;
+
+
+
+// <-- ITEM DROP COMPONENT FROM THE GRAVE -->
+// const ItemDrop: React.FC = () => { // { itemId, imageUrl, itemSlot } === props
+
+//   const { currentChar, setCurrentChar } = useContext(UserContext);
+
+// itemId, itemSlot coming from CHAR in userChars array from context
+// query /item endpoint to return imageURL
+// axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemId });
+
+//   return (
+//     <IconImg src={''}
+//   );
+
+// };
+
+// export default ItemDrop;
+
+
+
+// const {currentChar} = useContext(UserContext);
+// const handleClick = async () => {
+//   try {
+//     await axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemId });
+//     await axios.patch(`/character/update/${currentChar._id}`, {[`slot${itemSlot}`]: null});
+//   } catch (err) {
+//     console.error('Error updating location in handleClick--src/client/component/menu/ItemDrop.tsx: ', err);
+//   }
+// };
+
+// return <IconImg src={imageUrl || ''} onClick={handleClick} />;

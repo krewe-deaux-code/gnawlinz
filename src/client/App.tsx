@@ -14,14 +14,7 @@ export interface Character {
   handle_id: number;
   name: string;
   image_url: string;
-  slot0: number;
-  slot1: number;
-  slot2: number;
-  slot3: number;
-  slot4: number;
-  slot5: number;
-  slot6: number;
-  slot7: number;
+  inventory: Array<number>;
   health: number;
   strength: number;
   endurance: number;
