@@ -4,12 +4,12 @@ import { Body, InfoContainer, Tab, Content } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
 import Nav from '../nav/NavBar';
-import ItemSlots from './ItemSlots';
 //import { Cookie } from "express-session";
 //export const AuthContext = React.createContext(null);
 
 // export const UserContext = createContext<any>('');
 import { UserContext } from '../../App';
+import ItemSlots from './ItemSlots';
 
 const Menu: React.FC = () => {
 
