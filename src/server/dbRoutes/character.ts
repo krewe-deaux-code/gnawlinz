@@ -18,7 +18,7 @@ import Character from '../../db/schemas/character';
 // ******************
 // *** DB Queries ***
 // ******************
-//get a single character based on the character's id
+// get a single character based on the character's id
 characterRouter.get('/:_id', (req, res) => {
   const { _id } = req.params;
   // console.log('_id in Character Router.get : ', _id);
@@ -37,7 +37,7 @@ characterRouter.get('/:_id', (req, res) => {
     });
 });
 
-//get all the characters for a given user
+// get all the characters for a given user
 characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize order
   const { google_id } = req.params;
   Character.findAll({
@@ -54,6 +54,18 @@ characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize ord
     });
 });
 
+// get all the characters from the DB
+characterRouter.get('/characters/getall', (req, res) => {
+  Character.findAll()
+    .then((allChars) => {
+      res.status(200).send(allChars);
+    })
+    .catch((err) => {
+      console.error('Error getting all characters: ', err);
+    });
+});
+
+// update any number of fields on a single character in the db
 characterRouter.patch('/update/:char_id', (req, res) => {
   //console.log(req.body);
   Character.update(req.body, { where: { _id: req.params.char_id } })

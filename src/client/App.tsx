@@ -64,7 +64,7 @@ export interface LocationData {
 }
 
 export const UserContext = createContext<any>('');
-// export const InvestigateContext = createContext<boolean>(false);
+
 
 
 const App = () => {
@@ -86,7 +86,7 @@ const App = () => {
   const [location, setLocation] = useState({} as LocationData);
   const [allLocations, setAllLocations] = useState<LocationData[]>([]);
   const [visited, setVisited] = useState<LocationData[]>([]);
-  const [investigateDisabled, setInvestigateDisabled] = useState(false);
+  const [investigateDisabled, setInvestigateDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
