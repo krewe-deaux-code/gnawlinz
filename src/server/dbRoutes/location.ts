@@ -87,7 +87,7 @@ locationRouter.get('/:_id', async (req: Request, res: Response) => {
 });
 
 
-// update any number of fields on a single character in the db
+// update any number of fields on a single location in the db
 locationRouter.patch('/update/:_id', (req, res) => {
   //console.log(req.body);
   Location.update(req.body, { where: { _id: req.params._id } })
