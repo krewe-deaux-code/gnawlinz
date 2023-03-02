@@ -2,7 +2,7 @@ import React, { useEffect, useState, useContext } from 'react';
 import { IconContainer, StatName } from './Styled';
 import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
-import { UserContext } from '../../App';
+import { UserContext, Character } from '../../App';
 import axios from 'axios';
 
 interface Item {
@@ -18,39 +18,25 @@ interface Item {
   sell_price: number;
 }
 
-
 const ItemSlots: React.FC = () => {
 
-  const {currentChar} = useContext(UserContext);
-  const [items, setItems] = useState<Item[]>([]);
+  const { currentChar, setCurrentChar } = useContext(UserContext);
 
-  const fetchItemsArray = async (itemArray: unknown[]) => {
-    const passToDB = itemArray.filter(el => {
-      return el !== null;
-    });
-    const promises = passToDB.map((slotValue) =>
-      axios.get(`/item/${slotValue}`)
-    );
-    const results = await Promise.all(promises);
-    const itemsData = results.map((result) => result.data);
-    return itemsData;
+  const fetchItems = () => {
+    axios.get<Character>('/character/inventory/get', { params: { charID: currentChar._id } })
+      .then(({ data }) => {
+        setCurrentChar(data);
+        console.log(data);
+      });
   };
 
-  useEffect(() => {
-    fetchItemsArray([currentChar.slot0, currentChar.slot1, currentChar.slot2, currentChar.slot3, currentChar.slot4, currentChar.slot5, currentChar.slot6, currentChar.slot7])
-      .then((itemsData) =>
-        setItems(itemsData))
-      .catch((err) =>
-        console.error('Error in fetchItemsArray call--src/client/components/menu/ItemSlots.tsx', err));
-  }, []);
   return (
     <div>
-      {items.map((item, i: number) => (
-        <IconContainer key={i}><ItemDrop itemId={item._id} imageUrl={item.image_url} charId={currentChar._id} itemSlot={i} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
-      ))}
+      <button onClick={fetchItems}></button>
+      <div>{currentChar.inventory}</div>
     </div>
   );
 
-};
 
+};
 export default ItemSlots;
