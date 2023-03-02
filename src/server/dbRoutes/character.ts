@@ -70,8 +70,7 @@ characterRouter.get('/characters/getall', (req, res) => {
 characterRouter.get('/characters/allWithUsers', (req, res) => {
   Character.findAll({
     include: [{
-      model: User,
-      where: {_id: 1} // needs to be changed to be dynamic
+      model: User
     }]
   })
     .then((allChars) => {
