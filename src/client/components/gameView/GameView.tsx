@@ -165,11 +165,6 @@ const GameView: React.FC = () => {
 
 
 
-  // conditional for character loss involving health or mood reaching 0
-  if (currentChar.health < 1 || currentChar.mood < 1) {
-    return <div><Result /></div>;
-  }
-
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
     // const strength: number = currentChar.strength * 10;
@@ -187,8 +182,6 @@ const GameView: React.FC = () => {
   };
 
 
-
-
   // state & functions for investigate modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -196,14 +189,20 @@ const GameView: React.FC = () => {
 
   const [modalText, setModalText] = useState('');
 
-  // const getMessage = () => {
-  //   // setShowTextBox(true);
-  //   return (
-  //     <div>
-  //       {location.graffiti_msg}
-  //     </div>
-  //   );
-  // };
+  const [showTextBox, setShowTextBox] = useState(false);
+
+  const handleTextBoxClick = () => {
+    setShowTextBox(true);
+  };
+  const handleTextBoxClose = () => {
+    setShowTextBox(false);
+  };
+
+
+  // conditional for character loss involving health or mood reaching 0
+  if (currentChar.health < 1 || currentChar.mood < 1) {
+    return <div><Result /></div>;
+  }
 
   return (
 
@@ -257,7 +256,7 @@ const GameView: React.FC = () => {
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton>
+              <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
@@ -270,10 +269,8 @@ const GameView: React.FC = () => {
               <Modal.Footer>
                 <Button>Choice 1</Button>
                 <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
-                <Button>Choice 3</Button>
-                {/* <Button variant="secondary" onClick={handleClose}>
-                  Close
-                </Button> */}
+                <Button onClick={handleTextBoxClick}>Choice 3</Button>
+                {showTextBox && <input type="text" />}
               </Modal.Footer>
             </Modal>
           </Content1>
