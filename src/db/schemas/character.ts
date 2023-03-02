@@ -1,6 +1,6 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-//import Item from './item';
+// import Item from './item';
 import Location from './location';
 // import User from './user';
 
@@ -26,7 +26,7 @@ const Character = db.define('character', {
   },
   inventory: {
     type: DataTypes.ARRAY(DataTypes.INTEGER),
-    defaultValue: [1, 1, 1, 1, 1, 1, 1, 1]
+    defaultValue: []
   },
   health: {
     type: DataTypes.INTEGER
