@@ -56,7 +56,9 @@ characterRouter.get('/user/:google_id', (req, res) => { // look up Sequelize ord
 
 // get all the characters from the DB
 characterRouter.get('/characters/getall', (req, res) => {
-  Character.findAll()
+  Character.findAll({
+    order: [['score', 'DESC']]
+  })
     .then((allChars) => {
       res.status(200).send(allChars);
     })

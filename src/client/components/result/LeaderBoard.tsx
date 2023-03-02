@@ -1,7 +1,7 @@
-import React from 'react';//
+import React, { useState, useEffect } from 'react';//
 
 import { Table, Th, TableRow, Td } from './Styled';
-
+import axios from 'axios';
 
 // import { UserContext } from '../../App'; // <-- holds User object
 
@@ -10,6 +10,21 @@ import { Table, Th, TableRow, Td } from './Styled';
 
 const LeaderBoard: React.FC = () => {
 
+  const [leaders, setLeaders] = useState([]);
+  const getLeaders = () => {
+    axios.get('/character/characters/getall')
+      .then((results) => {
+        setLeaders(results.data);
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  };
+  useEffect(() => {
+    getLeaders();
+  }, []);
+
+  console.log('LEADERS', leaders);
   return (
 
     <Table>

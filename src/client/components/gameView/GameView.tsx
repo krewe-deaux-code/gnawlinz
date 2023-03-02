@@ -164,36 +164,31 @@ const GameView: React.FC = () => {
   }, []);
 
 
-
-  // conditional for character loss involving health or mood reaching 0
-  if (currentChar.health < 1 || currentChar.mood < 1) {
-    return <div><Result /></div>;
-  }
-
-  const StatusBars = () => {
-    const health: number = currentChar.health * 10;
-    // const strength: number = currentChar.strength * 10;
-    // const endurance: number = currentChar.endurance * 10;
-    const mood: number = currentChar.mood * 10;
-
-    return (
-      <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{backgroundColor: 'grey'}} /></div>
-        {/* <div>Strength<ProgressBar variant={strength < 30 ? 'danger' : strength < 70 ? 'warning' : 'success'} now={strength} label={`${strength}%`} /></div>
-        <div>Endurance<ProgressBar variant={endurance < 30 ? 'danger' : endurance < 70 ? 'warning' : 'success'} now={endurance} label={`${endurance}%`} /></div> */}
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{backgroundColor: 'grey'}} /></div>
-      </div>
-    );
-  };
-
-
-
-
   // state & functions for investigate modal
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+
+  const StatusBars = () => {
+    const health: number = currentChar.health * 10;
+    const mood: number = currentChar.mood * 10;
+
+    return (
+      <div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+      </div>
+    );
+  };
+
+
+  // conditional for character loss involving health or mood reaching 0
+  if (currentChar.health < 1 || currentChar.mood < 1) {
+    console.log('this breaks it');
+    return <Result />;
+  }
+  // Any hooks between above conditional and below return will crash the page.
   return (
 
     <Container>
@@ -250,7 +245,7 @@ const GameView: React.FC = () => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-               Choose from the options below:
+                Choose from the options below:
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
@@ -272,6 +267,7 @@ const GameView: React.FC = () => {
             <img src={currentChar.image_url} />
           </div>
           <StatContainer>
+
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div>{StatusBars()}</div>
           </StatContainer>
