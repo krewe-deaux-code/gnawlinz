@@ -27,8 +27,8 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   const [items, setItems] = useState<Item[]>([]);
 
   const fetchItemsArray = async (itemArray: unknown[]) => {
-    const passToDB = itemArray.filter(el => {
-      return el !== null;
+    const passToDB = itemArray.filter(item => {
+      return item !== null;
     });
     const promises = passToDB.map((slotValue) =>
       axios.get(`/item/${slotValue}`)
