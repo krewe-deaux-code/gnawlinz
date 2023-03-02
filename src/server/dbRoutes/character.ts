@@ -80,7 +80,7 @@ characterRouter.patch('/update/:char_id', (req, res) => {
 
 // axios get current char inventory
 characterRouter.get('/inventory/get', (req, res) => {
-  Character.findOne({ where: { character_id: req.body.charID } })
+  Character.findOne({ where: { character_id: req.query.charID } })
     .then((character: any) => {
       console.log('SUCCESS INVENTORY GET', character);
       // get items on current char
