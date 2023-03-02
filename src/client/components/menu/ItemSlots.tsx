@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { IconContainer, StatName } from './Styled';
 import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
-import { Character } from '../../App';
-
+import { UserContext } from '../../App';
 import axios from 'axios';
 
 interface Item {
@@ -19,11 +18,10 @@ interface Item {
   sell_price: number;
 }
 
-interface ItemSlotsProps {
-  char: Character;
-}
 
-const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
+const ItemSlots: React.FC = () => {
+
+  const {currentChar} = useContext(UserContext);
   const [items, setItems] = useState<Item[]>([]);
 
   const fetchItemsArray = async (itemArray: unknown[]) => {
@@ -39,7 +37,7 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   };
 
   useEffect(() => {
-    fetchItemsArray([char.slot0, char.slot1, char.slot2, char.slot3, char.slot4, char.slot5, char.slot6, char.slot7])
+    fetchItemsArray([currentChar.slot0, currentChar.slot1, currentChar.slot2, currentChar.slot3, currentChar.slot4, currentChar.slot5, currentChar.slot6, currentChar.slot7])
       .then((itemsData) =>
         setItems(itemsData))
       .catch((err) =>
@@ -48,7 +46,7 @@ const ItemSlots: React.FC<ItemSlotsProps> = ({ char }) => {
   return (
     <div>
       {items.map((item, i: number) => (
-        <IconContainer key={i}><ItemDrop itemId={item._id} charLocation={char.location} imageUrl={item.image_url} charId={char._id} itemSlot={i} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
+        <IconContainer key={i}><ItemDrop itemId={item._id} imageUrl={item.image_url} charId={currentChar._id} itemSlot={i} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
       ))}
     </div>
   );
