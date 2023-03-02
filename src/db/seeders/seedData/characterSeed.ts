@@ -9,7 +9,8 @@ export const characterSeed = [
     endurance: 2,
     mood: 9,
     location: 1,
-    ally_count: 0
+    ally_count: 0,
+    score: 120
   },
   {
     handle_id: '420',
@@ -21,7 +22,8 @@ export const characterSeed = [
     endurance: 4,
     mood: 5,
     location: 2,
-    ally_count: 0
+    ally_count: 0,
+    score: 31
   },
   {
     handle_id: '420',
@@ -33,6 +35,7 @@ export const characterSeed = [
     endurance: 2,
     mood: 4,
     location: 3,
-    ally_count: 0
+    ally_count: 0,
+    score: 67
   }
 ];
