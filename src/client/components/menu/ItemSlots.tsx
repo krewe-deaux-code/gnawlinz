@@ -20,61 +20,23 @@ interface Item {
 
 const ItemSlots: React.FC = () => {
 
-  const { currentChar } = useContext(UserContext);
+  const { currentChar, setCurrentChar } = useContext(UserContext);
 
   const fetchItems = () => {
     axios.get<Character>('/character/inventory/get', { params: { charID: currentChar._id } })
       .then(({ data }) => {
+        setCurrentChar(data);
         console.log(data);
       });
   };
 
+  return (
+    <div>
+      <button onClick={fetchItems}></button>
+      <div>{currentChar.inventory}</div>
+    </div>
+  );
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  // const {currentChar} = useContext(UserContext);
-  // const [items, setItems] = useState<Item[]>([]);
-  // console.log('current char in ItemSlots', currentChar);
-
-  // const fetchItemsArray = async (itemArray: unknown[]) => {
-  //   const passToDB = itemArray.filter(item => {
-  //     return item !== 1;
-  //   });
-  //   const promises = passToDB.map((slotValue) =>
-  //     axios.get(`/item/${slotValue}`)
-  //   );
-  //   const results = await Promise.all(promises);
-  //   const itemsData = results.map((result) => result.data);
-  //   return itemsData;
-  // };
-
-  // useEffect(() => {
-  //   fetchItemsArray(currentChar.inventory)
-  //     .then((itemsData) =>
-  //       setItems(itemsData))
-  //     .catch((err) =>
-  //       console.error('Error in fetchItemsArray call--src/client/components/menu/ItemSlots.tsx', err));
-  // }, []);
-  // return (
-  //   <div>
-  //     {items.map((item, i: number) => (
-  //       <IconContainer key={i}><ItemDrop itemId={item._id} imageUrl={item.image_url} charId={currentChar._id} itemSlot={i} /><StatName>Item Slot {`${i + 1}`}: {item.name || 'Empty'}</StatName></IconContainer>
-  //     ))}
-  //   </div>
-  // );
 
 };
-
 export default ItemSlots;
