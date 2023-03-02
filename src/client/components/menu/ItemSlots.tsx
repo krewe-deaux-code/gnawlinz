@@ -92,6 +92,7 @@ const ItemSlots: React.FC = () => {
 
 
 };
+
 export default ItemSlots;
 
 
