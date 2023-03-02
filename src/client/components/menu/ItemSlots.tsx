@@ -23,7 +23,7 @@ const ItemSlots: React.FC = () => {
   const { currentChar } = useContext(UserContext);
 
   const fetchItems = () => {
-    axios.get<Character>(`/character/inventory/get?charID=${currentChar._id}`)
+    axios.get<Character>('/character/inventory/get', { params: { charID: currentChar._id } })
       .then(({ data }) => {
         console.log(data);
       });
