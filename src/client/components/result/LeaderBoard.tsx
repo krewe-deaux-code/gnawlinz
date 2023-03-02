@@ -15,9 +15,9 @@ const LeaderBoard: React.FC = () => {
     <Table>
       <thead>
         <tr>
-          <Th>Column 1</Th>
-          <Th>Column 2</Th>
-          <Th>Column 3</Th>
+          <Th>Character</Th>
+          <Th>User</Th>
+          <Th>HighScore</Th>
         </tr>
       </thead>
       <tbody>
