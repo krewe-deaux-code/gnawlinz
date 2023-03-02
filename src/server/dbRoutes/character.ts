@@ -111,12 +111,17 @@ characterRouter.patch('/inventory/patch', (req, res) => {
 characterRouter.delete('/inventory/delete', (req, res) => {
   Character.findOne({ where: { _id: req.body.charID } })
     .then((character: any) => {
+      // console.log('LOOKING FOR ITEM TO DELETE', character);
       const remItem = character.inventory.indexOf(req.body.itemID);
       character.inventory[remItem] = 1;
+      console.log('LOOKING FOR ITEM TO DELETE', character.inventory);
       Character.update({ inventory: character.inventory }, {
         where: { _id: req.body.charID }
       })
-        .then((rowsUpdated: any) => { res.status(200).send(rowsUpdated); })
+        .then((rowsUpdated: any) => {
+          console.log('ITEM DELETED???', rowsUpdated);
+          res.status(200).send(rowsUpdated);
+        })
         .catch(err => console.error('Character UPDATE failed after inventory PUSH', err));
     })
     .catch(err => console.error('', err));

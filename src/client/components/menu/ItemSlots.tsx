@@ -35,6 +35,7 @@ const ItemSlots: React.FC = () => {
 
   // };
 
+  // below function fire upon "inventory" tab click ??
   const handleItemLookup = () => {
     currentChar.inventory.forEach(item => {
       axios.get(`/item/${item}`)
@@ -53,11 +54,14 @@ const ItemSlots: React.FC = () => {
         charID: currentChar._id,
         itemID: itemID,
       }
-    });
+    })
+      .then(() => fetchItems())
+      .catch(err => console.error('fetch after delete ERROR', err));
     // needs then and catches for both axios... call fetchItems?
-    fetchItems();
+    // fetchItems();
   };
 
+  // causing problems... ??
   // useEffect(() => {
   //   currentChar.inventory.forEach(item => {
   //     axios.get(`/item/${item}`)
