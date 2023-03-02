@@ -95,4 +95,48 @@ characterRouter.patch('/update/:char_id', (req, res) => {
     });
 });
 
+// axios get current char inventory
+characterRouter.get('/inventory/get', (req, res) => {
+  Character.findOne({ where: { character_id: req.body.charID } })
+    .then((character: any) => {
+      console.log('SUCCESS INVENTORY GET', character);
+      // get items on current char
+      const inventory = character.inventory;
+      res.status(200).send(inventory);
+    })
+    .catch(err => console.error('FAIL GET INVENTORY', err));
+});
+
+// axios post in gameView upon obtain item
+characterRouter.post('/inventory/post', (req, res) => {
+  Character.findOne({ where: { character_id: req.body.charID } })
+    .then((character: any) => {
+      const newItem = req.body.itemID;
+      // grab array and push new items into it
+      character.inventory.push(newItem);
+      console.log('SUCCESS INVENTORY', character);
+      Character.update({ inventory: character.inventory }, {
+        where: { character_id: req.body.charID }
+      })
+        .then((rowsUpdated: any) => { res.status(200).send(rowsUpdated); })
+        .catch(err => console.error('Character UPDATE failed after inventory PUSH', err));
+    })
+    .catch((err) => console.error('ERROR INVENTORY', err));
+});
+
+//
+characterRouter.delete('/inventory/delete', (req, res) => {
+  Character.findOne({ where: { character_id: req.body.charID } })
+    .then((character: any) => {
+      const remItem = character.inventory.indexOf(req.body.itemID);
+      character.inventory[remItem] = 1;
+      Character.update({ inventory: character.inventory }, {
+        where: { character_id: req.body.charID }
+      })
+        .then((rowsUpdated: any) => { res.status(200).send(rowsUpdated); })
+        .catch(err => console.error('Character UPDATE failed after inventory PUSH', err));
+    })
+    .catch(err => console.error('', err));
+});
+
 export default characterRouter;
