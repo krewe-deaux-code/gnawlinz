@@ -1,21 +1,21 @@
-import React, { useEffect, useState, useContext } from 'react';
-import { IconContainer, StatName } from './Styled';
-import ItemDrop from './ItemDrop';
+import React, { useContext } from 'react';
+// import { IconContainer, StatName } from './Styled';
+// import ItemDrop from './ItemDrop';
 //import CharacterStats from './CharacterStats';
 import { UserContext, Character } from '../../App';
 import axios from 'axios';
-interface Item {
-  _id: number;
-  name: string;
-  image_url: string;
-  consumables: boolean;
-  modified_stat0: string;
-  modified_stat1: string;
-  modifier0: number;
-  modifier1: number;
-  buy_price: number;
-  sell_price: number;
-}
+// interface Item {
+//   _id: number;
+//   name: string;
+//   image_url: string;
+//   consumables: boolean;
+//   modified_stat0: string;
+//   modified_stat1: string;
+//   modifier0: number;
+//   modifier1: number;
+//   buy_price: number;
+//   sell_price: number;
+// }
 
 
 const ItemSlots: React.FC = () => {
@@ -40,3 +40,4 @@ const ItemSlots: React.FC = () => {
 
 };
 export default ItemSlots;
+
