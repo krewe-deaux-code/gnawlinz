@@ -6,9 +6,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: 2,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: true, // _id 2
+    ally_effect: false,
+    item_effect: false,
   },
   { // fight ZB 2
     flavor_text: 'You attack the banana zombie!',
@@ -17,9 +17,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: 1,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: true, // _id 1
+    ally_effect: false,
+    item_effect: false,
   },
   { // talk to jet 3
     flavor_text: 'You wave your hand to get the attention of the flying object.',
@@ -28,9 +28,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   },
   { // talk to ZB 4
     flavor_text: 'You attempt to make contact with the entity.',
@@ -39,9 +39,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: 1,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: true, // _id 1
+    ally_effect: false,
+    item_effect: false,
   },
   { // fail jet stealth 5
     flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
@@ -50,9 +50,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: 2,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: true, // _id 2
+    ally_effect: false,
+    item_effect: false,
   },
   { // pass ZB stealth 6
     flavor_text: 'You attempt to explore the area without disturbing the entity.',
@@ -61,9 +61,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   },
   { // Flee 7
     flavor_text: 'You wordlessly turn and sprint away from the area. Whatever you might find here is not worth a potentially deadly fight.',
@@ -72,9 +72,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   },
   { // Hide and Rest 8
     flavor_text: 'You go inside, and find an abandoned space. This is a good spot to catch your breath and take stock of your situation.',
@@ -83,9 +83,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   },
   { // Search for survivors 9
     flavor_text: 'You cautiously enter the space and call out for survivors.',
@@ -94,9 +94,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   },
   { // Search for supplies 10
     flavor_text: 'You cautiously enter the space and search it for anything of use. You\'re confident you have found everything there is to find here, time to move on.',
@@ -105,9 +105,9 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: null,
-    ally_effect: null,
-    item_effect: null,
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   }
 ];
 

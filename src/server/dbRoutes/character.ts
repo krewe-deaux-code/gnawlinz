@@ -101,7 +101,8 @@ characterRouter.get('/inventory/get', (req, res) => {
     .then((character: any) => {
       console.log('SUCCESS INVENTORY GET', character);
       // get items on current char
-      const inventory = character.inventory;
+      // below is if you need to send JUST the inventory
+      // const inventory = character.inventory;
       res.status(200).send(character);
     })
     .catch(err => console.error('FAIL GET INVENTORY', err));

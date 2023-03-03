@@ -1,8 +1,8 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
-import Enemy from './enemy';
-import Ally from './ally';
-import Item from './item';
+// import Enemy from './enemy';
+// import Ally from './ally';
+// import Item from './item';
 
 const Choice = db.define('choice', {
   _id: {
@@ -29,25 +29,13 @@ const Choice = db.define('choice', {
     type: DataTypes.STRING
   },
   enemy_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Enemy,
-      key: '_id'
-    }
+    type: DataTypes.BOOLEAN,
   },
   ally_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Ally,
-      key: '_id'
-    }
+    type: DataTypes.BOOLEAN,
   },
   item_effect: {
-    type: DataTypes.INTEGER,
-    references: {
-      model: Item,
-      key: '_id'
-    }
+    type: DataTypes.BOOLEAN,
   },
 });
 
