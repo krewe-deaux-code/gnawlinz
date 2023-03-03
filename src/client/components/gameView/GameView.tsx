@@ -14,7 +14,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData, Enemy } from '../../App';
+import { UserContext, EventData, ChoiceData, Enemy, Ally } from '../../App';
 
 import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -26,7 +26,7 @@ const GameView: React.FC = () => {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
     location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
     setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
-    setInvestigateDisabled
+    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly
   } = useContext(UserContext);
 
   // state for investigate modal
@@ -36,8 +36,10 @@ const GameView: React.FC = () => {
   const [modalText2, setModalText2] = useState('');
   const [bool, setBool] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
-  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [fightText, setFightText] = useState('');
+  const [penalty, setPenalty] = useState('');
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
@@ -52,20 +54,12 @@ const GameView: React.FC = () => {
         });
         setPrevEventId(event.data._id);
         if (event.data.enemy_effect) {
-          // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-          axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
-            .then((enemy: any) => {
-              setCurrentEnemy(enemy.data);
-              // <-- enemy Fetched, Awaiting update to state -->
-              // <-- prepare user for fight... -->
-              // either separate enemy fetch/choice fetch
-              // from user action button click...
-              // or...
-              // refactor enemy_effect onto Event from Choice
-              console.log('Enemy fetched, sending to state...');
-              // return; // <-- used to escape resolveChoice()
-            })
-            .catch(err => console.error('FETCH ENEMY ERROR', err));
+          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
+          handleEnemyFetch();
+          setEvent(prevEvent => ({
+            ...prevEvent,
+            enemy_effect: false
+          }));
         } else {
           setCurrentEnemy({});
         }
@@ -80,22 +74,28 @@ const GameView: React.FC = () => {
     console.log('button pressed');
   };
 
-  //separate func for update char location via axios request to character/location endpoint
+  // NPC
+  const handleEnemyFetch = () => {
+    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+      .then((enemy: any) => {
+        setCurrentEnemy(enemy.data);
+        console.log('Enemy fetched, sending to state...');
+        // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
+      })
+      .catch(err => console.error('FETCH ENEMY ERROR', err));
+  };
 
-  // const fetchLocation = () => {
-  //   axios.get<LocationData>(`/location/${location._id}`)
-  //     .then((location) => {
-  //       console.log('Location from DB', location);
-  //       setLocation(location.data);
-  //       fetchEvent();
-  //       //update character location axios to server
-  //     })
-  //     .catch(err => console.log('Axios fail useEffect Location grab', err));
-  // };
-
-  // const updateLocationDB = () => {
-
-  //
+  const handleAllyFetch = () => {
+    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
+    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
+      .then((ally: any) => {
+        setCurrentAlly(ally.data);
+        console.log('ally fetched, sending to state...');
+        // <-- put ally.data.image_url somewhere into HUD to indicate enemy
+      })
+      .catch(err => console.error('FETCH ENEMY ERROR', err));
+  };
 
   const getAllLocations = () => {
     // console.log('Current Event on State: ', event);
@@ -173,6 +173,8 @@ const GameView: React.FC = () => {
   };
 
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
+    setPenalty(penalty);
+    setFightText('');
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -184,68 +186,49 @@ const GameView: React.FC = () => {
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        let choiceOutcome = statCheck(stat); // <-- argument from action Button click
+        const choiceOutcome = statCheck(stat); // <-- argument from action Button click
         // <-- choices valid for combat -->
         if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
           // <-- enemy Effect TRUE on choice to hit below IF block -->
-          if (isEnemy(currentEnemy)) { // <-- used to be: choiceResponse.data.enemy_effect
-            if (!Object.entries(currentEnemy).length) { // <-- redundant??
-              // // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-              // axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
-              //   .then((enemy: any) => {
-              //     setCurrentEnemy(enemy.data);
-              //     // <-- enemy Fetched, Awaiting update to state -->
-              //     // <-- prepare user for fight... -->
-              //     // either separate enemy fetch/choice fetch
-              //     // from user action button click...
-              //     // or...
-              //     // refactor enemy_effect onto Event from Choice
-              //     console.log('Enemy fetched, sending to state...');
-              //     return;
-              //   })
-              //   .catch(err => console.error('FETCH ENEMY ERROR', err));
-            }
+          if (isEnemy(currentEnemy) && currentEnemy.health > 0) { // <-- Enemy exists, enemy !dead
             console.log('ENEMY STATE', currentEnemy);
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
-            if (fightResult?.player) {
-              setCurrentChar((prevChar: any) => ({
-                ...prevChar,
-                health: fightResult.player
-              }));
-              choiceOutcome = 'failure';
-            } else if (fightResult?.enemy) {
-              setCurrentEnemy((prevEnemy: any) => ({
-                ...prevEnemy,
-                health: fightResult.enemy
-              }));
-              choiceOutcome = 'success';
+            // <-- player loses, adjust player health below
+            if (fightResult?.player || fightResult.player === 0) {
+              setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
+              setFightText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
+              if (currentChar.health <= 0) {
+                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
+              }
+              return;
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              // <-- enemy loses, adjust player health below
+              setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
+              setFightText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
+              return;
             }
-          } else { // no Enemy on Event/State
+          } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            // <-- give the player something...
+            setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
+            setFightText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
+            setOutcome('success'); // <-- ADD PLAYER KILL ENEMY TO STORY
+            // choiceOutcome = 'success';
+            setCurrentEnemy({});
+          } else { // <-- no Enemy on Event/State (enemy !exist)
             setOutcome('success');
+            // <-- succeed Engage roll mechanics here (no enemy)
             return;
           }
-        } else {
-          setOutcome(choiceOutcome);
+        } else { // <-- evacuate || wildcard || evade && success
+          // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
+          // arbitrate item/ally acquisition with percentage || algorithm
+          // <-- if (choiceType === 'evade' && choiceOutcome === 'success') --> player gets item || ally
+          // <-- if (choiceType === 'wildcard' && choiceOutcome === 'success') --> player gets item || ally
+          // <-- evacuate WORKS already...
+          setOutcome(choiceOutcome); // <-- success or fail to story
         }
-        axios.post(`story/ending/${currentChar._id}`,
-          {
-            result: choiceResponse.data[choiceOutcome]
-          })
-          .then(() => {
-            console.log('penalty: ', penalty);
-            if (choiceOutcome === 'failure' && penalty !== 'health') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] - 2
-              }));
-            } else if (choiceOutcome === 'success' && penalty !== 'health') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
-              }));
-            }
-          });
-      }) // <-- maybe another .then() to update the currentChar in DB with updated stats ?? -->
+        // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
+      })
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
       });
@@ -257,8 +240,33 @@ const GameView: React.FC = () => {
     getAllLocations();
   }, []);
 
-
-
+  useEffect(() => {
+    if (hasMounted) {
+      axios.post(`story/ending/${currentChar._id}`,
+        {
+          result: selectedChoice[outcome]
+        })
+        .then(() => {
+          if (penalty !== '') {
+            console.log('penalty: ', penalty);
+            if (outcome === 'failure') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] - 2
+              }));
+            } else if (outcome === 'success') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
+              }));
+            }
+          }
+        })
+        .catch(err => console.error('axios AMMEND to STORY', err));
+    } else {
+      setHasMounted(true);
+    }
+  }, [outcome]);
 
 
   const StatusBars = () => {
@@ -289,6 +297,7 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <Result />;
   }
+  console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
   return (
 
@@ -311,6 +320,11 @@ const GameView: React.FC = () => {
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
                   </>
+              }
+              {
+                fightText.length
+                  ? <p style={{ margin: '1rem' }}>{fightText}</p>
+                  : <></>
               }
               {
                 outcome.length
@@ -395,7 +409,7 @@ const GameView: React.FC = () => {
           <HudButton onClick={() => {
             hit.play();
             // <-- handleEnemy func ??
-            resolveChoice(choices.engage, 'engage', currentChar.strength, 'health');
+            resolveChoice(choices.engage, 'engage', currentChar.strength);
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();

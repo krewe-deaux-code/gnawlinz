@@ -21,6 +21,9 @@ const Enemy = db.define('enemy', {
   },
   health: {
     type: DataTypes.INTEGER
+  },
+  score: {
+    type: DataTypes.INTEGER
   }
 });
 

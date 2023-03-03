@@ -21,6 +21,7 @@ export interface Character {
   mood: number;
   location: number;
   ally_count: number;
+  score: number;
 }
 
 export interface EventData {
@@ -63,16 +64,40 @@ export interface Enemy {
   weapon1: string;
   strength: number;
   health: number;
+  score: number;
+}
+
+export interface Item {
+  _id: number;
+  name: string;
+  image_url: string;
+  consumables: boolean;
+  modified_stat0: string;
+  modified_stat1: string;
+  modifier0: number;
+  modifier1: number;
+  buy_price: number;
+  sell_price: number;
+}
+
+export interface Ally {
+  _id: number;
+  name: string;
+  image_url: string;
+  strength: number;
+  endurance: number;
+  aligntment: string;
 }
 
 export const UserContext = createContext<any>('');
-
 
 
 const App = () => {
 
   const [userChars, setUserChars] = useState<Character[]>([]);
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
+  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -104,7 +129,7 @@ const App = () => {
 
   return (
 
-    <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+    <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
       <BrowserRouter>
         <GlobalStyle />
         <Suspense fallback={<div>LOADING...</div>}>
