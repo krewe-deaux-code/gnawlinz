@@ -56,6 +56,20 @@ export interface LocationData {
   graffiti_msg: string;
 }
 
+export interface Item {
+  _id: number;
+  name: string;
+  image_url: string;
+  consumables: boolean;
+  modified_stat0: string;
+  modified_stat1: string;
+  modifier0: number;
+  modifier1: number;
+  buy_price: number;
+  sell_price: number;
+}
+
+
 export const UserContext = createContext<any>('');
 
 

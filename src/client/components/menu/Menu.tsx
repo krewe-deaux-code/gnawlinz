@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'; //useContext
 import { Link } from 'react-router-dom';
-import { Body, InfoContainer, Tab, Content } from './Styled';
+import { Body, InfoContainer, Tab, Content, IconImg, IconContainer } from './Styled';
 import CharacterStats from './CharacterStats';
 import axios from 'axios';
 import Nav from '../nav/NavBar';
@@ -8,8 +8,14 @@ import Nav from '../nav/NavBar';
 //export const AuthContext = React.createContext(null);
 
 // export const UserContext = createContext<any>('');
-import { UserContext } from '../../App';
-import ItemSlots from './ItemSlots';
+import { UserContext, Item, Character } from '../../App';
+//import ItemSlots from './ItemSlots';
+
+
+
+
+
+
 
 const Menu: React.FC = () => {
 
@@ -24,6 +30,65 @@ const Menu: React.FC = () => {
     avatar, setAvatar } = useContext(UserContext);
 
   const [active, setActive] = useState(0);
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+
+  const handleItemLookup = () => {
+    // setFetchedInventory([]);
+    currentChar.inventory.forEach(item => {
+      axios.get(`/item/${item}`)
+        .then((item: any) => {
+          // console.log('ITEM???', item.data);
+          setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item]);
+        })
+        .catch(err => console.error('error fetching from ITEM router', err));
+    });
+  };
+
+  const handleDropItem = (itemID) => {
+    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.delete('/character/inventory/delete', {
+      data: {
+        charID: currentChar._id,
+        itemID: itemID,
+      }
+    })
+      .then(() => {
+        console.log('inventory in handleDrop', fetchedInventory);
+        fetchItems();
+        console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+      })
+      .catch(err => console.error('fetch after delete ERROR', err));
+    // needs then and catches for both axios... call fetchItems?
+  };
+
+  const fetchItems = () => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        console.log('EMPTY???', character.data.inventory);
+        console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
+        setFetchedInventory([]);
+        character.data.inventory.forEach(item => {
+          axios.get(`/item/${item}`)
+            .then((item: any) => {
+              // console.log('ITEM???', item.data);
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
+              console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+            })
+            .then(() =>  console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .catch(err => console.error('error fetching from ITEM router', err));
+        });
+      })
+      .catch((err: any) =>
+        console.error('Error in Menu.tsx in fetchItems', err));
+  };
+
+  // const handleDrop = () => {
+
+  // };
+
+  // below function fire upon "inventory" tab click ??
+
 
   useEffect(() => {
     const sessionID: string = document.cookie.split('; ')[0].split('=')[1];
@@ -47,6 +112,17 @@ const Menu: React.FC = () => {
     }
   };
 
+  // const checkInventory = () => {
+  //   if (fetchedInventory.length) {
+  //     fetchedInventory.map((item: Item, i) => {
+  //       return <div
+  //         key={i}
+  //         onClick={() => handleDropItem(item._id)}>
+  //         {item.name}<IconImg src={item.image_url}></IconImg></div>;
+  //     });
+  //   }
+  // };
+
   //console.log(avatar, stateSession);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
@@ -60,7 +136,7 @@ const Menu: React.FC = () => {
           <Tab onClick={handleClick} active={active === 1} id={1}>
             Character Creation
           </Tab>
-          <Tab onClick={handleClick} active={active === 2} id={2}>
+          <Tab onClick={(e: any) => { handleClick(e); fetchItems(); }} active={active === 2} id={2}>
             Inventory
           </Tab>
         </InfoContainer>
@@ -87,7 +163,14 @@ const Menu: React.FC = () => {
             </span> */}
           </Content>
           <Content active={active === 2}>
-            <ItemSlots />
+            <div>
+              {
+                fetchedInventory.map((item: Item, i) => {
+                  return <div key={i}>
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                })
+              }
+            </div>
           </Content>
         </>
         <button>
