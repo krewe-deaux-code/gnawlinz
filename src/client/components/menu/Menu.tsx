@@ -75,7 +75,7 @@ const Menu: React.FC = () => {
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
               console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
             })
-            .then(() =>  console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
             .catch(err => console.error('error fetching from ITEM router', err));
         });
       })
