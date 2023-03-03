@@ -14,14 +14,7 @@ export interface Character {
   handle_id: number;
   name: string;
   image_url: string;
-  slot0: number;
-  slot1: number;
-  slot2: number;
-  slot3: number;
-  slot4: number;
-  slot5: number;
-  slot6: number;
-  slot7: number;
+  inventory: Array<number>;
   health: number;
   strength: number;
   endurance: number;
@@ -47,9 +40,9 @@ export interface ChoiceData {
   alignment0: string;
   alignment1: string;
   alignment2: string;
-  enemy_effect: number;
-  ally_effect: number;
-  item_effect: number;
+  enemy_effect: boolean;
+  ally_effect: boolean;
+  item_effect: boolean;
 }
 
 export interface LocationData {
@@ -62,6 +55,20 @@ export interface LocationData {
   graffiti: string;
   graffiti_msg: string;
 }
+
+export interface Item {
+  _id: number;
+  name: string;
+  image_url: string;
+  consumables: boolean;
+  modified_stat0: string;
+  modified_stat1: string;
+  modifier0: number;
+  modifier1: number;
+  buy_price: number;
+  sell_price: number;
+}
+
 
 export const UserContext = createContext<any>('');
 

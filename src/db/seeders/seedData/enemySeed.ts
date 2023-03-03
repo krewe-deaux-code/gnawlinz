@@ -5,7 +5,7 @@ export const enemySeed = [
     weapon1: 'Bite',
     strength: 1,
     health: 1
-  },   
+  },
   {
     name: 'F-35 Lightning II',
     image_url: 'https://www.seekpng.com/png/full/782-7825499_lockheed-martin-f-35-lightning-ii.png',
