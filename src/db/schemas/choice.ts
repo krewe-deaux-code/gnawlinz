@@ -28,15 +28,7 @@ const Choice = db.define('choice', {
   alignment2: {
     type: DataTypes.STRING
   },
-  enemy_effect: {
-    type: DataTypes.BOOLEAN,
-  },
-  ally_effect: {
-    type: DataTypes.BOOLEAN,
-  },
-  item_effect: {
-    type: DataTypes.BOOLEAN,
-  },
+
 });
 
 export default Choice;
