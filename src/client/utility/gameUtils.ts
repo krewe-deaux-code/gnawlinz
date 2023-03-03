@@ -1,3 +1,4 @@
+import { Enemy } from '../App';
 
 export const statCheck = (stat: number) => {
   const npcRoll = Math.floor(Math.random() * 10) + 1;
@@ -22,4 +23,8 @@ export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStr
   } else { // <-- tie
     return { player: (playerHealth - 1) };
   }
+};
+
+export const isEnemy = (obj: any): obj is Enemy => {
+  return 'strength' in obj && 'health' in obj;
 };

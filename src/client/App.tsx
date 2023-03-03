@@ -30,6 +30,9 @@ export interface EventData {
   choice1: number;
   choice2: number;
   choice3: number;
+  enemy_effect: boolean;
+  ally_effect: boolean;
+  item_effect: boolean;
 }
 
 export interface ChoiceData {
@@ -40,9 +43,6 @@ export interface ChoiceData {
   alignment0: string;
   alignment1: string;
   alignment2: string;
-  enemy_effect: boolean;
-  ally_effect: boolean;
-  item_effect: boolean;
 }
 
 export interface LocationData {

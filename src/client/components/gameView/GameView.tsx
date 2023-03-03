@@ -16,7 +16,7 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext, EventData, ChoiceData, Enemy } from '../../App';
 
-import { statCheck, fightEnemy } from '../../utility/gameUtils';
+import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
@@ -37,7 +37,7 @@ const GameView: React.FC = () => {
   const [bool, setBool] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
 
-  const [currentEnemy, setCurrentEnemy] = useState({} as Enemy);
+  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
@@ -51,6 +51,24 @@ const GameView: React.FC = () => {
           wildcard: event.data.choice3
         });
         setPrevEventId(event.data._id);
+        if (event.data.enemy_effect) {
+          // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+          axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+            .then((enemy: any) => {
+              setCurrentEnemy(enemy.data);
+              // <-- enemy Fetched, Awaiting update to state -->
+              // <-- prepare user for fight... -->
+              // either separate enemy fetch/choice fetch
+              // from user action button click...
+              // or...
+              // refactor enemy_effect onto Event from Choice
+              console.log('Enemy fetched, sending to state...');
+              // return; // <-- used to escape resolveChoice()
+            })
+            .catch(err => console.error('FETCH ENEMY ERROR', err));
+        } else {
+          setCurrentEnemy({});
+        }
       })
       .catch(err => {
         console.error('RANDOM EVENT FETCH FAILED', err);
@@ -170,22 +188,22 @@ const GameView: React.FC = () => {
         // <-- choices valid for combat -->
         if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
           // <-- enemy Effect TRUE on choice to hit below IF block -->
-          if (choiceResponse.data.enemy_effect) {
-            if (!Object.entries(currentEnemy).length) {
-              // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-              axios.get(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
-                .then(async (enemy: any) => {
-                  await setCurrentEnemy(enemy.data);
-                  // <-- enemy Fetched, Awaiting update to state -->
-                  // <-- prepare user for fight... -->
-                  // either separate enemy fetch/choice fetch
-                  // from user action button click...
-                  // or...
-                  // refactor enemy_effect onto Event from Choice
-                  console.log('Enemy fetched, sending to state...');
-                  return;
-                })
-                .catch(err => console.error('FETCH ENEMY ERROR', err));
+          if (isEnemy(currentEnemy)) { // <-- used to be: choiceResponse.data.enemy_effect
+            if (!Object.entries(currentEnemy).length) { // <-- redundant??
+              // // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+              // axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+              //   .then((enemy: any) => {
+              //     setCurrentEnemy(enemy.data);
+              //     // <-- enemy Fetched, Awaiting update to state -->
+              //     // <-- prepare user for fight... -->
+              //     // either separate enemy fetch/choice fetch
+              //     // from user action button click...
+              //     // or...
+              //     // refactor enemy_effect onto Event from Choice
+              //     console.log('Enemy fetched, sending to state...');
+              //     return;
+              //   })
+              //   .catch(err => console.error('FETCH ENEMY ERROR', err));
             }
             console.log('ENEMY STATE', currentEnemy);
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
@@ -202,7 +220,7 @@ const GameView: React.FC = () => {
               }));
               choiceOutcome = 'success';
             }
-          } else { // no Enemy on Choice
+          } else { // no Enemy on Event/State
             setOutcome('success');
             return;
           }
