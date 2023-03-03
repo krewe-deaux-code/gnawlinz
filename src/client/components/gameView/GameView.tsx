@@ -14,7 +14,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData } from '../../App';
+import { UserContext, EventData, ChoiceData, Enemy } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -24,6 +24,12 @@ const GameView: React.FC = () => {
 
   const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
+  // state for investigate modal
+  const [modalText, setModalText] = useState('');
+  const [showTextBox, setShowTextBox] = useState(false);
+  const [show, setShow] = useState(false);
+
+  const [currentEnemy, setCurrentEnemy] = useState({} as Enemy);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
@@ -98,6 +104,7 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+      // if allLocations[0] enemy_id === Boss_id ??
     } else {
       const randomNum = Math.floor(Math.random() * (visited.length));
       if (location !== visited[randomNum]) {
@@ -126,13 +133,23 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(false);
   };
 
-  const resolveChoice = (index: number, stat: number, penalty = '') => {
+  const resolveChoice = (index: number, choiceType: string, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
         const choiceOutcome = statCheck(stat);
-        setOutcome(choiceOutcome);
+        if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
+          // check if an enemy is on choiceResponse.data.enemy (true/false)
+          if (choiceResponse.data.enemy_effect) {
+            // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+            axios.get(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+              .then(enemy => console.log('enemy from DB axios', enemy))
+              .catch(err => console.error('FETCH ENEMY ERROR', err));
+          }
+        } else {
+          setOutcome(choiceOutcome);
+        }
         axios.post(`story/ending/${currentChar._id}`,
           {
             result: choiceResponse.data[choiceOutcome]
@@ -182,14 +199,9 @@ const GameView: React.FC = () => {
   };
 
 
-  // state & functions for investigate modal
-  const [show, setShow] = useState(false);
+  // functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const [modalText, setModalText] = useState('');
-
-  const [showTextBox, setShowTextBox] = useState(false);
 
   const handleTextBoxClick = () => {
     setShowTextBox(true);
@@ -197,7 +209,6 @@ const GameView: React.FC = () => {
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
-
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
@@ -288,19 +299,20 @@ const GameView: React.FC = () => {
         <Content3>
           <HudButton onClick={() => {
             hit.play();
-            resolveChoice(choices.engage, currentChar.strength, 'health');
+            // <-- handleEnemy func ??
+            resolveChoice(choices.engage, 'engage', currentChar.strength, 'health');
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();
-            resolveChoice(choices.evade, currentChar.endurance);
+            resolveChoice(choices.evade, 'evade', currentChar.endurance);
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
-            resolveChoice(choices.evacuate, 0);
+            resolveChoice(choices.evacuate, 'evacuate', 0);
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
-            resolveChoice(choices.wildcard, currentChar.mood, 'mood');
+            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood, 'mood');
           }}>Wildcard</HudButton>
         </Content3>
       </Footer>

@@ -56,7 +56,14 @@ export interface LocationData {
   graffiti_msg: string;
 }
 
-
+export interface Enemy {
+  _id: number;
+  name: string;
+  image_url: string;
+  weapon1: string;
+  strength: number;
+  health: number;
+}
 
 export const UserContext = createContext<any>('');
 
