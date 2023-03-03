@@ -6,12 +6,12 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext, Character } from '../../App'; // <-- holds User object
 
-import ItemSlots from './ItemSlots';
+//import ItemSlots from './ItemSlots';
 import CharacterLocation from './CharacterLocation';
 
 const CharacterStats: React.FC = () => {
 
-  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
+  const { userChars, setUserChars, currentChar, setCurrentChar, /* activeUser */ } = useContext(UserContext); // <-- NEED to get user chars below
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex] = useState(0);
@@ -23,8 +23,9 @@ const CharacterStats: React.FC = () => {
   };
 
 
-  const getCurrentChar = (_id = 1) => { // this happens on useEffect, hardcoded to re-select Okra
+  const getCurrentChar = (_id) => { // this happens on useEffect, hardcoded to re-select Okra
     _id = currentChar._id || 1;
+    // console.log('currentChar in CharacterStats', currentChar);
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
         setCurrentChar(data))
@@ -53,7 +54,7 @@ const CharacterStats: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log('INSIDE USE EFFECT', activeUser);
+    //console.log('INSIDE USE EFFECT', activeUser);
     fetchUserChars(); // activeUser.google_id as arg
     getCurrentChar(currentChar._id);
   }, []);
@@ -63,9 +64,9 @@ const CharacterStats: React.FC = () => {
   }
 
   // console.log('CHARS AFTER FETCH', userChars);
-  console.log('CURRENT CHAR', currentChar);
-  console.log('ACTIVE USER', activeUser);
-  console.log('USER CHARS -->', userChars);
+  //console.log('CURRENT CHAR', currentChar);
+  // console.log('ACTIVE USER', activeUser);
+  // console.log('USER CHARS -->', userChars);
 
   return (
     <>
