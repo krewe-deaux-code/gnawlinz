@@ -85,7 +85,21 @@ const GameView: React.FC = () => {
       });
   };
 
+  // Add a modal to handle location change after all locations have been used
+  const [showModal2, setShowModal2] = useState(false);
+  const handleShowModal2 = () => setShowModal2(true);
+  const [modalText2, setModalText2] = useState('');
+  const [bool, setBool] = useState(false);
 
+  const handleCloseModal2 = () => setShowModal2(false);
+  const setModalLocation = (index: number) => {
+    setLocation(visited[index]);
+    setCurrentChar(prevStats => ({
+      ...prevStats,
+      location: setModalLocation
+    }));
+
+  };
 
   const handleLocationChange = () => {
     if (allLocations.length) {
@@ -98,6 +112,11 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+    } else
+    if (bool === false) {
+      setBool(true);
+      setModalText2('true');
+      handleShowModal2();
     } else {
       const randomNum = Math.floor(Math.random() * (visited.length));
       if (location !== visited[randomNum]) {
@@ -164,10 +183,7 @@ const GameView: React.FC = () => {
   }, []);
 
 
-  // state & functions for investigate modal
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+
 
 
   const StatusBars = () => {
@@ -177,15 +193,27 @@ const GameView: React.FC = () => {
     return (
       <div>
         <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
+  };
+
+  // state & functions for investigate modal
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const [modalText, setModalText] = useState('');
+  const [showTextBox, setShowTextBox] = useState(false);
+  const handleTextBoxClick = () => {
+    setShowTextBox(true);
+  };
+  const handleTextBoxClose = () => {
+    setShowTextBox(false);
   };
 
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
-    console.log('this breaks it');
     return <Result />;
   }
   // Any hooks between above conditional and below return will crash the page.
@@ -231,6 +259,25 @@ const GameView: React.FC = () => {
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
+              <Modal show={showModal2} onHide={handleCloseModal2}>
+                <Modal.Header closeButton>
+                  <Modal.Title>Pick your next location</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <p>You have visited all locations, </p>
+                  <p>chose where to go next: </p>
+                  <p>1: Go back to the first location</p>
+                  <p>2: Go back to second location</p>
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button onClick={() => { setModalLocation(0); handleCloseModal2(); }}>
+                    Choice 1
+                  </Button>
+                  <Button onClick={() => { setModalLocation(1); handleCloseModal2(); }}>
+                    Choice 2
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </Content1>
           </Link>
           <Content1>
@@ -245,8 +292,7 @@ const GameView: React.FC = () => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                Choose from the options below:
-                Choose from the options below:
+                Choose from the options below:f
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
@@ -259,6 +305,7 @@ const GameView: React.FC = () => {
                 {showTextBox && <input type="text" />}
               </Modal.Footer>
             </Modal>
+
           </Content1>
         </Content1>
         <Content2>
@@ -267,7 +314,6 @@ const GameView: React.FC = () => {
             <img src={currentChar.image_url} />
           </div>
           <StatContainer>
-
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div>{StatusBars()}</div>
           </StatContainer>
@@ -290,10 +336,9 @@ const GameView: React.FC = () => {
             resolveChoice(choices.wildcard, currentChar.mood, 'mood');
           }}>Wildcard</HudButton>
         </Content3>
-      </Footer>
-    </Container>
+      </Footer >
+    </Container >
   );
 };
 
 export default GameView;
-

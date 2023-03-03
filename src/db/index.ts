@@ -85,7 +85,7 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await Character.sync(options).then(() => console.log('Char Table Created')).catch((err) => console.log('char table err', err));
-  await User.sync({force: false});
+  await User.sync(options);
   await Character_Ally.sync(options);
   await Location_Event.sync(options);
   await Story.sync(options);
