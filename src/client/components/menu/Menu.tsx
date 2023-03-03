@@ -32,17 +32,17 @@ const Menu: React.FC = () => {
   const [active, setActive] = useState(0);
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
 
-  const handleItemLookup = () => {
-    // setFetchedInventory([]);
-    currentChar.inventory.forEach(item => {
-      axios.get(`/item/${item}`)
-        .then((item: any) => {
-          // console.log('ITEM???', item.data);
-          setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item]);
-        })
-        .catch(err => console.error('error fetching from ITEM router', err));
-    });
-  };
+  // const handleItemLookup = () => {
+  //   // setFetchedInventory([]);
+  //   currentChar.inventory.forEach(item => {
+  //     axios.get(`/item/${item}`)
+  //       .then((item: any) => {
+  //         // console.log('ITEM???', item.data);
+  //         setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item]);
+  //       })
+  //       .catch(err => console.error('error fetching from ITEM router', err));
+  //   });
+  // };
 
   const handleDropItem = (itemID) => {
     axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
@@ -82,13 +82,6 @@ const Menu: React.FC = () => {
       .catch((err: any) =>
         console.error('Error in Menu.tsx in fetchItems', err));
   };
-
-  // const handleDrop = () => {
-
-  // };
-
-  // below function fire upon "inventory" tab click ??
-
 
   useEffect(() => {
     const sessionID: string = document.cookie.split('; ')[0].split('=')[1];
