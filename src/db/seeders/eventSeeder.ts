@@ -17,7 +17,7 @@ const eventSeeder = async (eventArr: any) => {
       .then((success)=>
         console.log('Event.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Event.findOrCreate error in src/db/seeders/eventSeeder.ts: '));
+        console.error('Error Event.findOrCreate error in src/db/seeders/eventSeeder.ts: ', err));
   }
 };
 

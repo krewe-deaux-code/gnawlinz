@@ -18,6 +18,15 @@ const Event = db.define('event', {
       key: '_id'
     }
   },
+  enemy_effect: {
+    type: DataTypes.BOOLEAN,
+  },
+  ally_effect: {
+    type: DataTypes.BOOLEAN,
+  },
+  item_effect: {
+    type: DataTypes.BOOLEAN,
+  },
   choice1: {
     type: DataTypes.INTEGER,
     references: {
@@ -38,15 +47,6 @@ const Event = db.define('event', {
       model: Choice,
       key: '_id'
     }
-  },
-  enemy_effect: {
-    type: DataTypes.BOOLEAN,
-  },
-  ally_effect: {
-    type: DataTypes.BOOLEAN,
-  },
-  item_effect: {
-    type: DataTypes.BOOLEAN,
   },
 });
 
