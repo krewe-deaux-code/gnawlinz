@@ -53,9 +53,9 @@ const Menu: React.FC = () => {
       }
     })
       .then(() => {
-        console.log('inventory in handleDrop', fetchedInventory);
+        // console.log('inventory in handleDrop', fetchedInventory);
         fetchItems();
-        console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
       })
       .catch(err => console.error('fetch after delete ERROR', err));
     // needs then and catches for both axios... call fetchItems?
@@ -65,17 +65,17 @@ const Menu: React.FC = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
         setCurrentChar(character.data);
-        console.log('EMPTY???', character.data.inventory);
-        console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
+        //console.log('EMPTY???', character.data.inventory);
+        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
             .then((item: any) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
-              console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+              //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
             })
-            .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
             .catch(err => console.error('error fetching from ITEM router', err));
         });
       })
