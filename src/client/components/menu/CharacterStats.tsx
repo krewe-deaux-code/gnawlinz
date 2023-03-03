@@ -25,6 +25,7 @@ const CharacterStats: React.FC = () => {
 
   const getCurrentChar = (_id) => { // this happens on useEffect, hardcoded to re-select Okra
     _id = currentChar._id || 1;
+    // console.log('currentChar in CharacterStats', currentChar);
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
         setCurrentChar(data))
