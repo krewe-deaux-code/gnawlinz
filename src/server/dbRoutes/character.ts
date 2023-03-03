@@ -33,7 +33,7 @@ characterRouter.get('/:_id', (req, res) => {
       res.status(200).send(character);
     })
     .catch((err) => {
-      console.error('Error Character.findOne failed - src/db/dbRoutes/character.ts: ', err);
+      console.error('Error Character.findOne failed - src/server/dbRoutes/character.ts: ', err);
       res.sendStatus(500);
     });
 });
