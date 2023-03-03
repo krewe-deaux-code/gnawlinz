@@ -8,5 +8,6 @@
     "cloudinary",
     "camelcase",
     "DBPW"
-  ]
+  ],
+  "editor.tabSize": 2
 }

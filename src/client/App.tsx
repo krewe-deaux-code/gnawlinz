@@ -40,9 +40,9 @@ export interface ChoiceData {
   alignment0: string;
   alignment1: string;
   alignment2: string;
-  enemy_effect: number;
-  ally_effect: number;
-  item_effect: number;
+  enemy_effect: boolean;
+  ally_effect: boolean;
+  item_effect: boolean;
 }
 
 export interface LocationData {
