@@ -9,6 +9,9 @@ const eventSeeder = async (eventArr: any) => {
         choice1: eventArr[i].choice1,
         choice2: eventArr[i].choice2,
         choice3: eventArr[i].choice3,
+        enemy_effect: eventArr[i].enemy_effect,
+        ally_effect: eventArr[i].ally_effect,
+        item_effect: eventArr[i].item_effect,
       }
     })
       .then((success)=>

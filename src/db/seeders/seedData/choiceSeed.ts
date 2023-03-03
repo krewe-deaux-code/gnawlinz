@@ -1,5 +1,5 @@
 export const choiceSeed = [
-  { // fight jet 1
+  { // fight jet 1 (keeping for the memories)
     flavor_text: 'You stand you ground and are engaged by a Lockheed Martin F-35 Lightning II.',
     success: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     failure: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.',
@@ -10,7 +10,7 @@ export const choiceSeed = [
     ally_effect: false,
     item_effect: false,
   },
-  { // fight ZB 2
+  { // Generic Fight Text
     flavor_text: 'You attack the banana zombie!',
     success: 'You defeated the banana zombie, and left behind a gross green peel for someone to slip on later.',
     failure: 'The banana zomibe consumed you, and added your biomass to its own.',
@@ -21,7 +21,7 @@ export const choiceSeed = [
     ally_effect: false,
     item_effect: false,
   },
-  { // talk to jet 3
+  { // Generic Talk Text
     flavor_text: 'You wave your hand to get the attention of the flying object.',
     success: 'The object slows and hovers above you, revealing itself as a Lockheed Martin F-35 Lightning II. The pilot responds by opening up the canopy of his vehicle and tossing out a care package of supplies! Wordlessly, he reseals the cockpit and flies off into the distance. You know it was the C variant due to it\'s hover capabilities, and that it is a variant deployed almost exclusively by the US Marine Corps.',
     failure: 'The pilot of the aircraft did not respond to your attempted communication, and the craft screamed off into the distance.',
@@ -32,18 +32,18 @@ export const choiceSeed = [
     ally_effect: false,
     item_effect: false,
   },
-  { // talk to ZB 4
-    flavor_text: 'You attempt to make contact with the entity.',
-    success: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
-    failure: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
-    alignment0: null,
-    alignment1: null,
-    alignment2: null,
-    enemy_effect: true, // _id 1
-    ally_effect: false,
-    item_effect: false,
-  },
-  { // fail jet stealth 5
+  // { // talk to ZB 4 (kill)
+  //   flavor_text: 'You attempt to make contact with the entity.',
+  //   success: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
+  //   failure: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
+  //   alignment0: null,
+  //   alignment1: null,
+  //   alignment2: null,
+  //   enemy_effect: true, // _id 1
+  //   ally_effect: false,
+  //   item_effect: false,
+  // },
+  { // Generic Stealth
     flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
     success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected your presence.',
     failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily tracked you!',
