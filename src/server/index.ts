@@ -41,6 +41,7 @@ import itemRouter from './dbRoutes/item';
 import locationRouter from './dbRoutes/location';
 import storyRouter from './dbRoutes/story';
 import userRouter from './dbRoutes/user';
+import bossRouter from './dbRoutes/boss';
 //import iconRouter from './dbRoutes/icon';
 
 // <-- use routes -->
@@ -53,6 +54,7 @@ app.use('/enemy', enemyRouter);
 app.use('/event', eventRouter);
 app.use('/item', itemRouter);
 app.use('/location', locationRouter);
+app.use('/boss', bossRouter);
 app.use('/story', storyRouter);
 app.use('/user', userRouter);
 //app.use('/icon', iconRouter);
