@@ -94,7 +94,7 @@ const App = () => {
 
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
-      .then(() => console.log('success'))
+      .then(() => console.log('character updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
 

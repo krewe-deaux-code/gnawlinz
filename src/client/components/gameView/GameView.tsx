@@ -16,13 +16,18 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext, EventData, ChoiceData, Enemy } from '../../App';
 
-import { statCheck } from '../../utility/gameUtils';
+import { statCheck, fightEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
 const GameView: React.FC = () => {
 
-  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
+  const {
+    prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
+    location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
+    setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
+    setInvestigateDisabled
+  } = useContext(UserContext);
 
   // state for investigate modal
   const [modalText, setModalText] = useState('');
@@ -34,7 +39,7 @@ const GameView: React.FC = () => {
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
-        console.log('EVENT', event);
+        // console.log('EVENT', event);
         setEvent(event.data);
         setChoices({
           engage: event.data.choice0,
@@ -45,7 +50,7 @@ const GameView: React.FC = () => {
         setPrevEventId(event.data._id);
       })
       .catch(err => {
-        console.log('RANDOM EVENT FETCH FAILED', err);
+        console.error('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
@@ -72,10 +77,10 @@ const GameView: React.FC = () => {
   //
 
   const getAllLocations = () => {
-    console.log('Current Event on State: ', event);
+    // console.log('Current Event on State: ', event);
     axios.get('/location/allLocations')
       .then(locations => {
-        console.log('current location: ', currentChar.location);
+        // console.log('current location: ', currentChar.location);
         // setCurrentChar(prevStats => ({
         //   ...prevStats,
         //   location: locations.data[0]._id
@@ -133,19 +138,57 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(false);
   };
 
-  const resolveChoice = (index: number, choiceType: string, stat: number, penalty = '') => {
-    axios.get<ChoiceData>(`/choice/selected/${index}`)
+  const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
+    console.log('choice from click?', choice_id);
+    // ATM evacuate will not fail...
+    if (choiceType === 'evacuate') {
+      handleLocationChange();
+      return;
+    }
+    // look up choice_id from action Button click
+    axios.get<ChoiceData>(`/choice/selected/${choice_id}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        const choiceOutcome = statCheck(stat);
+        let choiceOutcome = statCheck(stat); // <-- argument from action Button click
+        // <-- choices valid for combat -->
         if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
-          // check if an enemy is on choiceResponse.data.enemy (true/false)
+          // <-- enemy Effect TRUE on choice to hit below IF block -->
           if (choiceResponse.data.enemy_effect) {
-            // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-            axios.get(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
-              .then(enemy => console.log('enemy from DB axios', enemy))
-              .catch(err => console.error('FETCH ENEMY ERROR', err));
+            if (!Object.entries(currentEnemy).length) {
+              // if true: Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+              axios.get(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+                .then(async (enemy: any) => {
+                  await setCurrentEnemy(enemy.data);
+                  // <-- enemy Fetched, Awaiting update to state -->
+                  // <-- prepare user for fight... -->
+                  // either separate enemy fetch/choice fetch
+                  // from user action button click...
+                  // or...
+                  // refactor enemy_effect onto Event from Choice
+                  console.log('Enemy fetched, sending to state...');
+                  return;
+                })
+                .catch(err => console.error('FETCH ENEMY ERROR', err));
+            }
+            console.log('ENEMY STATE', currentEnemy);
+            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
+            if (fightResult?.player) {
+              setCurrentChar((prevChar: any) => ({
+                ...prevChar,
+                health: fightResult.player
+              }));
+              choiceOutcome = 'failure';
+            } else if (fightResult?.enemy) {
+              setCurrentEnemy((prevEnemy: any) => ({
+                ...prevEnemy,
+                health: fightResult.enemy
+              }));
+              choiceOutcome = 'success';
+            }
+          } else { // no Enemy on Choice
+            setOutcome('success');
+            return;
           }
         } else {
           setOutcome(choiceOutcome);
@@ -156,12 +199,12 @@ const GameView: React.FC = () => {
           })
           .then(() => {
             console.log('penalty: ', penalty);
-            if (choiceOutcome === 'failure') {
+            if (choiceOutcome === 'failure' && penalty !== 'health') {
               setCurrentChar(previousStats => ({
                 ...previousStats,
                 [penalty]: previousStats[penalty] - 2
               }));
-            } else if (choiceOutcome === 'success' && penalty === 'mood') {
+            } else if (choiceOutcome === 'success' && penalty !== 'health') {
               setCurrentChar(previousStats => ({
                 ...previousStats,
                 [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...

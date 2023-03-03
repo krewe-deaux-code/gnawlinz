@@ -61,7 +61,7 @@ export const choiceSeed = [
     alignment0: null,
     alignment1: null,
     alignment2: null,
-    enemy_effect: false,
+    enemy_effect: true,
     ally_effect: false,
     item_effect: false,
   },

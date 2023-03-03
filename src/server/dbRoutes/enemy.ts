@@ -10,8 +10,8 @@ const enemyRouter = Router();
 // *** DB Queries ***
 // ******************
 
-enemyRouter.get('/:id', (req, res)=>{
-  Enemy.findOne({where: {_id: req.params.id}})
+enemyRouter.get('/:id', (req, res) => {
+  Enemy.findOne({ where: { _id: req.params.id } })
     .then((response: any) => {
       //console.log(response.dataValues);
       res.status(200).send(response.dataValues);
