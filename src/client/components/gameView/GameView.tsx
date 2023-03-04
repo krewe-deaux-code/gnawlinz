@@ -11,7 +11,7 @@ import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
-  AllyImg
+  AllyImg, EnemyImg
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -217,7 +217,7 @@ const GameView: React.FC = () => {
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
-              setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
+              setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
                 setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
               }
@@ -225,7 +225,7 @@ const GameView: React.FC = () => {
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
-              setTempText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
+              setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
@@ -248,8 +248,7 @@ const GameView: React.FC = () => {
           if (choiceOutcome === 'success' && choiceType === 'wildcard' || choiceType === 'evade') { // --> player gets item || ally
             if (Object.entries(currentAlly).length) {
               setShowAlly(true);
-              setTempText('Hi, I\'m [ALLY.NAME], I\'m here to chew gum and kill bananas, and aaaaaall outta gum.'); // add to schema
-              console.log('eat a bag of chips');
+              setTempText(currentAlly.greeting); // add to schema
               console.log(currentAlly);
             }
           }
@@ -397,7 +396,16 @@ const GameView: React.FC = () => {
       <Main>
         <h2>{location.name}</h2>
         <div>
-          <AllyImg src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1677893849/gnawlinzAllies/ally1Pxl_h2bm1m.png' />
+          {
+            showAlly
+              ? <AllyImg src={currentAlly.image_url} />
+              : <></>
+          }
+          {
+            showEnemy
+              ? <EnemyImg src={currentEnemy.image_url} />
+              : <></>
+          }
           <EventText>
             <ScrollableContainer>
               {

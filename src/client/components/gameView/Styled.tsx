@@ -176,3 +176,14 @@ export const AllyImg = styled.img`
   top: 52%;
   right: 32%;
 `;
+
+export const EnemyImg = styled.img`
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  max-width: 500px;
+  max-height: 502px;
+  position: absolute;
+  top: 0%;
+  right: 30%;
+`;

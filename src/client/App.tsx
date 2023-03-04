@@ -86,7 +86,7 @@ export interface Ally {
   image_url: string;
   strength: number;
   endurance: number;
-  aligntment: string;
+  alignment: string;
   greeting: string;
   departing: string;
 }
