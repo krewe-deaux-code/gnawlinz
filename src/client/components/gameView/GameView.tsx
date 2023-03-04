@@ -10,7 +10,8 @@ import Button from 'react-bootstrap/Button';
 import {
   Container, Main, Content1,
   Content2, Content3, Footer, HudButton,
-  EventText, StatContainer, ScrollableContainer
+  EventText, StatContainer, ScrollableContainer,
+  AllyImg
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -369,6 +370,7 @@ const GameView: React.FC = () => {
       <Main>
         <h2>{location.name}</h2>
         <div>
+          <AllyImg src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1677893849/gnawlinzAllies/ally1Pxl_h2bm1m.png' />
           <EventText>
             <ScrollableContainer>
               {
