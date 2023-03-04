@@ -150,7 +150,6 @@ const GameView: React.FC = () => {
   };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
-    console.log(stat);
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
@@ -162,7 +161,7 @@ const GameView: React.FC = () => {
             result: choiceResponse.data[choiceOutcome]
           })
           .then(() => {
-            console.log('penalty: ', penalty);
+            // console.log('penalty: ', penalty);
             if (choiceOutcome === 'failure') {
               setCurrentChar(previousStats => ({
                 ...previousStats,
@@ -212,7 +211,7 @@ const GameView: React.FC = () => {
             .then(({data}) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
-              //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+              // Handles nonconsumable stat bonuses
               if (data.modified_stat0 === 'strength' && data.consumable === false) {
                 setBonusStrength(bonusStrength + data.modifier0);
               }
