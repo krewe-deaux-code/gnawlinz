@@ -224,26 +224,7 @@ const GameView: React.FC = () => {
 
 
   useEffect(() => {
-    axios.get<Character>(`/character/${currentChar._id}`)
-      .then((character: any) => {
-        setCurrentChar(character.data);
-        //console.log('EMPTY???', character.data.inventory);
-        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
-        setFetchedInventory([]);
-        character.data.inventory.forEach(item => {
-          axios.get(`/item/${item}`)
-            .then((item: any) => {
-              // console.log('ITEM???', item.data);
-              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
-              //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
-            })
-            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
-            .catch(err => console.error('error fetching from ITEM router', err));
-        });
-      })
-      .catch((err: any) =>
-        console.error('Error in Menu.tsx in fetchItems', err));
-    console.log('this is the use effect');
+    fetchItems();
     getAllLocations();
   }, []);
 
