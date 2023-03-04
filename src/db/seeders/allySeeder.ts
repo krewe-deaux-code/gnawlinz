@@ -9,7 +9,9 @@ const allySeeder = async (allyArr: any) => {
           image_url: allyArr[i].image_url,
           strength: allyArr[i].strength,
           endurance: allyArr[i].endurance,
-          alignment: allyArr[i].alignment
+          alignment: allyArr[i].alignment,
+          greeting: allyArr[i].greeting,
+          departing: allyArr[i].departing
         }
       })
       .then((success) =>

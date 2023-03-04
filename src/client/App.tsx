@@ -87,6 +87,8 @@ export interface Ally {
   strength: number;
   endurance: number;
   aligntment: string;
+  greeting: string;
+  departing: string;
 }
 
 export const UserContext = createContext<any>('');
