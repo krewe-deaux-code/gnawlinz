@@ -21,6 +21,7 @@ export interface Character {
   mood: number;
   location: number;
   ally_count: number;
+  score: number;
 }
 
 export interface EventData {
@@ -30,6 +31,9 @@ export interface EventData {
   choice1: number;
   choice2: number;
   choice3: number;
+  enemy_effect: boolean;
+  ally_effect: boolean;
+  item_effect: boolean;
 }
 
 export interface ChoiceData {
@@ -40,9 +44,6 @@ export interface ChoiceData {
   alignment0: string;
   alignment1: string;
   alignment2: string;
-  enemy_effect: boolean;
-  ally_effect: boolean;
-  item_effect: boolean;
 }
 
 export interface LocationData {
@@ -54,6 +55,16 @@ export interface LocationData {
   drop_item_slot: number;
   graffiti: string;
   graffiti_msg: string;
+}
+
+export interface Enemy {
+  _id: number;
+  name: string;
+  image_url: string;
+  weapon1: string;
+  strength: number;
+  health: number;
+  score: number;
 }
 
 export interface Item {
@@ -69,15 +80,24 @@ export interface Item {
   sell_price: number;
 }
 
+export interface Ally {
+  _id: number;
+  name: string;
+  image_url: string;
+  strength: number;
+  endurance: number;
+  aligntment: string;
+}
 
 export const UserContext = createContext<any>('');
-
 
 
 const App = () => {
 
   const [userChars, setUserChars] = useState<Character[]>([]);
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
+  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -99,7 +119,7 @@ const App = () => {
 
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
-      .then(() => console.log('success'))
+      .then(() => console.log('character updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
 
@@ -109,7 +129,7 @@ const App = () => {
 
   return (
 
-    <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+    <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
       <BrowserRouter>
         <GlobalStyle />
         <Suspense fallback={<div>LOADING...</div>}>

@@ -14,21 +14,39 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData } from '../../App';
+import { UserContext, EventData, ChoiceData, Enemy, Ally } from '../../App';
 
-import { statCheck } from '../../utility/gameUtils';
+import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
 const GameView: React.FC = () => {
 
-  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
+  const {
+    prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
+    location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
+    setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
+    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly
+  } = useContext(UserContext);
 
+  // state for investigate modal
+  const [modalText, setModalText] = useState('');
+  const [showTextBox, setShowTextBox] = useState(false);
+  const [show, setShow] = useState(false);
+  const [modalText2, setModalText2] = useState('');
+  const [bool, setBool] = useState(false);
+  const [showModal2, setShowModal2] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [inputValue, setInputValue] = useState('');
+
+  const [fightText, setFightText] = useState('');
+  const [penalty, setPenalty] = useState('');
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
-        console.log('EVENT', event);
+        // console.log('EVENT', event);
         setEvent(event.data);
         setChoices({
           engage: event.data.choice0,
@@ -37,9 +55,19 @@ const GameView: React.FC = () => {
           wildcard: event.data.choice3
         });
         setPrevEventId(event.data._id);
+        if (event.data.enemy_effect) {
+          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
+          handleEnemyFetch();
+          setEvent(prevEvent => ({
+            ...prevEvent,
+            enemy_effect: false
+          }));
+        } else {
+          setCurrentEnemy({});
+        }
       })
       .catch(err => {
-        console.log('RANDOM EVENT FETCH FAILED', err);
+        console.error('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
@@ -47,28 +75,34 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(true);
   };
 
-  //separate func for update char location via axios request to character/location endpoint
+  // NPC
+  const handleEnemyFetch = () => {
+    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
+    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+      .then((enemy: any) => {
+        setCurrentEnemy(enemy.data);
+        console.log('Enemy fetched, sending to state...');
+        // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
+      })
+      .catch(err => console.error('FETCH ENEMY ERROR', err));
+  };
 
-  // const fetchLocation = () => {
-  //   axios.get<LocationData>(`/location/${location._id}`)
-  //     .then((location) => {
-  //       console.log('Location from DB', location);
-  //       setLocation(location.data);
-  //       fetchEvent();
-  //       //update character location axios to server
-  //     })
-  //     .catch(err => console.log('Axios fail useEffect Location grab', err));
-  // };
-
-  // const updateLocationDB = () => {
-
-  //
+  const handleAllyFetch = () => {
+    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
+    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
+      .then((ally: any) => {
+        setCurrentAlly(ally.data);
+        console.log('ally fetched, sending to state...');
+        // <-- put ally.data.image_url somewhere into HUD to indicate enemy
+      })
+      .catch(err => console.error('FETCH ENEMY ERROR', err));
+  };
 
   const getAllLocations = () => {
-    console.log('Current Event on State: ', event);
+    // console.log('Current Event on State: ', event);
     axios.get('/location/allLocations')
       .then(locations => {
-        console.log('current location: ', currentChar.location);
+        // console.log('current location: ', currentChar.location);
         // setCurrentChar(prevStats => ({
         //   ...prevStats,
         //   location: locations.data[0]._id
@@ -85,10 +119,7 @@ const GameView: React.FC = () => {
   };
 
   // Add a modal to handle location change after all locations have been used
-  const [showModal2, setShowModal2] = useState(false);
   const handleShowModal2 = () => setShowModal2(true);
-  const [modalText2, setModalText2] = useState('');
-  const [bool, setBool] = useState(false);
 
   const handleCloseModal2 = () => setShowModal2(false);
   const setModalLocation = (index: number) => {
@@ -97,7 +128,6 @@ const GameView: React.FC = () => {
       ...prevStats,
       location: setModalLocation
     }));
-
   };
 
   const handleLocationChange = () => {
@@ -111,8 +141,7 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
-    } else
-    if (bool === false) {
+    } else if (bool === false) {
       setBool(true);
       setModalText2('true');
       handleShowModal2();
@@ -144,32 +173,63 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(false);
   };
 
-  const resolveChoice = (index: number, stat: number, penalty = '') => {
-    axios.get<ChoiceData>(`/choice/selected/${index}`)
+  const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
+    setPenalty(penalty);
+    setFightText('');
+    console.log('choice from click?', choice_id);
+    // ATM evacuate will not fail...
+    if (choiceType === 'evacuate') {
+      handleLocationChange();
+      return;
+    }
+    // look up choice_id from action Button click
+    axios.get<ChoiceData>(`/choice/selected/${choice_id}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        const choiceOutcome = statCheck(stat);
-        setOutcome(choiceOutcome);
-        axios.post(`story/ending/${currentChar._id}`,
-          {
-            result: choiceResponse.data[choiceOutcome]
-          })
-          .then(() => {
-            console.log('penalty: ', penalty);
-            if (choiceOutcome === 'failure') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] - 2
-              }));
-            } else if (choiceOutcome === 'success' && penalty === 'mood') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
-              }));
+        const choiceOutcome = statCheck(stat); // <-- argument from action Button click
+        // <-- choices valid for combat -->
+        if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
+          // <-- enemy Effect TRUE on choice to hit below IF block -->
+          if (isEnemy(currentEnemy) && currentEnemy.health > 0) { // <-- Enemy exists, enemy !dead
+            console.log('ENEMY STATE', currentEnemy);
+            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
+            // <-- player loses, adjust player health below
+            if (fightResult?.player || fightResult.player === 0) {
+              setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
+              setFightText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
+              if (currentChar.health <= 0) {
+                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
+              }
+              return;
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              // <-- enemy loses, adjust player health below
+              setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
+              setFightText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
+              return;
             }
-          });
-      }) // <-- maybe another .then() to update the currentChar in DB with updated stats ?? -->
+          } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            // <-- give the player something...
+            setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
+            setFightText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
+            setOutcome('success'); // <-- ADD PLAYER KILL ENEMY TO STORY
+            // choiceOutcome = 'success';
+            setCurrentEnemy({});
+          } else { // <-- no Enemy on Event/State (enemy !exist)
+            setOutcome('success');
+            // <-- succeed Engage roll mechanics here (no enemy)
+            return;
+          }
+        } else { // <-- evacuate || wildcard || evade && success
+          // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
+          // arbitrate item/ally acquisition with percentage || algorithm
+          // <-- if (choiceType === 'evade' && choiceOutcome === 'success') --> player gets item || ally
+          // <-- if (choiceType === 'wildcard' && choiceOutcome === 'success') --> player gets item || ally
+          // <-- evacuate WORKS already...
+          setOutcome(choiceOutcome); // <-- success or fail to story
+        }
+        // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
+      })
       .catch(err => {
         console.error('Failed setting selectedChoice State', err);
       });
@@ -181,8 +241,33 @@ const GameView: React.FC = () => {
     getAllLocations();
   }, []);
 
-
-
+  useEffect(() => {
+    if (hasMounted) {
+      axios.post(`story/ending/${currentChar._id}`,
+        {
+          result: selectedChoice[outcome]
+        })
+        .then(() => {
+          if (penalty !== '') {
+            console.log('penalty: ', penalty);
+            if (outcome === 'failure') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] - 2
+              }));
+            } else if (outcome === 'success') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
+              }));
+            }
+          }
+        })
+        .catch(err => console.error('axios AMMEND to STORY', err));
+    } else {
+      setHasMounted(true);
+    }
+  }, [outcome]);
 
 
   const StatusBars = () => {
@@ -197,21 +282,16 @@ const GameView: React.FC = () => {
     );
   };
 
-  // state & functions for investigate modal
-  const [show, setShow] = useState(false);
+
+  // functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-  const [modalText, setModalText] = useState('');
-  const [showTextBox, setShowTextBox] = useState(false);
-  const [showButton, setShowButton] = useState(false);
-  const [inputValue, setInputValue] = useState('');
 
-  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {
     setShowTextBox(true);
     setShowButton(true);
   };
-  // exit button func for modal, closes input field
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
@@ -280,6 +360,7 @@ const GameView: React.FC = () => {
   if (currentChar.health < 1 || currentChar.mood < 1) {
     return <Result />;
   }
+  console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
   return (
 
@@ -302,6 +383,11 @@ const GameView: React.FC = () => {
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
                   </>
+              }
+              {
+                fightText.length
+                  ? <p style={{ margin: '1rem' }}>{fightText}</p>
+                  : <></>
               }
               {
                 outcome.length
@@ -390,19 +476,20 @@ const GameView: React.FC = () => {
         <Content3>
           <HudButton onClick={() => {
             hit.play();
-            resolveChoice(choices.engage, currentChar.strength, 'health');
+            // <-- handleEnemy func ??
+            resolveChoice(choices.engage, 'engage', currentChar.strength);
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();
-            resolveChoice(choices.evade, currentChar.endurance);
+            resolveChoice(choices.evade, 'evade', currentChar.endurance);
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
-            resolveChoice(choices.evacuate, 0);
+            resolveChoice(choices.evacuate, 'evacuate', 0);
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
-            resolveChoice(choices.wildcard, currentChar.mood, 'mood');
+            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood, 'mood');
           }}>Wildcard</HudButton>
         </Content3>
       </Footer >
