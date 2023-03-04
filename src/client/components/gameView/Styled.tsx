@@ -103,6 +103,7 @@ export const Footer = styled.footer`
 
 export const CharImageStyles = styled.img`
 object-fit: contain;
+padding: auto;
 `;
 
 
@@ -119,6 +120,8 @@ justify-content: center;
 width: 100%;
 height: 100%;
 grid-area: inventory;
+padding: auto;
+margin: auto;
 `;
 
 export const IconContainer = styled.div`
@@ -143,7 +146,7 @@ export const CharStatusContainer = styled.div`
   "inventory inventory";
   width: 100%;
   height: auto;
-  padding: 0.25rem;
+  padding: 0.5rem;
   `;
 
 export const StatContainer = styled.div`
