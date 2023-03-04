@@ -10,6 +10,7 @@ import {
   Container, Main, Content1, CharStatusContainer,
   Content2, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
+  AllyImg,
   InventoryStyle, StatContainer2, CharImageStyles,
   IconContainer, IconImg, InventoryBorder
 } from './Styled'; //ContentBox
@@ -335,6 +336,7 @@ const GameView: React.FC = () => {
       <Main>
         <h2>{location.name}</h2>
         <div>
+          <AllyImg src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1677893849/gnawlinzAllies/ally1Pxl_h2bm1m.png' />
           <EventText>
             <ScrollableContainer>
               {

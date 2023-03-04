@@ -183,7 +183,7 @@ export const HudButton = styled.button`
 `;
 
 export const EventText = styled.div`
-  z-index: 1;
+  z-index: 3;
   background-color: #808080a6;
   color: white;
   padding: .4em;
@@ -222,4 +222,15 @@ export const ScrollableContainer = styled.div`
     background-size: 100%;
 
   }
+`;
+
+export const AllyImg = styled.img`
+  z-index: 2;
+  height: 83%;
+  width: 50%;
+  max-width: 200px;
+  max-height: 202px;
+  position: absolute;
+  top: 52%;
+  right: 32%;
 `;
