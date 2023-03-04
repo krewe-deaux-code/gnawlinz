@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
-  height: 100vh;
+  height: 100%;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
     "nav nav nav nav"
@@ -38,6 +38,7 @@ export const ContentBox = styled.div`
 
 export const NavBar = styled.nav`
   background: #ffb700;
+  height: 100%;
   grid-area: nav;
   padding: 0.25rem;
   display: flex;
@@ -83,18 +84,12 @@ export const Content2 = styled.div`
   grid-template-columns: .5fr .5fr;
 `;
 
-export const StatContainer = styled.div`
-  display: grid;
-  grid-template-rows: auto auto auto auto;
-  width: 100%;
-  height: 100%;
-  align-content: space-evenly;
-`;
 
 export const Content3 = styled(Content2)``;
 
 export const Footer = styled.footer`
   background: black;
+  height: 100%;
   grid-area: footer;
   padding: 0.25rem;
   display: flex;
@@ -107,6 +102,65 @@ export const Footer = styled.footer`
   height: 100%;
 `;
 
+export const CharImageStyles = styled.img`
+object-fit: contain;
+`;
+
+
+export const InventoryStyle = styled.div`
+  display: grid;
+  height: auto;
+  width: auto;
+ grid-template-areas: "item item item item item item item item";
+  `;
+
+export const InventoryBorder = styled.div`
+border: 1px solid white;
+justify-content: center;
+width: 100%;
+grid-area: inventory;
+`;
+
+export const IconContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  grid-gap: 1em;
+  `;
+
+export const IconImg = styled.img`
+  cursor: pointer;
+  padding: 5px;
+  width: 2em;
+`;
+
+export const CharStatusContainer = styled.div`
+
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+  "stat stat2"
+  "inventory inventory";
+  width: 100%;
+  height: auto;
+  `;
+
+export const StatContainer = styled.div`
+display: grid;
+grid-area: stat;
+grid-template-rows: auto auto auto auto;
+width: 100%;
+height: auto;
+justify-content: center;
+`;
+
+export const StatContainer2 = styled(StatContainer)`
+  grid-area: stat2;
+  grid-template-rows: .5fr 1fr;
+`;
+
+
+
 export const TopContent1 = styled.div`
   padding: 0.25rem;
   width: 100%;
@@ -115,7 +169,6 @@ export const TopContent1 = styled.div`
 
 export const TopContent2 = styled(TopContent1)``;
 
-export const TopContent3 = styled(TopContent1)``;
 
 export const HudButton = styled.button`
   font-size: 1.5em;

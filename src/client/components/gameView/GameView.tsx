@@ -2,19 +2,20 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1,
-  Content2, Content3, Footer, HudButton,
-  EventText, StatContainer, ScrollableContainer
+  Container, Main, Content1, CharStatusContainer,
+  Content2, Footer, HudButton,
+  EventText, StatContainer, ScrollableContainer,
+  InventoryStyle, StatContainer2, CharImageStyles,
+  IconContainer, IconImg, InventoryBorder
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData } from '../../App';
+import { UserContext, EventData, ChoiceData, Character, Item } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -89,6 +90,7 @@ const GameView: React.FC = () => {
   const handleShowModal2 = () => setShowModal2(true);
   const [modalText2, setModalText2] = useState('');
   const [bool, setBool] = useState(false);
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
 
   const handleCloseModal2 = () => setShowModal2(false);
   const setModalLocation = (index: number) => {
@@ -176,7 +178,71 @@ const GameView: React.FC = () => {
   };
 
 
+
+  const handleDropItem = (itemID) => {
+    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.delete('/character/inventory/delete', {
+      data: {
+        charID: currentChar._id,
+        itemID: itemID,
+      }
+    })
+      .then(() => {
+        // console.log('inventory in handleDrop', fetchedInventory);
+        fetchItems();
+        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+      })
+      .catch(err => console.error('fetch after delete ERROR', err));
+    // needs then and catches for both axios... call fetchItems?
+  };
+
+  const fetchItems = () => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        //console.log('EMPTY???', character.data.inventory);
+        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
+        setFetchedInventory([]);
+        character.data.inventory.forEach(item => {
+          axios.get(`/item/${item}`)
+            .then((item: any) => {
+              // console.log('ITEM???', item.data);
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
+              //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+            })
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .catch(err => console.error('error fetching from ITEM router', err));
+        });
+      })
+      .catch((err: any) =>
+        console.error('Error in Menu.tsx in fetchItems', err));
+  };
+
+
+
+
+
+
   useEffect(() => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        //console.log('EMPTY???', character.data.inventory);
+        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
+        setFetchedInventory([]);
+        character.data.inventory.forEach(item => {
+          axios.get(`/item/${item}`)
+            .then((item: any) => {
+              // console.log('ITEM???', item.data);
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
+              //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+            })
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .catch(err => console.error('error fetching from ITEM router', err));
+        });
+      })
+      .catch((err: any) =>
+        console.error('Error in Menu.tsx in fetchItems', err));
     console.log('this is the use effect');
     getAllLocations();
   }, []);
@@ -377,17 +443,28 @@ const GameView: React.FC = () => {
 
           </Content1>
         </Content1>
-        <Content2>
-          <div>
-            <h4>{currentChar.name}</h4>
-            <img src={currentChar.image_url} />
-          </div>
+        <CharStatusContainer>
           <StatContainer>
-            <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div>{StatusBars()}</div>
+            <h4>{currentChar.name}</h4>
+            <CharImageStyles src={currentChar.image_url} />
           </StatContainer>
-        </Content2>
-        <Content3>
+          <StatContainer2>
+            <div style={{ textDecoration: 'underline' }}>Status</div>
+            <div style={{ width: '10em' }}>{StatusBars()}</div>
+          </StatContainer2>
+          <InventoryBorder>
+            <h4>Inventory</h4>
+            <InventoryStyle>
+              {
+                fetchedInventory.map((item: Item, i) => {
+                  return <div key={i}>
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                })
+              }
+            </InventoryStyle>
+          </InventoryBorder>
+        </CharStatusContainer>
+        <Content2>
           <HudButton onClick={() => {
             hit.play();
             resolveChoice(choices.engage, currentChar.strength, 'health');
@@ -404,7 +481,7 @@ const GameView: React.FC = () => {
             wildCard.play();
             resolveChoice(choices.wildcard, currentChar.mood, 'mood');
           }}>Wildcard</HudButton>
-        </Content3>
+        </Content2>
       </Footer >
     </Container >
   );
