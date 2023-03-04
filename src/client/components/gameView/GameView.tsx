@@ -150,6 +150,8 @@ const GameView: React.FC = () => {
   };
 
   const handleLocationChange = () => {
+    setShowAlly(false);
+    setShowEnemy(false);
     if (allLocations.length) {
       setSelectedChoice({} as ChoiceData);
       setOutcome('');
