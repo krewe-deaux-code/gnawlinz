@@ -2,8 +2,6 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { Howler } from 'howler';
-
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
@@ -18,7 +16,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData, Enemy, Ally, Character, Item } from '../../App';
+import { UserContext, EventData, ChoiceData, Character, Item } from '../../App';
 
 import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -26,29 +24,7 @@ import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 const GameView: React.FC = () => {
 
-  const {
-    prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
-    location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
-    setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
-    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly
-  } = useContext(UserContext);
-
-  // state for investigate modal
-  const [modalText, setModalText] = useState('');
-  const [showTextBox, setShowTextBox] = useState(false);
-  const [show, setShow] = useState(false);
-  const [modalText2, setModalText2] = useState('');
-  const [bool, setBool] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
-  const [hasMounted, setHasMounted] = useState(false);
-  const [showButton, setShowButton] = useState(false);
-  const [inputValue, setInputValue] = useState('');
-
-  // state for fetchedInventory and Bonus/Stat Modifiers
-  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
-  const [bonusStrength, setBonusStrength] = useState(0);
-  const [bonusEndurance, setBonusEndurance] = useState(0);
-  const [bonusMood, setBonusMood] = useState(0);
+  const { prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled } = useContext(UserContext);
 
 
   const fetchEvent = () => {
@@ -111,9 +87,14 @@ const GameView: React.FC = () => {
   };
 
   // Add a modal to handle location change after all locations have been used
-
+  const [showModal2, setShowModal2] = useState(false);
   const handleShowModal2 = () => setShowModal2(true);
-
+  const [modalText2, setModalText2] = useState('');
+  const [bool, setBool] = useState(false);
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [bonusStrength, setBonusStrength] = useState(0);
+  const [bonusEndurance, setBonusEndurance] = useState(0);
+  const [bonusMood, setBonusMood] = useState(0);
   const handleCloseModal2 = () => setShowModal2(false);
   const setModalLocation = (index: number) => {
     setLocation(visited[index]);
@@ -121,6 +102,7 @@ const GameView: React.FC = () => {
       ...prevStats,
       location: setModalLocation
     }));
+
   };
 
   const handleLocationChange = () => {
@@ -134,7 +116,8 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
-    } else if (bool === false) {
+    } else
+    if (bool === false) {
       setBool(true);
       setModalText2('true');
       handleShowModal2();
@@ -225,7 +208,7 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({ data }) => {
+            .then(({data}) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               // Handles nonconsumable stat bonuses
@@ -281,8 +264,13 @@ const GameView: React.FC = () => {
   };
 
   // state & functions for investigate modal
+  const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [modalText, setModalText] = useState('');
+  const [showTextBox, setShowTextBox] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {

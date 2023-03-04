@@ -1,11 +1,10 @@
 //import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react'; //useState,
-import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider } from './Styled'; //ContentBox
+import { NavBar, TopContent1, TopContent2, TopContent3 } from './Styled'; //ContentBox
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
-import { Howler } from 'howler';
 
-import { UserContext, SettingsContext } from '../../App';
+import { UserContext } from '../../App';
 
 // Logo link props
 type LinkProps = {
@@ -13,16 +12,7 @@ type LinkProps = {
 };
 
 const Nav = ({ isActive }: LinkProps) => {
-  // <-- move to Title after Auth refactor/move -->
-  const { volume, setVolume } = useContext(SettingsContext);
-  const handleVolumeChange = (e) => {
-    const newVolume = e.target.value;
-    setVolume(parseFloat(newVolume));
-    Howler.volume(parseFloat(newVolume));
-    console.log('HOWLER VOLUME', newVolume);
-    console.log('VOLUME IN CONTEXT TITLE', volume);
-  };
-  console.log('VOLUME @ TITLE', volume);
+  //do stuff
 
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<string>('');
@@ -61,14 +51,6 @@ const Nav = ({ isActive }: LinkProps) => {
         ) : (
           <span className='inactive-link'>GNAWLINZ</span>
         )}
-        {/* move to Title after Auth refactor/move */}
-        <VolumeSlider
-          min={0}
-          max={1}
-          step={0.01}
-          value={volume}
-          onChange={handleVolumeChange}
-        />
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
       <TopContent3>

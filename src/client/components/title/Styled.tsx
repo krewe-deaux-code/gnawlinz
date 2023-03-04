@@ -49,12 +49,7 @@ const Footer = styled.footer`
   padding: 0.25rem;
 `;
 
-const VolumeSlider = styled.input.attrs({ type: 'range' })`
-
-`;
-
-export {
-  TitleContainer, NavBar, Main,
+export {TitleContainer, NavBar, Main,
+  // ContentBox,
   Content1, Content2, Content3,
-  Footer, VolumeSlider
-};
+  Footer};
