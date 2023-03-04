@@ -37,6 +37,8 @@ const GameView: React.FC = () => {
   const [bool, setBool] = useState(false);
   const [showModal2, setShowModal2] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
+  const [showButton, setShowButton] = useState(false);
+  const [inputValue, setInputValue] = useState('');
 
   const [fightText, setFightText] = useState('');
   const [penalty, setPenalty] = useState('');
@@ -71,7 +73,6 @@ const GameView: React.FC = () => {
 
   const handleClickButt = () => {
     setInvestigateDisabled(true);
-    console.log('button pressed');
   };
 
   // NPC
@@ -288,10 +289,72 @@ const GameView: React.FC = () => {
 
   const handleTextBoxClick = () => {
     setShowTextBox(true);
+    setShowButton(true);
   };
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
+  // for tag it button
+  const handleInputValueChange = (event) => {
+    setInputValue(event.target.value);
+  };
+
+  // search dropped item based on current location, update location database
+  const retrieveDropItem = () => {
+    const id = location._id;
+    axios.get(`/location/${location._id}`)
+      .then((location: any) => {
+        if (location.data.drop_item_slot === 1) {
+          setModalText('You search for items, but didn\'t find anything');
+        } else {
+          axios.get(`item/${location.data.drop_item_slot}`)
+            .then((response: any) => {
+              setModalText(`You searched for items and found ${response.data.name}`);
+            })
+            .catch((err) => {
+              console.error('Failed to get item id from item table', err);
+            })
+            .then(() => {
+              axios.patch(`/location/update/${id}`, {
+                drop_item_slot: 1
+              });
+            })
+            .catch((err) => {
+              console.error('Failed to update the state of location', err);
+            });
+        }
+      })
+      .catch((err) => {
+        console.error('Failed to get drop item from location', err);
+      });
+
+  };
+
+
+  const updateGraffitiMsg = () => {
+    axios.patch(`/location/update/${location._id}`, {
+      graffiti_msg: inputValue
+    })
+      .then(() => {
+        console.log('Graffiti message updated');
+        setLocation(location => ({
+          ...location,
+          graffiti_msg: inputValue
+        }));
+        setInputValue('');
+        setVisited(prevVisited => prevVisited.map(item => {
+          if (item.name === location.name) {
+            return location;
+          }
+          return item;
+        }));
+      })
+      .catch((err) => {
+        console.error('Failed to update graffiti message', err);
+      });
+  };
+
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood < 1) {
@@ -383,13 +446,18 @@ const GameView: React.FC = () => {
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
-                {modalText}
+                <p>{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
-                <Button>Choice 1</Button>
+                <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
                 <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
                 <Button onClick={handleTextBoxClick}>Choice 3</Button>
-                {showTextBox && <input type="text" />}
+                {showButton && (
+                  <div>
+                    <input type="text" value={inputValue} onChange={handleInputValueChange} />
+                    <button onClick={updateGraffitiMsg}>Tag it</button>
+                  </div>
+                )}
               </Modal.Footer>
             </Modal>
 
