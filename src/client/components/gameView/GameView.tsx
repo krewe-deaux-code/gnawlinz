@@ -12,7 +12,7 @@ import {
   EventText, StatContainer, ScrollableContainer,
   AllyImg, InventoryStyle, StatContainer2, CharImageStyles,
   IconContainer, IconImg, InventoryBorder, StatIconContainer,
-  TinyStatIconImg, StatBonusColor
+  TinyStatIconImg, StatBonusColor, ModalContainer
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -85,7 +85,6 @@ const GameView: React.FC = () => {
         console.error('Failed to retrieve all locations: ', err);
       });
   };
-
   // Add a modal to handle location change after all locations have been used
   const [showModal2, setShowModal2] = useState(false);
   const handleShowModal2 = () => setShowModal2(true);
@@ -103,6 +102,7 @@ const GameView: React.FC = () => {
       location: setModalLocation
     }));
 
+
   };
 
   const handleLocationChange = () => {
@@ -116,39 +116,39 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+
     } else
-    if (bool === false) {
-      setBool(true);
-      setModalText2('true');
-      handleShowModal2();
-    } else {
-      const randomNum = Math.floor(Math.random() * (visited.length));
-      if (location !== visited[randomNum]) {
-        setLocation(visited[randomNum]);
-        setCurrentChar(prevStats => ({
-          ...prevStats,
-          location: visited[randomNum]._id
-        }));
+      if (bool === false) {
+        setBool(true);
+        setModalText2('true');
+        handleShowModal2();
       } else {
-        if (visited[randomNum + 1]) {
-          setLocation(visited[randomNum + 1]);
+        const randomNum = Math.floor(Math.random() * (visited.length));
+        if (location !== visited[randomNum]) {
+          setLocation(visited[randomNum]);
           setCurrentChar(prevStats => ({
             ...prevStats,
-            location: visited[randomNum + 1]._id
+            location: visited[randomNum]._id
           }));
         } else {
-          setLocation(visited[randomNum - 1]);
-          setCurrentChar(prevStats => ({
-            ...prevStats,
-            location: visited[randomNum - 1]._id
-          }));
+          if (visited[randomNum + 1]) {
+            setLocation(visited[randomNum + 1]);
+            setCurrentChar(prevStats => ({
+              ...prevStats,
+              location: visited[randomNum + 1]._id
+            }));
+          } else {
+            setLocation(visited[randomNum - 1]);
+            setCurrentChar(prevStats => ({
+              ...prevStats,
+              location: visited[randomNum - 1]._id
+            }));
+          }
         }
       }
-    }
     fetchEvent();
     setInvestigateDisabled(false);
   };
-
   const resolveChoice = (index: number, stat: number, penalty = '') => {
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
@@ -208,7 +208,7 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({data}) => {
+            .then(({ data }) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               // Handles nonconsumable stat bonuses
@@ -390,14 +390,14 @@ const GameView: React.FC = () => {
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal show={showModal2} onHide={handleCloseModal2}>
+              <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to the first location</p>
+                  <p>1: Go back to first location</p>
                   <p>2: Go back to second location</p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -414,6 +414,7 @@ const GameView: React.FC = () => {
           <Content1>
             <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
+              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
@@ -441,7 +442,6 @@ const GameView: React.FC = () => {
                 )}
               </Modal.Footer>
             </Modal>
-
           </Content1>
         </Content1>
         <CharStatusContainer>
