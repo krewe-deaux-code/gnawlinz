@@ -4,6 +4,7 @@ import { NavBar, TopContent1, TopContent2, TopContent3 } from './Styled'; //Cont
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 
+
 import { UserContext } from '../../App';
 
 // Logo link props
@@ -42,10 +43,15 @@ const Nav = ({ isActive }: LinkProps) => {
     calculateRemainingTime();
   }, []);
 
+
+
+
   // logic to make logo active/inactive depending on where it is being rendered
   return (
+
     <NavBar>
       <TopContent1>
+
         {isActive ? (
           <Link to="/menu" className='active-link' >GNAWLINZ</Link>
         ) : (
@@ -57,6 +63,7 @@ const Nav = ({ isActive }: LinkProps) => {
         <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
     </NavBar>
   );
+
 
 };
 

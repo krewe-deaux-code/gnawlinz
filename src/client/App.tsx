@@ -1,7 +1,8 @@
-import React, { Suspense, lazy, createContext, useState, useEffect } from 'react';
+import React, { Suspense, lazy, createContext, useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
+import { ThemeProvider } from 'styled-components';
 
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
@@ -107,25 +108,50 @@ const App = () => {
     characterUpdate();
   }, [currentChar]);
 
+  const lightTheme = {
+    colors: {
+      primary: '#f4f4f4',
+      // secondary: '#f0ac00'
+      secondary: 'green'
+    }
+  };
+
+  const deuteranopiaTheme = {
+    colors: {
+      primary: '#003366', // blue
+      secondary: '#f0ac00', // orange
+      accent: '#00cc00', // green
+      text: '#333333', // dark gray
+      background: '#f5f5f5', // light gray
+    }
+  };
+
+  const [theme, setTheme] = useState(lightTheme);
+
+  const toggleTheme = useCallback(() => {
+    setTheme(prevTheme => prevTheme === lightTheme ? deuteranopiaTheme : lightTheme);
+  }, [setTheme]);
+
+
   return (
+    <ThemeProvider theme={theme}>
+      <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <button onClick={toggleTheme}>Toggle Theme</button>
+          <Suspense fallback={<div>LOADING...</div>}>
+            <Routes>
+              <Route path='/' element={<Title />} />
+              <Route path='menu' element={<Menu />} />
+              <Route path='gameView' element={<GameView />} />
+              <Route path='result' element={<Result />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
 
-    <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Suspense fallback={<div>LOADING...</div>}>
-
-          <Routes>
-            <Route path='/' element={<Title />} />
-            <Route path='menu' element={<Menu />} />
-            <Route path='gameView' element={<GameView />} />
-            <Route path='result' element={<Result />} />
-            <Route path='*' element={<Navigate to='/' replace />} />
-          </Routes>
-
-        </Suspense>
-      </BrowserRouter>
-    </UserContext.Provider>
-
+          </Suspense>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </ThemeProvider>
   );
 };
 export default App;

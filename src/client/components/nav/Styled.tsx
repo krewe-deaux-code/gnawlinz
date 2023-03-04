@@ -25,7 +25,8 @@ export const Container = styled.div`
 `;
 
 export const NavBar = styled.nav`
-  background: #f0ac00;
+  background-color: ${props => props.theme.colors.secondary};
+  /* background: #f0ac00; */
   grid-area: nav;
   padding: 0.25rem;
   display: flex;
