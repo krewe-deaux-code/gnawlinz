@@ -2,6 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { Howler } from 'howler';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
@@ -16,12 +17,18 @@ import {
 
 import { Link } from 'react-router-dom';
 import { UserContext, EventData, ChoiceData, Enemy, Ally } from '../../App';
+import { SettingsContext } from '../../App';
 
 import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
 const GameView: React.FC = () => {
+
+  const { volume, setVolume } = useContext(SettingsContext);
+  Howler.volume(volume);
+  console.log('HOWLER VOLUME CONTEXT', Howler.volume(volume));
+  console.log('CONTEXT VOLUME??', volume);
 
   const {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
