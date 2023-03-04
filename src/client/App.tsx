@@ -1,7 +1,9 @@
-import React, { Suspense, lazy, createContext, useState, useEffect } from 'react';
+import React, { Suspense, lazy, createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
+
+// import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
@@ -92,9 +94,13 @@ export interface Ally {
 }
 
 export const UserContext = createContext<any>('');
+export const SettingsContext = createContext<any>('');
 
 
 const App = () => {
+
+  const [volume, setVolume] = useState(0.7);
+  // const { volume, setVolume } = useContext(SettingsContext);
 
   const [userChars, setUserChars] = useState<Character[]>([]);
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
@@ -130,24 +136,24 @@ const App = () => {
   }, [currentChar]);
 
   return (
+    <SettingsContext.Provider value={{ volume, setVolume }}>
+      <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Suspense fallback={<div>LOADING...</div>}>
 
-    <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
-      <BrowserRouter>
-        <GlobalStyle />
-        <Suspense fallback={<div>LOADING...</div>}>
+            <Routes>
+              <Route path='/' element={<Title />} />
+              <Route path='menu' element={<Menu />} />
+              <Route path='gameView' element={<GameView />} />
+              <Route path='result' element={<Result />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
 
-          <Routes>
-            <Route path='/' element={<Title />} />
-            <Route path='menu' element={<Menu />} />
-            <Route path='gameView' element={<GameView />} />
-            <Route path='result' element={<Result />} />
-            <Route path='*' element={<Navigate to='/' replace />} />
-          </Routes>
-
-        </Suspense>
-      </BrowserRouter>
-    </UserContext.Provider>
-
+          </Suspense>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </SettingsContext.Provider>
   );
 };
 export default App;
