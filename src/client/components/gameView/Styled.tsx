@@ -2,7 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
-  height: 100%;
+  width: 100%;
+  height: 100vh;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
     "nav nav nav nav"
@@ -22,6 +23,7 @@ export const Container = styled.div`
       "footer";
   }
   color: white;
+  background-color: black;
 `;
 
 export const ContentBox = styled.div`
@@ -116,8 +118,9 @@ export const InventoryStyle = styled.div`
   `;
 
 export const InventoryBorder = styled.div`
-border: 1px solid white;
+border: .2em solid white;
 justify-content: center;
+border-radius: 2%;
 width: 100%;
 height: 100%;
 grid-area: inventory;
@@ -127,7 +130,10 @@ margin: auto;
 
 export const IconContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
+  text-align: center;
+  padding: auto;
+  margin: auto;
+  grid-template-rows: auto auto auto auto;
   justify-content: center;
   grid-gap: 1em;
   `;
@@ -136,6 +142,8 @@ export const IconImg = styled.img`
   cursor: pointer;
   padding: 5px;
   width: 2em;
+  margin-left: auto;
+  margin-right: auto;
 `;
 
 export const CharStatusContainer = styled.div`
@@ -147,7 +155,7 @@ export const CharStatusContainer = styled.div`
   "inventory inventory";
   width: 100%;
   height: auto;
-  padding: 0.5rem;
+  padding: auto;
   `;
 
 export const StatContainer = styled.div`
