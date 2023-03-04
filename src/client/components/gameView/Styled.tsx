@@ -109,6 +109,11 @@ object-fit: contain;
 padding: auto;
 `;
 
+export const TinyStatIconImg = styled(CharImageStyles)`
+width: 2em;
+padding-right: 0.5em;
+`;
+
 
 export const InventoryStyle = styled.div`
   display: grid;
@@ -138,12 +143,22 @@ export const IconContainer = styled.div`
   grid-gap: 1em;
   `;
 
+export const StatIconContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  width: 30%;
+  text-align: center;
+`;
+
 export const IconImg = styled.img`
   cursor: pointer;
-  padding: 5px;
+  padding: auto;
   width: 2em;
   margin-left: auto;
   margin-right: auto;
+`;
+export const StatBonusColor = styled.div`
+color: #2e8351;
 `;
 
 export const CharStatusContainer = styled.div`

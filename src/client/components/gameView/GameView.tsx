@@ -10,9 +10,9 @@ import {
   Container, Main, Content1, CharStatusContainer,
   Content2, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
-  AllyImg,
-  InventoryStyle, StatContainer2, CharImageStyles,
-  IconContainer, IconImg, InventoryBorder
+  AllyImg, InventoryStyle, StatContainer2, CharImageStyles,
+  IconContainer, IconImg, InventoryBorder, StatIconContainer,
+  TinyStatIconImg, StatBonusColor
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -92,7 +92,9 @@ const GameView: React.FC = () => {
   const [modalText2, setModalText2] = useState('');
   const [bool, setBool] = useState(false);
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
-
+  const [bonusStrength, setBonusStrength] = useState(0);
+  const [bonusEndurance, setBonusEndurance] = useState(0);
+  const [bonusMood, setBonusMood] = useState(0);
   const handleCloseModal2 = () => setShowModal2(false);
   const setModalLocation = (index: number) => {
     setLocation(visited[index]);
@@ -148,6 +150,7 @@ const GameView: React.FC = () => {
   };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
+    console.log(stat);
     axios.get<ChoiceData>(`/choice/selected/${index}`)
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
@@ -206,10 +209,28 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then((item: any) => {
+            .then(({data}) => {
               // console.log('ITEM???', item.data);
-              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item].sort((a, b) => b._id - a._id));
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
+              if (data.modified_stat0 === 'strength' && data.consumable === false) {
+                setBonusStrength(bonusStrength + data.modifier0);
+              }
+              if (data.modified_stat1 === 'strength' && data.consumable === false) {
+                setBonusStrength(bonusStrength + data.modifier1);
+              }
+              if (data.modified_stat0 === 'endurance' && data.consumable === false) {
+                setBonusEndurance(bonusEndurance + data.modifier0);
+              }
+              if (data.modified_stat1 === 'endurance' && data.consumable === false) {
+                setBonusEndurance(bonusEndurance + data.modifier1);
+              }
+              if (data.modified_stat0 === 'mood' && data.consumable === false) {
+                setBonusMood(bonusMood + data.modifier0);
+              }
+              if (data.modified_stat1 === 'mood' && data.consumable === false) {
+                setBonusMood(bonusMood + data.modifier1);
+              }
             })
             // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
             .catch(err => console.error('error fetching from ITEM router', err));
@@ -218,11 +239,6 @@ const GameView: React.FC = () => {
       .catch((err: any) =>
         console.error('Error in Menu.tsx in fetchItems', err));
   };
-
-
-
-
-
 
   useEffect(() => {
     fetchItems();
@@ -434,6 +450,10 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
@@ -450,11 +470,11 @@ const GameView: React.FC = () => {
         <Content2>
           <HudButton onClick={() => {
             hit.play();
-            resolveChoice(choices.engage, currentChar.strength, 'health');
+            resolveChoice(choices.engage, currentChar.strength + bonusStrength, 'health');
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();
-            resolveChoice(choices.evade, currentChar.endurance);
+            resolveChoice(choices.evade, currentChar.endurance + bonusEndurance, 'endurance');
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
@@ -462,7 +482,7 @@ const GameView: React.FC = () => {
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
-            resolveChoice(choices.wildcard, currentChar.mood, 'mood');
+            resolveChoice(choices.wildcard, currentChar.mood + bonusMood, 'mood');
           }}>Wildcard</HudButton>
         </Content2>
       </Footer >
