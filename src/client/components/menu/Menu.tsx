@@ -12,11 +12,6 @@ import { UserContext, Item, Character } from '../../App';
 //import ItemSlots from './ItemSlots';
 
 
-
-
-
-
-
 const Menu: React.FC = () => {
 
   // const [userChars, setUserChars] = useState<Character[]>([]);
