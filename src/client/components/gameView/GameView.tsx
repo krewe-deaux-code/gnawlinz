@@ -26,7 +26,8 @@ const GameView: React.FC = () => {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
     location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
     setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
-    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly
+    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
+    metAllyArr, setMetAllyArr
   } = useContext(UserContext);
 
   // state for investigate modal
@@ -40,8 +41,10 @@ const GameView: React.FC = () => {
   const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
-  const [fightText, setFightText] = useState('');
+  const [tempText, setTempText] = useState('');
   const [penalty, setPenalty] = useState('');
+  const [showEnemy, setShowEnemy] = useState(false);
+  const [showAlly, setShowAlly] = useState(false);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
@@ -64,6 +67,16 @@ const GameView: React.FC = () => {
           }));
         } else {
           setCurrentEnemy({});
+        }
+        if (event.data.ally_effect) {
+          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
+          handleAllyFetch();
+          setEvent(prevEvent => ({
+            ...prevEvent,
+            ally_effect: false
+          }));
+        } else {
+          setCurrentAlly({});
         }
       })
       .catch(err => {
@@ -91,7 +104,12 @@ const GameView: React.FC = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
     axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
       .then((ally: any) => {
-        setCurrentAlly(ally.data);
+        if (metAllyArr.includes(ally.data._id)) {
+          setCurrentAlly({});
+        } else {
+          setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
+          setCurrentAlly(ally.data);
+        }
         console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
@@ -175,7 +193,7 @@ const GameView: React.FC = () => {
 
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
-    setFightText('');
+    setTempText('');
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -192,12 +210,13 @@ const GameView: React.FC = () => {
         if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
           // <-- enemy Effect TRUE on choice to hit below IF block -->
           if (isEnemy(currentEnemy) && currentEnemy.health > 0) { // <-- Enemy exists, enemy !dead
+            setShowEnemy(true);
             console.log('ENEMY STATE', currentEnemy);
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
-              setFightText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
+              setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
                 setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
               }
@@ -205,13 +224,14 @@ const GameView: React.FC = () => {
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
-              setFightText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
+              setTempText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
-            setFightText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
+            setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
             setOutcome('success'); // <-- ADD PLAYER KILL ENEMY TO STORY
             // choiceOutcome = 'success';
             setCurrentEnemy({});
@@ -223,8 +243,15 @@ const GameView: React.FC = () => {
         } else { // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
           // arbitrate item/ally acquisition with percentage || algorithm
-          // <-- if (choiceType === 'evade' && choiceOutcome === 'success') --> player gets item || ally
-          // <-- if (choiceType === 'wildcard' && choiceOutcome === 'success') --> player gets item || ally
+
+          if (choiceOutcome === 'success' && choiceType === 'wildcard' || choiceType === 'evade') { // --> player gets item || ally
+            if (Object.entries(currentAlly).length) {
+              setShowAlly(true);
+              setTempText('Hi, I\'m [ALLY.NAME], I\'m here to chew gum and kill bananas, and aaaaaall outta gum.'); // add to schema
+              console.log('eat a bag of chips');
+              console.log(currentAlly);
+            }
+          }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
         }
@@ -263,7 +290,7 @@ const GameView: React.FC = () => {
             }
           }
         })
-        .catch(err => console.error('axios AMMEND to STORY', err));
+        .catch(err => console.error('axios AMEND to STORY', err));
     } else {
       setHasMounted(true);
     }
@@ -385,8 +412,8 @@ const GameView: React.FC = () => {
                   </>
               }
               {
-                fightText.length
-                  ? <p style={{ margin: '1rem' }}>{fightText}</p>
+                tempText.length
+                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
               {

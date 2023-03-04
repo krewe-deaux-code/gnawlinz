@@ -5,10 +5,13 @@ import Boss from '../../db/schemas/boss';
 const bossRouter = Router();
 
 bossRouter.get('/:id', (req, res) => {
-  Boss.findOne({ where: { _id: req.params.id } })
-    .then((response: any) => {
-      console.log(response.dataValues);
-      res.status(200).send(response.dataValues);
+  Boss.findOne({
+    where: {
+      _id: req.params.id
+    }
+  })
+    .then((boss) => {
+      res.status(200).send(boss?.dataValues);
     })
     .catch((err) => {
       console.log('get boss ERROR: ', err);
