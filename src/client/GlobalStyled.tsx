@@ -5,7 +5,6 @@ export const GlobalStyle = createGlobalStyle`
   HTML {
     background-color: black;
     background-size: cover;
-    height: 100%;
   }
   body {
     font-family: 'Edit Undo BRK', sans-serif !important;

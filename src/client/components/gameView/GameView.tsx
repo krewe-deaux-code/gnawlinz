@@ -251,7 +251,7 @@ const GameView: React.FC = () => {
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
-    const mood: number = currentChar.mood * 10;
+    const mood: number = (currentChar.mood + bonusMood) * 10;
 
     return (
       <div>
