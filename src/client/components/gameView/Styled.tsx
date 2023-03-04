@@ -66,7 +66,7 @@ export const Main = styled.main`
 
 export const Content1 = styled.div`
   background: #4f004f;
-  padding: 0.25rem;
+  padding: 0.125rem;
   width: 100%;
   height: 100%;
   display: grid;
@@ -80,6 +80,7 @@ export const Content2 = styled.div`
   width: 100%;
   height: 100%;
   display: grid;
+  gap: 0.25rem;
   align-content: space-evenly;
   grid-template-columns: .5fr .5fr;
 `;
@@ -178,7 +179,7 @@ export const HudButton = styled.button`
   font-size: 1.5em;
   background-color: black;
   color: white;
-  padding: .5rem;
+  padding: auto;
 `;
 
 export const EventText = styled.div`
