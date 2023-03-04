@@ -242,6 +242,9 @@ const GameView: React.FC = () => {
   useEffect(() => {
     fetchItems();
     getAllLocations();
+    setBonusEndurance(bonusEndurance);
+    setBonusStrength(bonusStrength);
+    setBonusMood(bonusMood);
   }, []);
 
 
@@ -340,7 +343,7 @@ const GameView: React.FC = () => {
 
 
   // conditional for character loss involving health or mood reaching 0
-  if (currentChar.health < 1 || currentChar.mood < 1) {
+  if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     return <Result />;
   }
   // Any hooks between above conditional and below return will crash the page.
