@@ -99,7 +99,6 @@ export const Footer = styled.footer`
   /* @media (max-width: 550px) {
     flex-direction: column;
   } */
-  height: 100%;
 `;
 
 export const CharImageStyles = styled.img`
@@ -118,6 +117,7 @@ export const InventoryBorder = styled.div`
 border: 1px solid white;
 justify-content: center;
 width: 100%;
+height: 100%;
 grid-area: inventory;
 `;
 
@@ -143,6 +143,7 @@ export const CharStatusContainer = styled.div`
   "inventory inventory";
   width: 100%;
   height: auto;
+  padding: 0.25rem;
   `;
 
 export const StatContainer = styled.div`

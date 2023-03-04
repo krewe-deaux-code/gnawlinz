@@ -431,7 +431,7 @@ const GameView: React.FC = () => {
           </StatContainer>
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div style={{ width: '10em' }}>{StatusBars()}</div>
+            <div style={{ width: '20em' }}>{StatusBars()}</div>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
