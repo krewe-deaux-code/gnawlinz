@@ -43,6 +43,8 @@ export const TopContent1 = styled.div`
   height: 100%;
 `;
 
+export const VolumeSlider = styled.input.attrs({ type: 'range' })``;
+
 export const TopContent2 = styled(TopContent1)``;
 
 export const TopContent3 = styled(TopContent1)``;
