@@ -88,7 +88,7 @@ export interface Ally {
   image_url: string;
   strength: number;
   endurance: number;
-  aligntment: string;
+  alignment: string;
   greeting: string;
   departing: string;
 }
@@ -106,6 +106,7 @@ const App = () => {
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
   const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
   const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
+  const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
