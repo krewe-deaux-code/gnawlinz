@@ -141,6 +141,7 @@ const GameView: React.FC = () => {
         console.error('Failed to retrieve all locations: ', err);
       });
   };
+
   // Add a modal to handle location change after all locations have been used
   const handleShowModal2 = () => setShowModal2(true);
 
@@ -197,40 +198,6 @@ const GameView: React.FC = () => {
     fetchEvent();
     setInvestigateDisabled(false);
   };
-
-  const resolveChoice = (index: number, stat: number, penalty = '') => {
-    axios.get<ChoiceData>(`/choice/selected/${index}`)
-      .then(choiceResponse => {
-        setSelectedChoice(choiceResponse.data);
-        // <-- computation for success check: -->
-        const choiceOutcome = statCheck(stat);
-        setOutcome(choiceOutcome);
-        axios.post(`story/ending/${currentChar._id}`,
-          {
-            result: choiceResponse.data[choiceOutcome]
-          })
-          .then(() => {
-            // console.log('penalty: ', penalty);
-            if (choiceOutcome === 'failure') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] - 2
-              }));
-            } else if (choiceOutcome === 'success' && penalty === 'mood') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
-              }));
-            }
-          });
-      }) // <-- maybe another .then() to update the currentChar in DB with updated stats ?? -->
-      .catch(err => {
-        console.error('Failed setting selectedChoice State', err);
-      });
-  };
-
-
-
   const handleDropItem = (itemID) => {
     axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
     axios.delete('/character/inventory/delete', {
@@ -545,14 +512,14 @@ const GameView: React.FC = () => {
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showModal2} onHide={handleCloseModal2}>
+              <Modal show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to first location</p>
+                  <p>1: Go back to the first location</p>
                   <p>2: Go back to second location</p>
                 </Modal.Body>
                 <Modal.Footer>
@@ -569,7 +536,6 @@ const GameView: React.FC = () => {
           <Content1>
             <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
-              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
@@ -597,6 +563,7 @@ const GameView: React.FC = () => {
                 )}
               </Modal.Footer>
             </Modal>
+
           </Content1>
         </Content1>
         <CharStatusContainer>
