@@ -85,7 +85,8 @@ io.on('connection', (socket) => {
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
   socket.on('couillon', (arg) => {
-    console.log(arg);
+    console.log(`${arg} died.`);
+    socket.emit('player_died', `${arg} died.`);
   });
   // Listen for events that indicate when a player has died
   // socket.on('player_died', (playerName) => {
