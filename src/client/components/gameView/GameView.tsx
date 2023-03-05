@@ -182,7 +182,7 @@ const GameView: React.FC = () => {
 
 
 
-  const handleDropItem = (itemID) => {
+  const handleDropItem = (itemID, i) => {
     axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
     axios.delete('/character/inventory/delete', {
       data: {
@@ -191,8 +191,29 @@ const GameView: React.FC = () => {
       }
     })
       .then(() => {
-        // console.log('inventory in handleDrop', fetchedInventory);
+        console.log('Current inventory', fetchedInventory[i]);
+        if (fetchedInventory[i].modified_stat0 === 'strength' && fetchedInventory[i].consumable === true) {
+          setBonusStrength(bonusStrength + fetchedInventory[i].modifier0);
+        }
+        if (fetchedInventory[i].modified_stat1 === 'strength' && fetchedInventory[i].consumable === true) {
+          setBonusStrength(bonusStrength + fetchedInventory[i].modifier1);
+        }
+        if (fetchedInventory[i].modified_stat0 === 'endurance' && fetchedInventory[i].consumable === true) {
+          setBonusEndurance(bonusEndurance + fetchedInventory[i].modifier0);
+        }
+        if (fetchedInventory[i].modified_stat1 === 'endurance' && fetchedInventory[i].consumable === true) {
+          setBonusEndurance(bonusEndurance + fetchedInventory[i].modifier1);
+        }
+        if (fetchedInventory[i].modified_stat0 === 'mood' && fetchedInventory[i].consumable === true) {
+          setBonusMood(bonusMood + fetchedInventory[i].modifier0);
+        }
+        if (fetchedInventory[i].modified_stat1 === 'mood' && fetchedInventory[i].consumable === true) {
+          setBonusMood(bonusMood + fetchedInventory[i].modifier1);
+        }
+      })
+      .then(() => {
         fetchItems();
+        console.log('currentstrength', bonusStrength);
         //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
       })
       .catch(err => console.error('fetch after delete ERROR', err));
@@ -208,7 +229,7 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({data}) => {
+            .then(({ data }) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               // Handles nonconsumable stat bonuses
@@ -237,6 +258,22 @@ const GameView: React.FC = () => {
       })
       .catch((err: any) =>
         console.error('Error in Menu.tsx in fetchItems', err));
+  };
+  const handleOnDragItem = (e: React.DragEvent, itemWidget: Item) => {
+
+    e.dataTransfer.setData( 'itemWidget', JSON.stringify(itemWidget));
+  };
+
+  const handleOnDropItem = (e: React.DragEvent) => {
+    e.preventDefault();
+    const itemWidget = e.dataTransfer.getData('itemWidget') as string;
+    const itemObj = JSON.parse(itemWidget);
+    const itemIdNumber = +itemObj._id;
+    handleDropItem(itemWidget, itemIdNumber);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
   };
 
   useEffect(() => {
@@ -377,7 +414,9 @@ const GameView: React.FC = () => {
               }
             </ScrollableContainer>
           </EventText>
-          <img src={location.image_url}></img>
+          <div className="page" onDrop={handleOnDropItem} onDragOver={handleDragOver}>
+            <img src={location.image_url}></img>
+          </div>
         </div>
       </Main>
       <Footer>
@@ -459,11 +498,14 @@ const GameView: React.FC = () => {
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
-            <InventoryStyle>
+            <InventoryStyle className='itemWidgets'>
               {
                 fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}>
-                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                  return <div key={i}
+                    className="itemWidget"
+                    draggable
+                    onDragStart={(e) => handleOnDragItem(e, item)}>
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id, i)} src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
             </InventoryStyle>
