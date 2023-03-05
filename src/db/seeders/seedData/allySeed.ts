@@ -14,7 +14,7 @@ export const allySeed = [
     strength: 10,
     endurance: 8,
     alignment: 'Good',
-    greeting: 'Hello',
-    departing: 'Goodbye'
+    greeting: '"OOOOOOOOOLD SPICE!"',
+    departing: 'Terry screams, "DOUBLE SUN POWAAAAAAA-" and then explodes.'
   }
 ];
