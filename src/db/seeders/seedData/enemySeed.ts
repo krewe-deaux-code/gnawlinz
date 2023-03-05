@@ -1,7 +1,7 @@
 export const enemySeed = [
   {
     name: 'Banana-Zombie',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676691095/gnawlinzAllies/awkward_banana_bcybru.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678057122/gnawlinzAllies/BZombiePxl_fwmu7p.png',
     weapon1: 'Tenta-peel',
     strength: 1,
     health: 1,
@@ -9,7 +9,7 @@ export const enemySeed = [
   },
   {
     name: 'F-35 Lightning II',
-    image_url: 'https://www.seekpng.com/png/full/782-7825499_lockheed-martin-f-35-lightning-ii.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678056762/gnawlinzAllies/F35Pxl_fgggew.png',
     weapon1: 'Air-to-Ground Missile',
     strength: 6,
     health: 100,
