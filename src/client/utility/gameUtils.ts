@@ -18,12 +18,12 @@ export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStr
   console.log('PLAYER ROLL', playerRoll);
   if (enemyRoll > playerRoll) {
     const dmg = enemyRoll - playerRoll;
-    return { player: (playerHealth - dmg) };
+    return { player: (playerHealth - dmg), damage: dmg };
   } else if (playerRoll > enemyRoll) {
     const dmg = playerRoll - enemyRoll;
-    return { enemy: (enemyHealth - dmg) };
+    return { enemy: (enemyHealth - dmg), damage: dmg };
   } else { // <-- tie
-    return { player: (playerHealth - 1) };
+    return { player: (playerHealth - 1), damage: 1 };
   }
 };
 
