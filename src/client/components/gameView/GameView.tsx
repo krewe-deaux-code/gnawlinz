@@ -331,20 +331,33 @@ const GameView: React.FC = () => {
   };
 
   // callback for PlayerDied event listener
-  // const handlePlayerDied = () => {
+  const appendToKillFeed = (death) => {
+    console.log('inside player died function');
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  };
+
+  const handlePlayerDied = () => {
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1 = 'heart attack');
+  };
+
+  // const appendToKillFeed = useCallback(() => {
   //   console.log('inside player died function');
   //   socket?.emit('couillon', currentChar.name);
-  // };
+  // }, [socket, currentChar.name]);
 
-  const handlePlayerDied = useCallback(() => {
-    console.log('inside player died function');
-    socket?.emit('couillon', currentChar.name);
-  }, [socket, currentChar.name]);
+  // socket?.on('player_died', (death) => {
+  //   console.log('HOW MANY TIMES');
+  //   setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  // });
 
-  socket?.on('player_died', (death) => {
-    console.log('HOW MANY TIMES');
-    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-  });
+  useEffect(() => {
+    if (socket) {
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
+      return () => {
+        socket.off('kill_feed', appendToKillFeed);
+      };
+    }
+  }, [socket]);
 
   // process.env.SERVER_URL as string
   useEffect(() => {
@@ -362,19 +375,19 @@ const GameView: React.FC = () => {
     };
   }, []);
 
-  // <-- useEffect to catch socket emits for killFeed
-  useEffect(() => {
-    // <-- if socket connection exists...
-    if (socket) {
-      // <-- binds playerDied event listener to socket instance
-      // <-- and executes callback function defined outside useEffect
-      socket.on('playerDied', handlePlayerDied);
-      // <-- cleanup function to remove the event listener
-      return () => {
-        socket.off('playerDied', handlePlayerDied);
-      };
-    }
-  }, [socket]);
+  // // <-- useEffect to catch socket emits for killFeed
+  // useEffect(() => {
+  //   // <-- if socket connection exists...
+  //   if (socket) {
+  //     // <-- binds playerDied event listener to socket instance
+  //     // <-- and executes callback function defined outside useEffect
+  //     socket.on('playerDied', handlePlayerDied);
+  //     // <-- cleanup function to remove the event listener
+  //     return () => {
+  //       socket.off('playerDied', handlePlayerDied);
+  //     };
+  //   }
+  // }, [socket]);
 
   useEffect(() => {
     if (hasMounted) {

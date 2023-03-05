@@ -79,14 +79,18 @@ app.get('/menu', (req, res) => {
 
 const io = new Server(server); // Create a new Socket.io server instance and pass in the HTTP server instance
 
+// ↓ ALL socket events should happen inside
+// ↓ io.on('connection') block to ensure all
+// ↓ events are registered to each connected client
 io.on('connection', (socket) => {
   console.log('A client has connected!', socket.id);
   // send a message to the client
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
-  socket.on('couillon', (arg) => {
-    console.log(`${arg} died.`);
-    socket.emit('player_died', `${arg} died.`);
+  socket.on('player_died', (charName, location, cause) => {
+    const death = `- ${charName} died from a ${cause} at ${location}`;
+    console.log(death);
+    socket.emit('kill_feed', death); // socket.broadcast.emit **
   });
   // Listen for events that indicate when a player has died
   // socket.on('player_died', (playerName) => {
