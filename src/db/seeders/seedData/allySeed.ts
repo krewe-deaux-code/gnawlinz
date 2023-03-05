@@ -1,7 +1,7 @@
 export const allySeed = [
   {
     name: 'Gene Nalgene',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677893849/gnawlinzAllies/ally1Pxl_h2bm1m.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677904538/gnawlinzAllies/Ally1Pxl_kjlumv.png',
     strength: 2,
     endurance: 1,
     alignment: 'Old',
