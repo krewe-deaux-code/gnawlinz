@@ -3,19 +3,21 @@ import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
+import { io, Socket } from 'socket.io-client';
+
 // import Investigate from './Investigate';
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1,
+  Container, Main, Content1, KillFeed,
   Content2, Content3, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
-  AllyImg
+  AllyImg, EnemyImg, CharImageStyles, CharStatusContainer, IconContainer, IconImg, InventoryBorder, InventoryStyle, StatBonusColor, StatContainer2, StatIconContainer, TinyStatIconImg
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData, Enemy, Ally } from '../../App';
+import { UserContext, EventData, ChoiceData, Enemy, Ally, Item, Character } from '../../App';
 
 import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -27,8 +29,13 @@ const GameView: React.FC = () => {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
     location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
     setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
-    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly
+    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
+    metAllyArr, setMetAllyArr
   } = useContext(UserContext);
+
+  // state for socket.io
+  const [socket, setSocket] = useState<Socket | undefined>();
+  const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
   const [modalText, setModalText] = useState('');
@@ -43,6 +50,13 @@ const GameView: React.FC = () => {
 
   const [tempText, setTempText] = useState('');
   const [penalty, setPenalty] = useState('');
+  const [showEnemy, setShowEnemy] = useState(false);
+  const [showAlly, setShowAlly] = useState(false);
+
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [bonusStrength, setBonusStrength] = useState(0);
+  const [bonusEndurance, setBonusEndurance] = useState(0);
+  const [bonusMood, setBonusMood] = useState(0);
 
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
@@ -65,6 +79,16 @@ const GameView: React.FC = () => {
           }));
         } else {
           setCurrentEnemy({});
+        }
+        if (event.data.ally_effect) {
+          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
+          handleAllyFetch();
+          setEvent(prevEvent => ({
+            ...prevEvent,
+            ally_effect: false
+          }));
+        } else {
+          setCurrentAlly({});
         }
       })
       .catch(err => {
@@ -92,7 +116,12 @@ const GameView: React.FC = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
     axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
       .then((ally: any) => {
-        setCurrentAlly(ally.data);
+        if (metAllyArr.includes(ally.data._id)) {
+          setCurrentAlly({});
+        } else {
+          setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
+          setCurrentAlly(ally.data);
+        }
         console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
@@ -132,6 +161,8 @@ const GameView: React.FC = () => {
   };
 
   const handleLocationChange = () => {
+    setShowAlly(false);
+    setShowEnemy(false);
     if (allLocations.length) {
       setSelectedChoice({} as ChoiceData);
       setOutcome('');
@@ -173,7 +204,62 @@ const GameView: React.FC = () => {
     fetchEvent();
     setInvestigateDisabled(false);
   };
+  const handleDropItem = (itemID) => {
+    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.delete('/character/inventory/delete', {
+      data: {
+        charID: currentChar._id,
+        itemID: itemID,
+      }
+    })
+      .then(() => {
+        // console.log('inventory in handleDrop', fetchedInventory);
+        fetchItems();
+        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+      })
+      .catch(err => console.error('fetch after delete ERROR', err));
+    // needs then and catches for both axios... call fetchItems?
+  };
 
+  const fetchItems = () => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        //console.log('EMPTY???', character.data.inventory);
+        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
+        setFetchedInventory([]);
+        character.data.inventory.forEach(item => {
+          axios.get(`/item/${item}`)
+            .then(({ data }) => {
+              // console.log('ITEM???', item.data);
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
+              // Handles nonconsumable stat bonuses
+              if (data.modified_stat0 === 'strength' && data.consumable === false) {
+                setBonusStrength(bonusStrength + data.modifier0);
+              }
+              if (data.modified_stat1 === 'strength' && data.consumable === false) {
+                setBonusStrength(bonusStrength + data.modifier1);
+              }
+              if (data.modified_stat0 === 'endurance' && data.consumable === false) {
+                setBonusEndurance(bonusEndurance + data.modifier0);
+              }
+              if (data.modified_stat1 === 'endurance' && data.consumable === false) {
+                setBonusEndurance(bonusEndurance + data.modifier1);
+              }
+              if (data.modified_stat0 === 'mood' && data.consumable === false) {
+                setBonusMood(bonusMood + data.modifier0);
+              }
+              if (data.modified_stat1 === 'mood' && data.consumable === false) {
+                setBonusMood(bonusMood + data.modifier1);
+              }
+            })
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .catch(err => console.error('error fetching from ITEM router', err));
+        });
+      })
+      .catch((err: any) =>
+        console.error('Error in Menu.tsx in fetchItems', err));
+  };
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
@@ -193,6 +279,7 @@ const GameView: React.FC = () => {
         if (choiceType === 'engage' || choiceType === 'evade' && choiceOutcome === 'failure') {
           // <-- enemy Effect TRUE on choice to hit below IF block -->
           if (isEnemy(currentEnemy) && currentEnemy.health > 0) { // <-- Enemy exists, enemy !dead
+            setShowEnemy(true);
             console.log('ENEMY STATE', currentEnemy);
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
@@ -210,6 +297,7 @@ const GameView: React.FC = () => {
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
             setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
@@ -224,8 +312,14 @@ const GameView: React.FC = () => {
         } else { // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
           // arbitrate item/ally acquisition with percentage || algorithm
-          // <-- if (choiceType === 'evade' && choiceOutcome === 'success') --> player gets item || ally
-          // <-- if (choiceType === 'wildcard' && choiceOutcome === 'success') --> player gets item || ally
+
+          if (choiceOutcome === 'success' && choiceType === 'wildcard' || choiceType === 'evade') { // --> player gets item || ally
+            if (Object.entries(currentAlly).length) {
+              setShowAlly(true);
+              setTempText(currentAlly.greeting); // add to schema
+              console.log(currentAlly);
+            }
+          }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
         }
@@ -236,11 +330,64 @@ const GameView: React.FC = () => {
       });
   };
 
+  // callback for PlayerDied event listener
+  const appendToKillFeed = (death) => {
+    console.log('inside player died function');
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  };
+
+  const handlePlayerDied = () => {
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1 = 'heart attack');
+  };
+
+  // const appendToKillFeed = useCallback(() => {
+  //   console.log('inside player died function');
+  //   socket?.emit('couillon', currentChar.name);
+  // }, [socket, currentChar.name]);
+
+  // socket?.on('player_died', (death) => {
+  //   console.log('HOW MANY TIMES');
+  //   setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  // });
 
   useEffect(() => {
+    if (socket) {
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
+      return () => {
+        socket.off('kill_feed', appendToKillFeed);
+      };
+    }
+  }, [socket]);
+
+  // process.env.SERVER_URL as string
+  useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
     console.log('this is the use effect');
+    fetchItems();
     getAllLocations();
+    setBonusEndurance(bonusEndurance);
+    setBonusStrength(bonusStrength);
+    setBonusMood(bonusMood);
+    // <-- socket cleanup, close connection
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
+
+  // // <-- useEffect to catch socket emits for killFeed
+  // useEffect(() => {
+  //   // <-- if socket connection exists...
+  //   if (socket) {
+  //     // <-- binds playerDied event listener to socket instance
+  //     // <-- and executes callback function defined outside useEffect
+  //     socket.on('playerDied', handlePlayerDied);
+  //     // <-- cleanup function to remove the event listener
+  //     return () => {
+  //       socket.off('playerDied', handlePlayerDied);
+  //     };
+  //   }
+  // }, [socket]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -264,7 +411,7 @@ const GameView: React.FC = () => {
             }
           }
         })
-        .catch(err => console.error('axios AMMEND to STORY', err));
+        .catch(err => console.error('axios AMEND to STORY', err));
     } else {
       setHasMounted(true);
     }
@@ -273,7 +420,7 @@ const GameView: React.FC = () => {
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
-    const mood: number = currentChar.mood * 10;
+    const mood: number = (currentChar.mood + bonusMood) * 10;
 
     return (
       <div>
@@ -358,7 +505,7 @@ const GameView: React.FC = () => {
 
 
   // conditional for character loss involving health or mood reaching 0
-  if (currentChar.health < 1 || currentChar.mood < 1) {
+  if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     return <Result />;
   }
   console.log('YOUR SCORE', currentChar.score);
@@ -369,8 +516,24 @@ const GameView: React.FC = () => {
       <Nav isActive={true} />
       <Main>
         <h2>{location.name}</h2>
+        <KillFeed>
+          {
+            killFeed.length
+              ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
+              : <div onClick={handlePlayerDied}>R.I.P</div>
+          }
+        </KillFeed>
         <div>
-          <AllyImg src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1677893849/gnawlinzAllies/ally1Pxl_h2bm1m.png' />
+          {
+            showAlly
+              ? <AllyImg src={currentAlly.image_url} />
+              : <></>
+          }
+          {
+            showEnemy
+              ? <EnemyImg src={currentEnemy.image_url} />
+              : <></>
+          }
           <EventText>
             <ScrollableContainer>
               {
@@ -465,25 +628,40 @@ const GameView: React.FC = () => {
 
           </Content1>
         </Content1>
-        <Content2>
-          <div>
-            <h4>{currentChar.name}</h4>
-            <img src={currentChar.image_url} />
-          </div>
+        <CharStatusContainer>
           <StatContainer>
-            <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div>{StatusBars()}</div>
+            <h4>{currentChar.name}</h4>
+            <CharImageStyles src={currentChar.image_url} />
           </StatContainer>
-        </Content2>
-        <Content3>
+          <StatContainer2>
+            <div style={{ textDecoration: 'underline' }}>Status</div>
+            <div style={{ width: '20em' }}>{StatusBars()}</div>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+          </StatContainer2>
+          <InventoryBorder>
+            <h4>Inventory</h4>
+            <InventoryStyle>
+              {
+                fetchedInventory.map((item: Item, i) => {
+                  return <div key={i}>
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                })
+              }
+            </InventoryStyle>
+          </InventoryBorder>
+        </CharStatusContainer>
+        <Content2>
           <HudButton onClick={() => {
             hit.play();
             // <-- handleEnemy func ??
-            resolveChoice(choices.engage, 'engage', currentChar.strength);
+            resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength);
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();
-            resolveChoice(choices.evade, 'evade', currentChar.endurance);
+            resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance);
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
@@ -491,9 +669,9 @@ const GameView: React.FC = () => {
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
-            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood, 'mood');
+            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood, 'mood');
           }}>Wildcard</HudButton>
-        </Content3>
+        </Content2>
       </Footer >
     </Container >
   );
