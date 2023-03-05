@@ -1,9 +1,11 @@
-import React, { Suspense, lazy, createContext, useState, useEffect, useCallback } from 'react';
+import React, { Suspense, lazy, createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
 import { useSpeechSynthesis } from 'react-speech-kit';
+
+// import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
@@ -23,6 +25,7 @@ export interface Character {
   mood: number;
   location: number;
   ally_count: number;
+  score: number;
 }
 
 export interface EventData {
@@ -32,6 +35,9 @@ export interface EventData {
   choice1: number;
   choice2: number;
   choice3: number;
+  enemy_effect: boolean;
+  ally_effect: boolean;
+  item_effect: boolean;
 }
 
 export interface ChoiceData {
@@ -42,9 +48,6 @@ export interface ChoiceData {
   alignment0: string;
   alignment1: string;
   alignment2: string;
-  enemy_effect: boolean;
-  ally_effect: boolean;
-  item_effect: boolean;
 }
 
 export interface LocationData {
@@ -56,6 +59,16 @@ export interface LocationData {
   drop_item_slot: number;
   graffiti: string;
   graffiti_msg: string;
+}
+
+export interface Enemy {
+  _id: number;
+  name: string;
+  image_url: string;
+  weapon1: string;
+  strength: number;
+  health: number;
+  score: number;
 }
 
 export interface Item {
@@ -71,15 +84,31 @@ export interface Item {
   sell_price: number;
 }
 
+export interface Ally {
+  _id: number;
+  name: string;
+  image_url: string;
+  strength: number;
+  endurance: number;
+  alignment: string;
+  greeting: string;
+  departing: string;
+}
 
 export const UserContext = createContext<any>('');
-
+export const SettingsContext = createContext<any>('');
 
 
 const App = () => {
 
+  const [volume, setVolume] = useState(0.7);
+  // const { volume, setVolume } = useContext(SettingsContext);
+
   const [userChars, setUserChars] = useState<Character[]>([]);
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
+  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
+  const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
@@ -101,7 +130,7 @@ const App = () => {
 
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
-      .then(() => console.log('success'))
+      .then(() => console.log('character updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
 
@@ -139,30 +168,32 @@ const App = () => {
 
   return (
     <ThemeProvider theme={theme}>
-      <UserContext.Provider value={{ prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
-        <BrowserRouter>
-          <GlobalStyle />
-          <button onClick={toggleTheme}>Toggle Theme</button>
-          <button className='btn btn-primary btn-lg'
-            onClick={() => speak({ text: 'Fuck, Fuck, Fuck' })}>
-            Speak
-          </button>
-          <button className='btn btn-primary btn-lg'
-            onClick={() => speak({ text: 'The ultimate vegan meal is death!' })}>
-            Speak
-          </button>
-          <Suspense fallback={<div>LOADING...</div>}>
-            <Routes>
-              <Route path='/' element={<Title />} />
-              <Route path='menu' element={<Menu />} />
-              <Route path='gameView' element={<GameView />} />
-              <Route path='result' element={<Result />} />
-              <Route path='*' element={<Navigate to='/' replace />} />
-            </Routes>
+      <SettingsContext.Provider value={{ volume, setVolume }}>
+        <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+          <BrowserRouter>
+            <GlobalStyle />
+            <button onClick={toggleTheme}>Toggle Theme</button>
+            <button className='btn btn-primary btn-lg'
+              onClick={() => speak({ text: 'Fuck, Fuck, Fuck' })}>
+              Speak
+            </button>
+            <button className='btn btn-primary btn-lg'
+              onClick={() => speak({ text: 'The ultimate vegan meal is death!' })}>
+              Speak
+            </button>
+            <Suspense fallback={<div>LOADING...</div>}>
+              <Routes>
+                <Route path='/' element={<Title />} />
+                <Route path='menu' element={<Menu />} />
+                <Route path='gameView' element={<GameView />} />
+                <Route path='result' element={<Result />} />
+                <Route path='*' element={<Navigate to='/' replace />} />
+              </Routes>
 
-          </Suspense>
-        </BrowserRouter>
-      </UserContext.Provider>
+            </Suspense>
+          </BrowserRouter>
+        </UserContext.Provider>
+      </SettingsContext.Provider>
     </ThemeProvider>
   );
 };

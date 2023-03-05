@@ -14,6 +14,9 @@ export const GlobalStyle = createGlobalStyle`
     background-color: ${props => props.theme.colors.secondary};
     color: ${props => props.theme.colors.text};
     transition: background-color 0.3s ease;
+    height: auto;
+    background-color: black;
+    background-size: cover;
   }
 `;
 

@@ -10,7 +10,8 @@ const enemySeeder = async (enemyArr: any) => {
           image_url: enemyArr[i].image_url,
           weapon1: enemyArr[i].weapon1,
           strength: enemyArr[i].strength,
-          health: enemyArr[i].health
+          health: enemyArr[i].health,
+          score: enemyArr[i].score
         }
       })
       .then((success) =>

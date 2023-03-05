@@ -1,23 +1,28 @@
 // import express from 'express';
 import { Router } from 'express';
+// <-- DB Model -->
+import Ally from '../../db/schemas/ally';
 
 const allyRouter = Router();
-
-// <-- Unsure if we need these -->
-// import { Sequelize } from 'sequelize';
-// import { db } from '../../db/index';
-// import '../auth/auth';
-
-// <-- DB Model -->
-// import Ally from '../../db/schemas/ally';
-
-// <-- middleware -->
-// allyRouter.use(express.json());
-// allyRouter.use(express.urlencoded({ extended: true }));
 
 // ******************
 // *** DB Queries ***
 // ******************
+
+allyRouter.get('/:_id', (req, res) => {
+  Ally.findOne({
+    where: {
+      _id: req.params._id
+    }
+  })
+    .then((ally) =>{
+      res.status(200).send(ally?.dataValues);
+    })
+    .catch((err) =>{
+      console.error('Get Ally Failure: ', err);
+      res.sendStatus(500);
+    });
+});
 
 
 export default allyRouter;

@@ -26,6 +26,12 @@ const Ally = db.define('ally', {
   alignment: {
     type: DataTypes.STRING
   },
+  greeting: {
+    type: DataTypes.STRING
+  },
+  departing: {
+    type: DataTypes.STRING
+  }
 });
 
 export default Ally;
