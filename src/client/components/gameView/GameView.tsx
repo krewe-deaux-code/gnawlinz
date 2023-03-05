@@ -337,7 +337,7 @@ const GameView: React.FC = () => {
   };
 
   const handlePlayerDied = () => {
-    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1 = 'heart attack');
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
   // const appendToKillFeed = useCallback(() => {
@@ -506,6 +506,7 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+    handlePlayerDied();
     return <Result />;
   }
   console.log('YOUR SCORE', currentChar.score);
