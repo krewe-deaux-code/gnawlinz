@@ -2,6 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
@@ -142,6 +143,7 @@ const GameView: React.FC = () => {
     }
     fetchEvent();
     setInvestigateDisabled(false);
+    // speak({ text: location.name });
   };
 
   const resolveChoice = (index: number, stat: number, penalty = '') => {
@@ -274,6 +276,25 @@ const GameView: React.FC = () => {
         console.error('Failed to update graffiti message', err);
       });
   };
+  // const handleClick = (event) =>{
+  //   // Get the text content of the clicked div
+  //   const text = event.target.textContent;
+  // };
+  const { speak, cancel } = useSpeechSynthesis();
+  // const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // useEffect(() => {
+  //   if (isSpeaking) {
+  //     cancel();
+  //   }
+  //   speak({ text: location.name });
+  //   setIsSpeaking(true);
+
+  //   return () => {
+  //     cancel();
+  //     setIsSpeaking(false);
+  //   };
+  // }, [location.name]);
 
 
   // conditional for character loss involving health or mood reaching 0
@@ -286,18 +307,18 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2>{location.name}</h2>
+        <h2 onClick={() => speak({text: location.name})}>{location.name}</h2>
         <div>
           <EventText>
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p>{event.initial_text}</p>
+                  ? <p onClick={() => speak({text: `${event.initial_text} What do you do? Select from an option below`})}>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p onClick={() => speak({text: selectedChoice.flavor_text})}style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -305,7 +326,7 @@ const GameView: React.FC = () => {
               }
               {
                 outcome.length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                  ? <p onClick={() => speak({text: selectedChoice[outcome]})}style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
                   : <></>
               }
             </ScrollableContainer>
@@ -322,7 +343,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={handleLocationChange}>New Location</HudButton>
+              <HudButton onClick={() => { handleLocationChange(); }}>New Location</HudButton>
               <Modal show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
@@ -355,12 +376,14 @@ const GameView: React.FC = () => {
               <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                Choose from the options below:f
+              <Modal.Body onClick={() => speak({text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti'})}>
+                Choose from the options below:
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
                 <p>3: Write graffiti</p>
-                <p>{modalText}</p>
+                <p
+                //  onClick={()=> speak({ text: {modalText} })}
+                >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>

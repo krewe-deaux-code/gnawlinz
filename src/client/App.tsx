@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
 import { ThemeProvider } from 'styled-components';
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 const Title = lazy(() => import('./components/title/Title'));
 const Menu = lazy(() => import('./components/menu/Menu'));
@@ -132,6 +133,9 @@ const App = () => {
     setTheme(prevTheme => prevTheme === lightTheme ? deuteranopiaTheme : lightTheme);
   }, [setTheme]);
 
+  // const { speak } = useSpeechSynthesis();
+
+  const { speak } = useSpeechSynthesis();
 
   return (
     <ThemeProvider theme={theme}>
@@ -139,6 +143,14 @@ const App = () => {
         <BrowserRouter>
           <GlobalStyle />
           <button onClick={toggleTheme}>Toggle Theme</button>
+          <button className='btn btn-primary btn-lg'
+            onClick={() => speak({ text: 'Fuck, Fuck, Fuck' })}>
+            Speak
+          </button>
+          <button className='btn btn-primary btn-lg'
+            onClick={() => speak({ text: 'The ultimate vegan meal is death!' })}>
+            Speak
+          </button>
           <Suspense fallback={<div>LOADING...</div>}>
             <Routes>
               <Route path='/' element={<Title />} />
