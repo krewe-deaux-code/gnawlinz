@@ -2,14 +2,15 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { Howler } from 'howler';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1,
-  Content2, Content3, Footer, HudButton,
+  Container, Main, Content1, CharStatusContainer,
+  Content2, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer, IconContainer, IconImg, InventoryBorder, InventoryStyle, StatBonusColor, StatContainer2, StatIconContainer, TinyStatIconImg
 } from './Styled'; //ContentBox
@@ -17,7 +18,7 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext, EventData, ChoiceData, Enemy, Ally, Item, Character } from '../../App';
 
-import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
+import { statCheck } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
@@ -55,7 +56,7 @@ const GameView: React.FC = () => {
   const fetchEvent = () => {
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
-        // console.log('EVENT', event);
+        console.log('EVENT', event);
         setEvent(event.data);
         setChoices({
           engage: event.data.choice0,
@@ -86,7 +87,7 @@ const GameView: React.FC = () => {
         }
       })
       .catch(err => {
-        console.error('RANDOM EVENT FETCH FAILED', err);
+        console.log('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
@@ -94,17 +95,20 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(true);
   };
 
-  // NPC
-  const handleEnemyFetch = () => {
-    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
-      .then((enemy: any) => {
-        setCurrentEnemy(enemy.data);
-        console.log('Enemy fetched, sending to state...');
-        // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
-      })
-      .catch(err => console.error('FETCH ENEMY ERROR', err));
-  };
+  //separate func for update char location via axios request to character/location endpoint
+
+  // const fetchLocation = () => {
+  //   axios.get<LocationData>(`/location/${location._id}`)
+  //     .then((location) => {
+  //       console.log('Location from DB', location);
+  //       setLocation(location.data);
+  //       fetchEvent();
+  //       //update character location axios to server
+  //     })
+  //     .catch(err => console.log('Axios fail useEffect Location grab', err));
+  // };
+
+  // const updateLocationDB = () => {
 
   const handleAllyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
@@ -123,10 +127,10 @@ const GameView: React.FC = () => {
   };
 
   const getAllLocations = () => {
-    // console.log('Current Event on State: ', event);
+    console.log('Current Event on State: ', event);
     axios.get('/location/allLocations')
       .then(locations => {
-        // console.log('current location: ', currentChar.location);
+        console.log('current location: ', currentChar.location);
         // setCurrentChar(prevStats => ({
         //   ...prevStats,
         //   location: locations.data[0]._id
@@ -143,6 +147,7 @@ const GameView: React.FC = () => {
   };
 
   // Add a modal to handle location change after all locations have been used
+
   const handleShowModal2 = () => setShowModal2(true);
 
   const handleCloseModal2 = () => setShowModal2(false);
@@ -348,7 +353,7 @@ const GameView: React.FC = () => {
                 ...previousStats,
                 [penalty]: previousStats[penalty] - 2
               }));
-            } else if (outcome === 'success') {
+            } else if (choiceOutcome === 'success' && penalty === 'mood') {
               setCurrentChar(previousStats => ({
                 ...previousStats,
                 [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
@@ -366,6 +371,7 @@ const GameView: React.FC = () => {
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
     const mood: number = (currentChar.mood + bonusMood) * 10;
+    const mood: number = (currentChar.mood + bonusMood) * 10;
 
     return (
       <div>
@@ -375,16 +381,16 @@ const GameView: React.FC = () => {
     );
   };
 
-
-  // functions for investigate modal
+  // state & functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {
     setShowTextBox(true);
     setShowButton(true);
   };
-  // write graffiti button function, shows input field and tag it button
+  // exit button func for modal, closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
@@ -451,9 +457,9 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+  if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     return <Result />;
   }
-  console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
   return (
 
@@ -568,11 +574,35 @@ const GameView: React.FC = () => {
         </Content1>
         <CharStatusContainer>
           <StatContainer>
+        <CharStatusContainer>
+          <StatContainer>
             <h4>{currentChar.name}</h4>
             <CharImageStyles src={currentChar.image_url} />
           </StatContainer>
           <StatContainer2>
+            <CharImageStyles src={currentChar.image_url} />
+          </StatContainer>
+          <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
+            <div style={{ width: '20em' }}>{StatusBars()}</div>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
+            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+          </StatContainer2>
+          <InventoryBorder>
+            <h4>Inventory</h4>
+            <InventoryStyle>
+              {
+                fetchedInventory.map((item: Item, i) => {
+                  return <div key={i}>
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                })
+              }
+            </InventoryStyle>
+          </InventoryBorder>
+        </CharStatusContainer>
+        <Content2>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
             <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
@@ -603,12 +633,13 @@ const GameView: React.FC = () => {
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
-            resolveChoice(choices.evacuate, 'evacuate', 0);
+            resolveChoice(choices.evacuate, 0);
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
             resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood, 'mood');
           }}>Wildcard</HudButton>
+        </Content2>
         </Content2>
       </Footer >
     </Container >
