@@ -3,12 +3,14 @@ import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
+import { io, Socket } from 'socket.io-client';
+
 // import Investigate from './Investigate';
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1,
+  Container, Main, Content1, KillFeed,
   Content2, Content3, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer, IconContainer, IconImg, InventoryBorder, InventoryStyle, StatBonusColor, StatContainer2, StatIconContainer, TinyStatIconImg
@@ -30,6 +32,10 @@ const GameView: React.FC = () => {
     setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
     metAllyArr, setMetAllyArr
   } = useContext(UserContext);
+
+  // state for socket.io
+  const [socket, setSocket] = useState<Socket | undefined>();
+  const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
   const [modalText, setModalText] = useState('');
@@ -324,15 +330,51 @@ const GameView: React.FC = () => {
       });
   };
 
+  // callback for PlayerDied event listener
+  // const handlePlayerDied = () => {
+  //   console.log('inside player died function');
+  //   socket?.emit('couillon', currentChar.name);
+  // };
 
+  const handlePlayerDied = useCallback(() => {
+    console.log('inside player died function');
+    socket?.emit('couillon', currentChar.name);
+  }, [socket, currentChar.name]);
+
+  socket?.on('player_died', (death) => {
+    console.log('HOW MANY TIMES');
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  });
+
+  // process.env.SERVER_URL as string
   useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
     console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     setBonusEndurance(bonusEndurance);
     setBonusStrength(bonusStrength);
     setBonusMood(bonusMood);
+    // <-- socket cleanup, close connection
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
+
+  // <-- useEffect to catch socket emits for killFeed
+  useEffect(() => {
+    // <-- if socket connection exists...
+    if (socket) {
+      // <-- binds playerDied event listener to socket instance
+      // <-- and executes callback function defined outside useEffect
+      socket.on('playerDied', handlePlayerDied);
+      // <-- cleanup function to remove the event listener
+      return () => {
+        socket.off('playerDied', handlePlayerDied);
+      };
+    }
+  }, [socket]);
 
   useEffect(() => {
     if (hasMounted) {
@@ -461,6 +503,13 @@ const GameView: React.FC = () => {
       <Nav isActive={true} />
       <Main>
         <h2>{location.name}</h2>
+        <KillFeed>
+          {
+            killFeed.length
+              ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
+              : <div onClick={handlePlayerDied}>R.I.P</div>
+          }
+        </KillFeed>
         <div>
           {
             showAlly

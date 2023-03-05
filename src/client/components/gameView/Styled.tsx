@@ -271,3 +271,12 @@ export const EnemyImg = styled.img`
   top: 0%;
   right: 30%;
 `;
+
+export const KillFeed = styled.div`
+  z-index: 2;
+  max-width: 250px;
+  max-height: 500px;
+  color: #17cc17;
+  position: relative;
+  left: 78%;
+`;

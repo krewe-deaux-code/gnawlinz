@@ -1,16 +1,18 @@
 import 'dotenv/config';
 import path from 'path';
+import http from 'http'; // sockets
 
 import express from 'express';
 import session from 'express-session';
 import passport from 'passport';
 
-
+import { Server } from 'socket.io'; // sockets
 const { PORT } = process.env;
 const DIST_DIR = path.resolve(__dirname, '..', '..', 'dist');
 const DIST_DIR_LOGIN = path.resolve(__dirname, '..', '..', 'dist', 'login');
 
 const app = express();
+const server = http.createServer(app); // pass our express server to http
 
 // <-- middleware -->
 app.use(express.json());
@@ -71,6 +73,32 @@ app.get('/menu', (req, res) => {
   res.sendFile(path.resolve(DIST_DIR, 'index.html'));
 });
 
+// ***********************
+// *** WEBSOCKETS SETUP ***
+// ***********************
+
+const io = new Server(server); // Create a new Socket.io server instance and pass in the HTTP server instance
+
+io.on('connection', (socket) => {
+  console.log('A client has connected!', socket.id);
+  // send a message to the client
+  socket.emit('Comment ça plume', '...cocodrie');
+  // receive a message from the client
+  socket.on('couillon', (arg) => {
+    console.log(`${arg} died.`);
+    socket.emit('player_died', `${arg} died.`);
+  });
+  // Listen for events that indicate when a player has died
+  // socket.on('player_died', (playerName) => {
+  //   console.log(`${playerName} has died!`);
+  //   // Emit a message to all connected clients that the player has died
+  //   io.emit('kill_feed', `${playerName} has died!`);
+  // });
+  // user disconnects from socket
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+});
 
 // ***********************
 // *** LISTEN/WILDCARD ***
@@ -85,7 +113,7 @@ app.get('*', (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`G'nawlinZ server listening @ http://localhost:${PORT}`);
 })
   // fix the EADDRINUSE error
