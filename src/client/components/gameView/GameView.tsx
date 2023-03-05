@@ -33,6 +33,10 @@ const GameView: React.FC = () => {
     metAllyArr, setMetAllyArr
   } = useContext(UserContext);
 
+  // state for socket.io
+  const [socket, setSocket] = useState<Socket | undefined>();
+  const [killFeed, setKillFeed] = useState([]);
+
   // state for investigate modal
   const [modalText, setModalText] = useState('');
   const [showTextBox, setShowTextBox] = useState(false);
@@ -326,15 +330,40 @@ const GameView: React.FC = () => {
       });
   };
 
-
+  // process.env.SERVER_URL as string
   useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
     console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     setBonusEndurance(bonusEndurance);
     setBonusStrength(bonusStrength);
     setBonusMood(bonusMood);
+    // <-- socket cleanup, close connection
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
+
+  // callback for PlayerDied event listener
+  const handlePlayerDied = () => {
+    console.log('inside player died function');
+  };
+
+  // <-- useEffect to catch socket emits for killFeed
+  useEffect(() => {
+    // <-- if socket connection exists...
+    if (socket) {
+      // <-- binds playerDied event listener to socket instance
+      // <-- and executes callback function defined outside useEffect
+      socket.on('playerDied', handlePlayerDied);
+      // <-- cleanup function to remove the event listener
+      return () => {
+        socket.off('playerDied', handlePlayerDied);
+      };
+    }
+  }, [socket]);
 
   useEffect(() => {
     if (hasMounted) {

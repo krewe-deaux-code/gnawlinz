@@ -1,11 +1,11 @@
-// const path = require('path');
-// require('dotenv').config();
-// const HtmlWebpackPlugin = require ('html-webpack-plugin');
+const path = require('path');
+require('dotenv').config();
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-import path from 'path';
-import dotenv from 'dotenv';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-dotenv.config();
+// import path from 'path';
+// import dotenv from 'dotenv';
+// import HtmlWebpackPlugin from 'html-webpack-plugin';
+// dotenv.config();
 
 //const SRC_DIR = path.resolve(__dirname, 'src/client');
 //const DIST_DIR = path.resolve(__dirname, 'dist');

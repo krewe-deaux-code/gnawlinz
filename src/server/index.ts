@@ -80,7 +80,7 @@ app.get('/menu', (req, res) => {
 const io = new Server(server); // Create a new Socket.io server instance and pass in the HTTP server instance
 
 io.on('connection', (socket) => {
-  console.log('A client has connected!');
+  console.log('A client has connected!', socket.id);
   // send a message to the client
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
@@ -93,6 +93,10 @@ io.on('connection', (socket) => {
   //   // Emit a message to all connected clients that the player has died
   //   io.emit('kill_feed', `${playerName} has died!`);
   // });
+  // user disconnects from socket
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
 });
 
 // ***********************
