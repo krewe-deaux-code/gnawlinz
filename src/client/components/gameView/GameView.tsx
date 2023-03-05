@@ -3,6 +3,8 @@ import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
+import { io, Socket } from 'socket.io-client';
+
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';

@@ -138,7 +138,7 @@ const App = () => {
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
-      <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
         <BrowserRouter>
           <GlobalStyle />
           <Suspense fallback={<div>LOADING...</div>}>
