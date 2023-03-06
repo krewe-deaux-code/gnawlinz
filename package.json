@@ -79,6 +79,7 @@
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
     "react-router-dom": "^6.7.9",
+    "react-speech-kit": "^3.0.1",
     "recoil": "^0.7.6",
     "sequelize": "^6.28.0",
     "sequelize-typescript": "^2.1.5",
