@@ -298,7 +298,7 @@ const GameView: React.FC = () => {
             if (fightResult?.player || fightResult.player === 0) {
               setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
-              setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
+              setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
                 setOutcome(currentEnemy.defeat); // <-- ADD PLAYER DEATH TO STORY
               }
@@ -307,7 +307,7 @@ const GameView: React.FC = () => {
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
               setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
-              setTempText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
+              setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
