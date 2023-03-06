@@ -24,6 +24,18 @@ const Enemy = db.define('enemy', {
   },
   score: {
     type: DataTypes.INTEGER
+  },
+  initial_text: {
+    type: DataTypes.TEXT
+  },
+  victory: {
+    type: DataTypes.TEXT
+  },
+  defeat: {
+    type: DataTypes.TEXT
+  },
+  contact: {
+    type: DataTypes.TEXT
   }
 });
 

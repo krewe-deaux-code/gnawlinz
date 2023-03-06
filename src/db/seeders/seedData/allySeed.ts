@@ -5,8 +5,8 @@ export const allySeed = [
     strength: 2,
     endurance: 1,
     alignment: 'Old',
-    greeting: 'Hello',
-    departing: 'Goodbye'
+    greeting: 'Hello, I\'m Gene. I will join your fight through the city!',
+    departing: 'Gene groans, "I\'m too old for this nonsense." and departs.'
   },
   {
     name: 'Terry Cruz',

@@ -67,6 +67,10 @@ export interface Enemy {
   strength: number;
   health: number;
   score: number;
+  initial_text: string;
+  victory: string;
+  defeat: string;
+  contact: string;
 }
 
 export interface Item {

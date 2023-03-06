@@ -63,6 +63,7 @@ const GameView: React.FC = () => {
   const [bonusMood, setBonusMood] = useState(0);
 
   const fetchEvent = () => {
+    setTempText('');
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         // console.log('EVENT', event);
@@ -118,14 +119,14 @@ const GameView: React.FC = () => {
 
   const handleAllyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
-    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
+    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
       .then((ally: any) => {
-        if (metAllyArr.includes(ally.data._id)) {
-          setCurrentAlly({});
-        } else {
-          setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
-          setCurrentAlly(ally.data);
-        }
+        // if (metAllyArr.includes(ally.data._id)) {
+        // setCurrentAlly({});
+        // } else {
+        setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
+        setCurrentAlly(ally.data);
+        //}
         console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
@@ -167,9 +168,9 @@ const GameView: React.FC = () => {
   const handleLocationChange = () => {
     setShowAlly(false);
     setShowEnemy(false);
+    setOutcome('');
+    setSelectedChoice({} as ChoiceData);
     if (allLocations.length) {
-      setSelectedChoice({} as ChoiceData);
-      setOutcome('');
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
       setCurrentChar(prevStats => ({
@@ -298,7 +299,9 @@ const GameView: React.FC = () => {
               setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
-              if (currentChar.health <= 0) { setOutcome('failure'); } // <-- ADD PLAYER DEATH TO STORY
+              if (currentChar.health <= 0) {
+                setOutcome(currentEnemy.defeat); // <-- ADD PLAYER DEATH TO STORY
+              }
               return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
@@ -308,15 +311,15 @@ const GameView: React.FC = () => {
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
             setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
-            setOutcome('success'); // <-- ADD PLAYER KILL ENEMY TO STORY
             // choiceOutcome = 'success';
             setCurrentEnemy({});
           } else { // <-- no Enemy on Event/State (enemy !exist)
-            setOutcome('success');
+            // setOutcome('You explored part of the city, but found no signs of life.');
             // <-- succeed Engage roll mechanics here (no enemy)
             return;
           }
@@ -404,7 +407,7 @@ const GameView: React.FC = () => {
     if (hasMounted) {
       axios.post(`story/ending/${currentChar._id}`,
         {
-          result: selectedChoice[outcome]
+          result: selectedChoice[outcome] || outcome
         })
         .then(() => {
           if (penalty !== '') {
@@ -583,13 +586,13 @@ const GameView: React.FC = () => {
                   </>
               }
               {
-                tempText.length
-                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
+                outcome.length
+                  ? <p onClick={() => speak({text: selectedChoice[outcome]})} style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
-                outcome.length
-                  ? <p onClick={() => speak({ text: selectedChoice[outcome] })} style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                tempText.length
+                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
             </ScrollableContainer>
@@ -654,7 +657,7 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
+            <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
               centered
               show={show}

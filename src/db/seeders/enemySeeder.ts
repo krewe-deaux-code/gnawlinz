@@ -11,7 +11,10 @@ const enemySeeder = async (enemyArr: any) => {
           weapon1: enemyArr[i].weapon1,
           strength: enemyArr[i].strength,
           health: enemyArr[i].health,
-          score: enemyArr[i].score
+          score: enemyArr[i].score,
+          initial_text: enemyArr[i].initial_text,
+          victory: enemyArr[i].victory,
+          defeat: enemyArr[i].defeat
         }
       })
       .then((success) =>
