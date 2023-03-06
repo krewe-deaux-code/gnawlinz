@@ -167,6 +167,10 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+      visited.forEach((location, i) => {
+        localStorage.setItem(i.toString(), location.name);
+        console.log(localStorage);
+      });
     } else if (bool === false) {
       setBool(true);
       setModalText2('true');
@@ -512,30 +516,24 @@ const GameView: React.FC = () => {
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal show={showModal2} onHide={handleCloseModal2}>
+              <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to the first location</p>
-                  <p>2: Go back to second location</p>
+                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={() => { setModalLocation(0); handleCloseModal2(); }}>
-                    Choice 1
-                  </Button>
-                  <Button onClick={() => { setModalLocation(1); handleCloseModal2(); }}>
-                    Choice 2
-                  </Button>
-                </Modal.Footer>
               </Modal>
             </Content1>
           </Link>
           <Content1>
             <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
+              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
@@ -574,6 +572,7 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
+            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
             <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
             <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
             <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
