@@ -166,6 +166,10 @@ export const StatBonusColor = styled.div`
 color: #2e8351;
 `;
 
+export const TempStatBonusColor = styled.div`
+color: #9a8127;
+`;
+
 export const CharStatusContainer = styled.div`
 
   display: grid;
