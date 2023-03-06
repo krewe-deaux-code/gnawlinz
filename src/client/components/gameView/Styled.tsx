@@ -271,3 +271,30 @@ export const EnemyImg = styled.img`
   top: 0%;
   right: 30%;
 `;
+
+export const KillFeed = styled.div`
+  z-index: 2;
+  max-width: 250px;
+  max-height: 28px;
+  color: #22f122;
+  position: relative;
+  left: 78%;
+  font-size: 11px;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  &::-webkit-scrollbar {
+    /* height: 10px; */
+    width: 7px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  &&::-webkit-scrollbar-track {
+    background: black;
+    border-radius: 5px;
+  }
+  &&::-webkit-scrollbar-thumb {
+    background-color: #f0ac00;
+    border-radius: 5px;
+    background-size: 100%;
+  }
+`;
