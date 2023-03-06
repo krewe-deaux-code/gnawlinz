@@ -277,6 +277,7 @@ export const KillFeed = styled.div`
   max-width: 250px;
   max-height: 28px;
   color: #22f122;
+  margin-bottom: 1px;
   position: relative;
   left: 78%;
   font-size: 11px;

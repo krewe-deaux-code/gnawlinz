@@ -5,6 +5,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { io, Socket } from 'socket.io-client';
+import { motion } from 'framer-motion';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState, useCallback } from 'react';
@@ -53,6 +54,8 @@ const GameView: React.FC = () => {
   const [penalty, setPenalty] = useState('');
   const [showEnemy, setShowEnemy] = useState(false);
   const [showAlly, setShowAlly] = useState(false);
+  const [damageToEnemy, setDamageToEnemy] = useState(0);
+  const [damageToPlayer, setDamageToPlayer] = useState(0);
 
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
   const [bonusStrength, setBonusStrength] = useState(0);
@@ -269,6 +272,8 @@ const GameView: React.FC = () => {
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
+    setDamageToEnemy(0);
+    setDamageToPlayer(0);
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -290,14 +295,14 @@ const GameView: React.FC = () => {
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
+              setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
-              if (currentChar.health <= 0) {
-                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
-              }
+              if (currentChar.health <= 0) { setOutcome('failure'); } // <-- ADD PLAYER DEATH TO STORY
               return;
-            } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
               setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
@@ -343,7 +348,7 @@ const GameView: React.FC = () => {
   };
 
   const handlePlayerDied = () => {
-    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1 = 'heart attack');
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
   // const appendToKillFeed = useCallback(() => {
@@ -533,6 +538,7 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+    handlePlayerDied();
     return <Result />;
   }
   console.log('YOUR SCORE', currentChar.score);
@@ -589,6 +595,38 @@ const GameView: React.FC = () => {
             </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
+          {
+            damageToEnemy > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [30, 0, -30, 0, 30, 0, -30],
+                  y: -250,
+                  x: 40
+                }}
+                style={{ color: 'green' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToEnemy}
+              </motion.div>
+              : <></>
+          }
+          {
+            damageToPlayer > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30],
+                  y: -250,
+                  x: -50
+                }}
+                style={{ color: 'red' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToPlayer}
+              </motion.div>
+              : <></>
+          }
         </div>
       </Main>
       <Footer>
