@@ -1,5 +1,5 @@
 export const choiceSeed = [
-  { // fight jet 1 (keeping for the memories)
+  { // fight jet 1 (keeping for the memories) 1
     flavor_text: 'You stand you ground and are engaged by a Lockheed Martin F-35 Lightning II.',
     success: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     failure: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.',
@@ -7,15 +7,15 @@ export const choiceSeed = [
     alignment1: null,
     alignment2: null,
   },
-  { // Generic Fight Text
-    flavor_text: 'You attack the banana zombie!',
+  { // Generic Fight Text 2
+    flavor_text: 'You stand you ground and fight!',
     success: 'You defeated the banana zombie, and left behind a gross green peel for someone to slip on later.',
     failure: 'The banana zomibe consumed you, and added your biomass to its own.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
   },
-  { // Generic Talk Text
+  { // Generic Talk Text 3
     flavor_text: 'You wave your hand to get the attention of the flying object.',
     success: 'The object slows and hovers above you, revealing itself as a Lockheed Martin F-35 Lightning II. The pilot responds by opening up the canopy of his vehicle and tossing out a care package of supplies! Wordlessly, he reseals the cockpit and flies off into the distance. You know it was the C variant due to it\'s hover capabilities, and that it is a variant deployed almost exclusively by the US Marine Corps.',
     failure: 'The pilot of the aircraft did not respond to your attempted communication, and the craft screamed off into the distance.',
@@ -23,15 +23,15 @@ export const choiceSeed = [
     alignment1: null,
     alignment2: null,
   },
-  { // talk to ZB 4 (kill)
+  { // talk to ZB 4 (kill) 4
     flavor_text: 'You attempt to make contact with the entity.',
-    success: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
-    failure: 'It slides grotesquely toward you, gritting its bared teeth. It responds to you only with a low growl and violence.',
+    success: 'You met with another survivor.',
+    failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
   },
-  { // Generic Stealth
+  { // Generic Stealth 5
     flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
     success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected your presence.',
     failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily tracked you!',
@@ -65,14 +65,14 @@ export const choiceSeed = [
   },
   { // Search for survivors 9
     flavor_text: 'You cautiously enter the space and call out for survivors.',
-    success: 'You heard the response of a living person! The developers haven\'t implemented allies yet, so you received a consolation item!.',
+    success: 'You heard the response of a living person!',
     failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
   },
   { // Search for supplies 10
-    flavor_text: 'You cautiously enter the space and search it for anything of use. You\'re confident you have found everything there is to find here, time to move on.',
+    flavor_text: 'You cautiously enter the space and search it for anything of use.',
     success: 'The space seemed like it had been picked mostly clean, but you did find one item worth taking with you.', //'You scavenged abandoned spaces, once full of people and music, and gathered what few resources remained.',
     failure: 'The space had been picked clean, and you found nothing but refuse.',
     alignment0: null,

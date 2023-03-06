@@ -67,6 +67,10 @@ export interface Enemy {
   strength: number;
   health: number;
   score: number;
+  initial_text: string;
+  victory: string;
+  defeat: string;
+  contact: string;
 }
 
 export interface Item {
@@ -126,6 +130,8 @@ const App = () => {
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
+
+
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
       .then(() => console.log('character updated (@APP LEVEL)'))
@@ -136,9 +142,10 @@ const App = () => {
     characterUpdate();
   }, [currentChar]);
 
+
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
-      <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
         <BrowserRouter>
           <GlobalStyle />
           <Suspense fallback={<div>LOADING...</div>}>

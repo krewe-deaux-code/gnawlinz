@@ -2,13 +2,17 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { useSpeechSynthesis } from 'react-speech-kit';
+
+import { io, Socket } from 'socket.io-client';
+import { motion } from 'framer-motion';
 
 // import Investigate from './Investigate';
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState, useCallback } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1,
+  Container, Main, Content1, KillFeed,
   Content2, Content3, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
@@ -34,6 +38,10 @@ const GameView: React.FC = () => {
     metAllyArr, setMetAllyArr
   } = useContext(UserContext);
 
+  // state for socket.io
+  const [socket, setSocket] = useState<Socket | undefined>();
+  const [killFeed, setKillFeed] = useState<string[]>([]);
+
   // state for investigate modal
   const [modalText, setModalText] = useState('');
   const [showTextBox, setShowTextBox] = useState(false);
@@ -49,6 +57,8 @@ const GameView: React.FC = () => {
   const [penalty, setPenalty] = useState('');
   const [showEnemy, setShowEnemy] = useState(false);
   const [showAlly, setShowAlly] = useState(false);
+  const [damageToEnemy, setDamageToEnemy] = useState(0);
+  const [damageToPlayer, setDamageToPlayer] = useState(0);
 
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
   const [bonusStrength, setBonusStrength] = useState(0);
@@ -60,6 +70,7 @@ const GameView: React.FC = () => {
   const [temporaryMood, setTemporaryMood] = useState(0);
 
   const fetchEvent = () => {
+    setTempText('');
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         // console.log('EVENT', event);
@@ -115,14 +126,14 @@ const GameView: React.FC = () => {
 
   const handleAllyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
-    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
+    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
       .then((ally: any) => {
-        if (metAllyArr.includes(ally.data._id)) {
-          setCurrentAlly({});
-        } else {
-          setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
-          setCurrentAlly(ally.data);
-        }
+        // if (metAllyArr.includes(ally.data._id)) {
+        // setCurrentAlly({});
+        // } else {
+        setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
+        setCurrentAlly(ally.data);
+        //}
         console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
@@ -164,9 +175,9 @@ const GameView: React.FC = () => {
   const handleLocationChange = () => {
     setShowAlly(false);
     setShowEnemy(false);
+    setOutcome('');
+    setSelectedChoice({} as ChoiceData);
     if (allLocations.length) {
-      setSelectedChoice({} as ChoiceData);
-      setOutcome('');
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
       setCurrentChar(prevStats => ({
@@ -174,6 +185,10 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+      visited.forEach((location, i) => {
+        localStorage.setItem(i.toString(), location.name);
+        console.log(localStorage);
+      });
     } else if (bool === false) {
       setBool(true);
       setModalText2('true');
@@ -204,6 +219,7 @@ const GameView: React.FC = () => {
     }
     fetchEvent();
     setInvestigateDisabled(false);
+    // speak({ text: location.name });
   };
 
 
@@ -404,6 +420,8 @@ const GameView: React.FC = () => {
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
+    setDamageToEnemy(0);
+    setDamageToPlayer(0);
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -425,28 +443,30 @@ const GameView: React.FC = () => {
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
+              setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
-                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
+                setOutcome(currentEnemy.defeat); // <-- ADD PLAYER DEATH TO STORY
               }
               return;
-            } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
               setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+            setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
             setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
-            setOutcome('success'); // <-- ADD PLAYER KILL ENEMY TO STORY
             // choiceOutcome = 'success';
             setCurrentEnemy({});
           } else { // <-- no Enemy on Event/State (enemy !exist)
-            setOutcome('success');
+            // setOutcome('You explored part of the city, but found no signs of life.');
             // <-- succeed Engage roll mechanics here (no enemy)
             return;
           }
@@ -471,6 +491,93 @@ const GameView: React.FC = () => {
       });
   };
 
+  // callback for PlayerDied event listener
+  const appendToKillFeed = (death) => {
+    console.log('inside player died function');
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  };
+
+  const handlePlayerDied = () => {
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
+  };
+
+  // const appendToKillFeed = useCallback(() => {
+  //   console.log('inside player died function');
+  //   socket?.emit('couillon', currentChar.name);
+  // }, [socket, currentChar.name]);
+
+  // socket?.on('player_died', (death) => {
+  //   console.log('HOW MANY TIMES');
+  //   setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+  // });
+
+  useEffect(() => {
+    if (socket) {
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
+      return () => {
+        socket.off('kill_feed', appendToKillFeed);
+      };
+    }
+  }, [socket]);
+
+  // process.env.SERVER_URL as string
+  useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
+    console.log('this is the use effect');
+    fetchItems();
+    getAllLocations();
+    setBonusEndurance(bonusEndurance);
+    setBonusStrength(bonusStrength);
+    setBonusMood(bonusMood);
+    // <-- socket cleanup, close connection
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  // // <-- useEffect to catch socket emits for killFeed
+  // useEffect(() => {
+  //   // <-- if socket connection exists...
+  //   if (socket) {
+  //     // <-- binds playerDied event listener to socket instance
+  //     // <-- and executes callback function defined outside useEffect
+  //     socket.on('playerDied', handlePlayerDied);
+  //     // <-- cleanup function to remove the event listener
+  //     return () => {
+  //       socket.off('playerDied', handlePlayerDied);
+  //     };
+  //   }
+  // }, [socket]);
+
+  useEffect(() => {
+    if (hasMounted) {
+      axios.post(`story/ending/${currentChar._id}`,
+        {
+          result: selectedChoice[outcome] || outcome
+        })
+        .then(() => {
+          if (penalty !== '') {
+            console.log('penalty: ', penalty);
+            if (outcome === 'failure') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] - 2
+              }));
+            } else if (outcome === 'success') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
+              }));
+            }
+          }
+        })
+        .catch(err => console.error('axios AMEND to STORY', err));
+    } else {
+      setHasMounted(true);
+    }
+  }, [outcome]);
+
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
@@ -478,8 +585,8 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `health ${health} %` })}>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `mood ${mood} %` })}>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -489,11 +596,13 @@ const GameView: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {
     setShowTextBox(true);
     setShowButton(true);
   };
-  // write graffiti button function, shows input field and tag it button
+
+  // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
@@ -592,10 +701,30 @@ const GameView: React.FC = () => {
       setHasMounted(true);
     }
   }, [outcome]);
+  // const handleClick = (event) =>{
+  //   // Get the text content of the clicked div
+  //   const text = event.target.textContent;
+  // };
+  const { speak } = useSpeechSynthesis();
+  // const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // useEffect(() => {
+  //   if (isSpeaking) {
+  //     cancel();
+  //   }
+  //   speak({ text: location.name });
+  //   setIsSpeaking(true);
+
+  //   return () => {
+  //     cancel();
+  //     setIsSpeaking(false);
+  //   };
+  // }, [location.name]);
 
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+    handlePlayerDied();
     return <Result />;
   }
   console.log('YOUR SCORE', currentChar.score);
@@ -605,7 +734,14 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2>{location.name}</h2>
+        <h2 onClick={() => speak({ text: location.name })}>{location.name}</h2>
+        <KillFeed>
+          {
+            killFeed.length
+              ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
+              : <div onClick={handlePlayerDied}>R.I.P</div>
+          }
+        </KillFeed>
         <div>
           {
             showAlly
@@ -621,32 +757,65 @@ const GameView: React.FC = () => {
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p>{event.initial_text}</p>
+                  ? <p onClick={() => speak({ text: `${event.initial_text} What do you do? Select an option below` })}>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p onClick={() => speak({ text: selectedChoice.flavor_text })} style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
                   </>
               }
               {
-                tempText.length
-                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
+                outcome.length
+                  ? <p onClick={() => speak({text: selectedChoice[outcome]})} style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
-                outcome.length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                tempText.length
+                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
             </ScrollableContainer>
           </EventText>
           <div className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
             <img src={location.image_url}></img>
+            
           </div>
+          {
+            damageToEnemy > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [30, 0, -30, 0, 30, 0, -30],
+                  y: -250,
+                  x: 40
+                }}
+                style={{ color: 'green' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToEnemy}
+              </motion.div>
+              : <></>
+          }
+          {
+            damageToPlayer > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30],
+                  y: -250,
+                  x: -50
+                }}
+                style={{ color: 'red' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToPlayer}
+              </motion.div>
+              : <></>
+          }
         </div>
       </Main>
       <Footer>
@@ -658,45 +827,43 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={ () => { handleLocationChange(); setTemporaryMood(0); setTemporaryStrength(0); setTemporaryStrength(0); } }>New Location</HudButton>
-              <Modal show={showModal2} onHide={handleCloseModal2}>
+              <HudButton onClick={ () => { () => { handleLocationChange(); setTemporaryMood(0); setTemporaryStrength(0); setTemporaryStrength(0); }; }}>New Location</HudButton>
+              <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to the first location</p>
-                  <p>2: Go back to second location</p>
+                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={() => { setModalLocation(0); handleCloseModal2(); }}>
-                    Choice 1
-                  </Button>
-                  <Button onClick={() => { setModalLocation(1); handleCloseModal2(); }}>
-                    Choice 2
-                  </Button>
-                </Modal.Footer>
               </Modal>
             </Content1>
           </Link>
           <Content1>
-            <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
+            <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
+              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
+              <Modal.Header closeButton onClick={() => { handleTextBoxClose(); handleClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                Choose from the options below:f
-                <p>1: Look for items</p>
-                <p>2: Look for graffiti</p>
-                <p>3: Write graffiti</p>
-                <p>{modalText}</p>
+                <div onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
+                  Choose from the options below:
+                  <p>1: Look for items</p>
+                  <p>2: Look for graffiti</p>
+                  <p>3: Write graffiti</p>
+                </div>
+                <p
+                  onClick={()=> speak({ text: modalText })}
+                >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
@@ -705,12 +872,11 @@ const GameView: React.FC = () => {
                 {showButton && (
                   <div>
                     <input type="text" value={inputValue} onChange={handleInputValueChange} />
-                    <button onClick={updateGraffitiMsg}>Tag it</button>
+                    <button onClick={() => { updateGraffitiMsg(); }}>Tag</button>
                   </div>
                 )}
               </Modal.Footer>
             </Modal>
-
           </Content1>
         </Content1>
         <CharStatusContainer>
@@ -723,10 +889,13 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
+            <div onClick={() => speak({ text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}` })} >
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+            </div>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
@@ -736,6 +905,7 @@ const GameView: React.FC = () => {
                   return <div key={i}
                     className="itemWidget"
                     draggable
+                    onClick={() => speak({ text: item.name })}
                     onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } } }>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })

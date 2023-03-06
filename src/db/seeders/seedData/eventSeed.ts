@@ -12,19 +12,19 @@
 
 export const eventSeed = [
   {
-    initial_text: 'You turn a corner, and hear the loudest sound you\'ve ever heard. In you peripheral vision you catch a glimpse of a huge dark shape roaring through the air toward you!',
-    choice0: 1, // fight the shadow
+    initial_text: 'You turn a corner, and are suddenly aware you are not alone. In you peripheral vision you catch a glimpse of a dark shape coming toward you!',
+    choice0: 2, // fight the shadow
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
-    choice3: 3, // attempt contact
+    choice3: 4, // attempt contact
     enemy_effect: true,
-    ally_effect: false,
+    ally_effect: true,
     item_effect: true,
   },
   {
-    initial_text: 'You\'ve come across a creature that makes you question your sanity. It seems to be an undead banana-peel. Tall as a man, with vacant eyes and bared teeth, it moves like an octopus out of water. It is a thing that should not be.',
+    initial_text: 'Entering the space, you feel a hostile presence. You\'re being watched... No. Hunted.',
     choice0: 2, // fight the zombie
-    choice1: 6, // attempt stealth
+    choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
     choice3: 4, // attempt contact
     enemy_effect: true,
@@ -33,10 +33,10 @@ export const eventSeed = [
   },
   {
     initial_text: 'You find an unlocked door! You can\'t see inside from where you are, and you don\'t hear anything moving around inside.',
+    choice0: 8, // Barricade yourself inside
     choice1: 10, // Search the building for supplies
-    choice3: 8, // Barricade yourself inside
     choice2: 7, // flee the scene
-    choice0: 9, // Search the building for survivors
+    choice3: 9, // Search the building for survivors
     enemy_effect: false,
     ally_effect: true,
     item_effect: true,
