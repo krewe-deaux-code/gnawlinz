@@ -59,6 +59,7 @@ const GameView: React.FC = () => {
   const [bonusMood, setBonusMood] = useState(0);
 
   const fetchEvent = () => {
+    setTempText('');
     axios.get<EventData>('/event/random', { params: { excludeEventId: prevEventId } })
       .then(event => {
         // console.log('EVENT', event);
@@ -114,7 +115,7 @@ const GameView: React.FC = () => {
 
   const handleAllyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
-    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 1) + 1}`)
+    axios.get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
       .then((ally: any) => {
         if (metAllyArr.includes(ally.data._id)) {
           setCurrentAlly({});
@@ -163,9 +164,9 @@ const GameView: React.FC = () => {
   const handleLocationChange = () => {
     setShowAlly(false);
     setShowEnemy(false);
+    setOutcome('');
+    setSelectedChoice({} as ChoiceData);
     if (allLocations.length) {
-      setSelectedChoice({} as ChoiceData);
-      setOutcome('');
       setAllLocations(prevLocations => prevLocations.slice(1));
       setLocation(allLocations[0]);
       setCurrentChar(prevStats => ({
@@ -287,7 +288,7 @@ const GameView: React.FC = () => {
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
-                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
+                setOutcome(`You were slain by a ${currentEnemy.name} with a ${currentEnemy.weapon1}`); // <-- ADD PLAYER DEATH TO STORY
               }
               return;
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
@@ -596,7 +597,7 @@ const GameView: React.FC = () => {
             </Content1>
           </Link>
           <Content1>
-            <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
+            <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
               show={show}
               onHide={handleClose}
