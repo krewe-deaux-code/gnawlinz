@@ -8,7 +8,8 @@
     "start": "nodemon src/server/index.ts",
     "build": "tsc && webpack",
     "lint": "eslint . --ext .ts --ext .tsx",
-    "lint:fix": "eslint --fix . --ext .ts --ext .tsx"
+    "lint:fix": "eslint --fix . --ext .ts --ext .tsx",
+    "speech:install": "npm install react-speech-kit --legacy-peer-deps"
   },
   "repository": {
     "type": "git",

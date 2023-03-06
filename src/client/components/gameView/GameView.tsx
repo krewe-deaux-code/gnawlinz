@@ -371,8 +371,8 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `health ${health} %` })}>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `mood ${mood} %` })}>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -382,11 +382,13 @@ const GameView: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {
     setShowTextBox(true);
     setShowButton(true);
   };
-  // write graffiti button function, shows input field and tag it button
+
+  // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
@@ -453,7 +455,7 @@ const GameView: React.FC = () => {
   //   // Get the text content of the clicked div
   //   const text = event.target.textContent;
   // };
-  const { speak, cancel } = useSpeechSynthesis();
+  const { speak } = useSpeechSynthesis();
   // const [isSpeaking, setIsSpeaking] = useState(false);
 
   // useEffect(() => {
@@ -481,7 +483,7 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2 onClick={() => speak({text: location.name})}>{location.name}</h2>
+        <h2 onClick={() => speak({ text: location.name })}>{location.name}</h2>
         <div>
           {
             showAlly
@@ -497,12 +499,12 @@ const GameView: React.FC = () => {
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p onClick={() => speak({text: `${event.initial_text} What do you do? Select from an option below`})}>{event.initial_text}</p>
+                  ? <p onClick={() => speak({ text: `${event.initial_text} What do you do? Select an option below` })}>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p onClick={() => speak({text: selectedChoice.flavor_text})}style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p onClick={() => speak({ text: selectedChoice.flavor_text })} style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -510,12 +512,12 @@ const GameView: React.FC = () => {
               }
               {
                 tempText.length
-                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
+                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
               {
                 outcome.length
-                  ? <p onClick={() => speak({text: selectedChoice[outcome]})}style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
+                  ? <p onClick={() => speak({ text: selectedChoice[outcome] })} style={{ margin: '1rem' }}>{selectedChoice[outcome]}</p>
                   : <></>
               }
             </ScrollableContainer>
@@ -562,10 +564,10 @@ const GameView: React.FC = () => {
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
+              <Modal.Header closeButton onClick={() => { handleTextBoxClose(); handleClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
-              <Modal.Body onClick={() => speak({text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti'})}>
+              <Modal.Body onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
                 Choose from the options below:
                 <p>1: Look for items</p>
                 <p>2: Look for graffiti</p>
@@ -581,7 +583,7 @@ const GameView: React.FC = () => {
                 {showButton && (
                   <div>
                     <input type="text" value={inputValue} onChange={handleInputValueChange} />
-                    <button onClick={updateGraffitiMsg}>Tag it</button>
+                    <button onClick={() => { updateGraffitiMsg(); }}>Tag</button>
                   </div>
                 )}
               </Modal.Footer>
@@ -597,10 +599,12 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+            <div onClick={() => speak({text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}`})} >
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+            </div>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
@@ -608,7 +612,7 @@ const GameView: React.FC = () => {
               {
                 fetchedInventory.map((item: Item, i) => {
                   return <div key={i}>
-                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                    <IconContainer onClick={() => speak({ text: item.name })}>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
             </InventoryStyle>

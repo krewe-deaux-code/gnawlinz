@@ -1,9 +1,7 @@
-import React, { Suspense, lazy, createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { Suspense, lazy, createContext, useContext, useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
-import { ThemeProvider } from 'styled-components';
-import { useSpeechSynthesis } from 'react-speech-kit';
 
 // import { SettingsContext } from './components/title/Title';
 
@@ -138,63 +136,26 @@ const App = () => {
     characterUpdate();
   }, [currentChar]);
 
-  const lightTheme = {
-    colors: {
-      primary: '#f4f4f4',
-      // secondary: '#f0ac00'
-      secondary: 'green'
-    }
-  };
-
-  const deuteranopiaTheme = {
-    colors: {
-      primary: '#003366', // blue
-      secondary: '#f0ac00', // orange
-      accent: '#00cc00', // green
-      text: '#333333', // dark gray
-      background: '#f5f5f5', // light gray
-    }
-  };
-
-  const [theme, setTheme] = useState(lightTheme);
-
-  const toggleTheme = useCallback(() => {
-    setTheme(prevTheme => prevTheme === lightTheme ? deuteranopiaTheme : lightTheme);
-  }, [setTheme]);
-
-  // const { speak } = useSpeechSynthesis();
-
-  const { speak } = useSpeechSynthesis();
 
   return (
-    <ThemeProvider theme={theme}>
-      <SettingsContext.Provider value={{ volume, setVolume }}>
-        <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
-          <BrowserRouter>
-            <GlobalStyle />
-            <button onClick={toggleTheme}>Toggle Theme</button>
-            <button className='btn btn-primary btn-lg'
-              onClick={() => speak({ text: 'Fuck, Fuck, Fuck' })}>
-              Speak
-            </button>
-            <button className='btn btn-primary btn-lg'
-              onClick={() => speak({ text: 'The ultimate vegan meal is death!' })}>
-              Speak
-            </button>
-            <Suspense fallback={<div>LOADING...</div>}>
-              <Routes>
-                <Route path='/' element={<Title />} />
-                <Route path='menu' element={<Menu />} />
-                <Route path='gameView' element={<GameView />} />
-                <Route path='result' element={<Result />} />
-                <Route path='*' element={<Navigate to='/' replace />} />
-              </Routes>
+    <SettingsContext.Provider value={{ volume, setVolume }}>
+      <UserContext.Provider value={{ currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+        <BrowserRouter>
+          <GlobalStyle />
+          <Suspense fallback={<div>LOADING...</div>}>
 
-            </Suspense>
-          </BrowserRouter>
-        </UserContext.Provider>
-      </SettingsContext.Provider>
-    </ThemeProvider>
+            <Routes>
+              <Route path='/' element={<Title />} />
+              <Route path='menu' element={<Menu />} />
+              <Route path='gameView' element={<GameView />} />
+              <Route path='result' element={<Result />} />
+              <Route path='*' element={<Navigate to='/' replace />} />
+            </Routes>
+
+          </Suspense>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </SettingsContext.Provider>
   );
 };
 export default App;
