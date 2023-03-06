@@ -25,8 +25,8 @@ export const choiceSeed = [
   },
   { // talk to ZB 4 (kill) 4
     flavor_text: 'You attempt to make contact with the entity.',
-    success: null,
-    failure: null,
+    success: 'You met with another survivor.',
+    failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
