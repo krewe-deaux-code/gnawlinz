@@ -2,8 +2,10 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { io, Socket } from 'socket.io-client';
+import { motion } from 'framer-motion';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState, useCallback } from 'react';
@@ -52,6 +54,8 @@ const GameView: React.FC = () => {
   const [penalty, setPenalty] = useState('');
   const [showEnemy, setShowEnemy] = useState(false);
   const [showAlly, setShowAlly] = useState(false);
+  const [damageToEnemy, setDamageToEnemy] = useState(0);
+  const [damageToPlayer, setDamageToPlayer] = useState(0);
 
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
   const [bonusStrength, setBonusStrength] = useState(0);
@@ -174,6 +178,10 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+      visited.forEach((location, i) => {
+        localStorage.setItem(i.toString(), location.name);
+        console.log(localStorage);
+      });
     } else if (bool === false) {
       setBool(true);
       setModalText2('true');
@@ -204,6 +212,7 @@ const GameView: React.FC = () => {
     }
     fetchEvent();
     setInvestigateDisabled(false);
+    // speak({ text: location.name });
   };
   const handleDropItem = (itemID) => {
     axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
@@ -264,6 +273,8 @@ const GameView: React.FC = () => {
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
+    setDamageToEnemy(0);
+    setDamageToPlayer(0);
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -285,14 +296,16 @@ const GameView: React.FC = () => {
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
+              setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${currentEnemy.strength - currentChar.strength} damage!`); // <-- check for ally??
               if (currentChar.health <= 0) {
                 setOutcome(currentEnemy.defeat); // <-- ADD PLAYER DEATH TO STORY
               }
               return;
-            } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
               setTempText(`You hit the ${currentEnemy.name} for ${currentChar.strength - currentEnemy.strength} damage!`);
               return;
@@ -338,7 +351,7 @@ const GameView: React.FC = () => {
   };
 
   const handlePlayerDied = () => {
-    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1 = 'heart attack');
+    socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
   // const appendToKillFeed = useCallback(() => {
@@ -425,8 +438,8 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `health ${health} %` })}>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div onClick={() => speak({ text: `mood ${mood} %` })}>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -436,11 +449,13 @@ const GameView: React.FC = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
   const handleTextBoxClick = () => {
     setShowTextBox(true);
     setShowButton(true);
   };
-  // write graffiti button function, shows input field and tag it button
+
+  // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
   };
@@ -503,10 +518,30 @@ const GameView: React.FC = () => {
         console.error('Failed to update graffiti message', err);
       });
   };
+  // const handleClick = (event) =>{
+  //   // Get the text content of the clicked div
+  //   const text = event.target.textContent;
+  // };
+  const { speak } = useSpeechSynthesis();
+  // const [isSpeaking, setIsSpeaking] = useState(false);
+
+  // useEffect(() => {
+  //   if (isSpeaking) {
+  //     cancel();
+  //   }
+  //   speak({ text: location.name });
+  //   setIsSpeaking(true);
+
+  //   return () => {
+  //     cancel();
+  //     setIsSpeaking(false);
+  //   };
+  // }, [location.name]);
 
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+    handlePlayerDied();
     return <Result />;
   }
   console.log('YOUR SCORE', currentChar.score);
@@ -516,7 +551,7 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2>{location.name}</h2>
+        <h2 onClick={() => speak({ text: location.name })}>{location.name}</h2>
         <KillFeed>
           {
             killFeed.length
@@ -539,12 +574,12 @@ const GameView: React.FC = () => {
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p>{event.initial_text}</p>
+                  ? <p onClick={() => speak({ text: `${event.initial_text} What do you do? Select an option below` })}>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p onClick={() => speak({ text: selectedChoice.flavor_text })} style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -552,17 +587,49 @@ const GameView: React.FC = () => {
               }
               {
                 outcome.length
-                  ? <p style={{ margin: '1rem' }}>{outcome}</p>
+                  ? <p onClick={() => speak({text: selectedChoice[outcome]})} style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
                 tempText.length
-                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
+                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
             </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
+          {
+            damageToEnemy > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [30, 0, -30, 0, 30, 0, -30],
+                  y: -250,
+                  x: 40
+                }}
+                style={{ color: 'green' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToEnemy}
+              </motion.div>
+              : <></>
+          }
+          {
+            damageToPlayer > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30],
+                  y: -250,
+                  x: -50
+                }}
+                style={{ color: 'red' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToPlayer}
+              </motion.div>
+              : <></>
+          }
         </div>
       </Main>
       <Footer>
@@ -574,45 +641,43 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal show={showModal2} onHide={handleCloseModal2}>
+              <HudButton onClick={() => { handleLocationChange(); }}>New Location</HudButton>
+              <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to the first location</p>
-                  <p>2: Go back to second location</p>
+                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={() => { setModalLocation(0); handleCloseModal2(); }}>
-                    Choice 1
-                  </Button>
-                  <Button onClick={() => { setModalLocation(1); handleCloseModal2(); }}>
-                    Choice 2
-                  </Button>
-                </Modal.Footer>
               </Modal>
             </Content1>
           </Link>
           <Content1>
             <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
+              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
               keyboard={false}
             >
-              <Modal.Header closeButton onClick={() => { handleClose(); handleTextBoxClose(); setModalText(''); }}>
+              <Modal.Header closeButton onClick={() => { handleTextBoxClose(); handleClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                Choose from the options below:f
-                <p>1: Look for items</p>
-                <p>2: Look for graffiti</p>
-                <p>3: Write graffiti</p>
-                <p>{modalText}</p>
+                <div onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
+                  Choose from the options below:
+                  <p>1: Look for items</p>
+                  <p>2: Look for graffiti</p>
+                  <p>3: Write graffiti</p>
+                </div>
+                <p
+                  onClick={()=> speak({ text: modalText })}
+                >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
@@ -621,12 +686,11 @@ const GameView: React.FC = () => {
                 {showButton && (
                   <div>
                     <input type="text" value={inputValue} onChange={handleInputValueChange} />
-                    <button onClick={updateGraffitiMsg}>Tag it</button>
+                    <button onClick={() => { updateGraffitiMsg(); }}>Tag</button>
                   </div>
                 )}
               </Modal.Footer>
             </Modal>
-
           </Content1>
         </Content1>
         <CharStatusContainer>
@@ -637,10 +701,13 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
+            <div onClick={() => speak({ text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}` })} >
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+            </div>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
@@ -648,7 +715,7 @@ const GameView: React.FC = () => {
               {
                 fetchedInventory.map((item: Item, i) => {
                   return <div key={i}>
-                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                    <IconContainer onClick={() => speak({ text: item.name })}>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
             </InventoryStyle>

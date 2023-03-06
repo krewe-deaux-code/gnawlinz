@@ -130,6 +130,8 @@ const App = () => {
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
+
+
   const characterUpdate = () => {
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
       .then(() => console.log('character updated (@APP LEVEL)'))
@@ -139,6 +141,7 @@ const App = () => {
   useEffect(() => {
     characterUpdate();
   }, [currentChar]);
+
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>

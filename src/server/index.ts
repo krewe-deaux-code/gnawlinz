@@ -87,17 +87,11 @@ io.on('connection', (socket) => {
   // send a message to the client
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
-  socket.on('player_died', (charName, location, cause) => {
+  socket.on('player_died', (charName, location, cause = 'heart attack') => {
     const death = `- ${charName} died from a ${cause} at ${location}`;
     console.log(death);
-    socket.emit('kill_feed', death); // socket.broadcast.emit **
+    socket.broadcast.emit('kill_feed', death); // socket.broadcast.emit **
   });
-  // Listen for events that indicate when a player has died
-  // socket.on('player_died', (playerName) => {
-  //   console.log(`${playerName} has died!`);
-  //   // Emit a message to all connected clients that the player has died
-  //   io.emit('kill_feed', `${playerName} has died!`);
-  // });
   // user disconnects from socket
   socket.on('disconnect', () => {
     console.log('user disconnected');

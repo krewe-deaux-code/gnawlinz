@@ -49,6 +49,7 @@ const Result: React.FC = () => {
     }
   });
 
+
   console.log('result from story query:', story);
   return (
     <Container>
