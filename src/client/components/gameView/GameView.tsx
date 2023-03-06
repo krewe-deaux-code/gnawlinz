@@ -4,6 +4,7 @@ import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 
 import { io, Socket } from 'socket.io-client';
+import { motion } from 'framer-motion';
 
 // import Investigate from './Investigate';
 import React, { useEffect, useContext, useState, useCallback } from 'react';
@@ -567,6 +568,20 @@ const GameView: React.FC = () => {
             </ScrollableContainer>
           </EventText>
           <img src={location.image_url}></img>
+          {
+            damageToEnemy > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 2, 3, 2, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0],
+                  y: -250
+                }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToEnemy}
+              </motion.div>
+              : <></>
+          }
         </div>
       </Main>
       <Footer>
