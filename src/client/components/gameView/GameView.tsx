@@ -174,6 +174,10 @@ const GameView: React.FC = () => {
         location: allLocations[0]._id
       }));
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+      visited.forEach((location, i) => {
+        localStorage.setItem(i.toString(), location.name);
+        console.log(localStorage);
+      });
     } else if (bool === false) {
       setBool(true);
       setModalText2('true');
@@ -597,30 +601,24 @@ const GameView: React.FC = () => {
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={() => { handleLocationChange(); }}>New Location</HudButton>
-              <Modal show={showModal2} onHide={handleCloseModal2}>
+              <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                   <p>You have visited all locations, </p>
                   <p>chose where to go next: </p>
-                  <p>1: Go back to the first location</p>
-                  <p>2: Go back to second location</p>
+                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
-                <Modal.Footer>
-                  <Button onClick={() => { setModalLocation(0); handleCloseModal2(); }}>
-                    Choice 1
-                  </Button>
-                  <Button onClick={() => { setModalLocation(1); handleCloseModal2(); }}>
-                    Choice 2
-                  </Button>
-                </Modal.Footer>
               </Modal>
             </Content1>
           </Link>
           <Content1>
             <HudButton onClick={() => { handleClickButt(); fetchEvent(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
             <Modal
+              centered
               show={show}
               onHide={handleClose}
               backdrop="static"
@@ -629,13 +627,15 @@ const GameView: React.FC = () => {
               <Modal.Header closeButton onClick={() => { handleTextBoxClose(); handleClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
-              <Modal.Body onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
-                Choose from the options below:
-                <p>1: Look for items</p>
-                <p>2: Look for graffiti</p>
-                <p>3: Write graffiti</p>
+              <Modal.Body>
+                <div onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
+                  Choose from the options below:
+                  <p>1: Look for items</p>
+                  <p>2: Look for graffiti</p>
+                  <p>3: Write graffiti</p>
+                </div>
                 <p
-                //  onClick={()=> speak({ text: {modalText} })}
+                  onClick={()=> speak({ text: modalText })}
                 >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
@@ -650,7 +650,6 @@ const GameView: React.FC = () => {
                 )}
               </Modal.Footer>
             </Modal>
-
           </Content1>
         </Content1>
         <CharStatusContainer>
@@ -661,7 +660,8 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={() => speak({text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}`})} >
+            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
+            <div onClick={() => speak({ text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}` })} >
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>

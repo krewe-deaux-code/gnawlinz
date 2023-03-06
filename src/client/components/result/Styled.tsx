@@ -119,7 +119,7 @@ export const Table = styled.table`
 `;
 
 export const Th = styled.th`
-  background-color: darkred;
+  background-color: black;
   border: 1px solid #ddd;
   padding: 8px;
   text-align: center;
@@ -132,6 +132,6 @@ export const Td = styled.td`
 
 export const TableRow = styled.tr`
   &:nth-child(even) {
-    background-color: darkred
+    background-color: black;
   }
 `;
