@@ -52,6 +52,8 @@ const GameView: React.FC = () => {
   const [penalty, setPenalty] = useState('');
   const [showEnemy, setShowEnemy] = useState(false);
   const [showAlly, setShowAlly] = useState(false);
+  const [damageToEnemy, setDamageToEnemy] = useState(0);
+  const [damageToPlayer, setDamageToPlayer] = useState(0);
 
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
   const [bonusStrength, setBonusStrength] = useState(0);
@@ -263,6 +265,8 @@ const GameView: React.FC = () => {
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
+    setDamageToEnemy(0);
+    setDamageToPlayer(0);
     console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
@@ -284,14 +288,14 @@ const GameView: React.FC = () => {
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
             // <-- player loses, adjust player health below
             if (fightResult?.player || fightResult.player === 0) {
+              setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
-              if (currentChar.health <= 0) {
-                setOutcome('failure'); // <-- ADD PLAYER DEATH TO STORY
-              }
+              if (currentChar.health <= 0) { setOutcome('failure'); } // <-- ADD PLAYER DEATH TO STORY
               return;
-            } else if (fightResult?.enemy || fightResult.enemy === 0) {
               // <-- enemy loses, adjust player health below
+            } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
               setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
