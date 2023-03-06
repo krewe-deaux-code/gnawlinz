@@ -354,6 +354,7 @@ const GameView: React.FC = () => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
+    e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     handleDropItemChar(itemArr[0], itemArr[1]);
@@ -384,8 +385,8 @@ const GameView: React.FC = () => {
       if (inventoryItem.modified_stat1 === 'mood') {
         setBonusMood(bonusMood - inventoryItem.modifier1);
       }
-      handleDropItem(itemArr[0], itemArr[1]);
     }
+    handleDropItem(itemArr[0], itemArr[1]);
   };
 
   const handleDragOver = (e: React.DragEvent) => {
