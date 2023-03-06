@@ -627,13 +627,15 @@ const GameView: React.FC = () => {
               <Modal.Header closeButton onClick={() => { handleTextBoxClose(); handleClose(); setModalText(''); }}>
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
-              <Modal.Body onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
-                Choose from the options below:
-                <p>1: Look for items</p>
-                <p>2: Look for graffiti</p>
-                <p>3: Write graffiti</p>
+              <Modal.Body>
+                <div onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
+                  Choose from the options below:
+                  <p>1: Look for items</p>
+                  <p>2: Look for graffiti</p>
+                  <p>3: Write graffiti</p>
+                </div>
                 <p
-                //  onClick={()=> speak({ text: {modalText} })}
+                  onClick={()=> speak({ text: modalText })}
                 >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
@@ -648,7 +650,6 @@ const GameView: React.FC = () => {
                 )}
               </Modal.Footer>
             </Modal>
-
           </Content1>
         </Content1>
         <CharStatusContainer>
@@ -659,17 +660,13 @@ const GameView: React.FC = () => {
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={() => speak({text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}`})} >
+            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
+            <div onClick={() => speak({ text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}` })} >
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
             </div>
-            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
-            <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
