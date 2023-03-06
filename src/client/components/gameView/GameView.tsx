@@ -572,13 +572,31 @@ const GameView: React.FC = () => {
             damageToEnemy > 0
               ? <motion.div
                 animate={{
-                  scale: [1, 2, 3, 2, 1, 0],
-                  rotate: [-30, 0, 30, 0, -30, 0],
-                  y: -250
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [30, 0, -30, 0, 30, 0, -30],
+                  y: -250,
+                  x: 40
                 }}
+                style={{ color: 'green' }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToEnemy}
+              </motion.div>
+              : <></>
+          }
+          {
+            damageToPlayer > 0
+              ? <motion.div
+                animate={{
+                  scale: [1, 1, 2, 3, 2, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30],
+                  y: -250,
+                  x: -50
+                }}
+                style={{ color: 'red' }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >{damageToPlayer}
               </motion.div>
               : <></>
           }
