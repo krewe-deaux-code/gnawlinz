@@ -328,7 +328,7 @@ const GameView: React.FC = () => {
   const fetchItems = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
-        setCurrentChar(character.data);
+        // setCurrentChar(character.data);
         //console.log('EMPTY???', character.data.inventory);
         //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
         setFetchedInventory([]);
@@ -376,7 +376,9 @@ const GameView: React.FC = () => {
     e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
-    handleDropItemChar(itemArr[0], itemArr[1]);
+    if (itemArr[0] !== 1) {
+      handleDropItemChar(itemArr[0], itemArr[1]);
+    }
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
@@ -405,7 +407,9 @@ const GameView: React.FC = () => {
         setBonusMood(bonusMood - inventoryItem.modifier1);
       }
     }
-    handleDropItem(itemArr[0], itemArr[1]);
+    if (itemArr[0] !== 1) {
+      handleDropItem(itemArr[0], itemArr[1]);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -864,8 +868,7 @@ const GameView: React.FC = () => {
                   return <div key={i}
                     className="itemWidget"
                     draggable
-                    onClick={() => speak({ text: item.name })}
-                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } } }>
+                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); } }>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
