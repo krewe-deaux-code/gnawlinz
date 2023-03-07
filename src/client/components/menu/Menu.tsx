@@ -162,7 +162,7 @@ const Menu: React.FC = () => {
           </Content>
         </>
         <button>
-          <Link to="/gameView">Start Game</Link>
+          <Link to="/game-view">Start Game</Link>
         </button>
 
       </Body >
