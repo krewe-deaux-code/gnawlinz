@@ -153,7 +153,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<Title />} />
               <Route path='menu' element={<Menu />} />
-              <Route path='gameView' element={<GameView />} />
+              <Route path='gameview' element={<GameView />} />
               <Route path='result' element={<Result />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
