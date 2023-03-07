@@ -173,6 +173,9 @@ const GameView: React.FC = () => {
   };
 
   const handleLocationChange = () => {
+    setTemporaryMood(0);
+    setTemporaryStrength(0);
+    setTemporaryStrength(0);
     setShowAlly(false);
     setShowEnemy(false);
     setOutcome('');
@@ -501,83 +504,6 @@ const GameView: React.FC = () => {
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
-  // const appendToKillFeed = useCallback(() => {
-  //   console.log('inside player died function');
-  //   socket?.emit('couillon', currentChar.name);
-  // }, [socket, currentChar.name]);
-
-  // socket?.on('player_died', (death) => {
-  //   console.log('HOW MANY TIMES');
-  //   setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-  // });
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('kill_feed', (death) => appendToKillFeed(death));
-      return () => {
-        socket.off('kill_feed', appendToKillFeed);
-      };
-    }
-  }, [socket]);
-
-  // process.env.SERVER_URL as string
-  useEffect(() => {
-    const newSocket = io();
-    setSocket(newSocket);
-    console.log('this is the use effect');
-    fetchItems();
-    getAllLocations();
-    setBonusEndurance(bonusEndurance);
-    setBonusStrength(bonusStrength);
-    setBonusMood(bonusMood);
-    // <-- socket cleanup, close connection
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-
-  // // <-- useEffect to catch socket emits for killFeed
-  // useEffect(() => {
-  //   // <-- if socket connection exists...
-  //   if (socket) {
-  //     // <-- binds playerDied event listener to socket instance
-  //     // <-- and executes callback function defined outside useEffect
-  //     socket.on('playerDied', handlePlayerDied);
-  //     // <-- cleanup function to remove the event listener
-  //     return () => {
-  //       socket.off('playerDied', handlePlayerDied);
-  //     };
-  //   }
-  // }, [socket]);
-
-  useEffect(() => {
-    if (hasMounted) {
-      axios.post(`story/ending/${currentChar._id}`,
-        {
-          result: selectedChoice[outcome] || outcome
-        })
-        .then(() => {
-          if (penalty !== '') {
-            console.log('penalty: ', penalty);
-            if (outcome === 'failure') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] - 2
-              }));
-            } else if (outcome === 'success') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
-              }));
-            }
-          }
-        })
-        .catch(err => console.error('axios AMEND to STORY', err));
-    } else {
-      setHasMounted(true);
-    }
-  }, [outcome]);
-
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
@@ -665,13 +591,30 @@ const GameView: React.FC = () => {
         console.error('Failed to update graffiti message', err);
       });
   };
+
   useEffect(() => {
+    if (socket) {
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
+      return () => {
+        socket.off('kill_feed', appendToKillFeed);
+      };
+    }
+  }, [socket]);
+
+
+
+  useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
     setBonusEndurance(0);
     setBonusStrength(0);
     setBonusMood(0);
     console.log('this is the use effect');
     fetchItems();
     getAllLocations();
+    return () => {
+      newSocket.disconnect();
+    };
   }, []);
 
   useEffect(() => {
@@ -701,6 +644,22 @@ const GameView: React.FC = () => {
       setHasMounted(true);
     }
   }, [outcome]);
+
+
+
+  // // <-- useEffect to catch socket emits for killFeed
+  // useEffect(() => {
+  //   // <-- if socket connection exists...
+  //   if (socket) {
+  //     // <-- binds playerDied event listener to socket instance
+  //     // <-- and executes callback function defined outside useEffect
+  //     socket.on('playerDied', handlePlayerDied);
+  //     // <-- cleanup function to remove the event listener
+  //     return () => {
+  //       socket.off('playerDied', handlePlayerDied);
+  //     };
+  //   }
+  // }, [socket]);
   // const handleClick = (event) =>{
   //   // Get the text content of the clicked div
   //   const text = event.target.textContent;
@@ -827,7 +786,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/gameView" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={ () => { () => { handleLocationChange(); setTemporaryMood(0); setTemporaryStrength(0); setTemporaryStrength(0); }; }}>New Location</HudButton>
+              <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
