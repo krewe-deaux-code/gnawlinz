@@ -15,7 +15,10 @@ import {
   Container, Main, Content1, KillFeed,
   Content2, Content3, Footer, HudButton,
   EventText, StatContainer, ScrollableContainer,
-  AllyImg, EnemyImg, CharImageStyles, CharStatusContainer, IconContainer, IconImg, InventoryBorder, InventoryStyle, StatBonusColor, StatContainer2, StatIconContainer, TinyStatIconImg
+  AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
+  IconContainer, IconImg, InventoryBorder, InventoryStyle,
+  StatBonusColor, StatContainer2, StatIconContainer,
+  TinyStatIconImg, TempStatBonusColor
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -61,6 +64,10 @@ const GameView: React.FC = () => {
   const [bonusStrength, setBonusStrength] = useState(0);
   const [bonusEndurance, setBonusEndurance] = useState(0);
   const [bonusMood, setBonusMood] = useState(0);
+
+  const [temporaryStrength, setTemporaryStrength] = useState(0);
+  const [temporaryEndurance, setTemporaryEndurance] = useState(0);
+  const [temporaryMood, setTemporaryMood] = useState(0);
 
   const fetchEvent = () => {
     setTempText('');
@@ -166,6 +173,9 @@ const GameView: React.FC = () => {
   };
 
   const handleLocationChange = () => {
+    setTemporaryMood(0);
+    setTemporaryStrength(0);
+    setTemporaryStrength(0);
     setShowAlly(false);
     setShowEnemy(false);
     setOutcome('');
@@ -214,7 +224,11 @@ const GameView: React.FC = () => {
     setInvestigateDisabled(false);
     // speak({ text: location.name });
   };
-  const handleDropItem = (itemID) => {
+
+
+  //  Item handling Functions drag and drop on location and character.
+  //  *********************************************************************************************************************************************************************************************
+  const handleDropItem = (itemID, i) => {
     axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
     axios.delete('/character/inventory/delete', {
       data: {
@@ -223,14 +237,94 @@ const GameView: React.FC = () => {
       }
     })
       .then(() => {
-        // console.log('inventory in handleDrop', fetchedInventory);
-        fetchItems();
+        fetchUndroppedItems();
+        // console.log('currentstrength', bonusStrength);
         //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
       })
       .catch(err => console.error('fetch after delete ERROR', err));
     // needs then and catches for both axios... call fetchItems?
   };
 
+  const handleDropItemChar = (itemID, i) => {
+    if (fetchedInventory[i].consumable === true) {
+      axios.delete('/character/inventory/delete', {
+        data: {
+          charID: currentChar._id,
+          itemID: itemID,
+        }
+      }
+      )
+
+        .then(() => {
+          // console.log('Current inventory', fetchedInventory[i]);
+          if (fetchedInventory[i].modified_stat0 === 'strength') {
+            setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier0);
+          }
+          if (fetchedInventory[i].modified_stat1 === 'strength') {
+            setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier1);
+          }
+          if (fetchedInventory[i].modified_stat0 === 'endurance') {
+            setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier0);
+          }
+          if (fetchedInventory[i].modified_stat1 === 'endurance') {
+            setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier1);
+          }
+          if (fetchedInventory[i].modified_stat0 === 'mood') {
+            setTemporaryMood(temporaryMood + fetchedInventory[i].modifier0);
+          }
+          if (fetchedInventory[i].modified_stat1 === 'mood') {
+            setTemporaryMood(temporaryMood + fetchedInventory[i].modifier1);
+          }
+          if (fetchedInventory[i].modified_stat0 === 'health') {
+
+            setCurrentChar((previousStats) => ({
+              ...previousStats,
+              health: previousStats.health + fetchedInventory[i].modifier0
+            }))
+              .then(() => {
+                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
+              });
+          }
+          if (fetchedInventory[i].modified_stat1 === 'health') {
+            console.log('FetchedInventory hit the health pot');
+            setCurrentChar((previousStats) => ({
+              ...previousStats,
+              health: previousStats.health + fetchedInventory[i].modifier1
+            }))
+              .then(() => {
+                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
+              });
+          }
+        })
+        .then(() => {
+          fetchUndroppedItems();
+          console.log('currentstrength', bonusStrength);
+        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+        })
+        .catch(err => console.error('fetch after delete ERROR', err));
+    // needs then and catches for both axios... call fetchItems?
+    }
+  };
+  const fetchUndroppedItems = () => {
+    axios.get<Character>(`/character/${currentChar._id}`)
+      .then((character: any) => {
+        setCurrentChar(character.data);
+        setFetchedInventory([]);
+        character.data.inventory.forEach(item => {
+          axios.get(`/item/${item}`)
+            .then(({  data  }) =>
+
+              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id))
+
+            )
+          // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            .catch(err => console.error('error fetching from ITEM router fetchedDroppedItem', err));
+        });
+      })
+      .catch((err: any) =>
+        console.error('Error in Menu.tsx in fetchunDroppedItems', err));
+
+  };
   const fetchItems = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
@@ -240,27 +334,29 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({ data }) => {
+            .then(({  data  }) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
-              // Handles nonconsumable stat bonuses
-              if (data.modified_stat0 === 'strength' && data.consumable === false) {
-                setBonusStrength(bonusStrength + data.modifier0);
-              }
-              if (data.modified_stat1 === 'strength' && data.consumable === false) {
-                setBonusStrength(bonusStrength + data.modifier1);
-              }
-              if (data.modified_stat0 === 'endurance' && data.consumable === false) {
-                setBonusEndurance(bonusEndurance + data.modifier0);
-              }
-              if (data.modified_stat1 === 'endurance' && data.consumable === false) {
-                setBonusEndurance(bonusEndurance + data.modifier1);
-              }
-              if (data.modified_stat0 === 'mood' && data.consumable === false) {
-                setBonusMood(bonusMood + data.modifier0);
-              }
-              if (data.modified_stat1 === 'mood' && data.consumable === false) {
-                setBonusMood(bonusMood + data.modifier1);
+              // Handles nonconsumable stat bonuses when item is fetched.
+              if (data.consumable === false) {
+                if (data.modified_stat0 === 'strength') {
+                  setBonusStrength(bonusStrength + data.modifier0);
+                }
+                if (data.modified_stat1 === 'strength') {
+                  setBonusStrength(bonusStrength + data.modifier1);
+                }
+                if (data.modified_stat0 === 'endurance') {
+                  setBonusEndurance(bonusEndurance + data.modifier0);
+                }
+                if (data.modified_stat1 === 'endurance') {
+                  setBonusEndurance(bonusEndurance + data.modifier1);
+                }
+                if (data.modified_stat0 === 'mood') {
+                  setBonusMood(bonusMood + data.modifier0);
+                }
+                if (data.modified_stat1 === 'mood') {
+                  setBonusMood(bonusMood + data.modifier1);
+                }
               }
             })
             // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
@@ -270,6 +366,60 @@ const GameView: React.FC = () => {
       .catch((err: any) =>
         console.error('Error in Menu.tsx in fetchItems', err));
   };
+
+  const handleOnDragItem = (e: React.DragEvent, itemId: number, i: number) => {
+    const itemIdIndex = [itemId, i];
+    e.dataTransfer.setData('itemWidget', JSON.stringify(itemIdIndex));
+  };
+
+  const handleDropItemOnCharacter = (e: React.DragEvent) => {
+    e.preventDefault();
+    const itemWidget = e.dataTransfer.getData('itemWidget') as string;
+    const itemArr = JSON.parse(itemWidget);
+    handleDropItemChar(itemArr[0], itemArr[1]);
+  };
+
+  const handleDropItemOnLocation = (e: React.DragEvent) => {
+    e.preventDefault();
+    const itemWidget = e.dataTransfer.getData('itemWidget') as string;
+    const itemArr = JSON.parse(itemWidget);
+    const inventoryItem = fetchedInventory[itemArr[1]];
+    //  removes item bonus from state when item is dropped
+    if (inventoryItem.consumable === false && inventoryItem._id !== 1) {
+      if (inventoryItem.modified_stat0 === 'strength') {
+        setBonusStrength(bonusStrength - inventoryItem.modifier0);
+      }
+      if (inventoryItem.modified_stat1 === 'strength') {
+        setBonusStrength(bonusStrength - inventoryItem.modifier1);
+      }
+      if (inventoryItem.modified_stat0 === 'endurance') {
+        setBonusEndurance(bonusEndurance - inventoryItem.modifier0);
+      }
+      if (inventoryItem.modified_stat1 === 'endurance') {
+        setBonusEndurance(bonusEndurance - inventoryItem.modifier1);
+      }
+      if (inventoryItem.modified_stat0 === 'mood') {
+        setBonusMood(bonusMood - inventoryItem.modifier0);
+      }
+      if (inventoryItem.modified_stat1 === 'mood') {
+        setBonusMood(bonusMood - inventoryItem.modifier1);
+      }
+    }
+    handleDropItem(itemArr[0], itemArr[1]);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+  };
+
+  // const handleDropConsumable = (e: React.DragEvent) {
+
+  // };
+
+
+  //  *********************************************************************************************************************************************************************************************
+
+
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
     setPenalty(penalty);
     setTempText('');
@@ -353,83 +503,6 @@ const GameView: React.FC = () => {
   const handlePlayerDied = () => {
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
-
-  // const appendToKillFeed = useCallback(() => {
-  //   console.log('inside player died function');
-  //   socket?.emit('couillon', currentChar.name);
-  // }, [socket, currentChar.name]);
-
-  // socket?.on('player_died', (death) => {
-  //   console.log('HOW MANY TIMES');
-  //   setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-  // });
-
-  useEffect(() => {
-    if (socket) {
-      socket.on('kill_feed', (death) => appendToKillFeed(death));
-      return () => {
-        socket.off('kill_feed', appendToKillFeed);
-      };
-    }
-  }, [socket]);
-
-  // process.env.SERVER_URL as string
-  useEffect(() => {
-    const newSocket = io();
-    setSocket(newSocket);
-    console.log('this is the use effect');
-    fetchItems();
-    getAllLocations();
-    setBonusEndurance(bonusEndurance);
-    setBonusStrength(bonusStrength);
-    setBonusMood(bonusMood);
-    // <-- socket cleanup, close connection
-    return () => {
-      newSocket.disconnect();
-    };
-  }, []);
-
-  // // <-- useEffect to catch socket emits for killFeed
-  // useEffect(() => {
-  //   // <-- if socket connection exists...
-  //   if (socket) {
-  //     // <-- binds playerDied event listener to socket instance
-  //     // <-- and executes callback function defined outside useEffect
-  //     socket.on('playerDied', handlePlayerDied);
-  //     // <-- cleanup function to remove the event listener
-  //     return () => {
-  //       socket.off('playerDied', handlePlayerDied);
-  //     };
-  //   }
-  // }, [socket]);
-
-  useEffect(() => {
-    if (hasMounted) {
-      axios.post(`story/ending/${currentChar._id}`,
-        {
-          result: selectedChoice[outcome] || outcome
-        })
-        .then(() => {
-          if (penalty !== '') {
-            console.log('penalty: ', penalty);
-            if (outcome === 'failure') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] - 2
-              }));
-            } else if (outcome === 'success') {
-              setCurrentChar(previousStats => ({
-                ...previousStats,
-                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
-              }));
-            }
-          }
-        })
-        .catch(err => console.error('axios AMEND to STORY', err));
-    } else {
-      setHasMounted(true);
-    }
-  }, [outcome]);
 
 
   const StatusBars = () => {
@@ -519,7 +592,74 @@ const GameView: React.FC = () => {
       });
   };
 
-  // const { speak } = useSpeechSynthesis();
+  useEffect(() => {
+    if (socket) {
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
+      return () => {
+        socket.off('kill_feed', appendToKillFeed);
+      };
+    }
+  }, [socket]);
+
+
+
+  useEffect(() => {
+    const newSocket = io();
+    setSocket(newSocket);
+    setBonusEndurance(0);
+    setBonusStrength(0);
+    setBonusMood(0);
+    console.log('this is the use effect');
+    fetchItems();
+    getAllLocations();
+    return () => {
+      newSocket.disconnect();
+    };
+  }, []);
+
+  useEffect(() => {
+    if (hasMounted) {
+      axios.post(`story/ending/${currentChar._id}`,
+        {
+          result: selectedChoice[outcome]
+        })
+        .then(() => {
+          if (penalty !== '') {
+            console.log('penalty: ', penalty);
+            if (outcome === 'failure') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] - 2
+              }));
+            } else if (outcome === 'success') {
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                [penalty]: previousStats[penalty] + 1 // this may need to be adjusted to avoid infinite scaling...
+              }));
+            }
+          }
+        })
+        .catch(err => console.error('axios AMEND to STORY', err));
+    } else {
+      setHasMounted(true);
+    }
+  }, [outcome]);
+
+
+
+  // // <-- useEffect to catch socket emits for killFeed
+  // useEffect(() => {
+  //   // <-- if socket connection exists...
+  //   if (socket) {
+  //     // <-- binds playerDied event listener to socket instance
+  //     // <-- and executes callback function defined outside useEffect
+  //     socket.on('playerDied', handlePlayerDied);
+  //     // <-- cleanup function to remove the event listener
+  //     return () => {
+  //       socket.off('playerDied', handlePlayerDied);
+  //     };
+  //   }
+  // }, [socket]);
 
 
   // conditional for character loss involving health or mood reaching 0
@@ -580,7 +720,10 @@ const GameView: React.FC = () => {
               }
             </ScrollableContainer>
           </EventText>
-          <img src={location.image_url}></img>
+          <div className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
+            <img src={location.image_url}></img>
+
+          </div>
           {
             damageToEnemy > 0
               ? <motion.div
@@ -624,7 +767,7 @@ const GameView: React.FC = () => {
           </Link>
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={() => { handleLocationChange(); }}>New Location</HudButton>
+              <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
                   <Modal.Title>Pick your next location</Modal.Title>
@@ -677,7 +820,9 @@ const GameView: React.FC = () => {
         <CharStatusContainer>
           <StatContainer>
             <h4>{currentChar.name}</h4>
-            <CharImageStyles src={currentChar.image_url} />
+            <div className='page' onDrop={handleDropItemOnCharacter} onDragOver={handleDragOver}>
+              <CharImageStyles src={currentChar.image_url} />
+            </div>
           </StatContainer>
           <StatContainer2>
             <div style={{ textDecoration: 'underline' }}>Status</div>
@@ -685,18 +830,22 @@ const GameView: React.FC = () => {
             <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
             <div>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
-            <InventoryStyle>
+            <InventoryStyle className='itemWidgets'>
               {
                 fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}>
-                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                  return <div key={i}
+                    className="itemWidget"
+                    draggable
+
+                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } } }>
+                    <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
             </InventoryStyle>
@@ -706,19 +855,31 @@ const GameView: React.FC = () => {
           <HudButton onClick={() => {
             hit.play();
             // <-- handleEnemy func ??
-            resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength);
+            resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
+            setTemporaryMood(0);
+            setTemporaryEndurance(0);
+            setTemporaryStrength(0);
           }}>Engage</HudButton>
           <HudButton onClick={() => {
             dodge.play();
-            resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance);
+            resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
+            setTemporaryMood(0);
+            setTemporaryEndurance(0);
+            setTemporaryStrength(0);
           }}>Evade</HudButton>
           <HudButton onClick={() => {
             evacuate.play();
             resolveChoice(choices.evacuate, 'evacuate', 0);
+            setTemporaryMood(0);
+            setTemporaryEndurance(0);
+            setTemporaryStrength(0);
           }}>Evacuate</HudButton>
           <HudButton onClick={() => {
             wildCard.play();
-            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood, 'mood');
+            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
+            setTemporaryMood(0);
+            setTemporaryStrength(0);
+            setTemporaryStrength(0);
           }}>Wildcard</HudButton>
         </Content2>
       </Footer >
