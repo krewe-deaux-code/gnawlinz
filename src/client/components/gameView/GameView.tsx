@@ -729,7 +729,7 @@ const GameView: React.FC = () => {
               }
               {
                 outcome.length
-                  ? <p onClick={() => speak({text: selectedChoice[outcome]})} style={{ margin: '1rem' }}>{outcome}</p>
+                  ? <p onClick={() => speak({ text: selectedChoice[outcome] })} style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
@@ -784,7 +784,7 @@ const GameView: React.FC = () => {
               <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
           </Link>
-          <Link to="/gameView" style={{ textDecoration: 'none' }}>
+          <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <Modal centered show={showModal2} onHide={handleCloseModal2}>
@@ -821,7 +821,7 @@ const GameView: React.FC = () => {
                   <p>3: Write graffiti</p>
                 </div>
                 <p
-                  onClick={()=> speak({ text: modalText })}
+                  onClick={() => speak({ text: modalText })}
                 >{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
