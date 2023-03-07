@@ -4,7 +4,6 @@
   "description": "A choice based adventure game where the player wanders for 3 days through a zombie infested New Orleans.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon src/server/index.ts",
     "build": "tsc && webpack --watch",
     "dev-build": "tsc && webpack",
