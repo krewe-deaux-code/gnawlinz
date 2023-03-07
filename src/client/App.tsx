@@ -77,7 +77,7 @@ export interface Item {
   _id: number;
   name: string;
   image_url: string;
-  consumables: boolean;
+  consumable: boolean;
   modified_stat0: string;
   modified_stat1: string;
   modifier0: number;

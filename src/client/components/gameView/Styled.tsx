@@ -155,13 +155,19 @@ export const StatIconContainer = styled.div`
 export const IconImg = styled.img`
   cursor: pointer;
   padding: auto;
-  width: 2em;
-  height: 2em;
+  width: auto;
+  height: auto;
+  max-width: 2em;
+  max-height: 2em;
   margin-left: auto;
   margin-right: auto;
 `;
 export const StatBonusColor = styled.div`
 color: #2e8351;
+`;
+
+export const TempStatBonusColor = styled.div`
+color: #9a8127;
 `;
 
 export const CharStatusContainer = styled.div`
