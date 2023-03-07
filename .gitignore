@@ -17,9 +17,3 @@ node_modules/
 dist
 
 gnawlinz-key.pem
-
-
-## <-- Local Server URL -->
-SERVER_URL=http://localhost:8080
-## <-- Deployed Server URL -->
-# SERVER_URL=http://ec2-3-16-155-139.us-east-2.compute.amazonaws.com:8080
