@@ -2,7 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-import { useSpeechSynthesis } from 'react-speech-kit';
+// import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
@@ -438,8 +438,8 @@ const GameView: React.FC = () => {
 
     return (
       <div>
-        <div onClick={() => speak({ text: `health ${health} %` })}>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div onClick={() => speak({ text: `mood ${mood} %` })}>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -518,25 +518,8 @@ const GameView: React.FC = () => {
         console.error('Failed to update graffiti message', err);
       });
   };
-  // const handleClick = (event) =>{
-  //   // Get the text content of the clicked div
-  //   const text = event.target.textContent;
-  // };
-  const { speak } = useSpeechSynthesis();
-  // const [isSpeaking, setIsSpeaking] = useState(false);
 
-  // useEffect(() => {
-  //   if (isSpeaking) {
-  //     cancel();
-  //   }
-  //   speak({ text: location.name });
-  //   setIsSpeaking(true);
-
-  //   return () => {
-  //     cancel();
-  //     setIsSpeaking(false);
-  //   };
-  // }, [location.name]);
+  // const { speak } = useSpeechSynthesis();
 
 
   // conditional for character loss involving health or mood reaching 0
@@ -551,7 +534,7 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2 onClick={() => speak({ text: location.name })}>{location.name}</h2>
+        <h2 className='speech'>{location.name}</h2>
         <KillFeed>
           {
             killFeed.length
@@ -574,12 +557,12 @@ const GameView: React.FC = () => {
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p onClick={() => speak({ text: `${event.initial_text} What do you do? Select an option below` })}>{event.initial_text}</p>
+                  ? <p>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p onClick={() => speak({ text: selectedChoice.flavor_text })} style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
                     <p style={{ margin: '1rem' }}>What do you do?</p>
                     <p style={{ margin: '1rem' }}>Select an option below...</p>
@@ -587,12 +570,12 @@ const GameView: React.FC = () => {
               }
               {
                 outcome.length
-                  ? <p onClick={() => speak({ text: selectedChoice[outcome] })} style={{ margin: '1rem' }}>{outcome}</p>
+                  ? <p style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
                 tempText.length
-                  ? <p onClick={() => speak({ text: tempText })} style={{ margin: '1rem' }}>{tempText}</p>
+                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
             </ScrollableContainer>
@@ -669,15 +652,13 @@ const GameView: React.FC = () => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div onClick={() => speak({ text: 'You investigated the area, choose from the options below: 1: Look for items, 2: Look for graffiti, 3: Write graffiti' })}>
+                <div>
                   Choose from the options below:
                   <p>1: Look for items</p>
                   <p>2: Look for graffiti</p>
                   <p>3: Write graffiti</p>
                 </div>
-                <p
-                  onClick={() => speak({ text: modalText })}
-                >{modalText}</p>
+                <p>{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
@@ -702,7 +683,7 @@ const GameView: React.FC = () => {
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
-            <div onClick={() => speak({ text: `health ${currentChar.health} , mood ${currentChar.mood} plus ${bonusMood}, strength ${currentChar.strength} plus ${bonusStrength}, endurance ${currentChar.endurance} plus ${bonusEndurance}` })} >
+            <div>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor></StatIconContainer>
@@ -715,7 +696,7 @@ const GameView: React.FC = () => {
               {
                 fetchedInventory.map((item: Item, i) => {
                   return <div key={i}>
-                    <IconContainer onClick={() => speak({ text: item.name })}>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
             </InventoryStyle>
