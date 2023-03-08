@@ -3,8 +3,6 @@ import React from 'react'; // { useEffect, useContext }
 import Nav from '../nav/NavBar';
 import { TitleContainer, Main, Footer, TitleLogoImg } from './Styled';
 
-//import GameView from '../gameView/GameView';
-//import axios from 'axios';
 
 const Title: React.FC = () => {
 
