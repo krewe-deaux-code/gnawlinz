@@ -275,23 +275,27 @@ const GameView = (props: GameViewProps) => {
           }
           if (fetchedInventory[i].modified_stat0 === 'health') {
 
-            setCurrentChar((previousStats) => ({
-              ...previousStats,
-              health: previousStats.health + fetchedInventory[i].modifier0
-            }))
-              .then(() => {
-                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
-              });
+            setCurrentChar((previousStats) => {
+              const inventoryUneaten = previousStats.inventory;
+              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
+              return {
+                ...previousStats,
+                health: previousStats.health + fetchedInventory[i].modifier0,
+                inventory: inventoryUneaten
+              };
+            });
           }
           if (fetchedInventory[i].modified_stat1 === 'health') {
             console.log('FetchedInventory hit the health pot');
-            setCurrentChar((previousStats) => ({
-              ...previousStats,
-              health: previousStats.health + fetchedInventory[i].modifier1
-            }))
-              .then(() => {
-                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
-              });
+            setCurrentChar((previousStats) => {
+              const inventoryUneaten = previousStats.inventory;
+              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
+              return {
+                ...previousStats,
+                health: previousStats.health + fetchedInventory[i].modifier1,
+                inventory: inventoryUneaten
+              };
+            });
           }
         })
         .then(() => {
@@ -306,7 +310,7 @@ const GameView = (props: GameViewProps) => {
   const fetchUndroppedItems = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
-        setCurrentChar(character.data);
+        //setCurrentChar(character.data);
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
@@ -326,7 +330,7 @@ const GameView = (props: GameViewProps) => {
   const fetchItems = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
-        setCurrentChar(character.data);
+        // setCurrentChar(character.data);
         //console.log('EMPTY???', character.data.inventory);
         //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
         setFetchedInventory([]);
@@ -371,14 +375,14 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
-    e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
-    handleDropItemChar(itemArr[0], itemArr[1]);
+    if (itemArr[0] !== 1) {
+      handleDropItemChar(itemArr[0], itemArr[1]);
+    }
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
-    e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     const inventoryItem = fetchedInventory[itemArr[1]];
@@ -403,7 +407,9 @@ const GameView = (props: GameViewProps) => {
         setBonusMood(bonusMood - inventoryItem.modifier1);
       }
     }
-    handleDropItem(itemArr[0], itemArr[1]);
+    if (itemArr[0] !== 1) {
+      handleDropItem(itemArr[0], itemArr[1]);
+    }
   };
 
   const handleDragOver = (e: React.DragEvent) => {
@@ -843,8 +849,7 @@ const GameView = (props: GameViewProps) => {
                   return <div key={i}
                     className="itemWidget"
                     draggable
-
-                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } }}>
+                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); } }>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
