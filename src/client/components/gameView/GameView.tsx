@@ -277,23 +277,29 @@ const GameView: React.FC = () => {
           }
           if (fetchedInventory[i].modified_stat0 === 'health') {
 
-            setCurrentChar((previousStats) => ({
-              ...previousStats,
-              health: previousStats.health + fetchedInventory[i].modifier0
-            }))
-              .then(() => {
-                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
-              });
+            setCurrentChar((previousStats) => {
+              const inventoryUneaten = previousStats.inventory;
+              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
+              return {
+                ...previousStats,
+                health: previousStats.health + fetchedInventory[i].modifier0,
+                inventory: inventoryUneaten
+              };
+            });
+           
           }
           if (fetchedInventory[i].modified_stat1 === 'health') {
             console.log('FetchedInventory hit the health pot');
-            setCurrentChar((previousStats) => ({
-              ...previousStats,
-              health: previousStats.health + fetchedInventory[i].modifier1
-            }))
-              .then(() => {
-                axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar);
-              });
+            setCurrentChar((previousStats) => {
+              const inventoryUneaten = previousStats.inventory;
+              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
+              return {
+                ...previousStats,
+                health: previousStats.health + fetchedInventory[i].modifier1,
+                inventory: inventoryUneaten
+              };
+            });
+         
           }
         })
         .then(() => {
@@ -308,7 +314,7 @@ const GameView: React.FC = () => {
   const fetchUndroppedItems = () => {
     axios.get<Character>(`/character/${currentChar._id}`)
       .then((character: any) => {
-        setCurrentChar(character.data);
+        //setCurrentChar(character.data);
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
@@ -373,7 +379,6 @@ const GameView: React.FC = () => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
-    e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     if (itemArr[0] !== 1) {
@@ -382,7 +387,6 @@ const GameView: React.FC = () => {
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
-    e.preventDefault();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     const inventoryItem = fetchedInventory[itemArr[1]];
