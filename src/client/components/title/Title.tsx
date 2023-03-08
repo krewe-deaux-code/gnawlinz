@@ -1,7 +1,7 @@
 import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
-import { TitleContainer, Main, Footer } from './Styled';
+import { TitleContainer, Main, Footer, TitleLogoImg } from './Styled';
 
 //import GameView from '../gameView/GameView';
 //import axios from 'axios';
@@ -12,7 +12,7 @@ const Title: React.FC = () => {
     <TitleContainer>
       <Nav isActive={false} />
       <Main>
-        <h1>GNAWLINZ</h1>
+        <TitleLogoImg src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1678237232/gnawlinzIcons/GnawlinzFinalColor_i3fncp.png' />
         <img src='https://media.discordapp.net/attachments/1054143394194149408/1075618769109528656/TitleScreenV4.png' />
       </Main>
       <Footer>
