@@ -2,13 +2,12 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-// import { useSpeechSynthesis } from 'react-speech-kit';
 
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
 // import Investigate from './Investigate';
-import React, { useEffect, useContext, useState, useCallback } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
@@ -22,13 +21,13 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, EventData, ChoiceData, Enemy, Ally, Item, Character } from '../../App';
+import { UserContext, SettingsContext, EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../App';
 
 import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
-const GameView: React.FC = () => {
+const GameView = (props: GameViewProps) => {
 
   const {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
@@ -222,7 +221,6 @@ const GameView: React.FC = () => {
     }
     fetchEvent();
     setInvestigateDisabled(false);
-    // speak({ text: location.name });
   };
 
 
@@ -299,10 +297,10 @@ const GameView: React.FC = () => {
         .then(() => {
           fetchUndroppedItems();
           console.log('currentstrength', bonusStrength);
-        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+          //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
         })
         .catch(err => console.error('fetch after delete ERROR', err));
-    // needs then and catches for both axios... call fetchItems?
+      // needs then and catches for both axios... call fetchItems?
     }
   };
   const fetchUndroppedItems = () => {
@@ -312,12 +310,12 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({  data  }) =>
+            .then(({ data }) =>
 
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id))
 
             )
-          // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
             .catch(err => console.error('error fetching from ITEM router fetchedDroppedItem', err));
         });
       })
@@ -334,7 +332,7 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({  data  }) => {
+            .then(({ data }) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               // Handles nonconsumable stat bonuses when item is fetched.
@@ -510,7 +508,7 @@ const GameView: React.FC = () => {
     const mood: number = (currentChar.mood + bonusMood) * 10;
 
     return (
-      <div>
+      <div onClick={props.handleSpeak}>
         <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
         <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
@@ -665,7 +663,9 @@ const GameView: React.FC = () => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     handlePlayerDied();
-    return <Result />;
+    return <Result handleSpeak={function (e: any): void {
+      throw new Error('Function not implemented.');
+    } }/>;
   }
   console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
@@ -674,7 +674,7 @@ const GameView: React.FC = () => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2 className='speech'>{location.name}</h2>
+        <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <KillFeed>
           {
             killFeed.length
@@ -697,25 +697,25 @@ const GameView: React.FC = () => {
             <ScrollableContainer>
               {
                 Object.entries(event).length
-                  ? <p>{event.initial_text}</p>
+                  ? <p onClick={props.handleSpeak}>{event.initial_text}</p>
                   : <></>
               }
               {
                 Object.entries(selectedChoice).length
-                  ? <p style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
+                  ? <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>{selectedChoice.flavor_text}</p>
                   : <>
-                    <p style={{ margin: '1rem' }}>What do you do?</p>
-                    <p style={{ margin: '1rem' }}>Select an option below...</p>
+                    <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>What do you do?</p>
+                    <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>Select an option below...</p>
                   </>
               }
               {
                 outcome.length
-                  ? <p style={{ margin: '1rem' }}>{outcome}</p>
+                  ? <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>{outcome}</p>
                   : <></>
               }
               {
                 tempText.length
-                  ? <p style={{ margin: '1rem' }}>{tempText}</p>
+                  ? <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>{tempText}</p>
                   : <></>
               }
             </ScrollableContainer>
@@ -770,11 +770,11 @@ const GameView: React.FC = () => {
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <Modal centered show={showModal2} onHide={handleCloseModal2}>
                 <Modal.Header closeButton>
-                  <Modal.Title>Pick your next location</Modal.Title>
+                  <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
-                  <p>You have visited all locations, </p>
-                  <p>chose where to go next: </p>
+                <Modal.Body >
+                  <p onClick={props.handleSpeak}>You have visited all locations, </p>
+                  <p onClick={props.handleSpeak}>choose where to go next: </p>
                   <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
                   <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
                   <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
@@ -795,13 +795,13 @@ const GameView: React.FC = () => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div>
+                <div onClick={props.handleSpeak}>
                   Choose from the options below:
                   <p>1: Look for items</p>
                   <p>2: Look for graffiti</p>
                   <p>3: Write graffiti</p>
+                  <p>{modalText}</p>
                 </div>
-                <p>{modalText}</p>
               </Modal.Body>
               <Modal.Footer>
                 <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
@@ -819,16 +819,16 @@ const GameView: React.FC = () => {
         </Content1>
         <CharStatusContainer>
           <StatContainer>
-            <h4>{currentChar.name}</h4>
+            <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
             <div className='page' onDrop={handleDropItemOnCharacter} onDragOver={handleDragOver}>
               <CharImageStyles src={currentChar.image_url} />
             </div>
           </StatContainer>
           <StatContainer2>
-            <div style={{ textDecoration: 'underline' }}>Status</div>
+            <div onClick={props.handleSpeak} style={{ textDecoration: 'underline' }}>Status</div>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div style={{ width: '20em' }}> Score: {currentChar.score}</div>
-            <div>
+            <div onClick={props.handleSpeak} style={{ width: '20em' }}> Score: {currentChar.score}</div>
+            <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
@@ -844,7 +844,7 @@ const GameView: React.FC = () => {
                     className="itemWidget"
                     draggable
 
-                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } } }>
+                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } }}>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }

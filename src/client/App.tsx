@@ -97,6 +97,11 @@ export interface Ally {
   departing: string;
 }
 
+export interface GameViewProps {
+  handleSpeak: (e) => void;
+}
+
+
 export const UserContext = createContext<any>('');
 export const SettingsContext = createContext<any>('');
 
@@ -129,7 +134,7 @@ const App = () => {
   const [investigateDisabled, setInvestigateDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
-
+  // const speechElements = useRef<HTMLElement[]>([]);
 
 
   const characterUpdate = () => {
@@ -138,51 +143,32 @@ const App = () => {
       .catch((err) => console.error('error update from axios front end', err));
   };
 
+  // text to speech functionality
+  const msg = new SpeechSynthesisUtterance();
+
+  const handleSpeak = (e) => {
+    msg.text = e.target.innerText;
+    window.speechSynthesis.speak(msg);
+  };
+
   useEffect(() => {
     characterUpdate();
   }, [currentChar]);
 
-  // Create a new SpeechSynthesis object
-  const synth = window.speechSynthesis;
-
-  // Function to create and play speech
-  const speak = (text) => {
-    // Create a new SpeechSynthesisUtterance object
-    const utterance = new SpeechSynthesisUtterance(text);
-
-    // Set the voice and other options for the speech
-    utterance.voice = synth.getVoices()[0];
-    utterance.rate = 1;
-    utterance.pitch = 1;
-
-    // Play the speech
-    synth.speak(utterance);
-  };
-
-  // Select all elements with the class name "speech"
-  const elements = document.querySelectorAll('.speech');
-
-  // Bind the elements to the speak() function
-  elements.forEach((element) => {
-    console.log('this is my console.log');
-    element.addEventListener('click', () => {
-      const text = element.textContent;
-      speak(text);
-    });
-  });
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
       <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
         <BrowserRouter>
           <GlobalStyle />
+
           <Suspense fallback={<div>LOADING...</div>}>
 
             <Routes>
-              <Route path='/' element={<Title />} />
+              <Route path='/' element={<Title handleSpeak={handleSpeak} />} />
               <Route path='menu' element={<Menu />} />
-              <Route path='game-view' element={<GameView />} />
-              <Route path='result' element={<Result />} />
+              <Route path='game-view' element={<GameView handleSpeak={handleSpeak}/>} />
+              <Route path='result' element={<Result handleSpeak={handleSpeak} />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
 

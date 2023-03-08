@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom';
 import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
-import { UserContext } from '../../App'; // <-- holds User object
+import { GameViewProps, UserContext } from '../../App'; // <-- holds User object
 
 
 import axios from 'axios';
 
-const Result: React.FC = () => {
+const Result = (props: GameViewProps) => {
 
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
 
@@ -54,7 +54,7 @@ const Result: React.FC = () => {
   return (
     <Container>
       <Nav isActive={true} />
-      <Story><h2>User Story</h2>
+      <Story><h2 onClick={props.handleSpeak}>User Story</h2>
         <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
             <div key={index} style={{ border: '1px solid black', margin: '10px' }}>
@@ -63,17 +63,17 @@ const Result: React.FC = () => {
           ))}
         </ScrollableContainer>
       </Story>
-      <End><h2>{resultText}</h2>
+      <End><h2 onClick={props.handleSpeak}>{resultText}</h2>
 
         <div>
           <img src={image} />
         </div>
         <CharacterStatContainer>
           <div>
-            <h4>{currentChar.name}</h4>
+            <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
             <img src={currentChar.image_url} />
           </div>
-          <StatContainer>
+          <StatContainer onClick={props.handleSpeak}>
             <div style={{ textDecoration: 'underline' }}>Status</div>
             <div>Health: {currentChar.health}</div>
             <div>Strength: {currentChar.strength}</div>
@@ -88,7 +88,7 @@ const Result: React.FC = () => {
             </Content1>
           </Link>
         </Content1>
-        <h4>LeaderBoard</h4>
+        <h4 onClick={props.handleSpeak}>LeaderBoard</h4>
         <LeaderBoard />
       </End>
     </Container>
