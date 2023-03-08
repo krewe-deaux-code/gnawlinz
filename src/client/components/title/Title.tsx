@@ -1,13 +1,10 @@
 import React from 'react'; // { useEffect, useContext }
-import { GameViewProps } from '../../App';
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
 import { TitleContainer, Main, Footer, TitleLogoImg } from './Styled';
 
-//import GameView from '../gameView/GameView';
-//import axios from 'axios';
 
-const Title = (props: GameViewProps) => {
+const Title: React.FC = () => {
 
   return (
     <TitleContainer>

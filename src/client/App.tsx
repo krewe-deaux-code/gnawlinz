@@ -165,7 +165,7 @@ const App = () => {
           <Suspense fallback={<div>LOADING...</div>}>
 
             <Routes>
-              <Route path='/' element={<Title handleSpeak={handleSpeak} />} />
+              <Route path='/' element={<Title />} />
               <Route path='menu' element={<Menu />} />
               <Route path='game-view' element={<GameView handleSpeak={handleSpeak}/>} />
               <Route path='result' element={<Result handleSpeak={handleSpeak} />} />
