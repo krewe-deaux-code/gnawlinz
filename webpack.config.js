@@ -20,7 +20,6 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/'
   },
-  watch: true,
   module: {
     rules: [
       // {

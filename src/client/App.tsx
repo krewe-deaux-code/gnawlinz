@@ -142,6 +142,34 @@ const App = () => {
     characterUpdate();
   }, [currentChar]);
 
+  // Create a new SpeechSynthesis object
+  const synth = window.speechSynthesis;
+
+  // Function to create and play speech
+  const speak = (text) => {
+    // Create a new SpeechSynthesisUtterance object
+    const utterance = new SpeechSynthesisUtterance(text);
+
+    // Set the voice and other options for the speech
+    utterance.voice = synth.getVoices()[0];
+    utterance.rate = 1;
+    utterance.pitch = 1;
+
+    // Play the speech
+    synth.speak(utterance);
+  };
+
+  // Select all elements with the class name "speech"
+  const elements = document.querySelectorAll('.speech');
+
+  // Bind the elements to the speak() function
+  elements.forEach((element) => {
+    console.log('this is my console.log');
+    element.addEventListener('click', () => {
+      const text = element.textContent;
+      speak(text);
+    });
+  });
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
