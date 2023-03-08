@@ -118,7 +118,7 @@ const GameView: React.FC = () => {
     axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
-        console.log('Enemy fetched, sending to state...');
+        //console.log('Enemy fetched, sending to state...');
         // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
       })
       .catch(err => console.error('FETCH ENEMY ERROR', err));
@@ -134,7 +134,7 @@ const GameView: React.FC = () => {
         setMetAllyArr(prevMetAllyArr => [...prevMetAllyArr, ally.data._id]);
         setCurrentAlly(ally.data);
         //}
-        console.log('ally fetched, sending to state...');
+        //console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
       .catch(err => console.error('FETCH ENEMY ERROR', err));
@@ -190,7 +190,7 @@ const GameView: React.FC = () => {
       setVisited(prevVisited => [...prevVisited, allLocations[0]]);
       visited.forEach((location, i) => {
         localStorage.setItem(i.toString(), location.name);
-        console.log(localStorage);
+        //console.log(localStorage);
       });
     } else if (bool === false) {
       setBool(true);
@@ -286,7 +286,7 @@ const GameView: React.FC = () => {
               });
           }
           if (fetchedInventory[i].modified_stat1 === 'health') {
-            console.log('FetchedInventory hit the health pot');
+            //console.log('FetchedInventory hit the health pot');
             setCurrentChar((previousStats) => ({
               ...previousStats,
               health: previousStats.health + fetchedInventory[i].modifier1
@@ -298,11 +298,11 @@ const GameView: React.FC = () => {
         })
         .then(() => {
           fetchUndroppedItems();
-          console.log('currentstrength', bonusStrength);
-        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
+          //console.log('currentstrength', bonusStrength);
+          //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
         })
         .catch(err => console.error('fetch after delete ERROR', err));
-    // needs then and catches for both axios... call fetchItems?
+      // needs then and catches for both axios... call fetchItems?
     }
   };
   const fetchUndroppedItems = () => {
@@ -312,12 +312,12 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({  data  }) =>
+            .then(({ data }) =>
 
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id))
 
             )
-          // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
+            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
             .catch(err => console.error('error fetching from ITEM router fetchedDroppedItem', err));
         });
       })
@@ -334,7 +334,7 @@ const GameView: React.FC = () => {
         setFetchedInventory([]);
         character.data.inventory.forEach(item => {
           axios.get(`/item/${item}`)
-            .then(({  data  }) => {
+            .then(({ data }) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
               // Handles nonconsumable stat bonuses when item is fetched.
@@ -421,18 +421,19 @@ const GameView: React.FC = () => {
 
 
   const resolveChoice = (choice_id: number, choiceType: string, stat: number, penalty = '') => {
+    console.log('choice ID: ', choice_id, 'choiceType: ', choiceType, 'stat: ', stat, 'penalty: ', penalty);
     setPenalty(penalty);
     setTempText('');
     setDamageToEnemy(0);
     setDamageToPlayer(0);
-    console.log('choice from click?', choice_id);
+    //console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
     if (choiceType === 'evacuate') {
       handleLocationChange();
       return;
     }
     // look up choice_id from action Button click
-    axios.get<ChoiceData>(`/choice/selected/${choice_id}`)
+    axios.get<ChoiceData>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
       .then(choiceResponse => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
@@ -443,24 +444,30 @@ const GameView: React.FC = () => {
           if (isEnemy(currentEnemy) && currentEnemy.health > 0) { // <-- Enemy exists, enemy !dead
             setShowEnemy(true);
             console.log('ENEMY STATE', currentEnemy);
+            console.log('CURRENT CHAR', currentChar);
             const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
+            console.log('FIGHT RESULT', fightResult);
             // <-- player loses, adjust player health below
-            if (fightResult?.player || fightResult.player === 0) {
+            if (fightResult.player || fightResult.player === 0) {
+              //console.log('Middle of IF check when player is damaged.');
+              if (fightResult.player <= 0) {
+                setSelectedChoice({ failure: currentEnemy.defeat});
+                setOutcome(choiceOutcome);
+                console.log('AAAAAAAAAAAHHHHHHHHHHH!');
+              }
               setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
               setTempText(`The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`); // <-- check for ally??
-              if (currentChar.health <= 0) {
-                setOutcome(currentEnemy.defeat); // <-- ADD PLAYER DEATH TO STORY
-              }
-              return;
+              // return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
+              //console.log('Middle of IF check when player is damaged.');
               setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({ ...prevEnemy, health: fightResult.enemy })); // could display enemy health: fightResult.enemy
               setTempText(`You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`);
               return;
             }
-          } else if (isEnemy(currentEnemy) && currentEnemy.health < 0) { // <-- enemy exists, enemy dead
+          } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) { // <-- enemy exists, enemy dead
             setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
             setShowEnemy(false);
             // <-- give the player something...
@@ -481,7 +488,7 @@ const GameView: React.FC = () => {
             if (Object.entries(currentAlly).length) {
               setShowAlly(true);
               setTempText(currentAlly.greeting); // add to schema
-              console.log(currentAlly);
+              //console.log(currentAlly);
             }
           }
           // <-- evacuate WORKS already...
@@ -496,7 +503,7 @@ const GameView: React.FC = () => {
 
   // callback for PlayerDied event listener
   const appendToKillFeed = (death) => {
-    console.log('inside player died function');
+    //console.log('inside player died function');
     setKillFeed(prevKillFeed => [...prevKillFeed, death]);
   };
 
@@ -574,7 +581,7 @@ const GameView: React.FC = () => {
       graffiti_msg: inputValue
     })
       .then(() => {
-        console.log('Graffiti message updated');
+        //console.log('Graffiti message updated');
         setLocation(location => ({
           ...location,
           graffiti_msg: inputValue
@@ -609,7 +616,7 @@ const GameView: React.FC = () => {
     setBonusEndurance(0);
     setBonusStrength(0);
     setBonusMood(0);
-    console.log('this is the use effect');
+    // console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     return () => {
@@ -625,7 +632,7 @@ const GameView: React.FC = () => {
         })
         .then(() => {
           if (penalty !== '') {
-            console.log('penalty: ', penalty);
+            // console.log('penalty: ', penalty);
             if (outcome === 'failure') {
               setCurrentChar(previousStats => ({
                 ...previousStats,
@@ -664,10 +671,11 @@ const GameView: React.FC = () => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
+    console.log('selectedChoice: ', selectedChoice);
     handlePlayerDied();
     return <Result />;
   }
-  console.log('YOUR SCORE', currentChar.score);
+  // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
   return (
 
@@ -844,7 +852,7 @@ const GameView: React.FC = () => {
                     className="itemWidget"
                     draggable
 
-                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } } }>
+                    onDragStart={(e) => { if (item._id !== 1) { handleOnDragItem(e, item._id, i); } }}>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }

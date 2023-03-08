@@ -164,7 +164,7 @@ const App = () => {
 
   // Bind the elements to the speak() function
   elements.forEach((element) => {
-    console.log('this is my console.log');
+    // console.log('this is my console.log');
     element.addEventListener('click', () => {
       const text = element.textContent;
       speak(text);
