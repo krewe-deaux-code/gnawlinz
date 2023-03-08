@@ -771,7 +771,7 @@ const GameView: React.FC = () => {
               <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
           </Link>
-          <Link to="/gameView" style={{ textDecoration: 'none' }}>
+          <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <Modal centered show={showModal2} onHide={handleCloseModal2}>
