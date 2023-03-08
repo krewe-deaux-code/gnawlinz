@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const TitleContainer = styled.div`
   display: grid;
@@ -13,6 +14,19 @@ const TitleContainer = styled.div`
   transition: all 0.25s ease-in-out;
   color: white;
   background-color: black;
+`;
+
+const TitleLogoImg = styled(motion.img)`
+  width: auto;
+  height: auto;
+  max-width: 30rem;
+  max-height: 30rem;
+  margin: 0 auto;
+`;
+
+const TitleImg = styled(motion.img)`
+  width: auto;
+  height: auto;
 `;
 
 const NavBar = styled.nav`
@@ -30,6 +44,10 @@ const NavBar = styled.nav`
 `;
 
 const Main = styled.main`
+  display: grid;
+  grid-template-rows: auto auto auto auto;
+  align-items: center;
+  justify-content: center;
   background: black;
   color: white;
   grid-area: main;
@@ -56,5 +74,6 @@ const VolumeSlider = styled.input.attrs({ type: 'range' })`
 export {
   TitleContainer, NavBar, Main,
   Content1, Content2, Content3,
-  Footer, VolumeSlider
+  Footer, VolumeSlider, TitleLogoImg,
+  TitleImg
 };
