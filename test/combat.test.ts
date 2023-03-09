@@ -26,8 +26,9 @@ describe('#damageApplication', () => {
         .then((response) => {
           playerHealth += response.data.health;
         })
-        .catch((err => console.log('err in damage calc tests: ', err)));
-    });
+        .catch((err => console.log('err in damage calc tests line 29: ', err)));
+    })
+    .catch((err => console.log('err in damage calc tests line 31: ', err)));
   // playerHealth should be 4-9
   it('should provide a new health total to be saved in the DB', () => {
     expect(playerHealth).toBeLessThan(10);
