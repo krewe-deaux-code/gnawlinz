@@ -555,6 +555,15 @@ const GameView: React.FC = () => {
             .then((response: any) => {
               setModalText(`You searched for items and found ${response.data.name}`);
             })
+            .then(() => {
+              console.log('currentChar in Investigate', currentChar);
+              const currentCharInventory = currentChar.inventory;
+              currentCharInventory[currentCharInventory.indexOf(1)] = location.data.drop_item_slot;
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                inventory: currentCharInventory
+              }));
+            })
             .catch((err) => {
               console.error('Failed to get item id from item table', err);
             })
@@ -597,7 +606,7 @@ const GameView: React.FC = () => {
         console.error('Failed to update graffiti message', err);
       });
   };
-
+  
   useEffect(() => {
     if (socket) {
       socket.on('kill_feed', (death) => appendToKillFeed(death));
@@ -612,9 +621,7 @@ const GameView: React.FC = () => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-    setBonusEndurance(0);
-    setBonusStrength(0);
-    setBonusMood(0);
+   
     console.log('this is the use effect');
     fetchItems();
     getAllLocations();

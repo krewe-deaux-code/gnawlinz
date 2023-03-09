@@ -1,0 +1,101 @@
+import { describe, expectTypeOf, it, expect } from 'vitest';
+import '../src/server/index';
+import '../src/db/index';
+import '../src/db/schemas/item';
+import '../src/server/dbRoutes/item';
+import { getItem } from '../src/server/dbRoutes/item';
+// const { currentChar } = useContext(UserContext);
+
+
+describe('getItem', () => {
+  const req = {
+    params: {
+      _id: 2,
+      name: 'Banana',
+      image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744463/gnawlinzItems/184060007_oirkki.webp',
+      consumable: true,
+      modified_stat0: 'health',
+      modified_stat1: null,
+      modifier0: 2,
+      modifier1: null,
+      buy_price: 2,
+      sell_price: 1
+    }
+  };
+
+  const banana = {
+    _id: 2,
+    name: 'Banana',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744463/gnawlinzItems/184060007_oirkki.webp',
+    consumable: true,
+    modified_stat0: 'health',
+    modified_stat1: null,
+    modifier0: 2,
+    modifier1: null,
+    buy_price: 2,
+    sell_price: 1
+  };
+  const itemCheck = getItem(req)
+    .then(res => res);
+  it('should return item', () => {
+    expect(itemCheck as any).toEqual(Promise.resolve(banana));
+    expectTypeOf(itemCheck).toBeObject();
+  });
+});
+
+describe('getItem2', () => {
+  const req2 = {
+    params: {
+      _id: 3,
+      name: 'Lead Pipe',
+      image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744593/gnawlinzItems/Lead_Pipe_n8qx3x.webp',
+      consumable: false,
+      modified_stat0: 'strength',
+      modified_stat1: null,
+      modifier0: 3,
+      modifier1: null,
+      buy_price: 5,
+      sell_price: 2
+    }
+  };
+  const leadPipe = {
+    name: 'Lead Pipe',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676744593/gnawlinzItems/Lead_Pipe_n8qx3x.webp',
+    consumable: false,
+    modified_stat0: 'strength',
+    modified_stat1: null,
+    modifier0: 3,
+    modifier1: null,
+    buy_price: 5,
+    sell_price: 2
+  };
+
+  const itemCheck2 = getItem(req2)
+    .then(res => res);
+  it('should return item', () => {
+    expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe));
+    expectTypeOf(itemCheck2).toBeObject();
+  });
+});
+
+
+
+
+// test('my currentChar.inventory type', () => {
+//   expectTypeOf(currentChar).toBeFunction();
+//   expectTypeOf(currentChar).parameter(0).toMatchTypeOf<Character>();
+// });
+
+// export default suite;
+
+
+
+
+
+
+// test('my currentChar.inventory type', () => {
+//   expectTypeOf(currentChar).toBeFunction();
+//   expectTypeOf(currentChar).parameter(0).toMatchTypeOf<Character>();
+// });
+
+// export default suite;
