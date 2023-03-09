@@ -13,7 +13,7 @@ const TitleContainer = styled.div`
   /* grid-gap: 0.25rem; */
   transition: all 0.25s ease-in-out;
   color: white;
-  background-color: black;
+  background-color: #121212;
 `;
 
 const TitleLogoImg = styled(motion.img)`
@@ -48,7 +48,7 @@ const Main = styled.main`
   grid-template-rows: auto auto auto auto;
   align-items: center;
   justify-content: center;
-  background: black;
+  background: #121212;
   color: white;
   grid-area: main;
   padding: 0.25rem;
@@ -62,7 +62,7 @@ const Content1 = styled.div`
 const Content2 = styled(Content1)``;
 const Content3 = styled(Content1)``;
 const Footer = styled.footer`
-  background: black;
+  background: #121212;
   grid-area: footer;
   padding: 0.25rem;
 `;
