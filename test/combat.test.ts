@@ -20,7 +20,7 @@ describe('#fightEnemy', () => {
 describe('#damageApplication', () => {
   // const damage = fightEnemy(7, 100, 4, 10); // returns ~8
   let playerHealth = 0;
-  axios.patch('character/update/1', { health: fightEnemy(7, 100, 4, 10).player })
+  axios.patch('/character/update/1', { health: fightEnemy(7, 100, 4, 10).player })
     .then(() => {
       axios.get('character/1')
         .then((response) => {
