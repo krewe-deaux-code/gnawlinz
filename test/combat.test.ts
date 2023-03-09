@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { describe, expect, it } from 'vitest';
-import { Enemy } from '../src/client/App';
+import { Enemy } from '../src/client/utility/interface';
 import { statCheck, fightEnemy, isEnemy } from '../src/client/utility/gameUtils';
 import handleLocationChange from '../src/client/components/gameView/GameView';
 

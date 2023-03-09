@@ -8,7 +8,8 @@ import Nav from '../nav/NavBar';
 //export const AuthContext = React.createContext(null);
 
 // export const UserContext = createContext<any>('');
-import { UserContext, Item, Character } from '../../App';
+import { UserContext } from '../../App';
+import { Item, Character } from '../../utility/interface';
 //import ItemSlots from './ItemSlots';
 
 
