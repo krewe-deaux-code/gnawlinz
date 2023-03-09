@@ -11,7 +11,7 @@ const Title: React.FC = () => {
       <Nav isActive={false} />
       <Main>
         <TitleLogoImg
-          src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1678385153/gnawlinzIcons/GnawlinzWorkFinalTouchup_dokckw.png'
+          src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1678394871/gnawlinzIcons/GnawlinzWorkFinalLogo_drtjiz.png'
           initial={{ filter: 'blur(5px)' }}
           animate={{ filter: 'blur(0px)' }}
           transition={{ duration: .75 }}
