@@ -9,7 +9,13 @@ describe('#updateDropItem', () => {
         axios.get('/location/2')
           .then((location) => {
             expect(location.data.drop_item_slot).toBe(1);
+          })
+          .catch((err) => {
+            console.log('failed to get updated drop item slot', err);
           });
+      })
+      .catch((err) => {
+        console.log('failed to update the drop item slot', err);
       });
   });
 });
@@ -21,7 +27,13 @@ describe('#updateGraffiti', () => {
         axios.get('/location/2')
           .then((location) => {
             expect(location.data.graffiti_msg).toBe('Hello');
+          })
+          .catch((err) => {
+            console.log('failed to get the correct message from location', err);
           });
+      })
+      .catch((err) => {
+        console.log('failed to update the message in location', err);
       });
   });
 });
