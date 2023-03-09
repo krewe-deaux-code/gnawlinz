@@ -457,7 +457,6 @@ const GameView = (props: GameViewProps) => {
               if (fightResult.player <= 0) {
                 setSelectedChoice({ failure: currentEnemy.defeat});
                 setOutcome(choiceOutcome);
-                console.log('AAAAAAAAAAAHHHHHHHHHHH!');
               }
               setDamageToPlayer(fightResult.damage);
               setCurrentChar((prevChar: any) => ({ ...prevChar, health: fightResult.player }));
