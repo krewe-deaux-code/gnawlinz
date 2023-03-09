@@ -1,4 +1,5 @@
 // import express from 'express';
+import axios from 'axios';
 import { Router } from 'express';
 import sequelize from 'sequelize';
 //import { TEXT } from 'sequelize';
@@ -24,6 +25,14 @@ import Story from '../../db/schemas/story';
 // ******************
 // *** DB Queries ***
 // ******************
+
+//example post request for new character
+// axios.post(`/story/begin/${newCharacterID}`, {backstory: 'string that is the backstory'})
+//   .then((response: any)=>{
+//     const storyArr = response.dataValues.char_choices;
+//     //you can do whatever you want with that array!
+//   })
+//   .catch(err => console.log('ERROR in create story for new character: ', err));
 
 storyRouter.get('/ending/:charID', (req, res) => {
   Story.findOne({ where: { character_id: req.params.charID } })
