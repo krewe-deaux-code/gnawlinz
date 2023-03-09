@@ -548,9 +548,9 @@ const GameView = (props: GameViewProps) => {
   };
 
   // search dropped item based on current location, update location database
-  const retrieveDropItem = () => {
-    const id = location._id;
-    axios.get(`/location/${location._id}`)
+  const retrieveDropItem = (number) => {
+
+    axios.get(`/location/${number}`)
       .then((location: any) => {
         if (location.data.drop_item_slot === 1) {
           setModalText('You search for items, but didn\'t find anything');
@@ -563,7 +563,7 @@ const GameView = (props: GameViewProps) => {
               console.error('Failed to get item id from item table', err);
             })
             .then(() => {
-              axios.patch(`/location/update/${id}`, {
+              axios.patch(`/location/update/${number}`, {
                 drop_item_slot: 1
               });
             })
@@ -817,7 +817,7 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
+                <Button onClick={() => { retrieveDropItem(location._id as number); }}>Choice 1</Button>
                 <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
                 <Button onClick={handleTextBoxClick}>Choice 3</Button>
                 {showButton && (
