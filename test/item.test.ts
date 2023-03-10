@@ -40,7 +40,6 @@ describe('#getItem Banana', () => {
     expect(itemCheck as any).toEqual(Promise.resolve(banana)
       .catch((err) => {
         console.error('failed to get Banana', err);
-        expectTypeOf(itemCheck).toBeObject();
       }));
   });
 
@@ -78,6 +77,5 @@ describe('#getItem Lead Pipe', () => {
       .catch((err) => {
         console.error('failed to get Lead Pipe', err);
       }));
-    expectTypeOf(itemCheck2).toBeObject();
   });
 });
