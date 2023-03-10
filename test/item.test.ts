@@ -1,8 +1,5 @@
-import { describe, expectTypeOf, it, expect } from 'vitest';
-import '../src/server/index';
+import { describe, it, expect } from 'vitest';
 import '../src/db/index';
-import '../src/db/schemas/item';
-import '../src/server/dbRoutes/item';
 import { getItem } from '../src/server/dbRoutes/item';
 // const { currentChar } = useContext(UserContext);
 
