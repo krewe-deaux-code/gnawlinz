@@ -9,10 +9,10 @@ describe('#fightEnemy', () => {
     expect(typeof fightEnemy(5, 100, 7, 10) as string).toBe('object');
   });
   it('returned object should have a player or enemy property', () => {
-    expect(fightEnemy(4, 100, 7, 10) as object).toHaveProperty('enemy');
+    expect(fightEnemy(4, 100, 8, 10) as object).toHaveProperty('enemy');
   });
   it('returned object should have a player or enemy property', () => {
-    expect(fightEnemy(7, 100, 4, 10) as object).toHaveProperty('player');
+    expect(fightEnemy(8, 100, 4, 10) as object).toHaveProperty('player');
   });
 });
 
@@ -35,7 +35,19 @@ describe('#damageApplication', () => {
   });
 });
 
-
+describe('#isEnemy', () => {
+  const input1 = {health: 1, strength: 10};
+  const input2 = {strength: 1};
+  it('returns ...', () => {
+    expect(isEnemy(input1) as boolean).toBe(true);
+  });
+  it('returns a string in all cases', () => {
+    expect(isEnemy(input2) as boolean).toBe(false);
+  });
+  it('returns a string in all cases', () => {
+    expect(typeof isEnemy(input2)).toBe('boolean');
+  });
+});
 
 //export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStrength: number, playerHealth: number) => {
 
