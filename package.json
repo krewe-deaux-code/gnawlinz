@@ -8,7 +8,8 @@
     "build": "tsc && webpack --watch",
     "dev-build": "tsc && webpack",
     "lint": "eslint . --ext .ts --ext .tsx",
-    "lint:fix": "eslint --fix . --ext .ts --ext .tsx"
+    "lint:fix": "eslint --fix . --ext .ts --ext .tsx",
+    "test": "vitest test/combat.test.ts test/serverLocation.test.ts"
   },
   "repository": {
     "type": "git",
