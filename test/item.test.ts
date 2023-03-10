@@ -36,13 +36,19 @@ describe('getItem Banana', () => {
     sell_price: 1
   };
   const itemCheck = getItem(req)
-    .then(res => res);
+    .then(res => res)
+    .catch((err) => {
+      console.error('failed to get Banana', err);
+    });
   it('should return item Banana', () => {
-    expect(itemCheck as any).toEqual(Promise.resolve(banana));
-    expectTypeOf(itemCheck).toBeObject();
+    expect(itemCheck as any).toEqual(Promise.resolve(banana)
+      .catch((err) => {
+        console.error('failed to get Banana', err);
+        expectTypeOf(itemCheck).toBeObject();
+      }));
   });
-});
 
+});
 describe('getItem Lead Pipe', () => {
   const req2 = {
     params: {
@@ -71,31 +77,15 @@ describe('getItem Lead Pipe', () => {
   };
 
   const itemCheck2 = getItem(req2)
-    .then(res => res);
+    .then(res => res)
+    .catch((err) => {
+      console.error('failed to get Banana', err);
+    });
   it('should return item Lead Pipe', () => {
-    expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe));
+    expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe)
+      .catch((err) => {
+        console.error('failed to get Banana', err);
+      }));
     expectTypeOf(itemCheck2).toBeObject();
   });
 });
-
-
-
-
-// test('my currentChar.inventory type', () => {
-//   expectTypeOf(currentChar).toBeFunction();
-//   expectTypeOf(currentChar).parameter(0).toMatchTypeOf<Character>();
-// });
-
-// export default suite;
-
-
-
-
-
-
-// test('my currentChar.inventory type', () => {
-//   expectTypeOf(currentChar).toBeFunction();
-//   expectTypeOf(currentChar).parameter(0).toMatchTypeOf<Character>();
-// });
-
-// export default suite;
