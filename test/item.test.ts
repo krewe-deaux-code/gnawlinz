@@ -7,7 +7,7 @@ import { getItem } from '../src/server/dbRoutes/item';
 // const { currentChar } = useContext(UserContext);
 
 
-describe('getItem Banana', () => {
+describe('#getItem Banana', () => {
   const req = {
     params: {
       _id: 2,
@@ -45,7 +45,7 @@ describe('getItem Banana', () => {
   });
 
 });
-describe('getItem Lead Pipe', () => {
+describe('#getItem Lead Pipe', () => {
   const req2 = {
     params: {
       _id: 3,
