@@ -51,7 +51,7 @@ describe('#isEnemy', () => {
     expect(isEnemy(input2) as boolean).toBe(false);
   });
   it('returns a string in all cases', () => {
-    expect(typeof isEnemy(input2)).toBe('object');
+    expect(typeof isEnemy(input2)).toBe('boolean');
   });
 });
 
