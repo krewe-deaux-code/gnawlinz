@@ -1,7 +1,7 @@
 export const itemSeed = [
   {
     name: 'Empty',
-    image_url: 'https://i.imgur.com/ItdPsA0.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678422331/gnawlinzItems/ItdPsA0_tsywid.png',
     consumable: true,
     modified_stat0: 'none',
     modified_stat1: null,
@@ -76,4 +76,26 @@ export const itemSeed = [
     buy_price: 2,
     sell_price: 0
   },
+  {
+    name: 'Beignet',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678424352/gnawlinzItems/beignet_tmrqy0.png',
+    consumable: true,
+    modified_stat0: 'health',
+    modified_stat1: 'mood',
+    modifier0: 2,
+    modifier1: 2,
+    buy_price: 2,
+    sell_price: 0
+  },
+  {
+    name: 'Bowl of Gumbo',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678425110/gnawlinzItems/gumbp_hakuum.psd',
+    consumable: true,
+    modified_stat0: 'health',
+    modified_stat1: 'strength',
+    modifier0: 3,
+    modifier1: 3,
+    buy_price: 3,
+    sell_price: 0
+  }
 ];

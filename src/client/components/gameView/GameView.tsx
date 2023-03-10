@@ -21,7 +21,8 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, SettingsContext, EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../App';
+import { UserContext, SettingsContext } from '../../App';
+import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../utility/interface';
 
 import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -533,6 +534,15 @@ const GameView = (props: GameViewProps) => {
             .then((response: any) => {
               setModalText(`You searched for items and found ${response.data.name}`);
             })
+            .then(() => {
+              console.log('currentChar in Investigate', currentChar);
+              const currentCharInventory = currentChar.inventory;
+              currentCharInventory[currentCharInventory.indexOf(1)] = location.data.drop_item_slot;
+              setCurrentChar(previousStats => ({
+                ...previousStats,
+                inventory: currentCharInventory
+              }));
+            })
             .catch((err) => {
               console.error('Failed to get item id from item table', err);
             })
@@ -575,7 +585,7 @@ const GameView = (props: GameViewProps) => {
         console.error('Failed to update graffiti message', err);
       });
   };
-
+  
   useEffect(() => {
     if (socket) {
       socket.on('kill_feed', (death) => appendToKillFeed(death));
@@ -590,10 +600,8 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-    setBonusEndurance(0);
-    setBonusStrength(0);
-    setBonusMood(0);
-    // console.log('this is the use effect');
+   
+    //console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     return () => {

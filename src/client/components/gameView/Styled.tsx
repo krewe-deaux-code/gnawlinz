@@ -4,7 +4,6 @@ export const Container = styled.div`
   display: grid;
   width: 100%;
   height: 100vh;
-  width: 100%;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
     "nav nav nav nav"
