@@ -100,6 +100,10 @@ export const RightSpacer = styled.div`
 export const CharacterContainer = styled.div`
   grid-area: character;
   background: grey;
+  display: grid;
+  grid-template-rows: .10fr .20fr .20fr;
+  grid-template-areas:
+    'hair face body';
 `;
 
 export const StatsContainer = styled.div`
@@ -110,4 +114,19 @@ export const StatsContainer = styled.div`
   width: 100%;
   align-content: space-evenly;
   background: grey;
+`;
+
+export const HairSlot = styled.div`
+  grid-area: hair;
+  z-index: 3;
+`;
+
+export const FaceSlot = styled.div`
+  grid-area: face;
+  z-index: 2;
+`;
+
+export const BodySlot = styled.div`
+  grid-area: body;
+  z-index: 1;
 `;

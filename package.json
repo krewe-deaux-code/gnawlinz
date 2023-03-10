@@ -60,6 +60,7 @@
     "@typescript-eslint/eslint-plugin": "^5.51.0",
     "@typescript-eslint/parser": "^5.52.0",
     "axios": "^1.2.3",
+    "cloudinary": "^1.35.0",
     "connect-ensure-login": "^0.1.1",
     "css-loader": "^6.7.3",
     "dayjs": "^1.11.7",
