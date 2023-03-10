@@ -152,9 +152,6 @@ const GameView = (props: GameViewProps) => {
         if (!Object.entries(event).length) {
           fetchEvent();
         }
-
-      }).then(() => {
-        console.log('getAllLocations func: visited', visited, 'all', allLocations, 'location', location);
       })
       .catch((err) => {
         console.error('Failed to retrieve all locations: ', err);
@@ -168,8 +165,6 @@ const GameView = (props: GameViewProps) => {
 
 
   const handleLocationChange = () => {
-    console.log('Start of handleLocationChange func: visited', visited, 'all', allLocations, 'location', location);
-
     setTemporaryMood(0);
     setTemporaryStrength(0);
     setTemporaryStrength(0);
@@ -196,7 +191,6 @@ const GameView = (props: GameViewProps) => {
 
     fetchEvent();
     setInvestigateDisabled(false);
-    console.log('END of handleLocationChange func: visited', visited, 'all', allLocations, 'location', location);
   };
 
   //  Item handling Functions drag and drop on location and character.
@@ -585,7 +579,7 @@ const GameView = (props: GameViewProps) => {
         console.error('Failed to update graffiti message', err);
       });
   };
-  
+
   useEffect(() => {
     if (socket) {
       socket.on('kill_feed', (death) => appendToKillFeed(death));
@@ -600,7 +594,7 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-   
+
     //console.log('this is the use effect');
     fetchItems();
     getAllLocations();
@@ -770,7 +764,6 @@ const GameView = (props: GameViewProps) => {
                 <Modal.Body >
                   <p onClick={props.handleSpeak}>You have visited all locations, </p>
                   <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
                   <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
                   <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
                   <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
