@@ -15,20 +15,13 @@ import Item from '../../db/schemas/item';
 // itemRouter.use(express.json());
 // itemRouter.use(express.urlencoded({ extended: true }));
 
-export const getItem = (req: { params: { _id: unknown; }; }) => {
-  const data = Item.findOne({
-    where: { _id: req.params._id }
-  });
-  return data;
-};
-
-
-
 // ******************
 // *** DB Queries ***
 // ******************
 itemRouter.get('/:_id', (req, res) => {
-  getItem(req)
+  Item.findOne({
+    where: { _id: req.params._id }
+  })
     .then(item =>
       res.status(200).send(item)
     )
