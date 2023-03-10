@@ -12,7 +12,7 @@ import { eventSeed } from './seeders/seedData/eventSeed';
 import { itemSeed } from './seeders/seedData/itemSeed';
 import { locationSeed } from './seeders/seedData/locationSeed';
 import { bossSeed } from './seeders/seedData/bossSeed';
-//import { storySeed } from './seeders/seedData/storySeed';
+import { storySeed } from './seeders/seedData/storySeed';
 // import { characterAllySeed } from './seeders/seedData/characterAllySeed';
 // import { locationEventSeed } from './seeders/seedData/locationEventSeed';
 
@@ -73,7 +73,7 @@ import eventSeeder from './seeders/eventSeeder';
 import itemSeeder from './seeders/itemSeeder';
 import locationSeeder from './seeders/locationSeeder';
 import bossSeeder from './seeders/bossSeeder';
-// import storySeeder from './seeders/storySeeder';
+import storySeeder from './seeders/storySeeder';
 // import characterAllySeeder from './seeders/characterAllySeeder';
 // import locationEventSeeder from './seeders/locationEventSeeder';
 
@@ -105,7 +105,7 @@ const modelSync = async (dropTables = false) => {
   await choiceSeeder(choiceSeed);
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
-  // await storySeeder(storySeed);
+  await storySeeder(storySeed);
   // await iconSeeder(iconSeed);
 };
 
