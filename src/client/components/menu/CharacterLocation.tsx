@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { StatName } from './Styled';
+import { CharacterLocationProps } from '../../utility/interface';
 
-interface CharacterLocationProps {
-  locationId: number;
-}
 
 const CharacterLocation: React.FC<CharacterLocationProps> = ({ locationId }) => {
   const [locationName, setLocationName] = useState('');

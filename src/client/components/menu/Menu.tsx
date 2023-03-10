@@ -41,7 +41,7 @@ const Menu: React.FC = () => {
   // };
 
   const handleDropItem = (itemID) => {
-    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.patch(`/location/update/${currentChar.location}`, { drop_item_slot: itemID });
     axios.delete('/character/inventory/delete', {
       data: {
         charID: currentChar._id,
