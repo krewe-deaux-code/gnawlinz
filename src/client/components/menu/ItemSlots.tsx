@@ -2,7 +2,7 @@
 // import { IconImg } from './Styled';
 // // import ItemDrop from './ItemDrop';
 // //import CharacterStats from './CharacterStats';
-// import { UserContext, Character } from '../../App';
+// import { UserContext, Character } from '../../utility/interface';
 // import axios from 'axios';
 
 // interface Item {

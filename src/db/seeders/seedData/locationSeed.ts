@@ -26,4 +26,22 @@ export const locationSeed = [
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
     graffiti_msg: 'Boom'
   },
+  {
+    name: 'Jazz Land',
+    image_url: '',
+    random_item_spot1: 'Behind the ticket booth',
+    random_item_spot2: 'In the weeds',
+    drop_item_slot: 5,
+    graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
+    graffiti_msg: ''
+  },
+  {
+    name: 'Man Chew',
+    image_url: '',
+    random_item_spot1: 'In the sink',
+    random_item_spot2: 'Behind the deep fryer',
+    drop_item_slot: 3,
+    graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
+    graffiti_msg: 'Winner, Winner, Chicken Dinner'
+  },
 ];
