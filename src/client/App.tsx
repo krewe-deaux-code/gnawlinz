@@ -54,6 +54,12 @@ const App = () => {
       .catch((err) => console.error('error update from axios front end', err));
   };
 
+  const locationUpdate = () => {
+    axios.patch<LocationData>(`/location/update/${location._id}`, location)
+      .then(() => console.log('location updated (@APP LEVEL)'))
+      .catch((err) => console.error('error update from axios front end', err));
+  };
+
   // text to speech functionality
   const msg = new SpeechSynthesisUtterance();
 
@@ -66,6 +72,9 @@ const App = () => {
     characterUpdate();
   }, [currentChar]);
 
+  useEffect(() => {
+    locationUpdate();
+  }, [location]);
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
