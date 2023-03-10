@@ -79,12 +79,12 @@ describe('getItem Lead Pipe', () => {
   const itemCheck2 = getItem(req2)
     .then(res => res)
     .catch((err) => {
-      console.error('failed to get Banana', err);
+      console.error('failed to get Lead Pipe', err);
     });
   it('should return item Lead Pipe', () => {
     expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe)
       .catch((err) => {
-        console.error('failed to get Banana', err);
+        console.error('failed to get Lead Pipe', err);
       }));
     expectTypeOf(itemCheck2).toBeObject();
   });
