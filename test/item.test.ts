@@ -7,7 +7,7 @@ import { getItem } from '../src/server/dbRoutes/item';
 // const { currentChar } = useContext(UserContext);
 
 
-describe('getItem', () => {
+describe('getItem Banana', () => {
   const req = {
     params: {
       _id: 2,
@@ -37,13 +37,13 @@ describe('getItem', () => {
   };
   const itemCheck = getItem(req)
     .then(res => res);
-  it('should return item', () => {
+  it('should return item Banana', () => {
     expect(itemCheck as any).toEqual(Promise.resolve(banana));
     expectTypeOf(itemCheck).toBeObject();
   });
 });
 
-describe('getItem2', () => {
+describe('getItem Lead Pipe', () => {
   const req2 = {
     params: {
       _id: 3,
@@ -72,7 +72,7 @@ describe('getItem2', () => {
 
   const itemCheck2 = getItem(req2)
     .then(res => res);
-  it('should return item', () => {
+  it('should return item Lead Pipe', () => {
     expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe));
     expectTypeOf(itemCheck2).toBeObject();
   });
