@@ -35,11 +35,7 @@ describe('getItem Banana', () => {
     buy_price: 2,
     sell_price: 1
   };
-  const itemCheck = getItem(req)
-    .then(res => res)
-    .catch((err) => {
-      console.error('failed to get Banana', err);
-    });
+  const itemCheck = getItem(req);
   it('should return item Banana', () => {
     expect(itemCheck as any).toEqual(Promise.resolve(banana)
       .catch((err) => {
@@ -76,11 +72,7 @@ describe('getItem Lead Pipe', () => {
     sell_price: 2
   };
 
-  const itemCheck2 = getItem(req2)
-    .then(res => res)
-    .catch((err) => {
-      console.error('failed to get Lead Pipe', err);
-    });
+  const itemCheck2 = getItem(req2);
   it('should return item Lead Pipe', () => {
     expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe)
       .catch((err) => {
