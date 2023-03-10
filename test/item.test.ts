@@ -1,8 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import '../src/db/index';
+import '../src/server/index';
+import '../src/db/schemas/item';
+import { Sequelize } from 'sequelize';
 import { getItem } from '../src/server/dbRoutes/item';
 // const { currentChar } = useContext(UserContext);
-
+import axios from 'axios';
 
 describe('#getItem Banana', () => {
   const req = {
@@ -32,10 +35,7 @@ describe('#getItem Banana', () => {
     buy_price: 2,
     sell_price: 1
   };
-  const itemCheck = getItem(req)
-    .catch((err) => {
-      console.error('failed to get Lead Pipe', err);
-    });
+  const itemCheck = getItem(req);
   it('should return item Banana', () => {
     expect(itemCheck as any).toEqual(Promise.resolve(banana)
       .catch((err) => {
@@ -71,10 +71,7 @@ describe('#getItem Lead Pipe', () => {
     sell_price: 2
   };
 
-  const itemCheck2 = getItem(req2)
-    .catch((err) => {
-      console.error('failed to get Lead Pipe', err);
-    });
+  const itemCheck2 = getItem(req2);
   it('should return item Lead Pipe', () => {
     expect(itemCheck2 as any).toEqual(Promise.resolve(leadPipe)
       .catch((err) => {

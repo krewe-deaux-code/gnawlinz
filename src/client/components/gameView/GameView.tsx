@@ -627,7 +627,7 @@ const GameView = (props: GameViewProps) => {
     const newSocket = io();
     setSocket(newSocket);
    
-    console.log('this is the use effect');
+    //console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     return () => {
