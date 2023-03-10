@@ -2,7 +2,7 @@ import React, { Suspense, lazy, createContext, useContext, useState, useEffect }
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
-
+import {Character, Enemy, Ally, EventData, ChoiceData, LocationData} from './utility/interface';
 // import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -11,95 +11,6 @@ const GameView = lazy(() => import('./components/gameView/GameView'));
 //const NavBar  = lazy(() => import('./components/nav/NavBar'));
 const Result = lazy(() => import('./components/result/Result'));
 
-export interface Character {
-  _id: number;
-  handle_id: number;
-  name: string;
-  image_url: string;
-  inventory: Array<number>;
-  health: number;
-  strength: number;
-  endurance: number;
-  mood: number;
-  location: number;
-  ally_count: number;
-  score: number;
-}
-
-export interface EventData {
-  _id: number;
-  initial_text: string;
-  choice0: number;
-  choice1: number;
-  choice2: number;
-  choice3: number;
-  enemy_effect: boolean;
-  ally_effect: boolean;
-  item_effect: boolean;
-}
-
-export interface ChoiceData {
-  _id: number;
-  flavor_text: string;
-  success: string;
-  failure: string;
-  alignment0: string;
-  alignment1: string;
-  alignment2: string;
-}
-
-export interface LocationData {
-  _id: number;
-  name: string;
-  image_url: string;
-  random_item_spot1: string;
-  random_item_spot2: string;
-  drop_item_slot: number;
-  graffiti: string;
-  graffiti_msg: string;
-}
-
-export interface Enemy {
-  _id: number;
-  name: string;
-  image_url: string;
-  weapon1: string;
-  strength: number;
-  health: number;
-  score: number;
-  initial_text: string;
-  victory: string;
-  defeat: string;
-  contact: string;
-}
-
-export interface Item {
-  _id: number;
-  name: string;
-  image_url: string;
-  consumable: boolean;
-  modified_stat0: string;
-  modified_stat1: string;
-  modifier0: number;
-  modifier1: number;
-  buy_price: number;
-  sell_price: number;
-}
-
-export interface Ally {
-  _id: number;
-  name: string;
-  image_url: string;
-  strength: number;
-  endurance: number;
-  alignment: string;
-  greeting: string;
-  departing: string;
-}
-
-export interface GameViewProps {
-  handleSpeak: (e) => void;
-}
 
 
 export const UserContext = createContext<any>('');

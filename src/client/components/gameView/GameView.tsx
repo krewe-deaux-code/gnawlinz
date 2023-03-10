@@ -21,7 +21,8 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, SettingsContext, EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../App';
+import { UserContext, SettingsContext } from '../../App';
+import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../utility/interface';
 
 import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
@@ -45,9 +46,8 @@ const GameView = (props: GameViewProps) => {
   const [modalText, setModalText] = useState('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
-  const [modalText2, setModalText2] = useState('');
-  const [bool, setBool] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
+  const [locationModalText, setLocationModalText] = useState('');
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -139,14 +139,13 @@ const GameView = (props: GameViewProps) => {
       .catch(err => console.error('FETCH ENEMY ERROR', err));
   };
 
-  const getAllLocations = () => {
+  const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
+    if (buttonClick > -1) {
+      currentChar.location = visited[buttonClick]._id;
+    }
     axios.get('/location/allLocations')
       .then(locations => {
-        // console.log('current location: ', currentChar.location);
-        // setCurrentChar(prevStats => ({
-        //   ...prevStats,
-        //   location: locations.data[0]._id
         setVisited(locations.data.filter((current) => current._id === currentChar.location));
         setAllLocations(locations.data.filter((current) => current._id !== currentChar.location));
         setLocation(locations.data.filter((current) => current._id === currentChar.location)[0]);
@@ -160,16 +159,10 @@ const GameView = (props: GameViewProps) => {
   };
 
   // Add a modal to handle location change after all locations have been used
-  const handleShowModal2 = () => setShowModal2(true);
+  const handleShowLocationModal = () => setShowLocationModal(true);
+  const handleCloseLocationModal = () => setShowLocationModal(false);
 
-  const handleCloseModal2 = () => setShowModal2(false);
-  const setModalLocation = (index: number) => {
-    setLocation(visited[index]);
-    setCurrentChar(prevStats => ({
-      ...prevStats,
-      location: setModalLocation
-    }));
-  };
+
 
   const handleLocationChange = () => {
     setTemporaryMood(0);
@@ -179,50 +172,26 @@ const GameView = (props: GameViewProps) => {
     setShowEnemy(false);
     setOutcome('');
     setSelectedChoice({} as ChoiceData);
-    if (allLocations.length) {
-      setAllLocations(prevLocations => prevLocations.slice(1));
-      setLocation(allLocations[0]);
-      setCurrentChar(prevStats => ({
-        ...prevStats,
-        location: allLocations[0]._id
-      }));
-      setVisited(prevVisited => [...prevVisited, allLocations[0]]);
-      visited.forEach((location, i) => {
-        localStorage.setItem(i.toString(), location.name);
-        //console.log(localStorage);
-      });
-    } else if (bool === false) {
-      setBool(true);
-      setModalText2('true');
-      handleShowModal2();
-    } else {
-      const randomNum = Math.floor(Math.random() * (visited.length));
-      if (location !== visited[randomNum]) {
-        setLocation(visited[randomNum]);
-        setCurrentChar(prevStats => ({
-          ...prevStats,
-          location: visited[randomNum]._id
-        }));
-      } else {
-        if (visited[randomNum + 1]) {
-          setLocation(visited[randomNum + 1]);
-          setCurrentChar(prevStats => ({
-            ...prevStats,
-            location: visited[randomNum + 1]._id
-          }));
-        } else {
-          setLocation(visited[randomNum - 1]);
-          setCurrentChar(prevStats => ({
-            ...prevStats,
-            location: visited[randomNum - 1]._id
-          }));
-        }
-      }
+    if (!allLocations.length) {
+      setLocationModalText('true');
+      handleShowLocationModal();
+      return;
     }
+    setAllLocations(prevLocations => prevLocations.slice(1));
+    setLocation(allLocations[0]);
+    setCurrentChar(prevStats => ({
+      ...prevStats,
+      location: allLocations[0]._id
+    }));
+
+    setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+    visited.forEach((location, i) => {
+      localStorage.setItem(i.toString(), location.name);
+    });
+
     fetchEvent();
     setInvestigateDisabled(false);
   };
-
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
@@ -662,10 +631,8 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-    setBonusEndurance(0);
-    setBonusStrength(0);
-    setBonusMood(0);
-    // console.log('this is the use effect');
+
+    //console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     return () => {
@@ -827,15 +794,17 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showModal2} onHide={handleCloseModal2}>
+              <Modal centered show={showLocationModal} onHide={handleCloseLocationModal}>
                 <Modal.Header closeButton>
                   <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                   <p onClick={props.handleSpeak}>You have visited all locations, </p>
                   <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
-                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
+                  <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
+                  <p onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')}</p>
                   <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
               </Modal>
