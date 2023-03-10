@@ -15,15 +15,11 @@ import Item from '../../db/schemas/item';
 // itemRouter.use(express.json());
 // itemRouter.use(express.urlencoded({ extended: true }));
 
-export const getItem = async (req: { params: { _id: unknown; }; }) => {
-  try {
-    const data = await Item.findOne({
-      where: { _id: req.params._id }
-    });
-    return data;
-  } catch (err) {
-    return console.error('Error in src/server/dbRoutes/item.ts function--getItem: ', err);
-  }
+export const getItem = (req: { params: { _id: unknown; }; }) => {
+  const data = Item.findOne({
+    where: { _id: req.params._id }
+  });
+  return data;
 };
 
 
