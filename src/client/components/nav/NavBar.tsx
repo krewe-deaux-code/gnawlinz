@@ -22,7 +22,7 @@ const Nav = ({ isActive }: LinkProps) => {
     console.log('HOWLER VOLUME', newVolume);
     console.log('VOLUME IN CONTEXT TITLE', volume);
   };
-  console.log('VOLUME @ TITLE', volume);
+  // console.log('VOLUME @ TITLE', volume);
 
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<string>('');

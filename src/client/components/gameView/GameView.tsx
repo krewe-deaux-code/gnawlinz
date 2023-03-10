@@ -671,7 +671,7 @@ const GameView = (props: GameViewProps) => {
     handlePlayerDied();
     return <Result handleSpeak={function (e: any): void {
       throw new Error('Function not implemented.');
-    } }/>;
+    }} />;
   }
   console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
@@ -737,9 +737,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [30, 0, -30, 0, 30, 0, -30],
                   y: -250,
-                  x: 40
+                  x: 80
                 }}
-                style={{ color: 'green' }}
+                style={{ color: 'green', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToEnemy}
@@ -753,9 +753,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [-30, 0, 30, 0, -30, 0, 30],
                   y: -250,
-                  x: -50
+                  x: -80
                 }}
-                style={{ color: 'red' }}
+                style={{ color: 'red', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToPlayer}
@@ -849,7 +849,7 @@ const GameView = (props: GameViewProps) => {
                   return <div key={i}
                     className="itemWidget"
                     draggable
-                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); } }>
+                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); }}>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }

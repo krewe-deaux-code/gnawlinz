@@ -78,3 +78,36 @@ export const StyledCarouselCaption = styled(Carousel.Caption)`
   // custom styles go here
 `;
 
+export const CCContainer = styled.div`
+  display: grid;
+  height: 80vh;
+  width: 100%;
+  grid-template-columns: .20fr .30fr .30fr .20fr;
+  grid-template-areas:
+    'Lspacer character stats Rspacer';
+`;
+
+export const LeftSpacer = styled.div`
+  grid-area: Lspacer;
+  background: grey;
+`;
+
+export const RightSpacer = styled.div`
+  grid-area: Rspacer;
+  background: grey;
+`;
+
+export const CharacterContainer = styled.div`
+  grid-area: character;
+  background: grey;
+`;
+
+export const StatsContainer = styled.div`
+  display: grid;
+  grid-area: stats;
+  grid-template-rows: auto auto auto auto auto auto;
+  height: 100%;
+  width: 100%;
+  align-content: space-evenly;
+  background: grey;
+`;
