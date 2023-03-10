@@ -23,7 +23,7 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext, SettingsContext, EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../App';
 
-import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
+import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
@@ -455,7 +455,7 @@ const GameView = (props: GameViewProps) => {
             if (fightResult.player || fightResult.player === 0) {
               //console.log('Middle of IF check when player is damaged.');
               if (fightResult.player <= 0) {
-                setSelectedChoice({ failure: currentEnemy.defeat});
+                setSelectedChoice({ failure: currentEnemy.defeat });
                 setOutcome(choiceOutcome);
               }
               setDamageToPlayer(fightResult.damage);
@@ -528,6 +528,9 @@ const GameView = (props: GameViewProps) => {
   };
 
 
+  // Investigate modal functions
+  // ************************************************************************************************************************************************************************************
+
   // functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -548,59 +551,102 @@ const GameView = (props: GameViewProps) => {
   };
 
   // search dropped item based on current location, update location database
-  const retrieveDropItem = (number) => {
+  // const retrieveDropItem = (number) => {
 
-    axios.get(`/location/${number}`)
-      .then((location: any) => {
-        if (location.data.drop_item_slot === 1) {
-          setModalText('You search for items, but didn\'t find anything');
-        } else {
-          axios.get(`item/${location.data.drop_item_slot}`)
-            .then((response: any) => {
-              setModalText(`You searched for items and found ${response.data.name}`);
-            })
-            .catch((err) => {
-              console.error('Failed to get item id from item table', err);
-            })
-            .then(() => {
-              axios.patch(`/location/update/${number}`, {
-                drop_item_slot: 1
-              });
-            })
-            .catch((err) => {
-              console.error('Failed to update the state of location', err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to get drop item from location', err);
-      });
+  //   axios.get(`/location/${number}`)
+  //     .then((location: any) => {
+  //       if (location.data.drop_item_slot === 1) {
+  //         setModalText('You search for items, but didn\'t find anything');
+  //       } else {
+  //         axios.get(`item/${location.data.drop_item_slot}`)
+  //           .then((response: any) => {
+  //             setModalText(`You searched for items and found ${response.data.name}`);
+  //           })
+  //           .catch((err) => {
+  //             console.error('Failed to get item id from item table', err);
+  //           })
+  //           .then(() => {
+  //             axios.patch(`/location/update/${number}`, {
+  //               drop_item_slot: 1
+  //             });
+  //             setCurrentChar(prevChar => ({
+  //               ...prevChar,
+  //               inventory: addItem(currentChar.inventory, location.data.drop_item_slot)
+  //             }));
+  //           })
+  //           .catch((err) => {
+  //             console.error('Failed to update the state of location', err);
+  //           });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to get drop item from location', err);
+  //     });
 
+  // };
+  const retrieveDropItem = () => {
+    if (location.drop_item_slot === 1) {
+      setModalText('You search for items, but didn\'t find anything');
+    } else {
+      axios.get(`item/${location.drop_item_slot}`)
+        .then((response: any) => {
+          setModalText(`You searched for items and found ${response.data.name}`);
+        })
+        .catch((err) => {
+          console.error('Failed to get item id from item table', err);
+        });
+      setCurrentChar(prevChar => ({
+        ...prevChar,
+        inventory: addItem(currentChar.inventory, location.drop_item_slot)
+      }));
+      setLocation(prevLocale => ({
+        ...prevLocale,
+        drop_item_slot: 1
+      }));
+      fetchItems();
+    }
   };
 
+
+  // const updateGraffitiMsg = () => {
+  //   axios.patch(`/location/update/${location._id}`, {
+  //     graffiti_msg: inputValue
+  //   })
+  //     .then(() => {
+  //       //console.log('Graffiti message updated');
+  //       setLocation(location => ({
+  //         ...location,
+  //         graffiti_msg: inputValue
+  //       }));
+  //       setInputValue('');
+  //       setVisited(prevVisited => prevVisited.map(item => {
+  //         if (item.name === location.name) {
+  //           return location;
+  //         }
+  //         return item;
+  //       }));
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to update graffiti message', err);
+  //     });
+  // };
 
   const updateGraffitiMsg = () => {
-    axios.patch(`/location/update/${location._id}`, {
+    setLocation(location => ({
+      ...location,
       graffiti_msg: inputValue
-    })
-      .then(() => {
-        //console.log('Graffiti message updated');
-        setLocation(location => ({
-          ...location,
-          graffiti_msg: inputValue
-        }));
-        setInputValue('');
-        setVisited(prevVisited => prevVisited.map(item => {
-          if (item.name === location.name) {
-            return location;
-          }
-          return item;
-        }));
-      })
-      .catch((err) => {
-        console.error('Failed to update graffiti message', err);
-      });
+    }));
+    setInputValue('');
+    setVisited(prevVisited => prevVisited.map(item => {
+      if (item.name === location.name) {
+        return location;
+      }
+      return item;
+    }));
   };
+
+  // *********************************************************************************************************************************************************************************************
+
 
   useEffect(() => {
     if (socket) {
@@ -678,7 +724,7 @@ const GameView = (props: GameViewProps) => {
     handlePlayerDied();
     return <Result handleSpeak={function (e: any): void {
       throw new Error('Function not implemented.');
-    } }/>;
+    }} />;
   }
   // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
@@ -817,7 +863,7 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => { retrieveDropItem(location._id as number); }}>Choice 1</Button>
+                <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
                 <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
                 <Button onClick={handleTextBoxClick}>Choice 3</Button>
                 {showButton && (
@@ -856,7 +902,7 @@ const GameView = (props: GameViewProps) => {
                   return <div key={i}
                     className="itemWidget"
                     draggable
-                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); } }>
+                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); }}>
                     <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
                 })
               }
@@ -900,3 +946,4 @@ const GameView = (props: GameViewProps) => {
 };
 
 export default GameView;
+

@@ -30,3 +30,13 @@ export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStr
 export const isEnemy = (obj: any): obj is Enemy => {
   return 'strength' in obj && 'health' in obj;
 };
+
+// function to add new item to inventory array
+export const addItem = (inventory: Array<number>, itemNum: number) => {
+  for (let i = 0; i <= inventory.length; i++) {
+    if (inventory[i] === 1) {
+      inventory.splice(i, 1, itemNum);
+      return inventory;
+    }
+  }
+};
