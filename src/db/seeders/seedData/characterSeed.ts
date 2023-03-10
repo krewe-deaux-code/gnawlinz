@@ -3,7 +3,7 @@ export const characterSeed = [
     handle_id: '420',
     name: 'Mr. Okra',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
-    inventory: [2, 3, 3, 3, 3, 1, 1, 1],
+    inventory: [2, 3, 1, 1, 1, 1, 1, 1],
     health: 10,
     strength: 5,
     endurance: 2,
