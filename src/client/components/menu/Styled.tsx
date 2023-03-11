@@ -65,16 +65,145 @@ export const Content = styled.div`
 export const StyledCarousel = styled(Carousel)`
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    position: relative;
     background-color: #ff0000 !important;
     z-index: 1 !important;
+  }
+  /* .carousel-control-next,
+  .carousel-control-prev {
+    position: relative;
+    display: contents;
+  } */
+`;
+
+export const HairCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: relative;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 80px;
+    height: 32px;
+  }
+`;
+
+export const FaceCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: relative;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 170px;
+    height: 32px;
+  }
+`;
+
+export const BodyCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: absolute;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 260px;
+    height: 32px;
   }
 `;
 
 export const StyledCarouselItem = styled(Carousel.Item)`
-  // custom styles go here
+  /* display: grid; */
 `;
 
 export const StyledCarouselCaption = styled(Carousel.Caption)`
   // custom styles go here
 `;
 
+// export const StyledCarouselControl = styled(Carousel.Control)`
+//   background-color: #ff0000;
+//   z-index: 1;
+// `;
+
+export const CCContainer = styled.div`
+  display: grid;
+  height: 80vh;
+  width: 100%;
+  grid-template-columns: .20fr .30fr .30fr .20fr;
+  grid-template-areas:
+    'Lspacer character stats Rspacer';
+`;
+
+export const LeftSpacer = styled.div`
+  grid-area: Lspacer;
+  background: grey;
+`;
+
+export const RightSpacer = styled.div`
+  grid-area: Rspacer;
+  background: grey;
+`;
+
+export const StatsContainer = styled.div`
+  display: grid;
+  grid-area: stats;
+  grid-template-rows: auto auto auto auto auto auto;
+  height: 100%;
+  width: 100%;
+  align-content: space-evenly;
+  background: #adadad;
+`;
+
+export const CharacterContainer = styled.div`
+  grid-area: character;
+  background: #5e5d5d;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 70px;
+  /* grid-template-rows: .10fr .20fr .20fr;
+  grid-template-areas:
+    'hair'; */
+`;
+
+export const AvatarContainer = styled.div`
+  display: flex;
+  position: relative;
+  height: 400px;
+  width: 300px;
+  justify-content: center;
+  align-items: flex-start;
+`;
+
+export const HairSlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
+  z-index: 10;
+`;
+
+export const FaceSlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
+  z-index: 5;
+`;
+
+export const BodySlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
+  z-index: 1;
+`;
