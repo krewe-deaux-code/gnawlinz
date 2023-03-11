@@ -48,7 +48,7 @@ const Result = (props: GameViewProps) => {
       uniqueEvents.push(line);
     }
   });
-
+  console.log(currentChar.health);
 
   console.log('result from story query:', story);
   return (
@@ -61,34 +61,38 @@ const Result = (props: GameViewProps) => {
               <p>{sentence}</p>
             </div>
           ))}
+          <Content1>
+            <Link to="/" style={{ textDecoration: 'none' }} >
+              <Content1>
+                <ResultButton>Play Again</ResultButton>
+              </Content1>
+            </Link>
+          </Content1>
         </ScrollableContainer>
       </Story>
       <End><h2 onClick={props.handleSpeak}>{resultText}</h2>
 
-        <div>
+        {/* <div >
           <img src={image} />
-        </div>
+        </div> */}
         <CharacterStatContainer>
-          <div>
-            <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
-            <img src={currentChar.image_url} />
+          <div >
+            <img src={image} />
           </div>
-          <StatContainer onClick={props.handleSpeak}>
+          <div>
+            {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
+            <img src={currentChar.image_url} />
+            <h4> Final Score: {currentChar.score} </h4>
+          </div>
+          {/* <StatContainer onClick={props.handleSpeak}>
             <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div>Health: {currentChar.health}</div>
-            <div>Strength: {currentChar.strength}</div>
-            <div>Endurance: {currentChar.endurance}</div>
-            <div>Mood: {currentChar.mood}</div>
-          </StatContainer>
+            <div>Health: {currentChar.health > -1 ? currentChar.health : 0}</div>
+            <div>Mood: {currentChar.mood > -1 ? currentChar.mood : 0}</div>
+            <div>Score: {currentChar.score}</div>
+          </StatContainer> */}
         </CharacterStatContainer>
-        <Content1>
-          <Link to="/" style={{ textDecoration: 'none' }} >
-            <Content1>
-              <ResultButton>Play Again</ResultButton>
-            </Content1>
-          </Link>
-        </Content1>
-        <h4 onClick={props.handleSpeak}>LeaderBoard</h4>
+
+        <h2 onClick={props.handleSpeak}>LeaderBoard</h2>
         <LeaderBoard />
       </End>
     </Container>
