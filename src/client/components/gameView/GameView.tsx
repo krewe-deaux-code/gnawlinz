@@ -17,7 +17,7 @@ import {
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer,
-  TinyStatIconImg, TempStatBonusColor
+  TinyStatIconImg, TempStatBonusColor, ModalBodyContainer, StyledModal
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -26,6 +26,7 @@ import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } fr
 
 import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
+import { ModalBody } from 'react-bootstrap';
 
 
 const GameView = (props: GameViewProps) => {
@@ -812,7 +813,8 @@ const GameView = (props: GameViewProps) => {
           </Link>
           <Content1>
             <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
-            <Modal
+
+            <StyledModal
               centered
               show={show}
               onHide={handleClose}
@@ -823,26 +825,20 @@ const GameView = (props: GameViewProps) => {
                 <Modal.Title>You investigated the area.</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <div onClick={props.handleSpeak}>
-                  Choose from the options below:
-                  <p>1: Look for items</p>
-                  <p>2: Look for graffiti</p>
-                  <p>3: Write graffiti</p>
-                  <p>{modalText}</p>
-                </div>
+                <ModalBodyContainer>
+                  <div onClick={props.handleSpeak}>Look for items</div>
+                  <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
+                  <div onClick={props.handleSpeak}>Look for graffiti</div>
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
+                  <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
+                  <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
+                </ModalBodyContainer>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
-                <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
-                <Button onClick={handleTextBoxClick}>Choice 3</Button>
-                {showButton && (
-                  <div>
-                    <input type="text" value={inputValue} onChange={handleInputValueChange} />
-                    <button onClick={() => { updateGraffitiMsg(); }}>Tag</button>
-                  </div>
-                )}
+                <p onClick={props.handleSpeak}>{modalText}</p>
               </Modal.Footer>
-            </Modal>
+            </StyledModal>
+
           </Content1>
         </Content1>
         <CharStatusContainer>
