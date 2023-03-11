@@ -88,9 +88,6 @@ export interface GameViewProps {
   handleSpeak: (e) => void;
 }
 
-export interface CharacterLocationProps {
-  locationId: number;
-}
 
 export interface Leader {
   name: string;
