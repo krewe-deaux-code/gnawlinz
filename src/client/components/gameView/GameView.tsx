@@ -21,9 +21,10 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, SettingsContext, EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../App';
+import { UserContext, SettingsContext } from '../../App';
+import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../utility/interface';
 
-import { statCheck, fightEnemy, isEnemy } from '../../utility/gameUtils';
+import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
 import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
 
 
@@ -45,9 +46,8 @@ const GameView = (props: GameViewProps) => {
   const [modalText, setModalText] = useState('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
-  const [modalText2, setModalText2] = useState('');
-  const [bool, setBool] = useState(false);
-  const [showModal2, setShowModal2] = useState(false);
+  const [locationModalText, setLocationModalText] = useState('');
+  const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
@@ -139,14 +139,13 @@ const GameView = (props: GameViewProps) => {
       .catch(err => console.error('FETCH ENEMY ERROR', err));
   };
 
-  const getAllLocations = () => {
+  const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
+    if (buttonClick > -1) {
+      currentChar.location = visited[buttonClick]._id;
+    }
     axios.get('/location/allLocations')
       .then(locations => {
-        // console.log('current location: ', currentChar.location);
-        // setCurrentChar(prevStats => ({
-        //   ...prevStats,
-        //   location: locations.data[0]._id
         setVisited(locations.data.filter((current) => current._id === currentChar.location));
         setAllLocations(locations.data.filter((current) => current._id !== currentChar.location));
         setLocation(locations.data.filter((current) => current._id === currentChar.location)[0]);
@@ -160,16 +159,10 @@ const GameView = (props: GameViewProps) => {
   };
 
   // Add a modal to handle location change after all locations have been used
-  const handleShowModal2 = () => setShowModal2(true);
+  const handleShowLocationModal = () => setShowLocationModal(true);
+  const handleCloseLocationModal = () => setShowLocationModal(false);
 
-  const handleCloseModal2 = () => setShowModal2(false);
-  const setModalLocation = (index: number) => {
-    setLocation(visited[index]);
-    setCurrentChar(prevStats => ({
-      ...prevStats,
-      location: setModalLocation
-    }));
-  };
+
 
   const handleLocationChange = () => {
     setTemporaryMood(0);
@@ -179,50 +172,26 @@ const GameView = (props: GameViewProps) => {
     setShowEnemy(false);
     setOutcome('');
     setSelectedChoice({} as ChoiceData);
-    if (allLocations.length) {
-      setAllLocations(prevLocations => prevLocations.slice(1));
-      setLocation(allLocations[0]);
-      setCurrentChar(prevStats => ({
-        ...prevStats,
-        location: allLocations[0]._id
-      }));
-      setVisited(prevVisited => [...prevVisited, allLocations[0]]);
-      visited.forEach((location, i) => {
-        localStorage.setItem(i.toString(), location.name);
-        //console.log(localStorage);
-      });
-    } else if (bool === false) {
-      setBool(true);
-      setModalText2('true');
-      handleShowModal2();
-    } else {
-      const randomNum = Math.floor(Math.random() * (visited.length));
-      if (location !== visited[randomNum]) {
-        setLocation(visited[randomNum]);
-        setCurrentChar(prevStats => ({
-          ...prevStats,
-          location: visited[randomNum]._id
-        }));
-      } else {
-        if (visited[randomNum + 1]) {
-          setLocation(visited[randomNum + 1]);
-          setCurrentChar(prevStats => ({
-            ...prevStats,
-            location: visited[randomNum + 1]._id
-          }));
-        } else {
-          setLocation(visited[randomNum - 1]);
-          setCurrentChar(prevStats => ({
-            ...prevStats,
-            location: visited[randomNum - 1]._id
-          }));
-        }
-      }
+    if (!allLocations.length) {
+      setLocationModalText('true');
+      handleShowLocationModal();
+      return;
     }
+    setAllLocations(prevLocations => prevLocations.slice(1));
+    setLocation(allLocations[0]);
+    setCurrentChar(prevStats => ({
+      ...prevStats,
+      location: allLocations[0]._id
+    }));
+
+    setVisited(prevVisited => [...prevVisited, allLocations[0]]);
+    visited.forEach((location, i) => {
+      localStorage.setItem(i.toString(), location.name);
+    });
+
     fetchEvent();
     setInvestigateDisabled(false);
   };
-
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
@@ -455,7 +424,7 @@ const GameView = (props: GameViewProps) => {
             if (fightResult.player || fightResult.player === 0) {
               //console.log('Middle of IF check when player is damaged.');
               if (fightResult.player <= 0) {
-                setSelectedChoice({ failure: currentEnemy.defeat});
+                setSelectedChoice({ failure: currentEnemy.defeat });
                 setOutcome(choiceOutcome);
               }
               setDamageToPlayer(fightResult.damage);
@@ -528,6 +497,9 @@ const GameView = (props: GameViewProps) => {
   };
 
 
+  // Investigate modal functions
+  // ************************************************************************************************************************************************************************************
+
   // functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -548,59 +520,102 @@ const GameView = (props: GameViewProps) => {
   };
 
   // search dropped item based on current location, update location database
-  const retrieveDropItem = (number) => {
+  // const retrieveDropItem = (number) => {
 
-    axios.get(`/location/${number}`)
-      .then((location: any) => {
-        if (location.data.drop_item_slot === 1) {
-          setModalText('You search for items, but didn\'t find anything');
-        } else {
-          axios.get(`item/${location.data.drop_item_slot}`)
-            .then((response: any) => {
-              setModalText(`You searched for items and found ${response.data.name}`);
-            })
-            .catch((err) => {
-              console.error('Failed to get item id from item table', err);
-            })
-            .then(() => {
-              axios.patch(`/location/update/${number}`, {
-                drop_item_slot: 1
-              });
-            })
-            .catch((err) => {
-              console.error('Failed to update the state of location', err);
-            });
-        }
-      })
-      .catch((err) => {
-        console.error('Failed to get drop item from location', err);
-      });
+  //   axios.get(`/location/${number}`)
+  //     .then((location: any) => {
+  //       if (location.data.drop_item_slot === 1) {
+  //         setModalText('You search for items, but didn\'t find anything');
+  //       } else {
+  //         axios.get(`item/${location.data.drop_item_slot}`)
+  //           .then((response: any) => {
+  //             setModalText(`You searched for items and found ${response.data.name}`);
+  //           })
+  //           .catch((err) => {
+  //             console.error('Failed to get item id from item table', err);
+  //           })
+  //           .then(() => {
+  //             axios.patch(`/location/update/${number}`, {
+  //               drop_item_slot: 1
+  //             });
+  //             setCurrentChar(prevChar => ({
+  //               ...prevChar,
+  //               inventory: addItem(currentChar.inventory, location.data.drop_item_slot)
+  //             }));
+  //           })
+  //           .catch((err) => {
+  //             console.error('Failed to update the state of location', err);
+  //           });
+  //       }
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to get drop item from location', err);
+  //     });
 
+  // };
+  const retrieveDropItem = () => {
+    if (location.drop_item_slot === 1) {
+      setModalText('You search for items, but didn\'t find anything');
+    } else {
+      axios.get(`item/${location.drop_item_slot}`)
+        .then((response: any) => {
+          setModalText(`You searched for items and found ${response.data.name}`);
+        })
+        .catch((err) => {
+          console.error('Failed to get item id from item table', err);
+        });
+      setCurrentChar(prevChar => ({
+        ...prevChar,
+        inventory: addItem(currentChar.inventory, location.drop_item_slot)
+      }));
+      setLocation(prevLocale => ({
+        ...prevLocale,
+        drop_item_slot: 1
+      }));
+      fetchItems();
+    }
   };
 
+
+  // const updateGraffitiMsg = () => {
+  //   axios.patch(`/location/update/${location._id}`, {
+  //     graffiti_msg: inputValue
+  //   })
+  //     .then(() => {
+  //       //console.log('Graffiti message updated');
+  //       setLocation(location => ({
+  //         ...location,
+  //         graffiti_msg: inputValue
+  //       }));
+  //       setInputValue('');
+  //       setVisited(prevVisited => prevVisited.map(item => {
+  //         if (item.name === location.name) {
+  //           return location;
+  //         }
+  //         return item;
+  //       }));
+  //     })
+  //     .catch((err) => {
+  //       console.error('Failed to update graffiti message', err);
+  //     });
+  // };
 
   const updateGraffitiMsg = () => {
-    axios.patch(`/location/update/${location._id}`, {
+    setLocation(location => ({
+      ...location,
       graffiti_msg: inputValue
-    })
-      .then(() => {
-        //console.log('Graffiti message updated');
-        setLocation(location => ({
-          ...location,
-          graffiti_msg: inputValue
-        }));
-        setInputValue('');
-        setVisited(prevVisited => prevVisited.map(item => {
-          if (item.name === location.name) {
-            return location;
-          }
-          return item;
-        }));
-      })
-      .catch((err) => {
-        console.error('Failed to update graffiti message', err);
-      });
+    }));
+    setInputValue('');
+    setVisited(prevVisited => prevVisited.map(item => {
+      if (item.name === location.name) {
+        return location;
+      }
+      return item;
+    }));
   };
+
+  // *********************************************************************************************************************************************************************************************
+
 
   useEffect(() => {
     if (socket) {
@@ -616,10 +631,8 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-    setBonusEndurance(0);
-    setBonusStrength(0);
-    setBonusMood(0);
-    // console.log('this is the use effect');
+
+    //console.log('this is the use effect');
     fetchItems();
     getAllLocations();
     return () => {
@@ -781,15 +794,17 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showModal2} onHide={handleCloseModal2}>
+              <Modal centered show={showLocationModal} onHide={handleCloseLocationModal}>
                 <Modal.Header closeButton>
                   <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                   <p onClick={props.handleSpeak}>You have visited all locations, </p>
                   <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { setModalLocation(0); handleCloseModal2(); }}>{localStorage.getItem('0')}</p>
-                  <p onClick={() => { setModalLocation(1); handleCloseModal2(); }}>{localStorage.getItem('1')}</p>
+                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
+                  <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
+                  <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
+                  <p onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')}</p>
                   <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
                 </Modal.Body>
               </Modal>
@@ -817,7 +832,7 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </Modal.Body>
               <Modal.Footer>
-                <Button onClick={() => { retrieveDropItem(location._id as number); }}>Choice 1</Button>
+                <Button onClick={() => { retrieveDropItem(); }}>Choice 1</Button>
                 <Button onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</Button>
                 <Button onClick={handleTextBoxClick}>Choice 3</Button>
                 {showButton && (
@@ -900,3 +915,4 @@ const GameView = (props: GameViewProps) => {
 };
 
 export default GameView;
+

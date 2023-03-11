@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
-import { GameViewProps, UserContext } from '../../App'; // <-- holds User object
-
+import { UserContext } from '../../App'; // <-- holds User object
+import { GameViewProps } from '../../utility/interface';
 
 import axios from 'axios';
 

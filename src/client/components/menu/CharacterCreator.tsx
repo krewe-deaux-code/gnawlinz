@@ -10,7 +10,8 @@ import {
   HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
 } from './Styled';
 
-import { UserContext, Character } from '../../App';
+import { UserContext } from '../../App';
+import { Character } from '../../utility/interface';
 
 // ******************
 // *** dummy data ***

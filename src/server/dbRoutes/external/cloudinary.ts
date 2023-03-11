@@ -13,8 +13,6 @@ cloudinary.v2.config({
 });
 
 cloudinaryRouter.get('/get', (req, res) => {
-  // pull string arg for folder from req obj
-  // pass that value dynamically as 1st arg to call
   const folder = req.query.folder;
   cloudinary.v2.api.resources({
     type: 'upload',

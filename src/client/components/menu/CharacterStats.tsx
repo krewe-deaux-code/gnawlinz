@@ -4,8 +4,8 @@ import axios from 'axios';
 import { StyledCarousel, IconImg, IconContainer, StatName } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
-import { UserContext, Character } from '../../App'; // <-- holds User object
-
+import { UserContext } from '../../App'; // <-- holds User object
+import { Character } from '../../utility/interface';
 //import ItemSlots from './ItemSlots';
 // import CharacterLocation from './CharacterLocation';
 

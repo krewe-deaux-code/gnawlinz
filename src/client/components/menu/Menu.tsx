@@ -1,21 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react'; //useContext
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content, IconImg, IconContainer } from './Styled';
 
 import axios from 'axios';
 
-import { UserContext, Item, Character } from '../../App';
 import CharacterCreator from './CharacterCreator';
 import CharacterStats from './CharacterStats';
 import Nav from '../nav/NavBar';
 
+import { UserContext } from '../../App';
+import { Item, Character } from '../../utility/interface';
+
 const Menu: React.FC = () => {
 
-  // const [userChars, setUserChars] = useState<Character[]>([]);
-  // const [currentChar, setCurrentChar] = useState<Character | null>(null);
-  // const [activeUser, setActiveUser] = useState({});
-  // const [stateSession, setStateSession] = useState('');
-  // const [avatar, setAvatar] = useState('');
   const {
     userChars, setUserChars, currentChar, setCurrentChar,
     activeUser, setActiveUser, stateSession, setStateSession,
