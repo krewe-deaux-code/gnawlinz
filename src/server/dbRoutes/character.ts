@@ -20,7 +20,6 @@ import User from '../../db/schemas/user';
 // *** DB Queries ***
 // ******************
 
-
 //create a new character entry in the DB
 characterRouter.post('/newCharacter', (req, res) => {
   Character.create(req.body.newCharacter)
