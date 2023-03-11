@@ -13,6 +13,22 @@ import {
 import { UserContext } from '../../App';
 import { Character } from '../../utility/interface';
 
+// <-- for reference building new Char Obj -->
+// interface Character {
+//   _id: number; <-- won't need
+//   handle_id: number; <-- come from session? activeUser?
+//   name: string;
+//   image_url: string;
+//   inventory: Array<number>; <-- empty []
+//   health: number;
+//   strength: number;
+//   endurance: number;
+//   mood: number;
+//   location: number; <-- 1 (random num between 1 - 3)
+//   ally_count: number; <-- 0
+//   score: number; <-- 0
+// }
+
 // ******************
 // *** dummy data ***
 // ******************
@@ -57,21 +73,26 @@ const CharacterCreator: React.FC = () => {
   const [index, setIndex] = useState(0);
 
   const [inputName, setInputName] = useState('');
-  const [hairImages, setHairImages] = useState([]);
-  const [faceImages, setFaceImages] = useState([]);
-  const [bodyImages, setBodyImages] = useState([]);
+  const [hairImageUrls, setHairImageUrls] = useState([]);
+  const [faceImageUrls, setFaceImageUrls] = useState([]);
+  const [bodyImageUrls, setBodyImageUrls] = useState([]);
   const [cloudFolders, setCloudFolders] = useState(['hair', 'face', 'body']);
+  const [chosenHair, setChosenHair] = useState<string>('');
+  const [chosenFace, setChosenFace] = useState<string>('');
+  const [chosenBody, setChosenBody] = useState<string>('');
 
-  const handleSelect = (selectedIndex: number, arr: string[]) => {
-    console.log('INSIDE HANDLE SELECT', selectedIndex);
-    // console.log('TEST', arr);
-    // check argument against length of passed in array
-    if (selectedIndex < 10) {
-      setIndex(selectedIndex);
-    } else {
-      setIndex(0);
-    }
-    // setCurrentChar(userChars[selectedIndex]);
+  const handleSelect = (i: number, images: string[], fn: any) => {
+    console.log('INSIDE HANDLE SELECT', i);
+    console.log('TEST', i, fn);
+    // if (type === 'hair') {
+    //   setChosenHair(images[i]);
+    // } else if (type === 'face') {
+    //   setChosenFace(images[i]);
+    // } else if (type === 'body') {
+    //   setChosenBody(images[i]);
+    // }
+    fn(images[i]);
+    console.log('CHOSEN', chosenHair, chosenFace, chosenBody);
   };
 
   const handleInputValueChange = (e) => {
@@ -79,16 +100,28 @@ const CharacterCreator: React.FC = () => {
     console.log('NAME CHANGE', inputName);
   };
 
+  const handleSaveImage = () => {
+    axios.post('/cloudinary/post', {
+      topImage: chosenHair,
+      middleImage: chosenFace,
+      bottomImage: chosenBody
+    })
+      .then(() => console.log('Success Posting from Client'))
+      .catch(err => console.error('Fail Posting from Client', err));
+  };
+
+  // <-- to save newChar in DB --> { newCharacter: {} }
+
   // *************
   // *** axios ***
   // *************
 
   const fetchImages = (folderName, i) => {
-    const fetchFuncs = [setHairImages, setFaceImages, setBodyImages];
+    const fetchFuncs = [setHairImageUrls, setFaceImageUrls, setBodyImageUrls];
     axios.get('/cloudinary/get', { params: { folder: folderName } })
       .then(response => {
         console.log('CLOUDINARY FROM SERVER', response); // <-- response.data[0].url
-        console.log('TEST', response.data.map(el => el.url));
+        // console.log('TEST', response.data.map(el => el.url));
         fetchFuncs[i](response.data.map(el => el.url));
       })
       .catch(err => {
@@ -97,11 +130,21 @@ const CharacterCreator: React.FC = () => {
   };
 
   // <-- commented out to preserve API hit limit -->
-  // useEffect(() => {
-  //   for (let i = 0; i < 3; i++) {
-  //     fetchImages(cloudFolders[i], i);
-  //   }
-  // }, []);
+  useEffect(() => {
+    for (let i = 0; i < 3; i++) {
+      fetchImages(cloudFolders[i], i);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (hairImageUrls.length) { setChosenHair(hairImageUrls[0]); }
+  }, [hairImageUrls]);
+  useEffect(() => {
+    if (faceImageUrls.length) { setChosenFace(faceImageUrls[0]); }
+  }, [faceImageUrls]);
+  useEffect(() => {
+    if (bodyImageUrls.length) { setChosenBody(bodyImageUrls[0]); }
+  }, [bodyImageUrls]);
 
   // console.log('STATE FETCH FROM CLOUDINARY', hairImages, faceImages, bodyImages);
 
@@ -110,28 +153,42 @@ const CharacterCreator: React.FC = () => {
       <LeftSpacer id='LSpacer'>Left Spacer</LeftSpacer>
       <CharacterContainer id='CharContainer'>
         <AvatarContainer id='Avatar Container'>
-          <BodyCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          <BodyCarousel
+            id='Body Carousel'
+            slide={false}
+            indicators={false}
+            onSelect={(i) => handleSelect(i, bodyImageUrls, setChosenBody)}
+            interval={null}>
             {
-              body.map((body: string, i: number) => {
+              bodyImageUrls.map((body: string, i: number) => {
                 return <StyledCarouselItem id='Body Item' key={i}>
                   <BodySlot src={body} />
                 </StyledCarouselItem>;
               })
             }
           </BodyCarousel>
-          <FaceCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          <FaceCarousel
+            id='Face Carousel'
+            slide={false}
+            indicators={false}
+            onSelect={(i) => handleSelect(i, faceImageUrls, setChosenFace)}
+            interval={null}>
             {
-              face.map((face: string, i: number) => {
-                console.log('IS THIS A URL???', face);
+              faceImageUrls.map((face: string, i: number) => {
                 return <StyledCarouselItem id='Face Item' key={i}>
                   <FaceSlot id='FaceSlot' src={face} />
                 </StyledCarouselItem>;
               })
             }
           </FaceCarousel>
-          <HairCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          <HairCarousel
+            id='Hair Carousel'
+            slide={false}
+            indicators={false}
+            onSelect={(i) => handleSelect(i, hairImageUrls, setChosenHair)}
+            interval={null}>
             {
-              hair.map((hair: string, i: number) => {
+              hairImageUrls.map((hair: string, i: number) => {
                 return <StyledCarouselItem id='Hair Item' key={i}>
                   <HairSlot id='HairSlot' src={hair} />
                 </StyledCarouselItem>;
@@ -167,8 +224,8 @@ const CharacterCreator: React.FC = () => {
             </StyledCarousel>
           </StyledCarousel>
         </StyledCarousel> */}
-
       </CharacterContainer>
+      <button onClick={handleSaveImage}>SAVE</button>
       <StatsContainer id='Stats'>
         <IconContainer>
           <StatName>{currentChar.name ? <p>Name: {currentChar.name}</p> : <></>}
