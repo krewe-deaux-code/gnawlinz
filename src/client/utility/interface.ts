@@ -95,4 +95,5 @@ export interface CharacterLocationProps {
 export interface Leader {
   name: string;
   score: number;
+  image_url: string;
 }

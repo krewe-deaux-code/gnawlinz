@@ -1,8 +1,6 @@
 import { createGlobalStyle } from 'styled-components';
 
 
-
-
 export const GlobalStyle = createGlobalStyle`
 
   HTML {
@@ -11,9 +9,10 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Edit Undo BRK', sans-serif !important;
-    height: auto;
-    background-color: #121212;
+    height: 100vh;
+    width: 100%;
+    background-color: black !important;
     background-size: cover;
+    box-sizing: border-box;
   }
 `;
-

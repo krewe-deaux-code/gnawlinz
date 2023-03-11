@@ -1,25 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react'; //useContext
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Body, InfoContainer, Tab, Content, IconImg, IconContainer } from './Styled';
-import CharacterStats from './CharacterStats';
-import axios from 'axios';
-import Nav from '../nav/NavBar';
-//import { Cookie } from "express-session";
-//export const AuthContext = React.createContext(null);
 
-// export const UserContext = createContext<any>('');
+import axios from 'axios';
+
+import CharacterCreator from './CharacterCreator';
+import CharacterStats from './CharacterStats';
+import Nav from '../nav/NavBar';
+
 import { UserContext } from '../../App';
 import { Item, Character } from '../../utility/interface';
-//import ItemSlots from './ItemSlots';
-
 
 const Menu: React.FC = () => {
 
-  // const [userChars, setUserChars] = useState<Character[]>([]);
-  // const [currentChar, setCurrentChar] = useState<Character | null>(null);
-  // const [activeUser, setActiveUser] = useState({});
-  // const [stateSession, setStateSession] = useState('');
-  // const [avatar, setAvatar] = useState('');
   const {
     userChars, setUserChars, currentChar, setCurrentChar,
     activeUser, setActiveUser, stateSession, setStateSession,
@@ -135,21 +128,7 @@ const Menu: React.FC = () => {
           </Content>
           <Content active={active === 1}>
             <h1>Character Creation:</h1>
-            <p>To be implemented in a future build</p>
-            {/* <CharacterCreation/> */}
-            {/* <span><b>Name:</b></span><span> Jean Valgene</span><br />
-            <span><b>Age:</b></span><span> 31</span><br />
-            <span><b>Background:</b><br /></span>
-            <span> Jono do my bidding...</span><br />
-            <span><b>Current Alignment:</b><br />
-            Evil/Old</span><br />
-            <span>
-              <b>Jean Valgene's Story:</b><br />
-            Jean Valgene decided to take a walk down to Chompitoulas Street<br />
-            Jean Valgene decided to look under a trash can<br />
-            Jean Valgene found a stray cat<br />
-            Jean Valgene decided to eat stray cat providing +1 temporary health and strength
-            </span> */}
+            <CharacterCreator />
           </Content>
           <Content active={active === 2}>
             <div>

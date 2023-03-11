@@ -15,6 +15,7 @@ const LeaderBoard: React.FC = () => {
   const getLeaders = () => {
     axios.get('/character/characters/getall')
       .then((results) => {
+        console.log(results.data);
         setLeaders(results.data);
       })
       .catch((err) => {
@@ -26,12 +27,12 @@ const LeaderBoard: React.FC = () => {
   }, []);
 
 
-
   console.log('LEADERS', leaders);
   return (
     <Table>
       <thead>
         <tr>
+          <Th>Avatar</Th>
           <Th>Character</Th>
           <Th>Score</Th>
         </tr>
@@ -39,6 +40,7 @@ const LeaderBoard: React.FC = () => {
       <tbody>
         {leaders.map((leader: Leader, i: number) => (
           <TableRow key={i}>
+            <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '100%', height: '%' }}/></Td>
             <Td>{leader.name}</Td>
             <Td>{leader.score}</Td>
           </TableRow>

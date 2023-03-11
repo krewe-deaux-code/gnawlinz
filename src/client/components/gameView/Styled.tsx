@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Modal from 'react-bootstrap/Modal';
 
 export const Container = styled.div`
   display: grid;
@@ -267,7 +268,7 @@ export const AllyImg = styled.img`
 `;
 
 export const EnemyImg = styled.img`
-  z-index: 2;
+  /* z-index: 2; */
   height: 100%;
   width: 100%;
   max-width: 500px;
@@ -303,4 +304,20 @@ export const KillFeed = styled.div`
     border-radius: 5px;
     background-size: 100%;
   }
+`;
+
+export const ModalBodyContainer = styled.div`
+  grid-template-columns: .5fr .5fr;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: 0.25rem;
+  align-content: space-evenly;
+  grid-template-columns: .5fr .5fr;
+`;
+
+export const StyledModal = styled(Modal)`
+  --bs-modal-bg: silver !important;
+
 `;
