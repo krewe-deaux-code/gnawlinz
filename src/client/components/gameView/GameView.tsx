@@ -425,7 +425,11 @@ const GameView = (props: GameViewProps) => {
             if (fightResult.player || fightResult.player === 0) {
               //console.log('Middle of IF check when player is damaged.');
               if (fightResult.player <= 0) {
-                setSelectedChoice({ failure: currentEnemy.defeat });
+                axios.post(`story/ending/${currentChar._id}`,
+                  {
+                    result: currentEnemy.defeat
+                  })
+                  .catch((err) => (console.error('Failed to add story on death: ', err)));
                 setOutcome(choiceOutcome);
               }
               setDamageToPlayer(fightResult.damage);
@@ -758,9 +762,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [30, 0, -30, 0, 30, 0, -30],
                   y: -250,
-                  x: 40
+                  x: 80
                 }}
-                style={{ color: 'green' }}
+                style={{ color: 'green', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToEnemy}
@@ -774,9 +778,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [-30, 0, 30, 0, -30, 0, 30],
                   y: -250,
-                  x: -50
+                  x: -80
                 }}
-                style={{ color: 'red' }}
+                style={{ color: 'red', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToPlayer}

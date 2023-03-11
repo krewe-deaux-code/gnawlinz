@@ -19,6 +19,19 @@ import User from '../../db/schemas/user';
 // ******************
 // *** DB Queries ***
 // ******************
+
+//create a new character entry in the DB
+characterRouter.post('/newCharacter', (req, res) => {
+  Character.create(req.body.newCharacter)
+    .then((newChar) => {
+      console.log(newChar);
+      res.status(201).send(newChar);
+    })
+    .catch((err) => {
+      console.error('Character Creation FAILURE: ', err);
+    });
+});
+
 // get a single character based on the character's id
 characterRouter.get('/:_id', (req, res) => {
   const { _id } = req.params;

@@ -4,6 +4,24 @@ import { Enemy } from '../src/client/utility/interface';
 import { statCheck, fightEnemy, isEnemy } from '../src/client/utility/gameUtils';
 import handleLocationChange from '../src/client/components/gameView/GameView';
 
+describe('#statCheck', () => {
+
+  const input = Math.floor(Math.random() * 10) + 1;
+
+  it('should always return "success" if the input is greater than 10', () => {
+    expect(statCheck(11) as string).toBe('success');
+  });
+
+  it('should always return "failure" if the input is less than 1', () => {
+    expect(statCheck(0) as string).toBe('failure');
+  });
+
+  it('should always return a string', () => {
+    expect(typeof statCheck(input)).toBe('string');
+  });
+
+});
+
 describe('#fightEnemy', () => {
   it('should return an object', () => {
     expect(typeof fightEnemy(5, 100, 7, 10) as string).toBe('object');
@@ -15,7 +33,6 @@ describe('#fightEnemy', () => {
     expect(fightEnemy(8, 100, 4, 10) as object).toHaveProperty('player');
   });
 });
-
 
 describe('#damageApplication', () => {
   // const damage = fightEnemy(7, 100, 4, 10); // returns ~8
@@ -36,8 +53,8 @@ describe('#damageApplication', () => {
 });
 
 describe('#isEnemy', () => {
-  const input1 = {health: 1, strength: 10};
-  const input2 = {strength: 1};
+  const input1 = { health: 1, strength: 10 };
+  const input2 = { strength: 1 };
   it('returns ...', () => {
     expect(isEnemy(input1) as boolean).toBe(true);
   });
@@ -51,11 +68,9 @@ describe('#isEnemy', () => {
 
 //export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStrength: number, playerHealth: number) => {
 
-
-
 describe('#isEnemy', () => {
-  const input1 = {health: 1, strength: 10};
-  const input2 = {strength: 1};
+  const input1 = { health: 1, strength: 10 };
+  const input2 = { strength: 1 };
   it('returns ...', () => {
     expect(isEnemy(input1) as boolean).toBe(true);
   });
