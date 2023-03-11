@@ -32,6 +32,7 @@ app.use(passport.initialize());
 app.use(passport.session()); // 18 - 26 ***
 
 // <-- express router -->
+import cloudinaryRouter from './dbRoutes/external/cloudinary';
 import Auth from './auth/auth';
 import allyRouter from './dbRoutes/ally';
 import charAllyRouter from './dbRoutes/character_ally';
@@ -47,6 +48,7 @@ import bossRouter from './dbRoutes/boss';
 //import iconRouter from './dbRoutes/icon';
 
 // <-- use routes -->
+app.use('/cloudinary', cloudinaryRouter);
 app.use('/auth', Auth);
 app.use('/ally', allyRouter);
 app.use('/charAlly', charAllyRouter);
