@@ -424,7 +424,11 @@ const GameView = (props: GameViewProps) => {
             if (fightResult.player || fightResult.player === 0) {
               //console.log('Middle of IF check when player is damaged.');
               if (fightResult.player <= 0) {
-                setSelectedChoice({ failure: currentEnemy.defeat });
+                axios.post(`story/ending/${currentChar._id}`,
+                  {
+                    result: currentEnemy.defeat
+                  })
+                  .catch((err) => (console.error('Failed to add story on death: ', err)));
                 setOutcome(choiceOutcome);
               }
               setDamageToPlayer(fightResult.damage);
