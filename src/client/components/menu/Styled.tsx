@@ -65,18 +65,77 @@ export const Content = styled.div`
 export const StyledCarousel = styled(Carousel)`
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    position: relative;
     background-color: #ff0000 !important;
     z-index: 1 !important;
+  }
+  /* .carousel-control-next,
+  .carousel-control-prev {
+    position: relative;
+    display: contents;
+  } */
+`;
+
+export const HairCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: relative;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 80px;
+    height: 32px;
+  }
+`;
+
+export const FaceCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: relative;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 170px;
+    height: 32px;
+  }
+`;
+
+export const BodyCarousel = styled(Carousel)`
+  position: absolute !important;
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: absolute;
+    background-color: #ff0000 !important;
+    z-index: 1 !important;
+  }
+  .carousel-control-next,
+  .carousel-control-prev {
+    position: absolute;
+    top: 260px;
+    height: 32px;
   }
 `;
 
 export const StyledCarouselItem = styled(Carousel.Item)`
-  // custom styles go here
+  /* display: grid; */
 `;
 
 export const StyledCarouselCaption = styled(Carousel.Caption)`
   // custom styles go here
 `;
+
+// export const StyledCarouselControl = styled(Carousel.Control)`
+//   background-color: #ff0000;
+//   z-index: 1;
+// `;
 
 export const CCContainer = styled.div`
   display: grid;
@@ -97,15 +156,6 @@ export const RightSpacer = styled.div`
   background: grey;
 `;
 
-export const CharacterContainer = styled.div`
-  grid-area: character;
-  background: grey;
-  display: grid;
-  grid-template-rows: .10fr .20fr .20fr;
-  grid-template-areas:
-    'hair face body';
-`;
-
 export const StatsContainer = styled.div`
   display: grid;
   grid-area: stats;
@@ -113,20 +163,41 @@ export const StatsContainer = styled.div`
   height: 100%;
   width: 100%;
   align-content: space-evenly;
-  background: grey;
+  background: #adadad;
 `;
 
-export const HairSlot = styled.div`
-  grid-area: hair;
-  z-index: 3;
+export const CharacterContainer = styled.div`
+  grid-area: character;
+  background: #5e5d5d;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* grid-template-rows: .10fr .20fr .20fr;
+  grid-template-areas:
+    'hair'; */
 `;
 
-export const FaceSlot = styled.div`
-  grid-area: face;
-  z-index: 2;
+export const AvatarContainer = styled.div`
+  padding-top: 50px;
 `;
 
-export const BodySlot = styled.div`
-  grid-area: body;
+export const HairSlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
+  z-index: 10;
+`;
+
+export const FaceSlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
+  z-index: 5;
+`;
+
+export const BodySlot = styled.img`
+  /* position: relative; */
+  place-self: start center;
+  /* grid-area: hair; */
   z-index: 1;
 `;

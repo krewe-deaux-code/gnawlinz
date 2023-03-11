@@ -1,20 +1,21 @@
 import React, { useState, useEffect, useContext } from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 
-// import cloudinary from 'cloudinary';
-// import { v2 as cloudinary } from 'cloudinary';
 import axios from 'axios';
 
 import {
   StyledCarousel, IconImg, IconContainer, StatName,
   CCContainer, LeftSpacer, RightSpacer, CharacterContainer,
-  StatsContainer, HairSlot, FaceSlot, BodySlot
+  StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem,
+  HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
 } from './Styled';
 
-import { UserContext, Character } from '../../App'; // <-- holds User object
+import { UserContext, Character } from '../../App';
 
-// const { CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_SECRET } = process.env; // <-- npm i --save-dev dotenv-webpack
-const cloudFolders = ['hair', 'face', 'body'];
+// ******************
+// *** dummy data ***
+// ******************
+
 const hair = [
   'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair1Pxl_idnvai.png',
   'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407932/hair/Hair2Pxl_k2c8ko.png',
@@ -48,31 +49,27 @@ const body = [
   'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407097/body/Body7Pxl_vqxar2.png'
 ];
 
-// const cloudinaryCore: any = new Cloudinary({
-//   cloud_name: 'de0mhjdfg',
-//   api_key: '742969255591168',
-//   api_secret: 'tYNQt5sfW6RbAeIJbSpX9ZCAqGI'
-// });
-
-// cloudinary.v2.config({
-//   cloud_name: 'de0mhjdfg',
-//   api_key: '742969255591168',
-//   api_secret: 'tYNQt5sfW6RbAeIJbSpX9ZCAqGI'
-// });
-
 const CharacterCreator: React.FC = () => {
 
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext);
 
-  const [ /*index*/, setIndex] = useState(0);
+  const [index, setIndex] = useState(0);
 
   const [inputName, setInputName] = useState('');
   const [hairImages, setHairImages] = useState([]);
   const [faceImages, setFaceImages] = useState([]);
   const [bodyImages, setBodyImages] = useState([]);
+  const [cloudFolders, setCloudFolders] = useState(['hair', 'face', 'body']);
 
-  const handleSelect = (selectedIndex: number) => {
-    setIndex(selectedIndex);
+  const handleSelect = (selectedIndex: number, arr: string[]) => {
+    console.log('INSIDE HANDLE SELECT', selectedIndex);
+    // console.log('TEST', arr);
+    // check argument against length of passed in array
+    if (selectedIndex < 10) {
+      setIndex(selectedIndex);
+    } else {
+      setIndex(0);
+    }
     // setCurrentChar(userChars[selectedIndex]);
   };
 
@@ -81,104 +78,95 @@ const CharacterCreator: React.FC = () => {
     console.log('NAME CHANGE', inputName);
   };
 
-  // <-- shift cloudinary over to server -->
-  // const fetchImages = () => {
-  //   axios.get('/cloudinary')
-  // };
+  // *************
+  // *** axios ***
+  // *************
 
+  const fetchImages = (folderName, i) => {
+    const fetchFuncs = [setHairImages, setFaceImages, setBodyImages];
+    axios.get('/cloudinary/get', { params: { folder: folderName } })
+      .then(response => {
+        console.log('CLOUDINARY FROM SERVER', response); // <-- response.data[0].url
+        console.log('TEST', response.data.map(el => el.url));
+        fetchFuncs[i](response.data.map(el => el.url));
+      })
+      .catch(err => {
+        console.error('ERROR CLOUD FROM SERVER', err);
+      });
+  };
+
+  // <-- commented out to preserve API hit limit -->
   // useEffect(() => {
-  //   const fetchFuncs = [setHairImages, setFaceImages, setBodyImages];
-  //   // for (let i = 0; i < fetchFuncs.length; i++) {
-  //   (function () {
-  //     const options = {
-  //       cloud_name: 'de0mhjdfg',
-  //       api_key: '742969255591168',
-  //       api_secret: 'tYNQt5sfW6RbAeIJbSpX9ZCAqGI'
-  //     };
-  //     console.log('FETCH FIRING', cloudinary);
-  //     cloudinary.api
-  //       .resources(
-  //         {
-  //           type: 'upload',
-  //           prefix: 'hair'
-  //         })
-  //       .then(result => console.log(result));
-  //     // cloudinary.v2.api.sub_folders('hair', options)
-  //     //   .then(response => {
-  //     //     console.log('CLOUDINARY', response);
-  //     //     // setHairImages(response.resources);
-  //     //   })
-  //     //   .catch(err => console.error('Fetching from Cloudinary Error', err));
-  //   })();
-  //   // }
+  //   for (let i = 0; i < 3; i++) {
+  //     fetchImages(cloudFolders[i], i);
+  //   }
   // }, []);
 
-  console.log('STATE FETCH FROM CLOUDINARY', hairImages, faceImages, bodyImages);
+  // console.log('STATE FETCH FROM CLOUDINARY', hairImages, faceImages, bodyImages);
 
   return (
     <CCContainer id='CCContainer'>
       <LeftSpacer id='LSpacer'>Left Spacer</LeftSpacer>
       <CharacterContainer id='CharContainer'>
-        {/* <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+        {/* <AvatarContainer id='Avatar Container'> */}
+        <BodyCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
           {
-            userChars.map((char: Character, i: number) => {
-              return <Carousel.Item key={i}>
-                <img src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1678401231/AvatarPxl1_jsnsse.png' />
+            body.map((body: string, i: number) => {
+              return <StyledCarouselItem id='Body Item' key={i}>
+                <BodySlot src={body} />
+              </StyledCarouselItem>;
+            })
+          }
+        </BodyCarousel>
+        <FaceCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          {
+            face.map((face: string, i: number) => {
+              console.log('IS THIS A URL???', face);
+              return <StyledCarouselItem id='Face Item' key={i}>
+                <FaceSlot id='FaceSlot' src={face} />
+              </StyledCarouselItem>;
+            })
+          }
+        </FaceCarousel>
+        <HairCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          {
+            hair.map((hair: string, i: number) => {
+              return <StyledCarouselItem id='Hair Item' key={i}>
+                <HairSlot id='HairSlot' src={hair} />
+              </StyledCarouselItem>;
+            })
+          }
+        </HairCarousel>
+        {/* </AvatarContainer> */}
+
+        {/* <StyledCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={(i) => handleSelect(i, hair)} interval={null}>
+          {
+            hair.map((hair: string, i: number) => {
+              return <Carousel.Item id='Hair Item' key={i}>
+                <HairSlot id='HairSlot' src={hair} />
               </Carousel.Item>;
             })
           }
-        </StyledCarousel> */}
-        <HairSlot>
-          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-            {
-              hair.map((hair: string, i: number) => {
-                return <Carousel.Item key={i}>
-                  <img src={hair} />
-                </Carousel.Item>;
-              })
-            }
-          </StyledCarousel>
-        </HairSlot>
-        <FaceSlot>
-          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+          <StyledCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
             {
               face.map((face: string, i: number) => {
-                return <Carousel.Item key={i}>
-                  <img src={face} />
+                return <Carousel.Item id='Face Item' key={i}>
+                  <FaceSlot id='FaceSlot' src={face} />
                 </Carousel.Item>;
               })
             }
+            <StyledCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+              {
+                body.map((body: string, i: number) => {
+                  return <Carousel.Item id='Body Item' key={i}>
+                    <BodySlot src={body} />
+                  </Carousel.Item>;
+                })
+              }
+            </StyledCarousel>
           </StyledCarousel>
-        </FaceSlot>
-        <BodySlot>
-          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-            {
-              body.map((body: string, i: number) => {
-                return <Carousel.Item key={i}>
-                  <img src={body} />
-                </Carousel.Item>;
-              })
-            }
-          </StyledCarousel>
-        </BodySlot>
-        {/* <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            userChars.map((char: Character, i: number) => {
-              return <Carousel.Item key={i}>
-                <img src={char.image_url} />
-              </Carousel.Item>;
-            })
-          }
-        </StyledCarousel>
-        <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            userChars.map((char: Character, i: number) => {
-              return <Carousel.Item key={i}>
-                <img src={char.image_url} />
-              </Carousel.Item>;
-            })
-          }
         </StyledCarousel> */}
+
       </CharacterContainer>
       <StatsContainer id='Stats'>
         <IconContainer>
@@ -192,7 +180,7 @@ const CharacterCreator: React.FC = () => {
         <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {currentChar.endurance}</StatName></IconContainer>
         <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" /><StatName>Mood: {currentChar.mood}</StatName></IconContainer>
       </StatsContainer>
-      <RightSpacer id='RSpacer'>{hairImages.length ? <>{hairImages[0]}</> : <></>}</RightSpacer>
+      <RightSpacer id='RSpacer'>Right Spacer</RightSpacer>
     </CCContainer>
   );
 };
