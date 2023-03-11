@@ -761,9 +761,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [30, 0, -30, 0, 30, 0, -30],
                   y: -250,
-                  x: 40
+                  x: 80
                 }}
-                style={{ color: 'green' }}
+                style={{ color: 'green', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToEnemy}
@@ -777,9 +777,9 @@ const GameView = (props: GameViewProps) => {
                   scale: [1, 1, 2, 3, 2, 1, 0],
                   rotate: [-30, 0, 30, 0, -30, 0, 30],
                   y: -250,
-                  x: -50
+                  x: -80
                 }}
-                style={{ color: 'red' }}
+                style={{ color: 'red', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToPlayer}
