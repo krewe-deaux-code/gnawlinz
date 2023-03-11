@@ -108,36 +108,36 @@ const CharacterCreator: React.FC = () => {
     <CCContainer id='CCContainer'>
       <LeftSpacer id='LSpacer'>Left Spacer</LeftSpacer>
       <CharacterContainer id='CharContainer'>
-        {/* <AvatarContainer id='Avatar Container'> */}
-        <BodyCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            body.map((body: string, i: number) => {
-              return <StyledCarouselItem id='Body Item' key={i}>
-                <BodySlot src={body} />
-              </StyledCarouselItem>;
-            })
-          }
-        </BodyCarousel>
-        <FaceCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            face.map((face: string, i: number) => {
-              console.log('IS THIS A URL???', face);
-              return <StyledCarouselItem id='Face Item' key={i}>
-                <FaceSlot id='FaceSlot' src={face} />
-              </StyledCarouselItem>;
-            })
-          }
-        </FaceCarousel>
-        <HairCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            hair.map((hair: string, i: number) => {
-              return <StyledCarouselItem id='Hair Item' key={i}>
-                <HairSlot id='HairSlot' src={hair} />
-              </StyledCarouselItem>;
-            })
-          }
-        </HairCarousel>
-        {/* </AvatarContainer> */}
+        <AvatarContainer id='Avatar Container'>
+          <BodyCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+            {
+              body.map((body: string, i: number) => {
+                return <StyledCarouselItem id='Body Item' key={i}>
+                  <BodySlot src={body} />
+                </StyledCarouselItem>;
+              })
+            }
+          </BodyCarousel>
+          <FaceCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+            {
+              face.map((face: string, i: number) => {
+                console.log('IS THIS A URL???', face);
+                return <StyledCarouselItem id='Face Item' key={i}>
+                  <FaceSlot id='FaceSlot' src={face} />
+                </StyledCarouselItem>;
+              })
+            }
+          </FaceCarousel>
+          <HairCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+            {
+              hair.map((hair: string, i: number) => {
+                return <StyledCarouselItem id='Hair Item' key={i}>
+                  <HairSlot id='HairSlot' src={hair} />
+                </StyledCarouselItem>;
+              })
+            }
+          </HairCarousel>
+        </AvatarContainer>
 
         {/* <StyledCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={(i) => handleSelect(i, hair)} interval={null}>
           {

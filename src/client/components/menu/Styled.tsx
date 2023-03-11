@@ -172,13 +172,19 @@ export const CharacterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  padding-top: 70px;
   /* grid-template-rows: .10fr .20fr .20fr;
   grid-template-areas:
     'hair'; */
 `;
 
 export const AvatarContainer = styled.div`
-  padding-top: 50px;
+  display: flex;
+  position: relative;
+  height: 400px;
+  width: 300px;
+  justify-content: center;
+  align-items: flex-start;
 `;
 
 export const HairSlot = styled.img`
