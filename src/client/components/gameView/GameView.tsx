@@ -690,6 +690,20 @@ const GameView = (props: GameViewProps) => {
   // }, [socket]);
 
 
+  localStorage.setItem('LOCATION_NAME', location.name);
+  const LOCATION_NAME = localStorage.getItem('LOCATION_NAME');
+  localStorage.setItem('LOCATION_IMAGE_URL', location.image_url);
+  const LOCATION_IMAGE_URL = localStorage.getItem('LOCATION_IMAGE_URL');
+  localStorage.setItem('LOCATION_GM', location.graffiti_message);
+  const LOCATION_GM = localStorage.getItem('LOCATION_GM');
+
+  localStorage.setItem('LOCATION_GM', location.graffiti_message);
+  const LOCATION_GM = localStorage.getItem('LOCATION_GM');
+
+
+
+
+
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     console.log('selectedChoice: ', selectedChoice);
@@ -705,7 +719,7 @@ const GameView = (props: GameViewProps) => {
     <Container>
       <Nav isActive={true} />
       <Main>
-        <h2 onClick={props.handleSpeak}>{location.name}</h2>
+        <h2 onClick={props.handleSpeak}>{LOCATION_NAME}</h2>
         <KillFeed>
           {
             killFeed.length
@@ -752,7 +766,7 @@ const GameView = (props: GameViewProps) => {
             </ScrollableContainer>
           </EventText>
           <div className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
-            <img src={location.image_url}></img>
+            <img src={LOCATION_IMAGE_URL}></img>
 
           </div>
           {
@@ -833,7 +847,7 @@ const GameView = (props: GameViewProps) => {
                   <div onClick={props.handleSpeak}>Look for items</div>
                   <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
                   <div onClick={props.handleSpeak}>Look for graffiti</div>
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${LOCATION_GM}"`)}>Choice 2</HudButton>
                   <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                   <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                 </ModalBodyContainer>
