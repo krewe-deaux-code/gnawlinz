@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';//
 
 import { Table, Th, TableRow, Td } from './Styled';
 
+import { Leader } from '../../utility/interface';
 // import { UserContext } from '../../App'; // <-- holds User object
 
 
 import axios from 'axios';
-interface Leader {
-  name: string;
-  score: number;
-  image_url: string;
-}
+
 
 const LeaderBoard: React.FC = () => {
 
