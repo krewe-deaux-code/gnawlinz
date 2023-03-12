@@ -68,6 +68,7 @@ const App = () => {
     if (sortedInventoryChar.inventory) {
       sortedInventoryChar.inventory.sort((a, b) => b - a);
     }
+    console.log('WHAT AM I', currentChar);
     axios.patch<Character>(`/character/update/${currentChar._id}`, sortedInventoryChar)
       .then(() => {
         console.log('character updated (@APP LEVEL)', currentChar);
@@ -76,6 +77,7 @@ const App = () => {
   };
 
   const locationUpdate = () => {
+    console.log('WHAT AM I', location);
     axios.patch<LocationData>(`/location/update/${location._id}`, location)
       .then(() => console.log('location updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
