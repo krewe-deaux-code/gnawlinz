@@ -172,7 +172,7 @@ export const CharacterContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding-top: 70px;
+  padding-top: 40px;
   /* grid-template-rows: .10fr .20fr .20fr;
   grid-template-areas:
     'hair'; */
