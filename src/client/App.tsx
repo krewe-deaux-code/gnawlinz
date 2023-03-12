@@ -2,7 +2,7 @@ import React, { Suspense, lazy, createContext, useContext, useState, useEffect }
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
-import {Character, Enemy, Ally, EventData, ChoiceData, LocationData} from './utility/interface';
+import { Character, Enemy, Ally, EventData, ChoiceData, LocationData } from './utility/interface';
 // import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -49,12 +49,14 @@ const App = () => {
 
 
   const characterUpdate = () => {
+    console.log('WHAT AM I', currentChar);
     axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
       .then(() => console.log('character updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
 
   const locationUpdate = () => {
+    console.log('WHAT AM I', location);
     axios.patch<LocationData>(`/location/update/${location._id}`, location)
       .then(() => console.log('location updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
@@ -87,7 +89,7 @@ const App = () => {
             <Routes>
               <Route path='/' element={<Title />} />
               <Route path='menu' element={<Menu />} />
-              <Route path='game-view' element={<GameView handleSpeak={handleSpeak}/>} />
+              <Route path='game-view' element={<GameView handleSpeak={handleSpeak} />} />
               <Route path='result' element={<Result handleSpeak={handleSpeak} />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
