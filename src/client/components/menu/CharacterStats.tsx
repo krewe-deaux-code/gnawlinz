@@ -11,7 +11,7 @@ import { Character } from '../../utility/interface';
 
 const CharacterStats: React.FC = () => {
 
-  const { userChars, setUserChars, currentChar, setCurrentChar, /* activeUser */ } = useContext(UserContext); // <-- NEED to get user chars below
+  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex] = useState(0);
@@ -33,7 +33,7 @@ const CharacterStats: React.FC = () => {
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
-  const fetchUserChars = (handle_id = '420') => {
+  const fetchUserChars = async() => {
     // handle_id = activeUser.google_id || '420';
     // console.log('here handle_id change', handle_id);
     // console.log('ACTIVE USER GOOGLE ID', activeUser.google_id);
@@ -43,14 +43,15 @@ const CharacterStats: React.FC = () => {
     //   console.log('here handle_id change', handle_id);
     // }
     // axios.get(`/character/user/${activeUser.google_id}`)
-    axios.get(`/character/user/${handle_id}`)
+    await axios.get(`/character/user/${activeUser.google_id}`)
       .then(({ data }) => {
-        // console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
+        console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
         setUserChars(data);
       })
       .catch((err) => {
         console.error('Front End side fetchUserChars from server', err);
       });
+    console.log('fetched Chars on State: ', userChars);
   };
 
   const getLocationById = (locationId) => {
