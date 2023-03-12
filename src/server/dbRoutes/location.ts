@@ -3,11 +3,6 @@ import { Router, Request, Response } from 'express';
 
 const locationRouter = Router();
 
-interface LocationUpdateRequest extends Request {
-  body: {
-    drop_item_slot: number;
-  };
-}
 
 
 // <-- Unsure if we need these -->
@@ -51,28 +46,6 @@ locationRouter.get('/allLocations', (req, res) => {
     .catch((err) => {
       console.error('Error from /location/allLocations: ', err);
     });
-});
-// below should be patch?
-locationRouter.put('/drop_item_slot/:_id', async (req: LocationUpdateRequest, res: Response) => {
-  try {
-    const { _id } = req.params;
-    const { drop_item_slot } = req.body;
-
-    // Find the location by _id and update the drop_item_slot
-    const [rowsUpdated, [updatedLocation]] = await Location.update(
-      { drop_item_slot: drop_item_slot },
-      { where: { _id: _id }, returning: true },
-    );
-
-    if (rowsUpdated > 0) {
-      res.status(200).send(updatedLocation);
-    } else {
-      res.status(404).send(`Location ${_id} not found`);
-    }
-  } catch (err) {
-    console.error('Error in locationRouter.put--src/server/dbRoutes/location.ts', err);
-    res.status(500).send('Server error');
-  }
 });
 
 //gets a single location by _id
