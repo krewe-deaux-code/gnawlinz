@@ -1,7 +1,7 @@
 import 'dotenv/config';
+import axios from 'axios';
 import { Router } from 'express';
 import cloudinary from 'cloudinary';
-
 const cloudinaryRouter = Router();
 
 const { CLOUD_NAME, CLOUDINARY_API_KEY, CLOUDINARY_SECRET } = process.env;
@@ -27,66 +27,40 @@ cloudinaryRouter.get('/get', (req, res) => {
     });
 });
 
-// <-- THIS is the most recent: https://cloudinary.com/documentation/image_upload_api_reference#sprite
 cloudinaryRouter.post('/post', (req, res) => {
-  const { topImage, middleImage, bottomImage } = req.body;
-  const w = 300;
-  const h = 400;
-  const f = 'png';
-  // const compositeUrl = cloudinary.v2.url(`l_${topImage},l_${middleImage},l_${bottomImage}`); // /w_${w},h_${h},f_${f}
-  cloudinary.v2.uploader.generate_sprite(topImage)
-    // .then(response => {
-    // return cloudinary.v2.uploader.upload(buffer, { folder: '/playerChars' })
-    //   .then(final => {
-    //     console.log('SUCCESS!!', final);
-    //   })
-    //   .catch(err => console.error('BUFFERED BUT FINAL FAIL', err));
-    // })
-    .then(response => console.log('COMPOSITE IMAGE SAVED, BUFFER??', response))
-    .catch(err => console.error('FAIL SAVING COMPOSITE IMAGE', err));
-  console.log('IMAGE POST FROM CLIENT', topImage, middleImage, bottomImage);
+
+  const { topImageUrl, middleImageUrl, bottomImageUrl, characterObj } = req.body;
+
+  const findPublicID = (imageUrl, folderName) => {
+    const startIndex = imageUrl.search(folderName);
+    return imageUrl.slice(startIndex, -4);
+  };
+
+  const hairID = findPublicID(topImageUrl, 'hair');
+  const faceID = findPublicID(middleImageUrl, 'face');
+  const bodyID = findPublicID(bottomImageUrl, 'body');
+  console.log('UNDEFINED?', characterObj);
+  console.log('HAIR?', topImageUrl);
+  cloudinary.v2.uploader.explicit(bodyID, {
+    type: 'upload',
+    eager: [
+      {
+        transformation: [
+          { overlay: { public_id: hairID } },
+          { overlay: { public_id: faceID } },
+          // { format: 'png' }
+        ]
+      }
+    ]
+  })
+    .then((response) => {
+      console.log('SUCCESS!!!!', response, response.eager[0].url); // response.eager[0].url
+      characterObj.image_url = response.eager[0].url;
+      axios.post('http://localhost:8080/character/newCharacter', { newCharacter: characterObj })
+        .then(response => console.log('new char in DB', response))
+        .catch(err => console.error('new char fail', err));
+    })
+    .catch(err => console.error('FAIL CLOUD UPLOAD', err));
 });
-
-// <-- THIS one seems to be the closest: In the Upload API Docs
-// cloudinaryRouter.post('/post', (req, res) => {
-//   const { topImage, middleImage, bottomImage } = req.body;
-//   const w = 300;
-//   const h = 400;
-//   const f = 'png';
-//   const compositeUrl = cloudinary.v2.url(`l_${topImage},l_${middleImage},l_${bottomImage}`); // /w_${w},h_${h},f_${f}
-//   cloudinary.v2.api.resource(compositeUrl, { resource_type: 'image' })
-//     .then(response => {
-//       const buffer = response.buffer;
-//       return cloudinary.v2.uploader.upload(buffer, { folder: '/playerChars' })
-//         .then(final => {
-//           console.log('SUCCESS!!', final);
-//         })
-//         .catch(err => console.error('BUFFERED BUT FINAL FAIL', err));
-//     })
-//     .then(response => console.log('COMPOSITE IMAGE SAVED, BUFFER??', response))
-//     .catch(err => console.error('FAIL SAVING COMPOSITE IMAGE', err));
-//   // console.log('IMAGE POST FROM CLIENT', topImage, middleImage, bottomImage);
-// });
-
-// <-- Using .image and transformation
-// cloudinaryRouter.post('/post', (req, res) => {
-//   const { topImage, middleImage, bottomImage } = req.body;
-//   const w = 300;
-//   const h = 400;
-//   const f = 'png';
-// const compositeImage = cloudinary.v2.image(
-//   topImage,
-//   {
-//     transformation: [
-//       { overlay: middleImage },
-//       { overlay: bottomImage },
-//       { format: f }
-//     ]
-//   }
-// );
-// cloudinary.v2.uploader.upload(compositeImage)
-//     .then(response => console.log('SUCCESS??', response))
-//     .catch(err => console.error('FAILURE!!', err));
-// });
 
 export default cloudinaryRouter;
