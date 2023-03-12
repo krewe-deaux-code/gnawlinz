@@ -63,6 +63,7 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleSaveChar = () => {
+    // userChars.push(newChar);
     console.log('INSIDE SAVE', newChar);
     axios.post('/cloudinary/post', {
       topImageUrl: chosenHair,
@@ -71,7 +72,9 @@ const CharacterCreator: React.FC = () => {
       characterObj: newChar
       // handle_id: activeUser.google_id
     })
-      .then(() => console.log('Success Posting from Client'))
+      .then(response => {
+        console.log('Success Posting from Client', response);
+      })
       .catch(err => console.error('Fail Posting from Client', err));
   };
 

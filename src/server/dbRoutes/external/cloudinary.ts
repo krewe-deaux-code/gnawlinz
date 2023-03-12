@@ -57,7 +57,10 @@ cloudinaryRouter.post('/post', (req, res) => {
       console.log('SUCCESS!!!!', response, response.eager[0].url); // response.eager[0].url
       characterObj.image_url = response.eager[0].url;
       axios.post('http://localhost:8080/character/newCharacter', { newCharacter: characterObj })
-        .then(response => console.log('new char in DB', response))
+        .then(response => {
+          console.log('new char in DB', response);
+          res.status(201).send(response.data);
+        })
         .catch(err => console.error('new char fail', err));
     })
     .catch(err => console.error('FAIL CLOUD UPLOAD', err));
