@@ -74,7 +74,7 @@ const CharacterStats: React.FC = () => {
     //console.log('INSIDE USE EFFECT', activeUser);
     fetchUserChars(); // activeUser.google_id as arg
     getCurrentChar(currentChar._id);
-  }, []);
+  }, [activeUser]);
 
   if (!currentChar) {
     return <div>Loading...</div>;
@@ -84,7 +84,7 @@ const CharacterStats: React.FC = () => {
   // console.log('CURRENT CHAR', currentChar);
   // console.log('ACTIVE USER', activeUser);
   // console.log('USER CHARS -->', userChars);
-
+  console.log('Current Acvite User: ', activeUser);
   return (
     <>
       <div>
