@@ -36,7 +36,7 @@ const GameView = (props: GameViewProps) => {
     location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
     setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
     setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
-    metAllyArr, setMetAllyArr
+    metAllyArr, setMetAllyArr, fetchedInventory
   } = useContext(UserContext);
 
   // state for socket.io
@@ -60,7 +60,6 @@ const GameView = (props: GameViewProps) => {
   const [damageToEnemy, setDamageToEnemy] = useState(0);
   const [damageToPlayer, setDamageToPlayer] = useState(0);
 
-  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
   const [bonusStrength, setBonusStrength] = useState(0);
   const [bonusEndurance, setBonusEndurance] = useState(0);
   const [bonusMood, setBonusMood] = useState(0);
@@ -196,152 +195,108 @@ const GameView = (props: GameViewProps) => {
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
-  const handleDropItem = (itemID, i) => {
-    axios.patch(`/location/update/${currentChar.location}`, { drop_item_slot: itemID });
-    axios.delete('/character/inventory/delete', {
-      data: {
-        charID: currentChar._id,
-        itemID: itemID,
-      }
-    })
-      .then(() => {
-        fetchUndroppedItems();
-        // console.log('currentstrength', bonusStrength);
-        //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
-      })
-      .catch(err => console.error('fetch after delete ERROR', err));
-    // needs then and catches for both axios... call fetchItems?
+  const handleDropItem = async (itemID, i) => {
+    console.log('location in handleDropItem', location);
+    await setLocation(currLocation => ({
+      ...currLocation,
+      drop_item_slot: itemID
+    }));
+
+    await setCurrentChar((previousStats) => {
+      const undroppedInventory = previousStats.inventory;
+      undroppedInventory[i] = 1;
+      return {
+        ...previousStats,
+        inventory: undroppedInventory
+      };
+    });
   };
 
   const handleDropItemChar = (itemID, i) => {
     if (fetchedInventory[i].consumable === true) {
-      axios.delete('/character/inventory/delete', {
-        data: {
-          charID: currentChar._id,
-          itemID: itemID,
-        }
+      setCurrentChar((previousStats) => {
+        const undroppedInventory = previousStats.inventory;
+        undroppedInventory[i] = 1;
+        return {
+          ...previousStats,
+          inventory: undroppedInventory
+        };
+      });
+
+
+      if (fetchedInventory[i].modified_stat0 === 'strength') {
+        setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier0);
       }
-      )
+      if (fetchedInventory[i].modified_stat1 === 'strength') {
+        setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier1);
+      }
+      if (fetchedInventory[i].modified_stat0 === 'endurance') {
+        setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier0);
+      }
+      if (fetchedInventory[i].modified_stat1 === 'endurance') {
+        setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier1);
+      }
+      if (fetchedInventory[i].modified_stat0 === 'mood') {
+        setTemporaryMood(temporaryMood + fetchedInventory[i].modifier0);
+      }
+      if (fetchedInventory[i].modified_stat1 === 'mood') {
+        setTemporaryMood(temporaryMood + fetchedInventory[i].modifier1);
+      }
+      if (fetchedInventory[i].modified_stat0 === 'health') {
 
-        .then(() => {
-          // console.log('Current inventory', fetchedInventory[i]);
-          if (fetchedInventory[i].modified_stat0 === 'strength') {
-            setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier0);
-          }
-          if (fetchedInventory[i].modified_stat1 === 'strength') {
-            setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier1);
-          }
-          if (fetchedInventory[i].modified_stat0 === 'endurance') {
-            setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier0);
-          }
-          if (fetchedInventory[i].modified_stat1 === 'endurance') {
-            setTemporaryEndurance(temporaryEndurance + fetchedInventory[i].modifier1);
-          }
-          if (fetchedInventory[i].modified_stat0 === 'mood') {
-            setTemporaryMood(temporaryMood + fetchedInventory[i].modifier0);
-          }
-          if (fetchedInventory[i].modified_stat1 === 'mood') {
-            setTemporaryMood(temporaryMood + fetchedInventory[i].modifier1);
-          }
-          if (fetchedInventory[i].modified_stat0 === 'health') {
+        setCurrentChar((previousStats) => {
+          return {
+            ...previousStats,
+            health: previousStats.health + fetchedInventory[i].modifier0,
+          };
+        });
+      }
+      if (fetchedInventory[i].modified_stat1 === 'health') {
+        console.log('FetchedInventory hit the health pot');
+        setCurrentChar((previousStats) => {
+          return {
+            ...previousStats,
+            health: previousStats.health + fetchedInventory[i].modifier1,
+          };
+        });
+      }
 
-            setCurrentChar((previousStats) => {
-              const inventoryUneaten = previousStats.inventory;
-              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
-              return {
-                ...previousStats,
-                health: previousStats.health + fetchedInventory[i].modifier0,
-                inventory: inventoryUneaten
-              };
-            });
-          }
-          if (fetchedInventory[i].modified_stat1 === 'health') {
-            console.log('FetchedInventory hit the health pot');
-            setCurrentChar((previousStats) => {
-              const inventoryUneaten = previousStats.inventory;
-              inventoryUneaten[inventoryUneaten.indexOf(itemID)] = 1;
-              return {
-                ...previousStats,
-                health: previousStats.health + fetchedInventory[i].modifier1,
-                inventory: inventoryUneaten
-              };
-            });
-          }
-        })
-        .then(() => {
-          fetchUndroppedItems();
-          //console.log('currentstrength', bonusStrength);
-          //console.log('inventory in handleDrop after fetchItems', fetchedInventory);
-        })
-        .catch(err => console.error('fetch after delete ERROR', err));
-      // needs then and catches for both axios... call fetchItems?
     }
-  };
-  const fetchUndroppedItems = () => {
-    axios.get<Character>(`/character/${currentChar._id}`)
-      .then((character: any) => {
-        //setCurrentChar(character.data);
-        setFetchedInventory([]);
-        character.data.inventory.forEach(item => {
-          axios.get(`/item/${item}`)
-            .then(({ data }) =>
-
-              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id))
-
-            )
-            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
-            .catch(err => console.error('error fetching from ITEM router fetchedDroppedItem', err));
-        });
-      })
-      .catch((err: any) =>
-        console.error('Error in Menu.tsx in fetchunDroppedItems', err));
-
-  };
-  const fetchItems = () => {
-    axios.get<Character>(`/character/${currentChar._id}`)
-      .then((character: any) => {
-        // setCurrentChar(character.data);
-        //console.log('EMPTY???', character.data.inventory);
-        //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
-        setFetchedInventory([]);
-        character.data.inventory.forEach(item => {
-          axios.get(`/item/${item}`)
-            .then(({ data }) => {
-              // console.log('ITEM???', item.data);
-              setFetchedInventory((prevInventory: Item[]) => [...prevInventory, data as Item].sort((a, b) => b._id - a._id));
-              // Handles nonconsumable stat bonuses when item is fetched.
-              if (data.consumable === false) {
-                if (data.modified_stat0 === 'strength') {
-                  setBonusStrength(bonusStrength + data.modifier0);
-                }
-                if (data.modified_stat1 === 'strength') {
-                  setBonusStrength(bonusStrength + data.modifier1);
-                }
-                if (data.modified_stat0 === 'endurance') {
-                  setBonusEndurance(bonusEndurance + data.modifier0);
-                }
-                if (data.modified_stat1 === 'endurance') {
-                  setBonusEndurance(bonusEndurance + data.modifier1);
-                }
-                if (data.modified_stat0 === 'mood') {
-                  setBonusMood(bonusMood + data.modifier0);
-                }
-                if (data.modified_stat1 === 'mood') {
-                  setBonusMood(bonusMood + data.modifier1);
-                }
-              }
-            })
-            // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
-            .catch(err => console.error('error fetching from ITEM router', err));
-        });
-      })
-      .catch((err: any) =>
-        console.error('Error in Menu.tsx in fetchItems', err));
   };
 
   const handleOnDragItem = (e: React.DragEvent, itemId: number, i: number) => {
     const itemIdIndex = [itemId, i];
     e.dataTransfer.setData('itemWidget', JSON.stringify(itemIdIndex));
+  };
+  const itemBonuses = async () => {
+    let strength = 0;
+    let endurance = 0;
+    let mood = 0;
+    fetchedInventory.forEach((item) => {
+      if (item.consumable === false) {
+        if (item.modified_stat0 === 'strength') {
+          strength += item.modifier0;
+        }
+        if (item.modified_stat1 === 'strength') {
+          strength += item.modifier1;
+        }
+        if (item.modified_stat0 === 'endurance') {
+          endurance += item.modifier0;
+        }
+        if (item.modified_stat1 === 'endurance') {
+          endurance += item.modifier1;
+        }
+        if (item.modified_stat0 === 'mood') {
+          mood += item.modifier0;
+        }
+        if (item.modified_stat1 === 'mood') {
+          mood += item.modifier1;
+        }
+      }
+    });
+    await setBonusStrength(strength);
+    await setBonusEndurance(endurance);
+    await setBonusMood(mood);
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
@@ -386,10 +341,7 @@ const GameView = (props: GameViewProps) => {
     e.preventDefault();
   };
 
-  // const handleDropConsumable = (e: React.DragEvent) {
-
-  // };
-
+ 
 
   //  *********************************************************************************************************************************************************************************************
 
@@ -577,7 +529,6 @@ const GameView = (props: GameViewProps) => {
         ...prevLocale,
         drop_item_slot: 1
       }));
-      fetchItems();
     }
   };
 
@@ -636,14 +587,15 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
-
-    //console.log('this is the use effect');
-    fetchItems();
     getAllLocations();
     return () => {
       newSocket.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    itemBonuses();
+  }, [fetchedInventory]);
 
   useEffect(() => {
     if (hasMounted) {
