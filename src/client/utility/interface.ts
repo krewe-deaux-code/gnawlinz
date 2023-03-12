@@ -88,3 +88,9 @@ export interface GameViewProps {
   handleSpeak: (e) => void;
 }
 
+
+export interface Leader {
+  name: string;
+  score: number;
+  image_url: string;
+}

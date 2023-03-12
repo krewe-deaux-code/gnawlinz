@@ -197,7 +197,7 @@ const GameView = (props: GameViewProps) => {
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
   const handleDropItem = (itemID, i) => {
-    axios.put(`/location/drop_item_slot/${currentChar.location}`, { drop_item_slot: itemID });
+    axios.patch(`/location/update/${currentChar.location}`, { drop_item_slot: itemID });
     axios.delete('/character/inventory/delete', {
       data: {
         charID: currentChar._id,
