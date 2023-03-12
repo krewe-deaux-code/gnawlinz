@@ -89,7 +89,7 @@ export const itemSeed = [
   },
   {
     name: 'Bowl of Gumbo',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678425110/gnawlinzItems/gumbp_hakuum.psd',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678585840/gnawlinzItems/Gumbo_js1nrf.png',
     consumable: true,
     modified_stat0: 'health',
     modified_stat1: 'strength',
