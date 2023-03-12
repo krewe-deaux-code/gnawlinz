@@ -74,6 +74,7 @@ const CharacterCreator: React.FC = () => {
     })
       .then(response => {
         console.log('Success Posting from Client', response);
+        userChars.push(response.data);
       })
       .catch(err => console.error('Fail Posting from Client', err));
   };
