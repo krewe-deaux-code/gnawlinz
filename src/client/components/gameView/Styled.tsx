@@ -60,12 +60,6 @@ export const Main = styled.main`
   padding: 0.25rem;
   position: relative;
 `;
-// const SideBar = styled.div`
-//   background: #9aaab7;
-//   grid-area: sidebar;
-//   padding: 0.25rem;
-// `;
-
 
 export const Content1 = styled.div`
   background: #4f004f;
@@ -109,6 +103,10 @@ export const Footer = styled.footer`
 export const CharImageStyles = styled.img`
 object-fit: contain;
 padding: auto;
+height: auto;
+width: auto;
+max-height: 276px;
+max-width: 183px;
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`

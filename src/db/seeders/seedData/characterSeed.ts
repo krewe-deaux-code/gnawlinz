@@ -2,7 +2,7 @@ export const characterSeed = [
   {
     handle_id: '111176632224852041225',
     name: 'Mr. Okra (B)',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
     inventory: [2, 3, 3, 1, 1, 1, 1, 1],
     health: 10,
     strength: 5,
@@ -41,7 +41,7 @@ export const characterSeed = [
   {
     handle_id: '103981305262482746711',
     name: 'Mr. Okra (C)',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
     inventory: [2, 3, 1, 1, 1, 1, 1, 1],
     health: 10,
     strength: 5,
@@ -80,7 +80,7 @@ export const characterSeed = [
   {
     handle_id: '115615491020346324419',
     name: 'Mr. Okra (S)',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
     inventory: [2, 3, 1, 1, 1, 1, 1, 1],
     health: 10,
     strength: 5,
@@ -119,7 +119,7 @@ export const characterSeed = [
   {
     handle_id: '112690625834923487555',
     name: 'Mr. Okra (Bl)',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
     inventory: [2, 3, 1, 1, 1, 1, 1, 1],
     health: 10,
     strength: 5,
@@ -158,7 +158,7 @@ export const characterSeed = [
   {
     handle_id: '101554516424924829736',
     name: 'Mr. Okra (M)',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676852416/gnawlinzAllies/mrOkraPxl_mnfyeo.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
     inventory: [2, 3, 3, 10, 1, 1, 1, 1],
     health: 10,
     strength: 5,

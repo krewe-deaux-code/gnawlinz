@@ -6,7 +6,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
-// import Investigate from './Investigate';
+
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -473,10 +473,10 @@ const GameView = (props: GameViewProps) => {
   const handleShow = () => setShow(true);
 
   // write graffiti button function, shows input field and tag it button
-  const handleTextBoxClick = () => {
-    setShowTextBox(true);
-    setShowButton(true);
-  };
+  // const handleTextBoxClick = () => {
+  //   setShowTextBox(true);
+  //   setShowButton(true);
+  // };
 
   // closes input field
   const handleTextBoxClose = () => {
@@ -488,39 +488,6 @@ const GameView = (props: GameViewProps) => {
   };
 
   // search dropped item based on current location, update location database
-  // const retrieveDropItem = (number) => {
-
-  //   axios.get(`/location/${number}`)
-  //     .then((location: any) => {
-  //       if (location.data.drop_item_slot === 1) {
-  //         setModalText('You search for items, but didn\'t find anything');
-  //       } else {
-  //         axios.get(`item/${location.data.drop_item_slot}`)
-  //           .then((response: any) => {
-  //             setModalText(`You searched for items and found ${response.data.name}`);
-  //           })
-  //           .catch((err) => {
-  //             console.error('Failed to get item id from item table', err);
-  //           })
-  //           .then(() => {
-  //             axios.patch(`/location/update/${number}`, {
-  //               drop_item_slot: 1
-  //             });
-  //             setCurrentChar(prevChar => ({
-  //               ...prevChar,
-  //               inventory: addItem(currentChar.inventory, location.data.drop_item_slot)
-  //             }));
-  //           })
-  //           .catch((err) => {
-  //             console.error('Failed to update the state of location', err);
-  //           });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed to get drop item from location', err);
-  //     });
-
-  // };
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
       setModalText('You search for items, but didn\'t find anything');
@@ -543,29 +510,6 @@ const GameView = (props: GameViewProps) => {
     }
   };
 
-
-  // const updateGraffitiMsg = () => {
-  //   axios.patch(`/location/update/${location._id}`, {
-  //     graffiti_msg: inputValue
-  //   })
-  //     .then(() => {
-  //       //console.log('Graffiti message updated');
-  //       setLocation(location => ({
-  //         ...location,
-  //         graffiti_msg: inputValue
-  //       }));
-  //       setInputValue('');
-  //       setVisited(prevVisited => prevVisited.map(item => {
-  //         if (item.name === location.name) {
-  //           return location;
-  //         }
-  //         return item;
-  //       }));
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed to update graffiti message', err);
-  //     });
-  // };
 
   const updateGraffitiMsg = () => {
     setLocation(location => ({
@@ -762,20 +706,23 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showLocationModal} onHide={handleCloseLocationModal}>
+              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
                 <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
-                  <p onClick={props.handleSpeak}>You have visited all locations, </p>
-                  <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
-                  <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
-                  <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
-                  <p onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')}</p>
-                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
+                  <ModalBodyContainer>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                  </ModalBodyContainer>
                 </Modal.Body>
-              </Modal>
+              </StyledModal>
             </Content1>
           </Link>
           <Content1>
@@ -796,7 +743,7 @@ const GameView = (props: GameViewProps) => {
                   <div onClick={props.handleSpeak}>Look for items</div>
                   <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
                   <div onClick={props.handleSpeak}>Look for graffiti</div>
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_message}"`)}>Choice 2</HudButton>
                   <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                   <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                 </ModalBodyContainer>
