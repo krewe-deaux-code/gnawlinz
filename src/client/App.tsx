@@ -82,7 +82,7 @@ const App = () => {
     console.log('WHAT AM I', location);
     const randomItemLocation = location;
     if (location.drop_item_slot === 1) {
-      if (Math.random() < 0.8) {
+      if (Math.random() < 0.2) {
         randomItemLocation.drop_item_slot = randomItem(1, 11);
       }
     }
