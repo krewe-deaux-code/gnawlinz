@@ -74,6 +74,9 @@ const CharacterCreator: React.FC = () => {
       .then(response => {
         console.log('Success Posting from Client', response);
         userChars.push(response.data);
+        setCurrentChar(response.data);
+        axios.post(`/story/begin/${response.data._id}`)
+          .catch(err => console.error('beginning story failed to fetch', err));
       })
       .catch(err => console.error('Fail Posting from Client', err));
   };
@@ -87,7 +90,7 @@ const CharacterCreator: React.FC = () => {
       ...prevChar,
       handle_id: activeUser.google_id, // <-- activeUser.user_id
       image_url: '',
-      inventory: [],
+      inventory: [1, 1, 1, 1, 1, 1, 1, 1],
       health: 1,
       strength: 1,
       endurance: 1,
@@ -146,7 +149,7 @@ const CharacterCreator: React.FC = () => {
     if (activeUser.handle_id === undefined) { loadCharDefaults(); }
   }, [activeUser]);
 
-  // console.log('AXCTIVE USER', newChar);
+  console.log('AXCTIVE USER', newChar);
 
   return (
     <CCContainer id='CCContainer'>
