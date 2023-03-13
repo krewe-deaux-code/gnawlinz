@@ -695,20 +695,23 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showLocationModal} onHide={handleCloseLocationModal}>
+              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
                 <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
-                  <p onClick={props.handleSpeak}>You have visited all locations, </p>
-                  <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
-                  <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
-                  <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
-                  <p onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')}</p>
-                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
+                  <ModalBodyContainer>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                  </ModalBodyContainer>
                 </Modal.Body>
-              </Modal>
+              </StyledModal>
             </Content1>
           </Link>
           <Content1>
