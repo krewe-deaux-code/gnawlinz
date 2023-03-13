@@ -743,7 +743,7 @@ const GameView = (props: GameViewProps) => {
                   <div onClick={props.handleSpeak}>Look for items</div>
                   <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
                   <div onClick={props.handleSpeak}>Look for graffiti</div>
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_message}"`)}>Choice 2</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
                   <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                   <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                 </ModalBodyContainer>
