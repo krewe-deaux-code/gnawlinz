@@ -109,6 +109,10 @@ export const Footer = styled.footer`
 export const CharImageStyles = styled.img`
 object-fit: contain;
 padding: auto;
+height: auto;
+width: auto;
+max-height: 276px;
+max-width: 183px;
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`

@@ -63,7 +63,6 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleSaveChar = () => {
-    // userChars.push(newChar);
     console.log('INSIDE SAVE', newChar);
     axios.post('/cloudinary/post', {
       topImageUrl: chosenHair,
@@ -86,7 +85,7 @@ const CharacterCreator: React.FC = () => {
   const loadCharDefaults = () => {
     setNewChar(prevChar => ({
       ...prevChar,
-      handle_id: activeUser.google_id,
+      handle_id: activeUser.google_id, // <-- activeUser.user_id
       image_url: '',
       inventory: [],
       health: 1,

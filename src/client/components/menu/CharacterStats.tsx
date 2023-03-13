@@ -51,6 +51,7 @@ const CharacterStats: React.FC = () => {
       .catch((err) => {
         console.error('Front End side fetchUserChars from server', err);
       });
+    console.log('USER CHARS', userChars);
   };
 
   const getLocationById = (locationId) => {
