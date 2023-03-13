@@ -19,7 +19,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(DIST_DIR));
 
-
 // <-- session -->
 app.use(session({
   secret: 'typescript is great.',

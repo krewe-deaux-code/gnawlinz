@@ -13,58 +13,6 @@ import {
 import { UserContext } from '../../App';
 import { Character } from '../../utility/interface';
 
-// <-- for reference building new Char Obj -->
-// interface Character {
-//   _id: number; <-- won't need
-//   handle_id: number; <-- come from session? activeUser?
-//   name: string;
-//   image_url: string;
-//   inventory: Array<number>; <-- empty []
-//   health: number;
-//   strength: number;
-//   endurance: number;
-//   mood: number;
-//   location: number; <-- 1 (random num between 1 - 3)
-//   ally_count: number; <-- 0
-//   score: number; <-- 0
-// }
-
-// ******************
-// *** dummy data ***
-// ******************
-
-const hair = [
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair1Pxl_idnvai.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407932/hair/Hair2Pxl_k2c8ko.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair3Pxl_ugjngb.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair4Pxl_gozyxw.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407932/hair/Hair5Pxl_mxuvza.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair6Pxl_ev7k88.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair7Pxl_b0kcax.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair8Pxl_fb4xfa.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair9Pxl_eaqpe3.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407931/hair/Hair10Pxl_i8nifo.png'
-];
-const face = [
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face1Pxl_gvhouy.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face2Pxl_nkh9vu.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face3Pxl_hwd1jv.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face4Pxl_lr0nec.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face5Pxl_izvh4x.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face6Pxl_qob3j6.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face7Pxl_nhbaex.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face8Pxl_hc7ivx.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407558/face/Face9Pxl_gmxzmp.png',
-];
-const body = [
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407096/body/Body1Pxl_penbsv.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407096/body/Body2Pxl_r7kme1.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407096/body/Body3Pxl_r0hran.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407097/body/Body4Pxl_hzwxdz.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407097/body/Body5Pxl_x77vqz.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407096/body/Body6Pxl_zu0c0r.png',
-  'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678407097/body/Body7Pxl_vqxar2.png'
-];
 
 const CharacterCreator: React.FC = () => {
 
@@ -77,22 +25,19 @@ const CharacterCreator: React.FC = () => {
   const [faceImageUrls, setFaceImageUrls] = useState([]);
   const [bodyImageUrls, setBodyImageUrls] = useState([]);
   const [cloudFolders, setCloudFolders] = useState(['hair', 'face', 'body']);
+  const [loadedImage, setLoadedImage] = useState('');
   const [chosenHair, setChosenHair] = useState<string>('');
   const [chosenFace, setChosenFace] = useState<string>('');
   const [chosenBody, setChosenBody] = useState<string>('');
+  const [newChar, setNewChar] = useState<Character>({} as Character);
+  const [health, setHealth] = useState<number>(1);
+  const [strength, setStrength] = useState<number>(1);
+  const [endurance, setEndurance] = useState<number>(1);
+  const [mood, setMood] = useState<number>(1);
+  const [statPool, setStatPool] = useState<number>(18);
 
   const handleSelect = (i: number, images: string[], fn: any) => {
-    console.log('INSIDE HANDLE SELECT', i);
-    console.log('TEST', i, fn);
-    // if (type === 'hair') {
-    //   setChosenHair(images[i]);
-    // } else if (type === 'face') {
-    //   setChosenFace(images[i]);
-    // } else if (type === 'body') {
-    //   setChosenBody(images[i]);
-    // }
     fn(images[i]);
-    console.log('CHOSEN', chosenHair, chosenFace, chosenBody);
   };
 
   const handleInputValueChange = (e) => {
@@ -100,20 +45,8 @@ const CharacterCreator: React.FC = () => {
     console.log('NAME CHANGE', inputName);
   };
 
-  const handleSaveImage = () => {
-    axios.post('/cloudinary/post', {
-      topImage: chosenHair,
-      middleImage: chosenFace,
-      bottomImage: chosenBody
-    })
-      .then(() => console.log('Success Posting from Client'))
-      .catch(err => console.error('Fail Posting from Client', err));
-  };
-
-  // <-- to save newChar in DB --> { newCharacter: {} }
-
   // *************
-  // *** axios ***
+  // <-- axios -->
   // *************
 
   const fetchImages = (folderName, i) => {
@@ -129,7 +62,69 @@ const CharacterCreator: React.FC = () => {
       });
   };
 
-  // <-- commented out to preserve API hit limit -->
+  const handleSaveChar = () => {
+    // userChars.push(newChar);
+    console.log('INSIDE SAVE', newChar);
+    axios.post('/cloudinary/post', {
+      topImageUrl: chosenHair,
+      middleImageUrl: chosenFace,
+      bottomImageUrl: chosenBody,
+      characterObj: newChar
+      // handle_id: activeUser.google_id
+    })
+      .then(response => {
+        console.log('Success Posting from Client', response);
+        userChars.push(response.data);
+      })
+      .catch(err => console.error('Fail Posting from Client', err));
+  };
+
+  // **********************
+  // <-- event handling -->
+  // **********************
+
+  const loadCharDefaults = () => {
+    setNewChar(prevChar => ({
+      ...prevChar,
+      handle_id: activeUser.google_id,
+      image_url: '',
+      inventory: [],
+      health: 1,
+      strength: 1,
+      endurance: 1,
+      mood: 1,
+      location: Math.floor(Math.random() * 3 + 1),
+      ally_count: 0,
+      score: 0
+    }));
+  };
+
+  const handleStatChange = (fn: any, modifier: string, statName: string, stat: number) => {
+    if (modifier === '+' && statPool !== 0) {
+      setNewChar(prevCharStats => ({
+        ...prevCharStats,
+        [statName]: ++stat
+      }));
+      fn(prevStat => ++prevStat);
+      if (stat >= 0) { // <-- not needed?
+        setStatPool(prevPool => --prevPool);
+      }
+    } else if (modifier === '-' && stat > 0) {
+      setNewChar(prevCharStats => ({
+        ...prevCharStats,
+        [statName]: --stat
+      }));
+      fn(prevStat => --prevStat);
+      if (stat > 0) {
+        setStatPool(prevPool => ++prevPool);
+      }
+    }
+  };
+
+  // *****************
+  // <-- useEffect -->
+  // *****************
+
   useEffect(() => {
     for (let i = 0; i < 3; i++) {
       fetchImages(cloudFolders[i], i);
@@ -139,25 +134,34 @@ const CharacterCreator: React.FC = () => {
   useEffect(() => {
     if (hairImageUrls.length) { setChosenHair(hairImageUrls[0]); }
   }, [hairImageUrls]);
+
   useEffect(() => {
     if (faceImageUrls.length) { setChosenFace(faceImageUrls[0]); }
   }, [faceImageUrls]);
+
   useEffect(() => {
     if (bodyImageUrls.length) { setChosenBody(bodyImageUrls[0]); }
   }, [bodyImageUrls]);
 
-  // console.log('STATE FETCH FROM CLOUDINARY', hairImages, faceImages, bodyImages);
+  useEffect(() => {
+    if (activeUser.handle_id === undefined) { loadCharDefaults(); }
+  }, [activeUser]);
+
+  // console.log('AXCTIVE USER', newChar);
 
   return (
     <CCContainer id='CCContainer'>
       <LeftSpacer id='LSpacer'>Left Spacer</LeftSpacer>
       <CharacterContainer id='CharContainer'>
+
         <AvatarContainer id='Avatar Container'>
           <BodyCarousel
             id='Body Carousel'
             slide={false}
             indicators={false}
-            onSelect={(i) => handleSelect(i, bodyImageUrls, setChosenBody)}
+            onSelect={(i) => {
+              handleSelect(i, bodyImageUrls, setChosenBody);
+            }}
             interval={null}>
             {
               bodyImageUrls.map((body: string, i: number) => {
@@ -171,7 +175,9 @@ const CharacterCreator: React.FC = () => {
             id='Face Carousel'
             slide={false}
             indicators={false}
-            onSelect={(i) => handleSelect(i, faceImageUrls, setChosenFace)}
+            onSelect={(i) => {
+              handleSelect(i, faceImageUrls, setChosenFace);
+            }}
             interval={null}>
             {
               faceImageUrls.map((face: string, i: number) => {
@@ -185,7 +191,9 @@ const CharacterCreator: React.FC = () => {
             id='Hair Carousel'
             slide={false}
             indicators={false}
-            onSelect={(i) => handleSelect(i, hairImageUrls, setChosenHair)}
+            onSelect={(i) => {
+              handleSelect(i, hairImageUrls, setChosenHair);
+            }}
             interval={null}>
             {
               hairImageUrls.map((hair: string, i: number) => {
@@ -196,47 +204,44 @@ const CharacterCreator: React.FC = () => {
             }
           </HairCarousel>
         </AvatarContainer>
-
-        {/* <StyledCarousel id='Hair Carousel' slide={false} indicators={false} onSelect={(i) => handleSelect(i, hair)} interval={null}>
-          {
-            hair.map((hair: string, i: number) => {
-              return <Carousel.Item id='Hair Item' key={i}>
-                <HairSlot id='HairSlot' src={hair} />
-              </Carousel.Item>;
-            })
-          }
-          <StyledCarousel id='Face Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-            {
-              face.map((face: string, i: number) => {
-                return <Carousel.Item id='Face Item' key={i}>
-                  <FaceSlot id='FaceSlot' src={face} />
-                </Carousel.Item>;
-              })
-            }
-            <StyledCarousel id='Body Carousel' slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-              {
-                body.map((body: string, i: number) => {
-                  return <Carousel.Item id='Body Item' key={i}>
-                    <BodySlot src={body} />
-                  </Carousel.Item>;
-                })
-              }
-            </StyledCarousel>
-          </StyledCarousel>
-        </StyledCarousel> */}
+        <div>{statPool}</div>
       </CharacterContainer>
-      <button onClick={handleSaveImage}>SAVE</button>
+      <button onClick={handleSaveChar}>SAVE</button>
       <StatsContainer id='Stats'>
         <IconContainer>
-          <StatName>{currentChar.name ? <p>Name: {currentChar.name}</p> : <></>}
+          <StatName>{newChar.name ? <p>Name: {newChar.name}</p> : <p>Name: Anonymous</p>}
             <input type="text" value={inputName} onChange={handleInputValueChange} />
-            <button onClick={() => { setCurrentChar(prevChar => ({ ...prevChar, name: inputName })); }}>Submit</button>
+            <button onClick={() => { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }}>Submit</button>
           </StatName>
         </IconContainer>
-        <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {currentChar.health}</StatName></IconContainer>
-        <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" /><StatName>Strength: {currentChar.strength}</StatName></IconContainer>
-        <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {currentChar.endurance}</StatName></IconContainer>
-        <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" /><StatName>Mood: {currentChar.mood}</StatName></IconContainer>
+        <IconContainer>
+          <IconImg
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />
+          <StatName>Health: {newChar.health}</StatName>
+          <button onClick={() => handleStatChange(setHealth, '-', 'health', health)}>-</button>
+          <button onClick={() => handleStatChange(setHealth, '+', 'health', health)}>+</button>
+        </IconContainer>
+        <IconContainer>
+          <IconImg
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />
+          <StatName>Strength: {newChar.strength}</StatName>
+          <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)}>-</button>
+          <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)}>+</button>
+        </IconContainer>
+        <IconContainer>
+          <IconImg
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />
+          <StatName>Endurance: {newChar.endurance}</StatName>
+          <button onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)}>-</button>
+          <button onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)}>+</button>
+        </IconContainer>
+        <IconContainer>
+          <IconImg
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />
+          <StatName>Mood: {newChar.mood}</StatName>
+          <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)}>-</button>
+          <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)}>+</button>
+        </IconContainer>
       </StatsContainer>
       <RightSpacer id='RSpacer'>Right Spacer</RightSpacer>
     </CCContainer>
