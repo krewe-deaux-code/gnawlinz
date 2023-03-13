@@ -6,7 +6,7 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
 import { Character } from '../../utility/interface';
-import { AutoIncrement } from 'sequelize-typescript';
+
 //import ItemSlots from './ItemSlots';
 // import CharacterLocation from './CharacterLocation';
 
