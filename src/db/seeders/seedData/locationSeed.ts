@@ -24,20 +24,20 @@ export const locationSeed = [
     random_item_spot2: 'Under a table',
     drop_item_slot: 4,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg: 'Boom'
+    graffiti_msg: 'mmm...powdered sugar'
   },
   {
     name: 'Jazz Land',
-    image_url: '',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_scale,h_460,w_690/v1678589839/gnawlinzLocations/pxArt_1_ldobgd.png',
     random_item_spot1: 'Behind the ticket booth',
     random_item_spot2: 'In the weeds',
     drop_item_slot: 5,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg: ''
+    graffiti_msg: 'No fun here'
   },
   {
     name: 'Man Chew',
-    image_url: '',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_scale,h_460,w_690/v1678588698/gnawlinzLocations/pxArt_e6b3we.png',
     random_item_spot1: 'In the sink',
     random_item_spot2: 'Behind the deep fryer',
     drop_item_slot: 3,
