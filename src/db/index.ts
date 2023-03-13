@@ -91,7 +91,7 @@ const modelSync = async (dropTables = false) => {
   await Choice.sync(options);
   await Event.sync(options);
   await User.sync(options);
-  await Character.sync(options).then(() => console.log('Char Table Created')).catch((err) => console.log('char table err', err));
+  await Character.sync(options);
   //await Character_Ally.sync(options);
   await Location_Event.sync(options);
   await Story.sync(options);
@@ -104,7 +104,7 @@ const modelSync = async (dropTables = false) => {
   await allySeeder(allySeed);
   await locationSeeder(locationSeed);
   await bossSeeder(bossSeed);
-  await characterSeeder(characterSeed).catch((err => { console.log('Dis sheet es FUCKED, yo!'); }));
+  await characterSeeder(characterSeed);
   await choiceSeeder(choiceSeed);
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
