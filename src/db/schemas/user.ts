@@ -19,15 +19,9 @@ const User = db.define('user', {
     type: DataTypes.STRING
   },
   session_id: {
-    type: DataTypes.STRING
+    type: DataTypes.STRING,
+    allowNull: true,
   },
-  // char0: {
-  //   type: DataTypes.INTEGER,
-  //   references: {
-  //     model: Character,
-  //     key: '_id'
-  //   }
-  // }
 });
 
 export default User;
