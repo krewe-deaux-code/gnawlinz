@@ -2,7 +2,7 @@ import { DataTypes } from 'sequelize';
 import { db } from '../index';
 // import Item from './item';
 import Location from './location';
-// import User from './user';
+import User from './user';
 
 const Character = db.define('character', {
   _id: {
@@ -19,7 +19,6 @@ const Character = db.define('character', {
   },
   name: {
     type: DataTypes.STRING,
-    unique: true
   },
   image_url: {
     type: DataTypes.STRING,

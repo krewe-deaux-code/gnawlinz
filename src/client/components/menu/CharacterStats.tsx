@@ -11,7 +11,7 @@ import { Character } from '../../utility/interface';
 
 const CharacterStats: React.FC = () => {
 
-  const { userChars, setUserChars, currentChar, setCurrentChar, /* activeUser */ } = useContext(UserContext); // <-- NEED to get user chars below
+  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
   // const [ userChars, setUserChars ] = useState<Character[]>([]);
   // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
   const [ /*index*/, setIndex] = useState(0);
@@ -33,7 +33,7 @@ const CharacterStats: React.FC = () => {
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
-  const fetchUserChars = (handle_id = '420') => {
+  const fetchUserChars = async () => {
     // handle_id = activeUser.google_id || '420';
     // console.log('here handle_id change', handle_id);
     // console.log('ACTIVE USER GOOGLE ID', activeUser.google_id);
@@ -43,9 +43,9 @@ const CharacterStats: React.FC = () => {
     //   console.log('here handle_id change', handle_id);
     // }
     // axios.get(`/character/user/${activeUser.google_id}`)
-    axios.get(`/character/user/${handle_id}`)
+    await axios.get(`/character/user/${activeUser.google_id}`)
       .then(({ data }) => {
-        // console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
+        console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
         setUserChars(data);
       })
       .catch((err) => {
@@ -74,7 +74,7 @@ const CharacterStats: React.FC = () => {
     //console.log('INSIDE USE EFFECT', activeUser);
     fetchUserChars(); // activeUser.google_id as arg
     getCurrentChar(currentChar._id);
-  }, []);
+  }, [activeUser]);
 
   if (!currentChar) {
     return <div>Loading...</div>;
@@ -84,7 +84,7 @@ const CharacterStats: React.FC = () => {
   // console.log('CURRENT CHAR', currentChar);
   // console.log('ACTIVE USER', activeUser);
   // console.log('USER CHARS -->', userChars);
-
+  console.log('Current Acvite User: ', activeUser);
   return (
     <>
       <div>

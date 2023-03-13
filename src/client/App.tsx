@@ -2,7 +2,7 @@ import React, { Suspense, lazy, createContext, useContext, useState, useEffect }
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
-import { Character, Enemy, Ally, EventData, ChoiceData, LocationData } from './utility/interface';
+import { Character, Enemy, Ally, EventData, ChoiceData, LocationData, Item } from './utility/interface';
 // import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -45,13 +45,34 @@ const App = () => {
   const [investigateDisabled, setInvestigateDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
-  // const speechElements = useRef<HTMLElement[]>([]);
 
+  // item bonus/inventory state
+  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+
+
+  const fetchItems = (charInventory) => {
+    const currentInventory = charInventory.map(item =>
+      axios.get(`/item/${item}`));
+    Promise.all(currentInventory)
+      .then(items => {
+        console.log('currentInventory in App.tsx', fetchedInventory);
+        const inventoryData = items.map(item => item.data);
+        setFetchedInventory(inventoryData.sort((a, b) => b._id - a._id));
+      })
+      .then(() => console.log('currentInventory in App.tsx after setFetchedInventory', fetchedInventory))
+      .catch(err => console.error('Error in fetchItems in App', err));
+  };
 
   const characterUpdate = () => {
+    const sortedInventoryChar = currentChar;
+    if (sortedInventoryChar.inventory) {
+      sortedInventoryChar.inventory.sort((a, b) => b - a);
+    }
     console.log('WHAT AM I', currentChar);
-    axios.patch<Character>(`/character/update/${currentChar._id}`, currentChar)
-      .then(() => console.log('character updated (@APP LEVEL)'))
+    axios.patch<Character>(`/character/update/${currentChar._id}`, sortedInventoryChar)
+      .then(() => {
+        console.log('character updated (@APP LEVEL)', currentChar);
+      })
       .catch((err) => console.error('error update from axios front end', err));
   };
 
@@ -72,6 +93,9 @@ const App = () => {
 
   useEffect(() => {
     characterUpdate();
+    if (currentChar.inventory) {
+      fetchItems(currentChar.inventory);
+    }
   }, [currentChar]);
 
   useEffect(() => {
@@ -80,7 +104,7 @@ const App = () => {
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume }}>
-      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled }}>
+      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled, fetchedInventory, setFetchedInventory }}>
         <BrowserRouter>
           <GlobalStyle />
 
