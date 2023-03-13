@@ -5,6 +5,7 @@ import { Sequelize } from 'sequelize';
 
 //import { iconSeed } from '../db/seeders/seedData/iconSeed';
 import { allySeed } from './seeders/seedData/allySeed';
+import { userSeed } from './seeders/seedData/userSeed';
 import { characterSeed } from './seeders/seedData/characterSeed';
 import { choiceSeed } from './seeders/seedData/choiceSeed';
 import { enemySeed } from './seeders/seedData/enemySeed';
@@ -46,12 +47,12 @@ db.authenticate()
 // *** MODEL SYNCS ***
 // *******************
 
+import User from './schemas/user';
 import Ally from './schemas/ally';
 import Item from './schemas/item';
 import Location from './schemas/location';
 import Boss from './schemas/boss';
 import Character from './schemas/character';
-import User from './schemas/user';
 import Choice from './schemas/choice';
 import Enemy from './schemas/enemy';
 import Event from './schemas/event';
@@ -65,6 +66,7 @@ import Location_Event from './schemas/location_event';
 // *************************
 
 //import iconSeeder from './seeders/iconSeeder';
+import userSeeder from './seeders/userSeeder';
 import allySeeder from './seeders/allySeeder';
 import characterSeeder from './seeders/characterSeeder';
 import choiceSeeder from './seeders/choiceSeeder';
@@ -88,20 +90,21 @@ const modelSync = async (dropTables = false) => {
   await Boss.sync(options);
   await Choice.sync(options);
   await Event.sync(options);
-  await Character.sync(options).then(() => console.log('Char Table Created')).catch((err) => console.log('char table err', err));
   await User.sync(options);
-  await Character_Ally.sync(options);
+  await Character.sync(options).then(() => console.log('Char Table Created')).catch((err) => console.log('char table err', err));
+  //await Character_Ally.sync(options);
   await Location_Event.sync(options);
   await Story.sync(options);
   //await Icon.sync(options);
   // ↑↑↑ Tables Synced ↑↑↑
   // ↓↓↓  Seed Tables  ↓↓↓
+  await userSeeder(userSeed);
   await itemSeeder(itemSeed);
   await enemySeeder(enemySeed);
   await allySeeder(allySeed);
   await locationSeeder(locationSeed);
   await bossSeeder(bossSeed);
-  await characterSeeder(characterSeed);
+  await characterSeeder(characterSeed).catch((err => { console.log('Dis sheet es FUCKED, yo!'); }));
   await choiceSeeder(choiceSeed);
   await eventSeeder(eventSeed);
   // await characterAllySeeder(characterAllySeed);
