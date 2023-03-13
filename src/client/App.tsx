@@ -45,7 +45,7 @@ const App = () => {
   const [investigateDisabled, setInvestigateDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
-  // const speechElements = useRef<HTMLElement[]>([]);
+
   // item bonus/inventory state
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
 
