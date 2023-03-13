@@ -40,7 +40,7 @@ const LeaderBoard: React.FC = () => {
       <tbody>
         {leaders.map((leader: Leader, i: number) => (
           <TableRow key={i}>
-            <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '100%', height: '%' }}/></Td>
+            <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '100%', height: '100%' }}/></Td>
             <Td>{leader.name}</Td>
             <Td>{leader.score}</Td>
           </TableRow>
