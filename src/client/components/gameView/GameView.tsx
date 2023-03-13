@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
   Container, Main, Content1, KillFeed,
-  Content2, Content3, Footer, HudButton,
+  Content2, Content3, Footer, HudButton, InventoryTextBubble,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
@@ -67,6 +67,8 @@ const GameView = (props: GameViewProps) => {
   const [temporaryStrength, setTemporaryStrength] = useState(0);
   const [temporaryEndurance, setTemporaryEndurance] = useState(0);
   const [temporaryMood, setTemporaryMood] = useState(0);
+
+  const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
 
   const fetchEvent = () => {
     setTempText('');
@@ -195,6 +197,15 @@ const GameView = (props: GameViewProps) => {
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
+ 
+  const handleOnMouseEnter = (item: Item) => {
+    setHoveredItem(item);
+  };
+
+  const handleOnMouseLeave = () => {
+    setHoveredItem(null);
+  };
+ 
   const handleDropItem = async (itemID, i) => {
     console.log('location in handleDropItem', location);
     await setLocation(currLocation => ({
@@ -695,20 +706,23 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <Modal centered show={showLocationModal} onHide={handleCloseLocationModal}>
+              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
                 <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>Pick your next location</Modal.Title>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
-                  <p onClick={props.handleSpeak}>You have visited all locations, </p>
-                  <p onClick={props.handleSpeak}>choose where to go next: </p>
-                  <p onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')}</p>
-                  <p onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')}</p>
-                  <p onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')}</p>
-                  <p onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')}</p>
-                  <style>{'p { cursor: pointer; } p:hover { color: blue; } '}</style>
+                  <ModalBodyContainer>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                    <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
+                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                  </ModalBodyContainer>
                 </Modal.Body>
-              </Modal>
+              </StyledModal>
             </Content1>
           </Link>
           <Content1>
@@ -729,7 +743,7 @@ const GameView = (props: GameViewProps) => {
                   <div onClick={props.handleSpeak}>Look for items</div>
                   <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
                   <div onClick={props.handleSpeak}>Look for graffiti</div>
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_message}"`)}>Choice 2</HudButton>
                   <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                   <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                 </ModalBodyContainer>
@@ -761,16 +775,38 @@ const GameView = (props: GameViewProps) => {
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
+            {hoveredItem && (
+              <InventoryTextBubble>
+                {hoveredItem.modifier0 && (
+                  <>
+                    <h5> {hoveredItem.modifier0} + {hoveredItem.modified_stat0}</h5>
+                    <br />
+                  </>
+                )}
+                {hoveredItem.modifier1 && (
+                  <>
+                    <h5> {hoveredItem.modifier1} + {hoveredItem.modified_stat1} </h5>
+                    <br />
+                  </>
+                )}
+              </ InventoryTextBubble>
+            )}
             <InventoryStyle className='itemWidgets'>
-              {
-                fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}
-                    className="itemWidget"
-                    draggable
-                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); }}>
-                    <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
-                })
-              }
+              {fetchedInventory.map((item: Item, i) => (
+                <div
+                  key={i}
+                  className="itemWidget"
+                  draggable
+                  onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                  onMouseEnter={() => handleOnMouseEnter(item)}
+                  onMouseLeave={() => handleOnMouseLeave()}
+                >
+                  <IconContainer>
+                    {item.name}
+                    <IconImg src={item.image_url} />
+                  </IconContainer>
+                </div>
+              ))}
             </InventoryStyle>
           </InventoryBorder>
         </CharStatusContainer>

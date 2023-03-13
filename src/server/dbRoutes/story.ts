@@ -62,10 +62,8 @@ storyRouter.post('/ending/:charID', (req, res) => {
   //     console.log('req body: ', req.body);
   //     console.log('story response char_choices: ', storyResponse[0].dataValues.char_choices);
   //     storyResponse[0].dataValues.char_choices.push(req.body.result)
-  Story.update({
-    char_choices: sequelize.fn('array_append', sequelize.col('char_choices'), req.body.result)
-  },
-  { where: { character_id: req.params.charID } }
+  Story.update({ char_choices: sequelize.fn('array_append', sequelize.col('char_choices'), req.body.result) },
+    { where: { character_id: req.params.charID } }
   ).then((rowsUpdated: any) => { res.status(204).send(rowsUpdated); });
 });
 //});

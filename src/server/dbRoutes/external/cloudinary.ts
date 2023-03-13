@@ -19,7 +19,6 @@ cloudinaryRouter.get('/get', (req, res) => {
     prefix: `${folder}`
   })
     .then(response => {
-      console.log('RESPONSE FROM CLOUDINARY', response);
       res.send(response.resources);
     })
     .catch(err => {
@@ -40,7 +39,7 @@ cloudinaryRouter.post('/post', (req, res) => {
   const faceID = findPublicID(middleImageUrl, 'face');
   const bodyID = findPublicID(bottomImageUrl, 'body');
   console.log('UNDEFINED?', characterObj);
-  console.log('HAIR?', topImageUrl);
+  console.log('HAIR?', hairID);
   cloudinary.v2.uploader.explicit(bodyID, {
     type: 'upload',
     eager: [
