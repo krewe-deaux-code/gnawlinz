@@ -12,7 +12,7 @@ import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
   Container, Main, Content1, KillFeed,
-  Content2, Content3, Footer, HudButton,
+  Content2, Content3, Footer, HudButton, InventoryTextBubble,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
@@ -67,6 +67,8 @@ const GameView = (props: GameViewProps) => {
   const [temporaryStrength, setTemporaryStrength] = useState(0);
   const [temporaryEndurance, setTemporaryEndurance] = useState(0);
   const [temporaryMood, setTemporaryMood] = useState(0);
+
+  const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
 
   const fetchEvent = () => {
     setTempText('');
@@ -195,6 +197,15 @@ const GameView = (props: GameViewProps) => {
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
+ 
+  const handleOnMouseEnter = (item: Item) => {
+    setHoveredItem(item);
+  };
+
+  const handleOnMouseLeave = () => {
+    setHoveredItem(null);
+  };
+ 
   const handleDropItem = async (itemID, i) => {
     console.log('location in handleDropItem', location);
     await setLocation(currLocation => ({
@@ -341,7 +352,7 @@ const GameView = (props: GameViewProps) => {
     e.preventDefault();
   };
 
- 
+
 
   //  *********************************************************************************************************************************************************************************************
 
@@ -817,16 +828,38 @@ const GameView = (props: GameViewProps) => {
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
+            {hoveredItem && (
+              <InventoryTextBubble>
+                {hoveredItem.modifier0 && (
+                  <>
+                    <h5> {hoveredItem.modifier0} + {hoveredItem.modified_stat0}</h5>
+                    <br />
+                  </>
+                )}
+                {hoveredItem.modifier1 && (
+                  <>
+                    <h5> {hoveredItem.modifier1} + {hoveredItem.modified_stat1} </h5>
+                    <br />
+                  </>
+                )}
+              </ InventoryTextBubble>
+            )}
             <InventoryStyle className='itemWidgets'>
-              {
-                fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}
-                    className="itemWidget"
-                    draggable
-                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); }}>
-                    <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
-                })
-              }
+              {fetchedInventory.map((item: Item, i) => (
+                <div
+                  key={i}
+                  className="itemWidget"
+                  draggable
+                  onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                  onMouseEnter={() => handleOnMouseEnter(item)}
+                  onMouseLeave={() => handleOnMouseLeave()}
+                >
+                  <IconContainer>
+                    {item.name}
+                    <IconImg src={item.image_url} />
+                  </IconContainer>
+                </div>
+              ))}
             </InventoryStyle>
           </InventoryBorder>
         </CharStatusContainer>
