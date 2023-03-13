@@ -47,7 +47,7 @@ storyRouter.post('/begin/:charID', (req, res) => {
   console.log('REQ OBJ: ', req);
   Story.create({
     character_id: req.params.charID,
-    char_choices: [req.body.backstory]
+    char_choices: ['You awoke from a Carnival bender to find yourself in a monster infested New Orleans! You set out to find supplies and vanquish that which should not be.']
   })
     .then((storyResponse: any) => {
       console.log('story object created in db: ', storyResponse);
