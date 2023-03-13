@@ -61,20 +61,16 @@ const Result = (props: GameViewProps) => {
               <p>{sentence}</p>
             </div>
           ))}
-          <Content1>
-            <Link to="/" style={{ textDecoration: 'none' }} >
-              <Content1>
-                <ResultButton>Play Again</ResultButton>
-              </Content1>
-            </Link>
-          </Content1>
         </ScrollableContainer>
+        <Content1>
+          <Link to="/" style={{ textDecoration: 'none' }} >
+            <Content1>
+              <ResultButton>Play Again</ResultButton>
+            </Content1>
+          </Link>
+        </Content1>
       </Story>
       <End><h2 onClick={props.handleSpeak}>{resultText}</h2>
-
-        {/* <div >
-          <img src={image} />
-        </div> */}
         <CharacterStatContainer>
           <div >
             <img src={image} />
@@ -84,16 +80,11 @@ const Result = (props: GameViewProps) => {
             <img src={currentChar.image_url} />
             <h4> Final Score: {currentChar.score} </h4>
           </div>
-          {/* <StatContainer onClick={props.handleSpeak}>
-            <div style={{ textDecoration: 'underline' }}>Status</div>
-            <div>Health: {currentChar.health > -1 ? currentChar.health : 0}</div>
-            <div>Mood: {currentChar.mood > -1 ? currentChar.mood : 0}</div>
-            <div>Score: {currentChar.score}</div>
-          </StatContainer> */}
         </CharacterStatContainer>
-
-        <h2 onClick={props.handleSpeak}>LeaderBoard</h2>
-        <LeaderBoard />
+        <ScrollableContainer>
+          <h2 onClick={props.handleSpeak}>LeaderBoard</h2>
+          <LeaderBoard />
+        </ScrollableContainer>
       </End>
     </Container>
   );
