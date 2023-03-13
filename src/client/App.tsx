@@ -75,10 +75,18 @@ const App = () => {
       })
       .catch((err) => console.error('error update from axios front end', err));
   };
-
+  const randomItem = (min, max) => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  };
   const locationUpdate = () => {
     console.log('WHAT AM I', location);
-    axios.patch<LocationData>(`/location/update/${location._id}`, location)
+    const randomItemLocation = location;
+    if (location.drop_item_slot === 1) {
+      if (Math.random() < 0.8) {
+        randomItemLocation.drop_item_slot = randomItem(1, 11);
+      }
+    }
+    axios.patch<LocationData>(`/location/update/${location._id}`, randomItemLocation)
       .then(() => console.log('location updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
