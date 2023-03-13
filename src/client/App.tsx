@@ -86,7 +86,7 @@ const App = () => {
         randomItemLocation.drop_item_slot = randomItem(1, 11);
       }
     }
-    axios.patch<LocationData>(`/location/update/${location._id}`, randomItemLocation)
+    axios.patch<LocationData>(`/location/update/${randomItemLocation._id}`, randomItemLocation)
       .then(() => console.log('location updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
