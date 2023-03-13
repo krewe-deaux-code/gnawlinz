@@ -6,7 +6,7 @@ import ProgressBar from 'react-bootstrap/ProgressBar';
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
-// import Investigate from './Investigate';
+
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
@@ -341,7 +341,7 @@ const GameView = (props: GameViewProps) => {
     e.preventDefault();
   };
 
- 
+
 
   //  *********************************************************************************************************************************************************************************************
 
@@ -462,10 +462,10 @@ const GameView = (props: GameViewProps) => {
   const handleShow = () => setShow(true);
 
   // write graffiti button function, shows input field and tag it button
-  const handleTextBoxClick = () => {
-    setShowTextBox(true);
-    setShowButton(true);
-  };
+  // const handleTextBoxClick = () => {
+  //   setShowTextBox(true);
+  //   setShowButton(true);
+  // };
 
   // closes input field
   const handleTextBoxClose = () => {
@@ -477,39 +477,6 @@ const GameView = (props: GameViewProps) => {
   };
 
   // search dropped item based on current location, update location database
-  // const retrieveDropItem = (number) => {
-
-  //   axios.get(`/location/${number}`)
-  //     .then((location: any) => {
-  //       if (location.data.drop_item_slot === 1) {
-  //         setModalText('You search for items, but didn\'t find anything');
-  //       } else {
-  //         axios.get(`item/${location.data.drop_item_slot}`)
-  //           .then((response: any) => {
-  //             setModalText(`You searched for items and found ${response.data.name}`);
-  //           })
-  //           .catch((err) => {
-  //             console.error('Failed to get item id from item table', err);
-  //           })
-  //           .then(() => {
-  //             axios.patch(`/location/update/${number}`, {
-  //               drop_item_slot: 1
-  //             });
-  //             setCurrentChar(prevChar => ({
-  //               ...prevChar,
-  //               inventory: addItem(currentChar.inventory, location.data.drop_item_slot)
-  //             }));
-  //           })
-  //           .catch((err) => {
-  //             console.error('Failed to update the state of location', err);
-  //           });
-  //       }
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed to get drop item from location', err);
-  //     });
-
-  // };
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
       setModalText('You search for items, but didn\'t find anything');
@@ -532,29 +499,6 @@ const GameView = (props: GameViewProps) => {
     }
   };
 
-
-  // const updateGraffitiMsg = () => {
-  //   axios.patch(`/location/update/${location._id}`, {
-  //     graffiti_msg: inputValue
-  //   })
-  //     .then(() => {
-  //       //console.log('Graffiti message updated');
-  //       setLocation(location => ({
-  //         ...location,
-  //         graffiti_msg: inputValue
-  //       }));
-  //       setInputValue('');
-  //       setVisited(prevVisited => prevVisited.map(item => {
-  //         if (item.name === location.name) {
-  //           return location;
-  //         }
-  //         return item;
-  //       }));
-  //     })
-  //     .catch((err) => {
-  //       console.error('Failed to update graffiti message', err);
-  //     });
-  // };
 
   const updateGraffitiMsg = () => {
     setLocation(location => ({
