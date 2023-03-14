@@ -197,15 +197,17 @@ const GameView = (props: GameViewProps) => {
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
- 
+
   const handleOnMouseEnter = (item: Item) => {
-    setHoveredItem(item);
+    if (item._id !== 1) {
+      setHoveredItem(item);
+    }
   };
 
   const handleOnMouseLeave = () => {
     setHoveredItem(null);
   };
- 
+
   const handleDropItem = async (itemID, i) => {
     console.log('location in handleDropItem', location);
     await setLocation(currLocation => ({
@@ -382,7 +384,7 @@ const GameView = (props: GameViewProps) => {
             setShowEnemy(true);
             console.log('ENEMY STATE', currentEnemy);
             console.log('CURRENT CHAR', currentChar);
-            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
+            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, stat, currentChar.health);
             console.log('FIGHT RESULT', fightResult);
             // <-- player loses, adjust player health below
             if (fightResult.player || fightResult.player === 0) {
@@ -713,13 +715,13 @@ const GameView = (props: GameViewProps) => {
                 <Modal.Body >
                   <ModalBodyContainer>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
                   </ModalBodyContainer>
                 </Modal.Body>
               </StyledModal>
@@ -778,7 +780,7 @@ const GameView = (props: GameViewProps) => {
             {hoveredItem && (
               <InventoryTextBubble>
                 {hoveredItem.modifier0 && (
-                  <>
+                  <><h5>{hoveredItem.consumable === true ? 'Consumable' : ''}</h5>
                     <h5> {hoveredItem.modifier0} + {hoveredItem.modified_stat0}</h5>
                     <br />
                   </>
