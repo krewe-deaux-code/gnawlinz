@@ -12,6 +12,7 @@ export const statCheck = (stat: number) => {
 };
 
 export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStrength: number, playerHealth: number) => {
+  console.log('Player Strength in fightEnemy', playerStrength);
   const playerRoll = Math.floor(Math.random() * 4) + 1 + playerStrength;
   const enemyRoll = Math.floor(Math.random() * 4) + 1 + enemyStrength;
   console.log('ENEMY ROLL', enemyRoll);
