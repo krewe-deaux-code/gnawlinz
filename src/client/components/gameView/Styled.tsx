@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 
 export const Container = styled.div`
   display: grid;
-  width: 100%;
+  max-width: 100%;
   height: 100vh;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
@@ -15,12 +15,10 @@ export const Container = styled.div`
   transition: all 0.25s ease-in-out;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-rows: 0.1fr 0.7fr .3fr;
     grid-template-areas:
       "nav"
-      "sidebar"
       "main"
-      "content"
       "footer";
   }
   color: white;
@@ -41,7 +39,6 @@ export const ContentBox = styled.div`
 
 export const NavBar = styled.nav`
   background: #ffb700;
-  height: 100%;
   grid-area: nav;
   padding: 0.25rem;
   display: flex;

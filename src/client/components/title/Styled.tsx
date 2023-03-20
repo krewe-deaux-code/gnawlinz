@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 
 const TitleContainer = styled.div`
   display: grid;
-  height: 100vh;
+  height: 97vh;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
   "nav nav nav nav"
@@ -12,6 +12,14 @@ const TitleContainer = styled.div`
   text-align: center;
   /* grid-gap: 0.25rem; */
   transition: all 0.25s ease-in-out;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 0.6fr 0.2fr;
+    grid-template-areas:
+      "nav"
+      "main"
+      "footer";
+  }
   color: white;
   background-color: #121212;
 `;
@@ -32,7 +40,6 @@ const TitleImg = styled(motion.img)`
 `;
 
 const NavBar = styled.nav`
-  background: #3a3a55;
   grid-area: nav;
   padding: 0.25rem;
   background: #ffb700;
