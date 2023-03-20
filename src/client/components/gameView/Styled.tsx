@@ -226,17 +226,18 @@ export const HudButton = styled.button`
 
 export const EventText = styled.div`
   z-index: 3;
-  background-color: #808080a6;
+  background-color: rgb(92 92 92 / 65%);
+  backdrop-filter: blur(4px);
   color: white;
   padding: .4em;
   margin: auto;
   text-align: center;
   border: 1px solid;
   position: absolute;
-  height: 25%;
-  width: 50%;
-  top: 72%;
-  left: 25%;
+  height: 28%;
+  width: 42%;
+  top: 69%;
+  left: 29%;
   overflow: auto;
 `;
 
