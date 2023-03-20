@@ -103,6 +103,10 @@ export const Footer = styled.footer`
 export const CharImageStyles = styled.img`
 object-fit: contain;
 padding: auto;
+height: auto;
+width: auto;
+max-height: 276px;
+max-width: 183px;
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
@@ -188,6 +192,18 @@ justify-content: center;
 export const StatContainer2 = styled(StatContainer)`
   grid-area: stat2;
   grid-template-rows: .5fr 1fr;
+`;
+
+export const InventoryTextBubble = styled.div`
+position: absolute;
+bottom: 5rem;
+padding: 5px;
+font-size: 1rem;
+color: black;
+background-color: #fff;
+border: 1px solid #ccc;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+white-space: nowrap;
 `;
 
 
