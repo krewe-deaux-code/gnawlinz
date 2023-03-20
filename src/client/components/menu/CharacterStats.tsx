@@ -7,14 +7,14 @@ import Carousel from 'react-bootstrap/Carousel';
 import { UserContext } from '../../App'; // <-- holds User object
 import { Character } from '../../utility/interface';
 
-//import ItemSlots from './ItemSlots';
-// import CharacterLocation from './CharacterLocation';
+// make dummy char for Create New Char? option. silhoutte image below:
+// https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png
+// push dummy char on useEffect (first time render?) into userChars state array...
 
 const CharacterStats: React.FC = () => {
 
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
-  // const [ userChars, setUserChars ] = useState<Character[]>([]);
-  // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
+
   const [ /*index*/, setIndex] = useState(0);
   const [locationName, setLocationName] = useState('');
 
