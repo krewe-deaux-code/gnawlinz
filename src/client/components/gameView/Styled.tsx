@@ -24,7 +24,7 @@ export const Container = styled.div`
       "footer";
   }
   color: white;
-  background-color: black;
+  background-color: #1f2128;
 `;
 
 export const ContentBox = styled.div`
