@@ -194,6 +194,18 @@ export const StatContainer2 = styled(StatContainer)`
   grid-template-rows: .5fr 1fr;
 `;
 
+export const InventoryTextBubble = styled.div`
+position: absolute;
+bottom: 5rem;
+padding: 5px;
+font-size: 1rem;
+color: black;
+background-color: #fff;
+border: 1px solid #ccc;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+white-space: nowrap;
+`;
+
 
 
 export const TopContent1 = styled.div`
