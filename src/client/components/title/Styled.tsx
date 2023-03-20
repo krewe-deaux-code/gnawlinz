@@ -19,6 +19,8 @@ const TitleContainer = styled.div`
 const TitleLogoImg = styled(motion.img)`
   width: auto;
   height: auto;
+  min-width: 10rem;
+  min-height: 10rem;
   max-width: 30rem;
   max-height: 30rem;
   margin: 0 auto;
