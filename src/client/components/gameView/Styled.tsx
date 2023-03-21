@@ -22,7 +22,7 @@ export const Container = styled.div`
       "footer";
   }
   color: white;
-  background-color: black;
+  background-color: #1f2128;
 `;
 
 export const ContentBox = styled.div`
@@ -223,17 +223,18 @@ export const HudButton = styled.button`
 
 export const EventText = styled.div`
   z-index: 3;
-  background-color: #808080a6;
+  background-color: rgb(92 92 92 / 65%);
+  backdrop-filter: blur(4px);
   color: white;
   padding: .4em;
   margin: auto;
   text-align: center;
   border: 1px solid;
   position: absolute;
-  height: 25%;
-  width: 50%;
-  top: 72%;
-  left: 25%;
+  height: 28%;
+  width: 42%;
+  top: 69%;
+  left: 29%;
   overflow: auto;
 `;
 
@@ -285,32 +286,30 @@ export const EnemyImg = styled.img`
   right: 30%;
 `;
 
+export const KillFeedContainer = styled.div`
+  z-index: 2;
+  max-width: 250px;
+  max-height: 350px;
+  color: #22f122;
+  /* margin-bottom: 1px; */
+  margin-left: 3rem;
+  position: relative;
+  top: 100%;
+  left: 100%;
+  font-size: 12px;
+`;
+
 export const KillFeed = styled.div`
   z-index: 2;
   max-width: 250px;
   max-height: 28px;
   color: #22f122;
-  margin-bottom: 1px;
+  /* margin-bottom: 1px; */
+  /* margin-left: 3rem; */
   position: relative;
-  left: 78%;
+  /* top: 100%; */
+  /* left: 100%; */
   font-size: 11px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  &::-webkit-scrollbar {
-    /* height: 10px; */
-    width: 7px;
-    border: 1px solid black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-track {
-    background: black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-thumb {
-    background-color: #f0ac00;
-    border-radius: 5px;
-    background-size: 100%;
-  }
 `;
 
 export const ModalBodyContainer = styled.div`
@@ -327,4 +326,10 @@ export const ModalBodyContainer = styled.div`
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
 
+`;
+
+export const Page = styled.div`
+  display: grid;
+  align-items: center;
+  justify-content: center;
 `;
