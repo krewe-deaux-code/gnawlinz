@@ -289,32 +289,30 @@ export const EnemyImg = styled.img`
   right: 30%;
 `;
 
+export const KillFeedContainer = styled.div`
+  z-index: 2;
+  max-width: 250px;
+  max-height: 350px;
+  color: #22f122;
+  /* margin-bottom: 1px; */
+  margin-left: 3rem;
+  position: relative;
+  top: 100%;
+  left: 100%;
+  font-size: 12px;
+`;
+
 export const KillFeed = styled.div`
   z-index: 2;
   max-width: 250px;
   max-height: 28px;
   color: #22f122;
-  margin-bottom: 1px;
+  /* margin-bottom: 1px; */
+  /* margin-left: 3rem; */
   position: relative;
-  left: 78%;
+  /* top: 100%; */
+  /* left: 100%; */
   font-size: 11px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  &::-webkit-scrollbar {
-    /* height: 10px; */
-    width: 7px;
-    border: 1px solid black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-track {
-    background: black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-thumb {
-    background-color: #f0ac00;
-    border-radius: 5px;
-    background-size: 100%;
-  }
 `;
 
 export const ModalBodyContainer = styled.div`
@@ -331,4 +329,10 @@ export const ModalBodyContainer = styled.div`
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
 
+`;
+
+export const Page = styled.div`
+  display: grid;
+  align-items: center;
+  justify-content: center;
 `;

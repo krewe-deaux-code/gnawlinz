@@ -11,12 +11,12 @@ import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1, KillFeed,
+  Container, Main, Content1, KillFeed, KillFeedContainer,
   Content2, Content3, Footer, HudButton, InventoryTextBubble,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
-  StatBonusColor, StatContainer2, StatIconContainer,
+  StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer, StyledModal
 } from './Styled'; //ContentBox
 
@@ -447,12 +447,16 @@ const GameView = (props: GameViewProps) => {
   const appendToKillFeed = (death) => {
     //console.log('inside player died function');
     setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+    setTimeout(expireKillFeed, 10000);
   };
 
   const handlePlayerDied = () => {
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
+  const expireKillFeed = () => {
+    setKillFeed(prevKillFeed => prevKillFeed.slice(1));
+  };
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
@@ -615,13 +619,6 @@ const GameView = (props: GameViewProps) => {
       <Nav isActive={true} />
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
-        <KillFeed>
-          {
-            killFeed.length
-              ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
-              : <div onClick={handlePlayerDied}>R.I.P</div>
-          }
-        </KillFeed>
         <div>
           {
             showAlly
@@ -660,10 +657,19 @@ const GameView = (props: GameViewProps) => {
               }
             </ScrollableContainer>
           </EventText>
-          <div className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
+          <Page className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
+            <KillFeedContainer>
+              R.I.P
+              <KillFeed>
+                {
+                  killFeed.length
+                    ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
+                    : <p onClick={handlePlayerDied}>test</p>
+                }
+              </KillFeed>
+            </KillFeedContainer>
             <img src={location.image_url}></img>
-
-          </div>
+          </Page>
           {
             damageToEnemy > 0
               ? <motion.div
