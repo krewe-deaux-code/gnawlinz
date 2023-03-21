@@ -35,6 +35,29 @@ const TitleLogoImg = styled(motion.img)`
   margin: 0 auto;
 `;
 
+const TitleButton = styled.button`
+  background-color: #0050ec;
+  font-family: 'Edit Undo BRK', sans-serif;
+  color: white;
+  font-size: 1rem;
+  font-weight: bold;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  margin-top: 1rem;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #0e285d;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #0e285d;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #0e285d;
+  }
+`;
+
 const TitleImg = styled(motion.img)`
   width: auto;
   height: auto;
@@ -86,5 +109,5 @@ export {
   TitleContainer, NavBar, Main,
   Content1, Content2, Content3,
   Footer, VolumeSlider, TitleLogoImg,
-  TitleImg
+  TitleImg, TitleButton
 };

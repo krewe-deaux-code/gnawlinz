@@ -1,7 +1,7 @@
 import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
-import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg } from './Styled';
+import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg, TitleButton } from './Styled';
 
 
 const Title: React.FC = () => {
@@ -23,9 +23,9 @@ const Title: React.FC = () => {
         />
       </Main>
       <Footer>
-        <button>
-          <a href="/auth/google">Sign In</a>
-        </button>
+        <TitleButton href="/auth/google">
+          <a style={{textDecoration: 'none' }} href="/auth/google">Sign In</a>
+        </TitleButton>
       </Footer>
     </TitleContainer>
   );
