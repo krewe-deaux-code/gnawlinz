@@ -2,20 +2,28 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
+  width: 100%;
   height: 100vh;
-  grid-template-rows: 0.1fr 1fr;
+  grid-template-rows: 0.05fr 0.95fr;
   grid-template-areas:
     "nav nav"
     "end  story";
   text-align: center;
   grid-gap: 0.25rem;
-  transition: all 0.25s ease-in-out;
   grid-template-columns: .5fr .5fr;
+  transition: all 0.25s ease-in-out;
   color: white;
+  @media (max-width: 550px) {
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.2fr 0.4fr 0.4fr;
+    grid-template-areas:
+      "nav"
+      "end"
+      "story";
+  }
 `;
 
 export const NavBar = styled.nav`
-  background: #3a3a55;
   grid-area: nav;
   padding: 0.25rem;
   background: #ffb700;
