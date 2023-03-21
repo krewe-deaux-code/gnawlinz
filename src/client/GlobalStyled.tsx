@@ -5,12 +5,13 @@ export const GlobalStyle = createGlobalStyle`
 
   HTML {
     background-color: #121212;
-    background-size: cover;
+    background-size:  100%;
   }
   body {
     font-family: 'Edit Undo BRK', sans-serif !important;
-    height: 100vh;
+    height: 100%;
     width: 100%;
+    margin: 0;
     background-color: black !important;
     background-size: cover;
     box-sizing: border-box;
