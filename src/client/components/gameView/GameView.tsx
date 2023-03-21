@@ -69,6 +69,7 @@ const GameView = (props: GameViewProps) => {
   const [temporaryMood, setTemporaryMood] = useState(0);
 
   const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
+  const [showEvent, setShowEvent] = useState(true);
 
   const fetchEvent = () => {
     setTempText('');
@@ -111,6 +112,9 @@ const GameView = (props: GameViewProps) => {
 
   const handleClickButt = () => {
     setInvestigateDisabled(true);
+  };
+  const handleToggleEvent = () => {
+    setShowEvent(showEvent ? false : true);
   };
 
   // NPC
@@ -631,7 +635,7 @@ const GameView = (props: GameViewProps) => {
               ? <EnemyImg src={currentEnemy.image_url} />
               : <></>
           }
-          <EventText>
+          <EventText show={showEvent}>
             <ScrollableContainer>
               {
                 Object.entries(event).length
@@ -819,6 +823,7 @@ const GameView = (props: GameViewProps) => {
           </InventoryBorder>
         </CharStatusContainer>
         <Content2>
+          <div><button onClick={handleToggleEvent}>Toggle Event</button></div>
           <HudButton onClick={() => {
             hit.play();
             // <-- handleEnemy func ??
@@ -849,6 +854,7 @@ const GameView = (props: GameViewProps) => {
             setTemporaryStrength(0);
           }}>Wildcard</HudButton>
         </Content2>
+
       </Footer >
     </Container >
   );
