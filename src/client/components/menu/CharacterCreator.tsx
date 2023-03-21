@@ -153,7 +153,7 @@ const CharacterCreator: React.FC = () => {
 
   return (
     <CCContainer id='CCContainer'>
-      <LeftSpacer id='LSpacer'>Left Spacer</LeftSpacer>
+      <LeftSpacer id='LSpacer'></LeftSpacer>
       <CharacterContainer id='CharContainer'>
 
         <AvatarContainer id='Avatar Container'>
@@ -245,7 +245,7 @@ const CharacterCreator: React.FC = () => {
           <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)}>+</button>
         </IconContainer>
       </StatsContainer>
-      <RightSpacer id='RSpacer'>Right Spacer</RightSpacer>
+      <RightSpacer id='RSpacer'></RightSpacer>
     </CCContainer>
   );
 };
