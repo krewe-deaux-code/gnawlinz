@@ -238,6 +238,7 @@ export const EventText = styled.div`
   top: 72%;
   left: 25%;
   overflow: auto;
+  ${props => (props.show ? '' : 'visibility: hidden')}
 `;
 
 export const ScrollableContainer = styled.div`
