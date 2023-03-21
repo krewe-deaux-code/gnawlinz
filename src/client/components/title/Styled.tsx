@@ -31,12 +31,14 @@ const TitleLogoImg = styled(motion.img)`
   min-height: 10rem;
   max-width: 30rem;
   max-height: 30rem;
+  padding: .25rem;
   margin: 0 auto;
 `;
 
 const TitleImg = styled(motion.img)`
   width: auto;
   height: auto;
+  padding: .25rem;
 `;
 
 const NavBar = styled.nav`
