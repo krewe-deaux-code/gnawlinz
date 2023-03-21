@@ -54,7 +54,9 @@ const Result = (props: GameViewProps) => {
   return (
     <Container>
       <Nav isActive={true} />
-      <Story><h2 onClick={props.handleSpeak}>User Story</h2>
+      <Story>
+
+        <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
         <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
             <div key={index} style={{ border: '1px solid black', margin: '10px' }}>
@@ -70,17 +72,12 @@ const Result = (props: GameViewProps) => {
           </Link>
         </Content1>
       </Story>
-      <End><h2 onClick={props.handleSpeak}>{resultText}</h2>
-        <CharacterStatContainer>
-          <div >
-            <img src={image} />
-          </div>
-          <div>
-            {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-            <img src={currentChar.image_url} />
-            <h4> Final Score: {currentChar.score} </h4>
-          </div>
-        </CharacterStatContainer>
+      <End>
+        <div>
+          {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
+          <img src={currentChar.image_url} />
+          <h4> Final Score: {currentChar.score} </h4>
+        </div>
         <ScrollableContainer>
           <h2 onClick={props.handleSpeak}>LeaderBoard</h2>
           <LeaderBoard />
