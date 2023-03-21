@@ -11,12 +11,12 @@ import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import {
-  Container, Main, Content1, KillFeed,
-  Content2, Content3, Footer, HudButton,
+  Container, Main, Content1, KillFeed, KillFeedContainer,
+  Content2, Content3, Footer, HudButton, InventoryTextBubble,
   EventText, StatContainer, ScrollableContainer,
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
-  StatBonusColor, StatContainer2, StatIconContainer,
+  StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer, StyledModal
 } from './Styled'; //ContentBox
 
@@ -67,6 +67,8 @@ const GameView = (props: GameViewProps) => {
   const [temporaryStrength, setTemporaryStrength] = useState(0);
   const [temporaryEndurance, setTemporaryEndurance] = useState(0);
   const [temporaryMood, setTemporaryMood] = useState(0);
+
+  const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
 
   const fetchEvent = () => {
     setTempText('');
@@ -195,6 +197,17 @@ const GameView = (props: GameViewProps) => {
 
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
+
+  const handleOnMouseEnter = (item: Item) => {
+    if (item._id !== 1) {
+      setHoveredItem(item);
+    }
+  };
+
+  const handleOnMouseLeave = () => {
+    setHoveredItem(null);
+  };
+
   const handleDropItem = async (itemID, i) => {
     console.log('location in handleDropItem', location);
     await setLocation(currLocation => ({
@@ -371,7 +384,7 @@ const GameView = (props: GameViewProps) => {
             setShowEnemy(true);
             console.log('ENEMY STATE', currentEnemy);
             console.log('CURRENT CHAR', currentChar);
-            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, currentChar.strength, currentChar.health);
+            const fightResult = fightEnemy(currentEnemy.strength, currentEnemy.health, stat, currentChar.health);
             console.log('FIGHT RESULT', fightResult);
             // <-- player loses, adjust player health below
             if (fightResult.player || fightResult.player === 0) {
@@ -434,12 +447,16 @@ const GameView = (props: GameViewProps) => {
   const appendToKillFeed = (death) => {
     //console.log('inside player died function');
     setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+    setTimeout(expireKillFeed, 10000);
   };
 
   const handlePlayerDied = () => {
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
+  const expireKillFeed = () => {
+    setKillFeed(prevKillFeed => prevKillFeed.slice(1));
+  };
 
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
@@ -602,13 +619,6 @@ const GameView = (props: GameViewProps) => {
       <Nav isActive={true} />
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
-        <KillFeed>
-          {
-            killFeed.length
-              ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
-              : <div onClick={handlePlayerDied}>R.I.P</div>
-          }
-        </KillFeed>
         <div>
           {
             showAlly
@@ -647,10 +657,19 @@ const GameView = (props: GameViewProps) => {
               }
             </ScrollableContainer>
           </EventText>
-          <div className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
+          <Page className="page" onDrop={handleDropItemOnLocation} onDragOver={handleDragOver}>
+            <KillFeedContainer>
+              R.I.P
+              <KillFeed>
+                {
+                  killFeed.length
+                    ? killFeed.map((death, i) => <p key={i} onClick={handlePlayerDied}>{death}</p>)
+                    : <p onClick={handlePlayerDied}>test</p>
+                }
+              </KillFeed>
+            </KillFeedContainer>
             <img src={location.image_url}></img>
-
-          </div>
+          </Page>
           {
             damageToEnemy > 0
               ? <motion.div
@@ -702,13 +721,13 @@ const GameView = (props: GameViewProps) => {
                 <Modal.Body >
                   <ModalBodyContainer>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
                     <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
-                    <HudButton style={{fontSize: '1.3rem'}} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
                   </ModalBodyContainer>
                 </Modal.Body>
               </StyledModal>
@@ -764,16 +783,38 @@ const GameView = (props: GameViewProps) => {
           </StatContainer2>
           <InventoryBorder>
             <h4>Inventory</h4>
+            {hoveredItem && (
+              <InventoryTextBubble>
+                {hoveredItem.modifier0 && (
+                  <><h5>{hoveredItem.consumable === true ? 'Consumable' : ''}</h5>
+                    <h5> {hoveredItem.modifier0} + {hoveredItem.modified_stat0}</h5>
+                    <br />
+                  </>
+                )}
+                {hoveredItem.modifier1 && (
+                  <>
+                    <h5> {hoveredItem.modifier1} + {hoveredItem.modified_stat1} </h5>
+                    <br />
+                  </>
+                )}
+              </ InventoryTextBubble>
+            )}
             <InventoryStyle className='itemWidgets'>
-              {
-                fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}
-                    className="itemWidget"
-                    draggable
-                    onDragStart={(e) => { handleOnDragItem(e, item._id, i); }}>
-                    <IconContainer>{item.name}<IconImg src={item.image_url}></IconImg></IconContainer></div>;
-                })
-              }
+              {fetchedInventory.map((item: Item, i) => (
+                <div
+                  key={i}
+                  className="itemWidget"
+                  draggable
+                  onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                  onMouseEnter={() => handleOnMouseEnter(item)}
+                  onMouseLeave={() => handleOnMouseLeave()}
+                >
+                  <IconContainer>
+                    {item.name}
+                    <IconImg src={item.image_url} />
+                  </IconContainer>
+                </div>
+              ))}
             </InventoryStyle>
           </InventoryBorder>
         </CharStatusContainer>

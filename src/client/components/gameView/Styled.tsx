@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 
 export const Container = styled.div`
   display: grid;
-  width: 100%;
+  max-width: 100%;
   height: 100vh;
   grid-template-rows: 0.10fr .70fr 0.30fr;
   grid-template-areas:
@@ -15,16 +15,14 @@ export const Container = styled.div`
   transition: all 0.25s ease-in-out;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.4fr 0.4fr 2.2fr 1.2fr 1fr;
+    grid-template-rows: 0.1fr 0.7fr .3fr;
     grid-template-areas:
       "nav"
-      "sidebar"
       "main"
-      "content"
       "footer";
   }
   color: white;
-  background-color: black;
+  background-color: #1f2128;
 `;
 
 export const ContentBox = styled.div`
@@ -41,7 +39,6 @@ export const ContentBox = styled.div`
 
 export const NavBar = styled.nav`
   background: #ffb700;
-  height: 100%;
   grid-area: nav;
   padding: 0.25rem;
   display: flex;
@@ -103,6 +100,10 @@ export const Footer = styled.footer`
 export const CharImageStyles = styled.img`
 object-fit: contain;
 padding: auto;
+height: auto;
+width: auto;
+max-height: 276px;
+max-width: 183px;
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
@@ -190,6 +191,18 @@ export const StatContainer2 = styled(StatContainer)`
   grid-template-rows: .5fr 1fr;
 `;
 
+export const InventoryTextBubble = styled.div`
+position: absolute;
+bottom: 5rem;
+padding: 5px;
+font-size: 1rem;
+color: black;
+background-color: #fff;
+border: 1px solid #ccc;
+box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+white-space: nowrap;
+`;
+
 
 
 export const TopContent1 = styled.div`
@@ -210,17 +223,18 @@ export const HudButton = styled.button`
 
 export const EventText = styled.div`
   z-index: 3;
-  background-color: #808080a6;
+  background-color: rgb(92 92 92 / 65%);
+  backdrop-filter: blur(4px);
   color: white;
   padding: .4em;
   margin: auto;
   text-align: center;
   border: 1px solid;
   position: absolute;
-  height: 25%;
-  width: 50%;
-  top: 72%;
-  left: 25%;
+  height: 28%;
+  width: 42%;
+  top: 69%;
+  left: 29%;
   overflow: auto;
 `;
 
@@ -272,32 +286,30 @@ export const EnemyImg = styled.img`
   right: 30%;
 `;
 
+export const KillFeedContainer = styled.div`
+  z-index: 2;
+  max-width: 250px;
+  max-height: 350px;
+  color: #22f122;
+  /* margin-bottom: 1px; */
+  margin-left: 3rem;
+  position: relative;
+  top: 100%;
+  left: 100%;
+  font-size: 12px;
+`;
+
 export const KillFeed = styled.div`
   z-index: 2;
   max-width: 250px;
   max-height: 28px;
   color: #22f122;
-  margin-bottom: 1px;
+  /* margin-bottom: 1px; */
+  /* margin-left: 3rem; */
   position: relative;
-  left: 78%;
+  /* top: 100%; */
+  /* left: 100%; */
   font-size: 11px;
-  overflow-y: scroll;
-  scroll-behavior: smooth;
-  &::-webkit-scrollbar {
-    /* height: 10px; */
-    width: 7px;
-    border: 1px solid black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-track {
-    background: black;
-    border-radius: 5px;
-  }
-  &&::-webkit-scrollbar-thumb {
-    background-color: #f0ac00;
-    border-radius: 5px;
-    background-size: 100%;
-  }
 `;
 
 export const ModalBodyContainer = styled.div`
@@ -314,4 +326,10 @@ export const ModalBodyContainer = styled.div`
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
 
+`;
+
+export const Page = styled.div`
+  display: grid;
+  align-items: center;
+  justify-content: center;
 `;

@@ -6,14 +6,15 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
 import { Character } from '../../utility/interface';
-//import ItemSlots from './ItemSlots';
-// import CharacterLocation from './CharacterLocation';
+
+// make dummy char for Create New Char? option. silhoutte image below:
+// https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png
+// push dummy char on useEffect (first time render?) into userChars state array...
 
 const CharacterStats: React.FC = () => {
 
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
-  // const [ userChars, setUserChars ] = useState<Character[]>([]);
-  // const [ currentChar, setCurrentChar ] = useState<Character | null>(null);
+
   const [ /*index*/, setIndex] = useState(0);
   const [locationName, setLocationName] = useState('');
 
@@ -33,7 +34,7 @@ const CharacterStats: React.FC = () => {
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
   };
 
-  const fetchUserChars = async() => {
+  const fetchUserChars = async () => {
     // handle_id = activeUser.google_id || '420';
     // console.log('here handle_id change', handle_id);
     // console.log('ACTIVE USER GOOGLE ID', activeUser.google_id);
@@ -51,7 +52,7 @@ const CharacterStats: React.FC = () => {
       .catch((err) => {
         console.error('Front End side fetchUserChars from server', err);
       });
-    console.log('fetched Chars on State: ', userChars);
+    console.log('USER CHARS', userChars);
   };
 
   const getLocationById = (locationId) => {
@@ -93,7 +94,7 @@ const CharacterStats: React.FC = () => {
           {
             userChars.map((char: Character, i: number) => {
               return <Carousel.Item key={i}>
-                <img src={char.image_url} />
+                <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
                 <StatName>Name: {char.name}</StatName>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
                 <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>

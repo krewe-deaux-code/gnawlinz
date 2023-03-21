@@ -43,5 +43,5 @@ export const locationSeed = [
     drop_item_slot: 3,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
     graffiti_msg: 'Winner, Winner, Chicken Dinner'
-  },
+  }
 ];
