@@ -314,14 +314,13 @@ export const KillFeed = styled.div`
 `;
 
 export const ModalBodyContainer = styled.div`
-  grid-template-columns: .5fr .5fr;
+  grid-template-rows: auto auto auto;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
   display: grid;
   gap: 0.25rem;
   align-content: space-evenly;
-  grid-template-columns: .5fr .5fr;
 `;
 
 export const StyledModal = styled(Modal)`
