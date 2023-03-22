@@ -17,7 +17,8 @@ import {
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
-  TinyStatIconImg, TempStatBonusColor, ModalBodyContainer, StyledModal
+  TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
+  StyledModal, ArcadeButton
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -826,35 +827,40 @@ const GameView = (props: GameViewProps) => {
         </CharStatusContainer>
         <Content2>
           <div><button onClick={handleToggleEvent}>Toggle Event</button></div>
-          <HudButton onClick={() => {
-            hit.play();
-            // <-- handleEnemy func ??
-            resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Engage</HudButton>
-          <HudButton onClick={() => {
-            dodge.play();
-            resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Evade</HudButton>
-          <HudButton onClick={() => {
-            evacuate.play();
-            resolveChoice(choices.evacuate, 'evacuate', 0);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Evacuate</HudButton>
-          <HudButton onClick={() => {
-            wildCard.play();
-            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
-            setTemporaryMood(0);
-            setTemporaryStrength(0);
-            setTemporaryStrength(0);
-          }}>Wildcard</HudButton>
+          <div>
+            <h5>Engage</h5>
+            <ArcadeButton onClick={() => {
+              hit.play();
+              // <-- handleEnemy func ??
+              resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Evade</h5>
+            <ArcadeButton onClick={() => {
+              dodge.play();
+              resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Evacuate</h5>
+            <ArcadeButton onClick={() => {
+              evacuate.play();
+              resolveChoice(choices.evacuate, 'evacuate', 0);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Wildcard</h5>
+            <ArcadeButton onClick={() => {
+              wildCard.play();
+              resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
+              setTemporaryMood(0);
+              setTemporaryStrength(0);
+              setTemporaryStrength(0);
+            }} /></div>
         </Content2>
 
       </Footer >

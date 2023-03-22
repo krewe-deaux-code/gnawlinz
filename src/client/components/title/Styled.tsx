@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const TitleContainer = styled.div`
   display: grid;
   height: 97vh;
-  grid-template-rows: 0.10fr .70fr 0.30fr;
+  grid-template-rows: 0.50fr .70fr 0.30fr;
   grid-template-areas:
   "nav nav nav nav"
   "main main main main"
@@ -25,16 +25,41 @@ const TitleContainer = styled.div`
 `;
 
 const TitleLogoImg = styled(motion.img)`
-  width: auto;
+  width: 100%;
   height: auto;
-  max-width: 30rem;
-  max-height: 30rem;
-  margin: 0 auto;
+  justify-content: flex-start;
+  align-items: center;
+  object-fit: cover;
+  padding: .25rem;
+`;
+
+const TitleButton = styled.button`
+  background-color: #931a03;
+  color: white !important;
+  font-family: 'Edit Undo BRK', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #60180e;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #60180e;
+  }
 `;
 
 const TitleImg = styled(motion.img)`
-  width: auto;
+  width: 100%;
   height: auto;
+  border-radius: 1rem;
+  padding: .25rem;
 `;
 
 const NavBar = styled.nav`
@@ -82,5 +107,5 @@ export {
   TitleContainer, NavBar, Main,
   Content1, Content2, Content3,
   Footer, VolumeSlider, TitleLogoImg,
-  TitleImg
+  TitleImg, TitleButton
 };
