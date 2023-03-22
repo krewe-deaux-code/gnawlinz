@@ -452,11 +452,13 @@ const GameView = (props: GameViewProps) => {
   // callback for PlayerDied event listener
   const appendToKillFeed = (death) => {
     //console.log('inside player died function');
-    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-    setTimeout(expireKillFeed, 10000);
+    if (!killFeed.includes(death)) {
+      setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+      setTimeout(expireKillFeed, 10000);
+    }
   };
 
-  const handlePlayerDied = () => {
+  const handlePlayerDied = () => { // **
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 

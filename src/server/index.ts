@@ -88,8 +88,8 @@ io.on('connection', (socket) => {
   // send a message to the client
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
-  socket.on('player_died', (charName = 'someone', location = 'somewhere', cause = 'heart attack') => {
-    const death = `- ${charName} died from a ${cause} at ${location}`;
+  socket.on('player_died', (charName = 'someone', location = 'somewhere', cause = 'a heart attack') => {
+    const death = `- ${charName} died from ${cause} at ${location}`;
     console.log(death);
     socket.broadcast.emit('kill_feed', death); // socket.broadcast.emit **
   });
