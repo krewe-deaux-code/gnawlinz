@@ -237,7 +237,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679511485/gnawlinzIcons/armpng_tljlh3.png" />
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />
           <CCStatName id='statName'>Strength: {newChar.strength}
             <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ marginLeft: '2.29rem' }}>-</button>
             <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -253,7 +253,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679511487/gnawlinzIcons/moodpng_ed3wzw.png" />
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />
           <CCStatName id='statName'>Mood: {newChar.mood}
             <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ marginLeft: '5.24rem' }}>-</button>
             <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ marginLeft: '0.5rem' }}>+</button>
