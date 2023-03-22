@@ -1,5 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -59,13 +60,13 @@ export const Body = styled.div`
   text-align: center;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: rgb(31, 33, 40); /* changed from black */
   color: white;
 `;
 
 export const InfoContainer = styled.div`
   overflow: hidden;
-  background: black;
+  background: rgb(31, 33, 40); /* changed from black */
   height: 3em;
 
 `;
@@ -242,4 +243,8 @@ export const BodySlot = styled.img`
   place-self: start center;
   /* grid-area: hair; */
   z-index: 1;
+`;
+
+export const NameInput = styled(motion.input)`
+
 `;

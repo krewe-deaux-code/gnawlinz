@@ -12,7 +12,7 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     width: 100%;
     margin: 0;
-    background-color: black !important;
+    background-color: rgb(31, 33, 40) !important; /* changed from black */
     background-size: cover;
     box-sizing: border-box;
   }
