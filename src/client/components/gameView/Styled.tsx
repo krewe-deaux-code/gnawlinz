@@ -230,6 +230,7 @@ export const EventText = styled.div`
   margin: auto;
   text-align: center;
   border: 1px solid;
+  border-radius: 5px;
   position: absolute;
   height: 28%;
   width: 42%;
@@ -314,19 +315,18 @@ export const KillFeed = styled.div`
 `;
 
 export const ModalBodyContainer = styled.div`
-  grid-template-columns: .5fr .5fr;
+  grid-template-rows: auto auto auto;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
   display: grid;
   gap: 0.25rem;
   align-content: space-evenly;
-  grid-template-columns: .5fr .5fr;
 `;
 
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
-
+  backdrop-filter: blur(4px);
 `;
 
 export const Page = styled.div`
