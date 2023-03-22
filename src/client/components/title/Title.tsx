@@ -6,6 +6,10 @@ import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg, TitleButton } fro
 
 const Title: React.FC = () => {
 
+  const handleSignIn = () => {
+    window.location.href = '/auth/google';
+  };
+
   return (
     <TitleContainer>
       <Nav isActive={false} />
@@ -23,8 +27,8 @@ const Title: React.FC = () => {
         />
       </Main>
       <Footer>
-        <TitleButton href="/auth/google">
-          <a style={{textDecoration: 'none' }} href="/auth/google">Sign In</a>
+        <TitleButton onClick={handleSignIn}>
+          Sign In
         </TitleButton>
       </Footer>
     </TitleContainer>

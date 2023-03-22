@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
-import { Body, InfoContainer, Tab, Content, IconImg, IconContainer } from './Styled';
-
+import { useNavigate } from 'react-router-dom';
+import { Body, InfoContainer, Tab, Content, IconImg, IconContainer, MenuButton } from './Styled';
 import axios from 'axios';
 
 import CharacterCreator from './CharacterCreator';
@@ -20,7 +19,11 @@ const Menu: React.FC = () => {
 
   const [active, setActive] = useState(0);
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const navigate = useNavigate();
 
+  const handleClickStart = () => {
+    navigate('/game-view');
+  };
   // const handleItemLookup = () => {
   //   // setFetchedInventory([]);
   //   currentChar.inventory.forEach(item => {
@@ -141,9 +144,8 @@ const Menu: React.FC = () => {
             </div>
           </Content>
         </>
-        <button>
-          <Link to="/game-view">Start Game</Link>
-        </button>
+        <MenuButton onClick={handleClickStart}>Start Game
+        </MenuButton>
 
       </Body >
     </UserContext.Provider>

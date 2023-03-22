@@ -1,7 +1,28 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
-
 import 'bootstrap/dist/css/bootstrap.css';
+
+export const MenuButton = styled.button`
+background-color: #931a03;
+  color: white !important;
+  font-family: 'Edit Undo BRK', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #60180e;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #60180e;
+  }
+`;
 
 export const StatName = styled.h5`
   font-size: 1.5em;

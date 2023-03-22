@@ -333,3 +333,43 @@ export const Page = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
+const size = 7;
+
+export const ArcadeButton = styled.button`
+  position: relative;
+  display: inline-block;
+  width: ${size}rem;
+  height: ${size}rem;
+  border: 0;
+  margin: 1em;
+  outline: none;
+  background-color: #c2290a;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: box-shadow 200ms;
+  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b, inset 0 -${size / 24}rem ${size / 60}rem #aa2409, 0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 60}rem ${size / 10}rem #611405, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 133, 110, 0.7), inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 71, 37, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 31, 8, 0.2), inset 0 0 0 ${size / 5.5}rem #c2290a, inset 0 ${size / 2.5}rem ${size / 7.5}rem #aa2409, inset 0 0 ${size / 10}rem ${size / 6}rem #911f08, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+
+  &:active {
+    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b, inset 0 -${size / 24}rem ${size / 60}rem #aa2409, 0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 60}rem ${size / 10}rem #611405, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 133, 110, 0.2), inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 71, 37, 0.5), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 20, 5, 0.2), inset 0 0 0 ${size / 5.5}rem #b32609, inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b2108, inset 0 0 ${size / 10}rem ${size / 6}rem #791a06, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  background-color: #b8270a;
+
+
+&::before {
+   opacity: 0.5;
+}
+  }
+  &:before {
+     content: "";
+  position: absolute;
+  bottom: ${size / 4.5}rem;
+  left: ${size / 3.6}rem;
+  display: block;
+  width: ${size / 2.2}rem;
+  height: ${size / 3.3}rem;
+  background: rgba(247, 133, 110, 0.2);
+  background: linear-gradient(to top, rgba(250, 173, 158, 0.3) 0%, rgba(194, 41, 10, 0.1) 100%);
+  border-radius: 40% 40% 60% 60%;
+  transition: opacity 200ms;
+  }
+`;

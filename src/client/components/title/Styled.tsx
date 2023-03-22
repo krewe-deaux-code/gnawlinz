@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 const TitleContainer = styled.div`
   display: grid;
   height: 97vh;
-  grid-template-rows: 0.10fr .70fr 0.30fr;
+  grid-template-rows: 0.50fr .70fr 0.30fr;
   grid-template-areas:
   "nav nav nav nav"
   "main main main main"
@@ -25,42 +25,40 @@ const TitleContainer = styled.div`
 `;
 
 const TitleLogoImg = styled(motion.img)`
-  width: auto;
+  width: 100%;
   height: auto;
-  min-width: 10rem;
-  min-height: 10rem;
-  max-width: 30rem;
-  max-height: 30rem;
+  justify-content: flex-start;
+  align-items: center;
+  object-fit: cover;
   padding: .25rem;
-  margin: 0 auto;
 `;
 
 const TitleButton = styled.button`
-  background-color: #0050ec;
+  background-color: #931a03;
+  color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
-  color: white;
   font-size: 1rem;
-  font-weight: bold;
   padding: 1rem 1rem;
   border-radius: 2em;
-  margin-top: 1rem;
   cursor: pointer;
   transition: 0.1s ease;
   border-width: 0;
-  box-shadow: 1px 5px 0 0 #0e285d;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
   &:hover {
     transform: translateY(-4px);
-  box-shadow: 1px 9px 0 0 #0e285d;
+  box-shadow: 1px 9px 0 0 #60180e;
   }
   &:active {
     transform: translateY(4px);
-  box-shadow: 0px 0px 0 0 #0e285d;
+  box-shadow: 0px 0px 0 0 #60180e;
   }
 `;
 
 const TitleImg = styled(motion.img)`
-  width: auto;
+  width: 100%;
   height: auto;
+  border-radius: 1rem;
   padding: .25rem;
 `;
 
