@@ -1,13 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react';
-import Carousel from 'react-bootstrap/Carousel';
 
 import axios from 'axios';
 
 import names from '../../utility/names';
 
 import {
-  StyledCarousel, IconImg, IconContainer, StatName, NameBox, CCStatName, SaveBox,
-  CCContainer, LeftSpacer, RightSpacer, CharacterContainer, StatIconContainer,
+  IconImg, NameBox, CCStatName, SaveBox, CharacterContainer,
+  CCContainer, LeftSpacer, RightSpacer, StatIconContainer,
   StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem,
   HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
 } from './Styled';
@@ -267,11 +266,5 @@ const CharacterCreator: React.FC = () => {
     </CCContainer>
   );
 };
-
-// style={{
-//   marginLeft: '5rem',
-//   top: '2.3rem',
-//   position: 'relative'
-// }}
 
 export default CharacterCreator;
