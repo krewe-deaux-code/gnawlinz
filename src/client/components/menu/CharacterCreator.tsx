@@ -3,16 +3,17 @@ import Carousel from 'react-bootstrap/Carousel';
 
 import axios from 'axios';
 
+import names from '../../utility/names';
+
 import {
-  StyledCarousel, IconImg, IconContainer, StatName,
-  CCContainer, LeftSpacer, RightSpacer, CharacterContainer,
+  StyledCarousel, IconImg, IconContainer, StatName, NameBox, CCStatName, SaveBox,
+  CCContainer, LeftSpacer, RightSpacer, CharacterContainer, StatIconContainer,
   StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem,
   HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
 } from './Styled';
 
 import { UserContext } from '../../App';
 import { Character } from '../../utility/interface';
-
 
 const CharacterCreator: React.FC = () => {
 
@@ -42,7 +43,11 @@ const CharacterCreator: React.FC = () => {
 
   const handleInputValueChange = (e) => {
     setInputName(e.target.value);
-    console.log('NAME CHANGE', inputName);
+    console.log('INPUT NAME', inputName, 'NEW CHAR', newChar);
+  };
+
+  const genRandomName = () => {
+    setInputName(names[Math.floor(Math.random() * names.length)]);
   };
 
   // *************
@@ -63,6 +68,7 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleSaveChar = () => {
+    if (!inputName.length) { genRandomName(); }
     console.log('INSIDE SAVE', newChar);
     axios.post('/cloudinary/post', {
       topImageUrl: chosenHair,
@@ -131,6 +137,7 @@ const CharacterCreator: React.FC = () => {
     for (let i = 0; i < 3; i++) {
       fetchImages(cloudFolders[i], i);
     }
+    genRandomName();
   }, []);
 
   useEffect(() => {
@@ -148,6 +155,10 @@ const CharacterCreator: React.FC = () => {
   useEffect(() => {
     if (activeUser.handle_id === undefined) { loadCharDefaults(); }
   }, [activeUser]);
+
+  useEffect(() => {
+    if (inputName.length || inputName === '') { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }
+  }, [inputName]);
 
   console.log('AXCTIVE USER', newChar);
 
@@ -206,48 +217,61 @@ const CharacterCreator: React.FC = () => {
             }
           </HairCarousel>
         </AvatarContainer>
-        <div>{statPool}</div>
+        <NameBox>{newChar.name ? <p>Name: {newChar.name}</p> : <p>Name: enter your name</p>}
+          <input type="text" value={inputName} onChange={handleInputValueChange} />
+          <button onClick={genRandomName} style={{ 'marginTop': '1.35rem' }}>Randomize</button>
+        </NameBox>
       </CharacterContainer>
-      <button onClick={handleSaveChar}>SAVE</button>
       <StatsContainer id='Stats'>
-        <IconContainer>
-          <StatName>{newChar.name ? <p>Name: {newChar.name}</p> : <p>Name: Anonymous</p>}
-            <input type="text" value={inputName} onChange={handleInputValueChange} />
-            <button onClick={() => { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }}>Submit</button>
-          </StatName>
-        </IconContainer>
-        <IconContainer>
+        <StatIconContainer>
           <IconImg
             src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />
-          <StatName>Health: {newChar.health}</StatName>
-          <button onClick={() => handleStatChange(setHealth, '-', 'health', health)}>-</button>
-          <button onClick={() => handleStatChange(setHealth, '+', 'health', health)}>+</button>
-        </IconContainer>
-        <IconContainer>
+          <CCStatName id='statName'>Health: {newChar.health}
+            <button onClick={() => handleStatChange(setHealth, '-', 'health', health)} style={{ marginLeft: '4.00rem' }}>-</button>
+            <button onClick={() => handleStatChange(setHealth, '+', 'health', health)} style={{ marginLeft: '0.5rem' }}>+</button>
+          </CCStatName>
+        </StatIconContainer>
+        <StatIconContainer>
           <IconImg
             src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />
-          <StatName>Strength: {newChar.strength}</StatName>
-          <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)}>-</button>
-          <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)}>+</button>
-        </IconContainer>
-        <IconContainer>
+          <CCStatName id='statName'>Strength: {newChar.strength}
+            <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ marginLeft: '2.29rem' }}>-</button>
+            <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ marginLeft: '0.5rem' }}>+</button>
+          </CCStatName>
+        </StatIconContainer>
+        <StatIconContainer>
           <IconImg
             src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />
-          <StatName>Endurance: {newChar.endurance}</StatName>
-          <button onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)}>-</button>
-          <button onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)}>+</button>
-        </IconContainer>
-        <IconContainer>
+          <CCStatName id='statName'>Endurance: {newChar.endurance}
+            <button onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)} style={{ marginLeft: '1.54rem' }}>-</button>
+            <button onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)} style={{ marginLeft: '0.5rem' }}>+</button>
+          </CCStatName>
+        </StatIconContainer>
+        <StatIconContainer>
           <IconImg
             src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />
-          <StatName>Mood: {newChar.mood}</StatName>
-          <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)}>-</button>
-          <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)}>+</button>
-        </IconContainer>
+          <CCStatName id='statName'>Mood: {newChar.mood}
+            <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ marginLeft: '5.24rem' }}>-</button>
+            <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ marginLeft: '0.5rem' }}>+</button>
+          </CCStatName>
+        </StatIconContainer>
+        <SaveBox>
+          <h3 style={{
+            bottom: '1rem',
+            position: 'relative'
+          }}>Stat Pool: {statPool}</h3>
+          <button onClick={handleSaveChar}>SAVE</button>
+        </SaveBox>
       </StatsContainer>
       <RightSpacer id='RSpacer'></RightSpacer>
     </CCContainer>
   );
 };
+
+// style={{
+//   marginLeft: '5rem',
+//   top: '2.3rem',
+//   position: 'relative'
+// }}
 
 export default CharacterCreator;
