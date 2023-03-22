@@ -25,10 +25,32 @@ background-color: #931a03;
 `;
 
 export const StatName = styled.h5`
+    /* display: grid; */
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+  `;
+
+export const CCStatName = styled.div`
+    /* display: grid; */
+    font-size: 1.5em;
+    color: white;
+    text-align: center;
+  `;
+
+export const NameBox = styled.h5`
+  margin-top: 1rem;
+  display: grid;
   font-size: 1.5em;
   color: white;
   text-align: center;
-  margin: auto;
+  `;
+
+export const SaveBox = styled.h5`
+    margin-left: 5rem;
+    top: 2.7rem;
+    position: relative;
+    display: grid;
   `;
 
 export const IconContainer = styled.div`
@@ -36,6 +58,16 @@ export const IconContainer = styled.div`
   grid-template-columns: auto auto;
   justify-content: center;
   grid-gap: 1em;
+  align-items: center;
+  `;
+
+export const StatIconContainer = styled.div`
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  grid-gap: 1em;
+  align-items: center;
   `;
 
 export const IconImg = styled.img`
@@ -179,24 +211,28 @@ export const RightSpacer = styled.div`
 
 export const StatsContainer = styled.div`
   display: grid;
-  grid-area: stats;
+  grid-area: stats / stats / stats / stats;
   grid-template-rows: auto auto auto auto auto auto;
   height: 100%;
   width: 100%;
-  align-content: space-evenly;
-  background: #adadad;
+  background: rgb(173, 173, 173);
+  justify-items: start;
+  justify-content: center;
+  align-content: center;
 `;
 
 export const CharacterContainer = styled.div`
-  grid-area: character;
-  background: #5e5d5d;
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding-top: 40px;
   /* grid-template-rows: .10fr .20fr .20fr;
   grid-template-areas:
     'hair'; */
+    grid-area: character / character / character / character;
+    background: rgb(94, 93, 93);
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    align-items: center;
+    /* padding-top: 40px; */
+    flex-direction: column;
 `;
 
 export const AvatarContainer = styled.div`
