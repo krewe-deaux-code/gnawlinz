@@ -230,6 +230,7 @@ export const EventText = styled.div`
   margin: auto;
   text-align: center;
   border: 1px solid;
+  border-radius: 5px;
   position: absolute;
   height: 28%;
   width: 42%;
@@ -325,7 +326,7 @@ export const ModalBodyContainer = styled.div`
 
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
-
+  backdrop-filter: blur(4px);
 `;
 
 export const Page = styled.div`
