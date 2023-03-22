@@ -144,6 +144,7 @@ export const StatIconContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
   width: 30%;
+  padding: 3px;
   text-align: center;
 `;
 
