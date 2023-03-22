@@ -5,6 +5,8 @@ import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import { UserContext } from '../../App'; // <-- holds User object
 import { GameViewProps } from '../../utility/interface';
+import Confetti from 'react-confetti';
+
 
 import axios from 'axios';
 
@@ -17,6 +19,8 @@ const Result = (props: GameViewProps) => {
   // add win/loss image & resultText to state
   const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
   const [resultText, setResultText] = useState('you died!');
+  const [showConfetti, setShowConfetti] = useState(false);
+
 
   useEffect(() => {
     axios.get(`story/ending/${currentChar._id}`)
@@ -29,6 +33,7 @@ const Result = (props: GameViewProps) => {
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
+        setShowConfetti(true);
         setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
         setResultText('you survived!');
       } else {
@@ -42,6 +47,16 @@ const Result = (props: GameViewProps) => {
 
   }, []);
 
+  useEffect(() => {
+    let timeout;
+    if (showConfetti) {
+      timeout = setTimeout(() => {
+        setShowConfetti(false);
+      }, 5000);
+    }
+    return () => clearTimeout(timeout);
+  }, [showConfetti]);
+
   const uniqueEvents = [];
   story.forEach((line) => {
     if (!uniqueEvents.includes(line) && line) {
@@ -53,12 +68,16 @@ const Result = (props: GameViewProps) => {
   console.log('result from story query:', story);
   return (
     <Container>
+      {showConfetti && <Confetti />}
+      {/* {resultText === 'you survived!' ? <div> <Confetti /> </div> : null}; */}
       <Nav isActive={true} />
-      <Story><h2 onClick={props.handleSpeak}>User Story</h2>
-        <ScrollableContainer>
+      <Story>
+
+        <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
+        <ScrollableContainer >
           {uniqueEvents.map((sentence, index) => (
-            <div key={index} style={{ border: '1px solid black', margin: '10px' }}>
-              <p>{sentence}</p>
+            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
+              <p onClick={props.handleSpeak}>{sentence}</p>
             </div>
           ))}
         </ScrollableContainer>
@@ -70,23 +89,18 @@ const Result = (props: GameViewProps) => {
           </Link>
         </Content1>
       </Story>
-      <End><h2 onClick={props.handleSpeak}>{resultText}</h2>
-        <CharacterStatContainer>
-          <div >
-            <img src={image} />
-          </div>
-          <div>
-            {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-            <img src={currentChar.image_url} />
-            <h4> Final Score: {currentChar.score} </h4>
-          </div>
-        </CharacterStatContainer>
+      <End>
+        <div>
+          {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
+          <h2> Your Score: {currentChar.score} </h2>
+          <img src={currentChar.image_url} />
+        </div>
+        <h2 onClick={props.handleSpeak}>Top Scores</h2>
         <ScrollableContainer>
-          <h2 onClick={props.handleSpeak}>LeaderBoard</h2>
           <LeaderBoard />
         </ScrollableContainer>
       </End>
-    </Container>
+    </Container >
   );
 };
 

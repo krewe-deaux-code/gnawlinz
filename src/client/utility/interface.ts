@@ -93,4 +93,7 @@ export interface Leader {
   name: string;
   score: number;
   image_url: string;
+  health: number;
+  mood: number;
+  strength: number;
 }
