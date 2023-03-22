@@ -181,12 +181,14 @@ export const CCContainer = styled.div`
 
 export const LeftSpacer = styled.div`
   grid-area: Lspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const RightSpacer = styled.div`
   grid-area: Rspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const StatsContainer = styled.div`
@@ -195,7 +197,9 @@ export const StatsContainer = styled.div`
   grid-template-rows: auto auto auto auto auto auto;
   height: 100%;
   width: 100%;
-  background: rgb(173, 173, 173);
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
+  border-right: 3px solid darkgoldenrod;
   justify-items: start;
   justify-content: center;
   align-content: center;
@@ -206,7 +210,9 @@ export const CharacterContainer = styled.div`
   grid-template-areas:
     'hair'; */
     grid-area: character / character / character / character;
-    background: rgb(94, 93, 93);
+    background: rgba(173, 173, 173, 0.5);
+    backdrop-filter: blur(15px);
+    border-left: 3px solid darkgoldenrod;
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
