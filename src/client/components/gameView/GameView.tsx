@@ -163,6 +163,7 @@ const GameView = (props: GameViewProps) => {
       .catch((err) => {
         console.error('Failed to retrieve all locations: ', err);
       });
+    setInvestigateDisabled(false);
   };
 
   // Add a modal to handle location change after all locations have been used
@@ -469,8 +470,8 @@ const GameView = (props: GameViewProps) => {
 
     return (
       <div onClick={props.handleSpeak}>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} label={`${health / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} label={`${mood / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -778,9 +779,8 @@ const GameView = (props: GameViewProps) => {
             </div>
           </StatContainer>
           <StatContainer2>
-            <div onClick={props.handleSpeak} style={{ textDecoration: 'underline' }}>Status</div>
+            <h4 onClick={props.handleSpeak}> {'Score: ' + currentChar.score}</h4>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={props.handleSpeak} style={{ width: '20em' }}> Score: {currentChar.score}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
