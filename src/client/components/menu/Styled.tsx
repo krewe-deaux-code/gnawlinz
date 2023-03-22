@@ -1,5 +1,6 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export const MenuButton = styled.button`
@@ -80,13 +81,13 @@ export const Body = styled.div`
   text-align: center;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: rgb(31, 33, 40); /* changed from black */
   color: white;
 `;
 
 export const InfoContainer = styled.div`
   overflow: hidden;
-  background: black;
+  background: rgb(31, 33, 40); /* changed from black */
   height: 3em;
 
 `;
@@ -201,12 +202,14 @@ export const CCContainer = styled.div`
 
 export const LeftSpacer = styled.div`
   grid-area: Lspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const RightSpacer = styled.div`
   grid-area: Rspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const StatsContainer = styled.div`
@@ -215,7 +218,9 @@ export const StatsContainer = styled.div`
   grid-template-rows: auto auto auto auto auto auto;
   height: 100%;
   width: 100%;
-  background: rgb(173, 173, 173);
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
+  border-right: 3px solid darkgoldenrod;
   justify-items: start;
   justify-content: center;
   align-content: center;
@@ -226,7 +231,9 @@ export const CharacterContainer = styled.div`
   grid-template-areas:
     'hair'; */
     grid-area: character / character / character / character;
-    background: rgb(94, 93, 93);
+    background: rgba(173, 173, 173, 0.5);
+    backdrop-filter: blur(15px);
+    border-left: 3px solid darkgoldenrod;
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -263,4 +270,8 @@ export const BodySlot = styled.img`
   place-self: start center;
   /* grid-area: hair; */
   z-index: 1;
+`;
+
+export const NameInput = styled(motion.input)`
+
 `;
