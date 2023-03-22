@@ -720,8 +720,8 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
-                <Modal.Header closeButton>
+              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
+                <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
@@ -759,7 +759,7 @@ const GameView = (props: GameViewProps) => {
                   {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
                   <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Look for graffiti</HudButton>
                   <div style={{ display: 'flex' }}>
-                    <input type="text" style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
+                    <input type="text" maxLength={23} style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                     <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                   </div>
                 </ModalBodyContainer>
