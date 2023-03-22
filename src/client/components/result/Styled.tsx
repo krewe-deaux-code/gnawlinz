@@ -101,18 +101,18 @@ export const ScrollableContainer = styled.div`
         /* height: 10px; */
         width: 30px;
         border: 1px solid black;
-        border-radius: 5px;
+        /* border-radius: 5px; */
     }
       /* Set the background color of the scrollbar */
   &&::-webkit-scrollbar-track {
     background: black;
-    border-radius: 5px;
+    /* border-radius: 5px; */
   }
 
   /* Set the color and shape of the scrollbar thumb */
   &&::-webkit-scrollbar-thumb {
     background-color: black;
-    border-radius: 5px;
+    /* border-radius: 5px; */
     /* background-size: 100%; */
     background: url('https://toppng.com/uploads/preview/zombie-pixel-art-zombie-hand-pixel-art-115630797224fcuwmxj8h.png') no-repeat;
     background-size: 30px 50px;

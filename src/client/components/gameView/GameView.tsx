@@ -17,7 +17,8 @@ import {
   AllyImg, EnemyImg, CharImageStyles, CharStatusContainer,
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
-  TinyStatIconImg, TempStatBonusColor, ModalBodyContainer, StyledModal
+  TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
+  StyledModal, ArcadeButton
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -162,6 +163,7 @@ const GameView = (props: GameViewProps) => {
       .catch((err) => {
         console.error('Failed to retrieve all locations: ', err);
       });
+    setInvestigateDisabled(false);
   };
 
   // Add a modal to handle location change after all locations have been used
@@ -468,8 +470,8 @@ const GameView = (props: GameViewProps) => {
 
     return (
       <div onClick={props.handleSpeak}>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : health < 70 ? 'warning' : 'success'} now={health} label={`${health}%`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : mood < 70 ? 'warning' : 'success'} now={mood} label={`${mood}%`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Health<ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} label={`${health / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} label={`${mood / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
       </div>
     );
   };
@@ -724,13 +726,13 @@ const GameView = (props: GameViewProps) => {
                 </Modal.Header>
                 <Modal.Body >
                   <ModalBodyContainer>
-                    <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p>
+                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p> */}
                     <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
-                    <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p>
+                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p> */}
                     <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
-                    <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p>
+                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p> */}
                     <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
-                    <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p>
+                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p> */}
                     <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
                   </ModalBodyContainer>
                 </Modal.Body>
@@ -752,12 +754,14 @@ const GameView = (props: GameViewProps) => {
               </Modal.Header>
               <Modal.Body>
                 <ModalBodyContainer>
-                  <div onClick={props.handleSpeak}>Look for items</div>
-                  <HudButton onClick={() => { retrieveDropItem(); }}>Choice 1</HudButton>
-                  <div onClick={props.handleSpeak}>Look for graffiti</div>
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Choice 2</HudButton>
-                  <input type="text" placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
-                  <HudButton onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
+                  {/* <div onClick={props.handleSpeak}>Look for items</div> */}
+                  <HudButton onClick={() => { retrieveDropItem(); }}>Search for items</HudButton>
+                  {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
+                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Look for graffiti</HudButton>
+                  <div style={{ display: 'flex' }}>
+                    <input type="text" style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
+                    <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
+                  </div>
                 </ModalBodyContainer>
               </Modal.Body>
               <Modal.Footer>
@@ -775,9 +779,8 @@ const GameView = (props: GameViewProps) => {
             </div>
           </StatContainer>
           <StatContainer2>
-            <div onClick={props.handleSpeak} style={{ textDecoration: 'underline' }}>Status</div>
+            <h4 onClick={props.handleSpeak}> {'Score: ' + currentChar.score}</h4>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={props.handleSpeak} style={{ width: '20em' }}> Score: {currentChar.score}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
@@ -824,35 +827,40 @@ const GameView = (props: GameViewProps) => {
         </CharStatusContainer>
         <Content2>
           <div><button onClick={handleToggleEvent}>Toggle Event</button></div>
-          <HudButton onClick={() => {
-            hit.play();
-            // <-- handleEnemy func ??
-            resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Engage</HudButton>
-          <HudButton onClick={() => {
-            dodge.play();
-            resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Evade</HudButton>
-          <HudButton onClick={() => {
-            evacuate.play();
-            resolveChoice(choices.evacuate, 'evacuate', 0);
-            setTemporaryMood(0);
-            setTemporaryEndurance(0);
-            setTemporaryStrength(0);
-          }}>Evacuate</HudButton>
-          <HudButton onClick={() => {
-            wildCard.play();
-            resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
-            setTemporaryMood(0);
-            setTemporaryStrength(0);
-            setTemporaryStrength(0);
-          }}>Wildcard</HudButton>
+          <div>
+            <h5>Engage</h5>
+            <ArcadeButton onClick={() => {
+              hit.play();
+              // <-- handleEnemy func ??
+              resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Evade</h5>
+            <ArcadeButton onClick={() => {
+              dodge.play();
+              resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Evacuate</h5>
+            <ArcadeButton onClick={() => {
+              evacuate.play();
+              resolveChoice(choices.evacuate, 'evacuate', 0);
+              setTemporaryMood(0);
+              setTemporaryEndurance(0);
+              setTemporaryStrength(0);
+            }} /></div>
+          <div><h5>Wildcard</h5>
+            <ArcadeButton onClick={() => {
+              wildCard.play();
+              resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
+              setTemporaryMood(0);
+              setTemporaryStrength(0);
+              setTemporaryStrength(0);
+            }} /></div>
         </Content2>
 
       </Footer >
