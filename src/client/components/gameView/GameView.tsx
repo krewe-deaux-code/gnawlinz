@@ -448,14 +448,38 @@ const GameView = (props: GameViewProps) => {
       });
   };
 
-  // callback for PlayerDied event listener
-  const appendToKillFeed = (death) => {
-    //console.log('inside player died function');
-    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-    setTimeout(expireKillFeed, 10000);
+  const throttle = (cb, delay = 1000) => {
+    let shouldWait = false;
+
+    return (...args) => {
+      if (shouldWait) { return; }
+
+      cb(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, delay);
+    };
   };
 
-  const handlePlayerDied = () => {
+  // callback for PlayerDied event listener
+  // const appendToKillFeed = throttle((death: string) => {
+  //   setKillFeed(prevKillFeed => {
+  //     if (!prevKillFeed.includes(death)) {
+  //       return [...prevKillFeed, death];
+  //     }
+  //     return prevKillFeed;
+  //   });
+  //   setTimeout(expireKillFeed, 10000);
+  // });
+  // callback for PlayerDied event listener
+  const appendToKillFeed = (death) => {
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+    setTimeout(expireKillFeed, 10000);
+
+  };
+
+  const handlePlayerDied = () => { // **
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
@@ -622,6 +646,7 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     console.log('selectedChoice: ', selectedChoice);
+    // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
     return <Result handleSpeak={function (e: any): void {
       throw new Error('Function not implemented.');
@@ -684,7 +709,12 @@ const GameView = (props: GameViewProps) => {
                 }
               </KillFeed>
             </KillFeedContainer>
-            <img src={location.image_url}></img>
+            <img src={location.image_url}
+              style={{
+                position: 'relative',
+                bottom: '98%'
+              }}
+            ></img>
           </Page>
           {
             damageToEnemy > 0
@@ -733,6 +763,9 @@ const GameView = (props: GameViewProps) => {
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
                 <Modal.Header closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
+              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
+                <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                   <ModalBodyContainer>
@@ -769,7 +802,7 @@ const GameView = (props: GameViewProps) => {
                   {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
                   <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Look for graffiti</HudButton>
                   <div style={{ display: 'flex' }}>
-                    <input type="text" style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
+                    <input type="text" maxLength={23} style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                     <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
                   </div>
                 </ModalBodyContainer>
@@ -793,7 +826,8 @@ const GameView = (props: GameViewProps) => {
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
             </div>
@@ -836,7 +870,6 @@ const GameView = (props: GameViewProps) => {
           </InventoryBorder>
         </CharStatusContainer>
         <Content2>
-          <div><button onClick={handleToggleEvent}>Toggle Event</button></div>
           <div>
             <h5>Engage</h5>
             <ArcadeButton onClick={() => {
@@ -855,6 +888,7 @@ const GameView = (props: GameViewProps) => {
               setTemporaryEndurance(0);
               setTemporaryStrength(0);
             }} /></div>
+          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent}/></div>
           <div><h5>Evacuate</h5>
             <ArcadeButton onClick={() => {
               evacuate.play();

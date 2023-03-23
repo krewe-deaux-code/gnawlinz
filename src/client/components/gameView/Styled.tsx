@@ -144,6 +144,7 @@ export const StatIconContainer = styled.div`
   display: grid;
   grid-template-columns: auto auto auto auto;
   width: 30%;
+  padding: 3px;
   text-align: center;
 `;
 
@@ -291,14 +292,34 @@ export const EnemyImg = styled.img`
 export const KillFeedContainer = styled.div`
   z-index: 2;
   max-width: 250px;
-  max-height: 350px;
-  color: #22f122;
-  /* margin-bottom: 1px; */
+  max-height: 465px;
+  color: rgb(34, 241, 34);
   margin-left: 3rem;
   position: relative;
-  top: 100%;
   left: 100%;
   font-size: 12px;
+  height: 465px;
+  overflow-y: auto;
+  top: 2%;
+  &::-webkit-scrollbar {
+        /* height: 10px; */
+        width: 10px;
+        border: 1px solid black;
+        border-radius: 5px;
+    }
+      /* Set the background color of the scrollbar */
+  &&::-webkit-scrollbar-track {
+    background: black;
+    border-radius: 5px;
+  }
+
+  /* Set the color and shape of the scrollbar thumb */
+  &&::-webkit-scrollbar-thumb {
+    background-color: #f0ac00;
+    border-radius: 5px;
+    background-size: 100%;
+
+  }
 `;
 
 export const KillFeed = styled.div`
@@ -331,8 +352,11 @@ export const StyledModal = styled(Modal)`
 
 export const Page = styled.div`
   display: grid;
+  -webkit-box-align: center;
   align-items: center;
+  -webkit-box-pack: center;
   justify-content: center;
+  max-height: 510.5px;
 `;
 
 const size = 7;
