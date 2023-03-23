@@ -268,7 +268,7 @@ export const ScrollableContainer = styled.div`
 `;
 
 export const AllyImg = styled.img`
-  z-index: 2;
+  z-index: 1;
   height: 83%;
   width: 50%;
   max-width: 200px;
@@ -279,7 +279,7 @@ export const AllyImg = styled.img`
 `;
 
 export const EnemyImg = styled.img`
-  /* z-index: 2; */
+  z-index: 1;
   height: 100%;
   width: 100%;
   max-width: 500px;
