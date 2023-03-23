@@ -80,7 +80,7 @@ app.get('/menu', (req, res) => {
 
 const io = new Server(server); // Create a new Socket.io server instance and pass in the HTTP server instance
 
-const article = (cause: string) => {
+const article = (cause = 'heart attack') => {
   const vowels = ['a', 'e', 'i', 'o', 'u'];
   if (vowels.includes(cause[0].toLowerCase())) {
     return 'an';
@@ -97,8 +97,8 @@ io.on('connection', (socket) => {
   // send a message to the client
   socket.emit('Comment ça plume', '...cocodrie');
   // receive a message from the client
-  socket.on('player_died', (charName = 'someone', location = 'somewhere', cause = 'heart attack') => {
-    const death = `- ${charName} died from ${article(cause)} ${cause} at ${location}`;
+  socket.on('player_died', (charName = 'someone', location = 'somewhere', cause) => {
+    const death = `- ${charName || 'someone'} died from ${article(cause || 'heart attack')} ${cause || 'heart attack'} at ${location || 'somewhere'}`;
     console.log(death);
     socket.broadcast.emit('kill_feed', death); // socket.broadcast.emit **
   });
