@@ -449,14 +449,38 @@ const GameView = (props: GameViewProps) => {
       });
   };
 
-  // callback for PlayerDied event listener
-  const appendToKillFeed = (death) => {
-    //console.log('inside player died function');
-    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
-    setTimeout(expireKillFeed, 10000);
+  const throttle = (cb, delay = 1000) => {
+    let shouldWait = false;
+
+    return (...args) => {
+      if (shouldWait) { return; }
+
+      cb(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, delay);
+    };
   };
 
-  const handlePlayerDied = () => {
+  // callback for PlayerDied event listener
+  // const appendToKillFeed = throttle((death: string) => {
+  //   setKillFeed(prevKillFeed => {
+  //     if (!prevKillFeed.includes(death)) {
+  //       return [...prevKillFeed, death];
+  //     }
+  //     return prevKillFeed;
+  //   });
+  //   setTimeout(expireKillFeed, 10000);
+  // });
+  // callback for PlayerDied event listener
+  const appendToKillFeed = (death) => {
+    setKillFeed(prevKillFeed => [...prevKillFeed, death]);
+    setTimeout(expireKillFeed, 10000);
+
+  };
+
+  const handlePlayerDied = () => { // **
     socket?.emit('player_died', currentChar.name, location.name, currentEnemy.weapon1);
   };
 
@@ -612,6 +636,7 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || (currentChar.mood + bonusMood) < 1) {
     console.log('selectedChoice: ', selectedChoice);
+    // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
     return <Result handleSpeak={function (e: any): void {
       throw new Error('Function not implemented.');
@@ -674,7 +699,12 @@ const GameView = (props: GameViewProps) => {
                 }
               </KillFeed>
             </KillFeedContainer>
-            <img src={location.image_url}></img>
+            <img src={location.image_url}
+              style={{
+                position: 'relative',
+                bottom: '98%'
+              }}
+            ></img>
           </Page>
           {
             damageToEnemy > 0
