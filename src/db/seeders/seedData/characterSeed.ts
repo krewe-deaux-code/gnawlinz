@@ -1,5 +1,18 @@
 export const characterSeed = [
   {
+    handle_id: '',
+    name: 'Someguy McPlaceholder',
+    image_url: 'https://media.moddb.com/images/downloads/1/106/105160/Moddb_thumg.png',
+    inventory: [10, 11, 1, 1, 1, 1, 1, 1],
+    health: 10,
+    strength: 8,
+    endurance: 8,
+    mood: 8,
+    location: 1,
+    ally_count: 0,
+    score: 0
+  },
+  {
     handle_id: '111176632224852041225',
     name: 'Mr. Okra (B)',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678680692/gnawlinzAllies/OkraPxl_tcovum.png',
