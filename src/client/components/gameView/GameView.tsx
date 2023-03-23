@@ -18,7 +18,7 @@ import {
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
-  StyledModal, ArcadeButton
+  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -43,7 +43,6 @@ const GameView = (props: GameViewProps) => {
   // state for socket.io
   const [socket, setSocket] = useState<Socket | undefined>();
   const [killFeed, setKillFeed] = useState<string[]>([]);
-
   // state for investigate modal
   const [modalText, setModalText] = useState('');
   const [showTextBox, setShowTextBox] = useState(false);
@@ -467,11 +466,21 @@ const GameView = (props: GameViewProps) => {
   const StatusBars = () => {
     const health: number = currentChar.health * 10;
     const mood: number = (currentChar.mood + bonusMood) * 10;
+    const healthOverlayValue = `${health / 10} / 10`;
+    const moodOverlayValue = `${mood / 10} / 10`;
 
     return (
       <div onClick={props.handleSpeak}>
-        <div>Health<ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} label={`${health / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
-        <div>Mood<ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} label={`${mood / 10} / 10`} style={{ backgroundColor: 'grey' }} /></div>
+        <div>Health</div>
+        <ProgressBarContainer>
+          <OverlayValue>{healthOverlayValue}</OverlayValue>
+          <ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} style={{backgroundColor: 'grey'}} />
+        </ProgressBarContainer>
+        <div>Mood</div>
+        <ProgressBarContainer>
+          <OverlayValue>{moodOverlayValue}</OverlayValue>
+          <ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} style={{backgroundColor: 'grey'}}/>
+        </ProgressBarContainer>
       </div>
     );
   };
@@ -483,6 +492,7 @@ const GameView = (props: GameViewProps) => {
   // functions for investigate modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
 
   // write graffiti button function, shows input field and tag it button
   // const handleTextBoxClick = () => {
@@ -722,7 +732,7 @@ const GameView = (props: GameViewProps) => {
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
                 <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
                   <ModalBodyContainer>
@@ -783,9 +793,9 @@ const GameView = (props: GameViewProps) => {
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>

@@ -96,6 +96,7 @@ export const ScrollableContainer = styled.div`
     width: 100%;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     position: relative;
     &::-webkit-scrollbar {
         /* height: 10px; */
@@ -124,6 +125,8 @@ export const ScrollableContainer = styled.div`
 export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
+  border: 2px solid black;
+
 `;
 
 export const Th = styled.th`
