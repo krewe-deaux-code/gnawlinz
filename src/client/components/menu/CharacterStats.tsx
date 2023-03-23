@@ -24,8 +24,8 @@ const CharacterStats: React.FC = () => {
     setCurrentChar(userChars[selectedIndex]);
   };
 
-  const getCurrentChar = (_id) => { // this happens on useEffect, hardcoded to re-select Okra
-    _id = currentChar._id || 1;
+  const getCurrentChar = () => { // this happens on useEffect, hardcoded to re-select Okra
+    const _id = currentChar._id || 1;
     // console.log('currentChar in CharacterStats', currentChar);
     axios.get<Character>(`/character/${_id}`)
       .then(({ data }) =>
@@ -74,7 +74,7 @@ const CharacterStats: React.FC = () => {
   useEffect(() => {
     //console.log('INSIDE USE EFFECT', activeUser);
     fetchUserChars(); // activeUser.google_id as arg
-    getCurrentChar(currentChar._id);
+    getCurrentChar();
   }, [activeUser]);
 
   if (!currentChar) {
