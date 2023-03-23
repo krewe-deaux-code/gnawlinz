@@ -2,7 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
-
+import { ReactNode } from 'react';
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
 
@@ -45,7 +45,7 @@ const GameView = (props: GameViewProps) => {
   const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
-  const [modalText, setModalText] = useState('');
+  const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
   const [locationModalText, setLocationModalText] = useState('');
@@ -544,7 +544,14 @@ const GameView = (props: GameViewProps) => {
     } else {
       axios.get(`item/${location.drop_item_slot}`)
         .then((response: any) => {
-          setModalText(`You searched for items and found ${response.data.name}`);
+          const itemName = response.data.name;
+          const imageUrl = response.data.image_url;
+          const imageTag = `<img src='${imageUrl}' alt='${itemName}' style='max-width: 40%; max-height: 40%'/>`;
+          setModalText(
+            <div style={{textAlign: 'center'}}>
+              You searched for items and found {itemName}.
+              <div dangerouslySetInnerHTML={{ __html: imageTag }} />
+            </div>);
         })
         .catch((err) => {
           console.error('Failed to get item id from item table', err);
