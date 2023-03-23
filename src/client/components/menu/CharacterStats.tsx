@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import images from '../../utility/images';
 
 import { StyledCarousel, IconImg, IconContainer, StatName } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
@@ -96,11 +97,11 @@ const CharacterStats: React.FC = () => {
               return <Carousel.Item key={i}>
                 <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
                 <StatName>Name: {char.name}</StatName>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png" /><StatName>Location: {locationName}</StatName></IconContainer>
+                <IconContainer><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainer>
+                <IconContainer><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainer>
+                <IconContainer><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
+                <IconContainer><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainer>
+                <IconContainer><IconImg src={images.locationIcon} /><StatName>Location: {locationName}</StatName></IconContainer>
               </Carousel.Item>;
             })
           }

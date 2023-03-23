@@ -2,6 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import images from '../../utility/images';
 
 import { io, Socket } from 'socket.io-client';
 import { motion } from 'framer-motion';
@@ -760,9 +761,6 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
-                <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
                 <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
@@ -825,11 +823,10 @@ const GameView = (props: GameViewProps) => {
             <h4 onClick={props.handleSpeak}> {'Score: ' + currentChar.score}</h4>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={ images.healthIcon } />{currentChar.health}</StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={ images.moodIcon } />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={ images.strengthIcon } />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={ images.enduranceIcon } />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
