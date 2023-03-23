@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 
+import { motion } from 'framer-motion';
 import axios from 'axios';
 
 import names from '../../utility/names';
 
 import {
   IconImg, NameBox, CCStatName, SaveBox, CharacterContainer,
-  CCContainer, LeftSpacer, RightSpacer, StatIconContainer,
+  CCContainer, LeftSpacer, RightSpacer, StatIconContainer, NameInput,
   StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem,
   HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
 } from './Styled';
@@ -19,6 +20,7 @@ const CharacterCreator: React.FC = () => {
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext);
 
   const [index, setIndex] = useState(0);
+  const nameInputRef = useRef<HTMLInputElement>(null);
 
   const [inputName, setInputName] = useState('');
   const [hairImageUrls, setHairImageUrls] = useState([]);
@@ -67,7 +69,10 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleSaveChar = () => {
-    if (!inputName.length) { genRandomName(); }
+    if (!inputName.length) {
+      genRandomName();
+      return;
+    }
     console.log('INSIDE SAVE', newChar);
     axios.post('/cloudinary/post', {
       topImageUrl: chosenHair,
@@ -159,7 +164,7 @@ const CharacterCreator: React.FC = () => {
     if (inputName.length || inputName === '') { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }
   }, [inputName]);
 
-  console.log('AXCTIVE USER', newChar);
+  console.log('NEW CHAR from CHAR CREATOR', newChar);
 
   return (
     <CCContainer id='CCContainer'>
@@ -216,8 +221,8 @@ const CharacterCreator: React.FC = () => {
             }
           </HairCarousel>
         </AvatarContainer>
-        <NameBox>{newChar.name ? <p>Name: {newChar.name}</p> : <p>Name: enter your name</p>}
-          <input type="text" value={inputName} onChange={handleInputValueChange} />
+        <NameBox>{newChar.name ? <p style={{ color: 'white' }}>Name: {newChar.name}</p> : <motion.p animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }} style={{ color: 'red' }} transition={{ duration: 0.3 }}>Name: enter your name</motion.p>}
+          <NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} />
           <button onClick={genRandomName} style={{ 'marginTop': '1.35rem' }}>Randomize</button>
         </NameBox>
       </CharacterContainer>
@@ -232,7 +237,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677182371/gnawlinzIcons/arm3_jlktow.png" />
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />
           <CCStatName id='statName'>Strength: {newChar.strength}
             <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ marginLeft: '2.29rem' }}>-</button>
             <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -248,7 +253,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677195540/gnawlinzIcons/noun-mood-White771001_u6wmb5.png" />
+            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />
           <CCStatName id='statName'>Mood: {newChar.mood}
             <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ marginLeft: '5.24rem' }}>-</button>
             <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -259,7 +264,13 @@ const CharacterCreator: React.FC = () => {
             bottom: '1rem',
             position: 'relative'
           }}>Stat Pool: {statPool}</h3>
-          <button onClick={handleSaveChar}>SAVE</button>
+          <button onClick={() => {
+            if (!inputName.length) {
+              nameInputRef.current?.focus();
+            } else {
+              handleSaveChar();
+            }
+          }}>SAVE</button>
         </SaveBox>
       </StatsContainer>
       <RightSpacer id='RSpacer'></RightSpacer>

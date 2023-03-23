@@ -1,7 +1,29 @@
 import Carousel from 'react-bootstrap/Carousel';
 import styled from 'styled-components';
-
+import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
+
+export const MenuButton = styled.button`
+background-color: #931a03;
+  color: white !important;
+  font-family: 'Edit Undo BRK', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #60180e;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #60180e;
+  }
+`;
 
 export const StatName = styled.h5`
     /* display: grid; */
@@ -59,13 +81,13 @@ export const Body = styled.div`
   text-align: center;
   width: 100%;
   height: 100%;
-  background-color: black;
+  background-color: rgb(31, 33, 40); /* changed from black */
   color: white;
 `;
 
 export const InfoContainer = styled.div`
   overflow: hidden;
-  background: black;
+  background: rgb(31, 33, 40); /* changed from black */
   height: 3em;
 
 `;
@@ -180,12 +202,14 @@ export const CCContainer = styled.div`
 
 export const LeftSpacer = styled.div`
   grid-area: Lspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const RightSpacer = styled.div`
   grid-area: Rspacer;
-  background: grey;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
 `;
 
 export const StatsContainer = styled.div`
@@ -194,7 +218,9 @@ export const StatsContainer = styled.div`
   grid-template-rows: auto auto auto auto auto auto;
   height: 100%;
   width: 100%;
-  background: rgb(173, 173, 173);
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
+  border-right: 3px solid darkgoldenrod;
   justify-items: start;
   justify-content: center;
   align-content: center;
@@ -205,7 +231,9 @@ export const CharacterContainer = styled.div`
   grid-template-areas:
     'hair'; */
     grid-area: character / character / character / character;
-    background: rgb(94, 93, 93);
+    background: rgba(173, 173, 173, 0.5);
+    backdrop-filter: blur(15px);
+    border-left: 3px solid darkgoldenrod;
     display: flex;
     -webkit-box-pack: center;
     justify-content: center;
@@ -242,4 +270,8 @@ export const BodySlot = styled.img`
   place-self: start center;
   /* grid-area: hair; */
   z-index: 1;
+`;
+
+export const NameInput = styled(motion.input)`
+
 `;

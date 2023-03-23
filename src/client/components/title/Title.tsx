@@ -1,17 +1,21 @@
 import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
-import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg } from './Styled';
+import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg, TitleButton } from './Styled';
 
 
 const Title: React.FC = () => {
+
+  const handleSignIn = () => {
+    window.location.href = '/auth/google';
+  };
 
   return (
     <TitleContainer>
       <Nav isActive={false} />
       <Main>
         <TitleLogoImg
-          src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1679326991/gnawlinzIcons/Gnawlinzpixel1_mxtj7k.png'
+          src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1679498653/gnawlinzIcons/GnawlinzPixelatedSmaller_wyxezu.png'
           initial={{ filter: 'blur(5px)' }}
           animate={{ filter: 'blur(0px)' }}
           transition={{ duration: .75 }}
@@ -23,9 +27,9 @@ const Title: React.FC = () => {
         />
       </Main>
       <Footer>
-        <button>
-          <a href="/auth/google">Sign In</a>
-        </button>
+        <TitleButton onClick={handleSignIn}>
+          Sign In
+        </TitleButton>
       </Footer>
     </TitleContainer>
   );
