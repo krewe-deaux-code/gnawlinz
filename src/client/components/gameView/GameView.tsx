@@ -20,7 +20,7 @@ import {
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
-  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue
+  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue, ArcadeButtonInvestigate, ArcadeButtonToggle
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -680,6 +680,11 @@ const GameView = (props: GameViewProps) => {
   return (
 
     <Container>
+      <div style={{ position: 'absolute', opacity: 0 }}>
+        <Link to="/result" style={{ textDecoration: 'none' }}>
+          <HudButton onClick={() => complete.play()} />
+        </Link>
+      </div>
       <Nav isActive={true} />
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
@@ -775,14 +780,14 @@ const GameView = (props: GameViewProps) => {
       </Main>
       <Footer>
         <Content1>
-          <Link to="/result" style={{ textDecoration: 'none' }}>
+          {/* <Link to="/result" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
-          </Link>
+          </Link> */}
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
-              <HudButton onClick={handleLocationChange}>New Location</HudButton>
+              {/* <HudButton onClick={handleLocationChange}>New Location</HudButton> */}
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
                 <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
@@ -802,9 +807,9 @@ const GameView = (props: GameViewProps) => {
               </StyledModal>
             </Content1>
           </Link>
-          <Content1>
-            <HudButton onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled}>Investigate</HudButton>
-
+          <Content2>
+            <div><h5>Investigate</h5><ArcadeButtonInvestigate onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled} /></div>
+            <div><h5>Toggle Event</h5><ArcadeButtonToggle onClick={handleToggleEvent} /></div>
             <StyledModal
               centered
               show={show}
@@ -832,7 +837,7 @@ const GameView = (props: GameViewProps) => {
               </Modal.Footer>
             </StyledModal>
 
-          </Content1>
+          </Content2>
         </Content1>
         <CharStatusContainer>
           <StatContainer>
@@ -919,7 +924,6 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
               }} /></div>
-          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent} /></div>
           <div><h5>Evacuate</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evacuate')}
