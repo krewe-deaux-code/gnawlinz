@@ -434,7 +434,7 @@ const GameView = (props: GameViewProps) => {
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
-            setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
+            setTempText(`You defeated the enemy and got ${currentEnemy.score} points!`); // <-- put effects on canvas??
             // choiceOutcome = 'success';
             setCurrentEnemy({});
           } else { // <-- no Enemy on Event/State (enemy !exist)
