@@ -59,7 +59,7 @@ export const Main = styled.main`
 `;
 
 export const Content1 = styled.div`
-  background: #4f004f;
+  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679600452/gnawlinzIcons/dark-wood-1920x1080_cwlol9.png');
   padding: 0.125rem;
   width: 100%;
   height: 100%;
@@ -70,14 +70,13 @@ export const Content1 = styled.div`
 `;
 
 export const Content2 = styled.div`
-  background: #4f004f;
+  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679600452/gnawlinzIcons/dark-wood-1920x1080_cwlol9.png');
   padding: 0.25rem;
   width: 100%;
   height: 100%;
   display: grid;
-  gap: 0.25rem;
-  align-content: space-evenly;
-  grid-template-columns: .5fr .5fr;
+  align-content: space-around;
+  grid-template-columns: auto auto;
 `;
 
 
@@ -222,6 +221,7 @@ export const HudButton = styled.button`
   padding: auto;
 `;
 
+
 export const EventText = styled.div`
   z-index: 3;
   background-color: rgb(92 92 92 / 65%);
@@ -359,7 +359,7 @@ export const Page = styled.div`
   max-height: 510.5px;
 `;
 
-const size = 7;
+const size = 8;
 
 export const ArcadeButton = styled.button`
   position: relative;
@@ -396,5 +396,55 @@ export const ArcadeButton = styled.button`
   background: linear-gradient(to top, rgba(250, 173, 158, 0.3) 0%, rgba(194, 41, 10, 0.1) 100%);
   border-radius: 40% 40% 60% 60%;
   transition: opacity 200ms;
+  }
+`;
+
+
+export const ArcadeButtonInvestigate = styled(ArcadeButton)`
+  background-color: #1a0ac2;
+  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), 
+  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
+  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
+  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7), 
+  inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(54, 37, 244, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(19, 8, 145, 0.2),
+  inset 0 0 0 ${size / 5.5}rem #1a0ac2, inset 0 ${size / 2.5}rem ${size / 7.5}rem #1609aa, inset 0 0 ${size / 10}rem ${size / 6}rem #130891, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  &:active {
+    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+     inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+       inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(121, 110, 247, 0.2),
+        inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(54, 37, 244, 0.5),
+         inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(13, 5, 97, 0.2),
+          inset 0 0 0 ${size / 5.5}rem #1809b3, inset 0 ${size / 2.5}rem ${size / 7.5}rem #14089b, inset 0 0 ${size / 10}rem ${size / 6}rem #100679, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  background-color: #180ab8;
+  }
+  &:before {
+
+  background: rgba(121, 110, 247, 0.2);
+  background: linear-gradient(to top, rgba(166, 158, 250, 0.3) 0%, rgba(26, 10, 194, 0.1) 100%);
+  }
+`;
+
+export const ArcadeButtonToggle = styled(ArcadeButton)`
+  background-color: #c2c20a;
+  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #dada0b, inset 0 -${size / 24}rem ${size / 60}rem #aaaa09, 0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+   inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 60}rem ${size / 10}rem #616105, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+     inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 247, 110, 0.7),
+      inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 244, 37, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 145, 8, 0.2),
+       inset 0 0 0 ${size / 5.5}rem #c2c20a, inset 0 ${size / 2.5}rem ${size / 7.5}rem #aaaa09, inset 0 0 ${size / 10}rem ${size / 6}rem #919108, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  &:active {
+    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #dada0b, inset 0 -${size / 24}rem ${size / 60}rem #aaaa09, 0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+     inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 60}rem ${size / 10}rem #616105, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 247, 110, 0.2),
+       inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 244, 37, 0.5),
+        inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 97, 5, 0.2),
+       inset 0 0 0 ${size / 5.5}rem #b3b309, inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b9b08, inset 0 0 ${size / 10}rem ${size / 6}rem #797906, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  background-color: #b8b80a;
+  }
+  &:before {
+  background: rgba(247, 247, 110, 0.2);
+  background: linear-gradient(to top, rgba(250, 250, 158, 0.3) 0%, rgba(194, 194, 10, 0.1) 100%);
   }
 `;
