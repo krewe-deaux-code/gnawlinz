@@ -170,7 +170,11 @@ const CharacterCreator: React.FC = () => {
   }, [activeUser]);
 
   useEffect(() => {
-    if (inputName.length || inputName === '') { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }
+    if (inputName.length || inputName === '') {
+      setNewChar(prevChar => (
+        { ...prevChar, name: inputName }
+      ));
+    }
   }, [inputName]);
 
   // console.log('NEW CHAR from CHAR CREATOR', newChar);
@@ -231,9 +235,13 @@ const CharacterCreator: React.FC = () => {
               }
             </HairCarousel>
           </AvatarContainer>
-          <NameBox>{newChar.name ? <p style={{ color: 'white' }}>Name: {newChar.name}</p> : <motion.p animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }} style={{ color: 'white' }} transition={{ duration: 0.3 }}>Name: enter your name</motion.p>}
-            <NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} />
-            <StatButton onClick={genRandomName} style={{ marginTop: '1.35rem', marginLeft: '2.4rem', width: '11rem', height: '2.3rem' }}>Randomize</StatButton>
+          <NameBox>{newChar.name
+            ? <p style={{ color: 'white' }}>Name: {newChar.name}</p>
+            : <motion.p
+              animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
+              style={{ color: 'white' }}
+              transition={{ duration: 0.3 }}
+            >Name: enter your name</motion.p>}<NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} /><StatButton onClick={genRandomName} style={{ marginTop: '1.35rem', marginLeft: '2.4rem', width: '11rem', height: '2.3rem' }}>Randomize</StatButton>
           </NameBox>
         </CharacterContainer>
         <StatsContainer id='Stats'>
@@ -242,8 +250,12 @@ const CharacterCreator: React.FC = () => {
               src={images.healthIcon} />
             <HStatName id='statName'>
               <span>Health: </span><span> {newChar.health}</span>
-              <StatButton onClick={() => handleStatChange(setHealth, '-', 'health', health)} style={{ width: '2.5rem' }}>-</StatButton>
-              <StatButton onClick={() => handleStatChange(setHealth, '+', 'health', health)} style={{ width: '2.5rem' }}>+</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setHealth, '-', 'health', health)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setHealth, '+', 'health', health)}
+                style={{ width: '2.5rem' }}>+</StatButton>
             </HStatName>
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
@@ -251,8 +263,12 @@ const CharacterCreator: React.FC = () => {
               src={images.strengthIcon} />
             <SStatName id='statName'>
               <span>Strength: </span><span> {newChar.strength}</span>
-              <StatButton onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ width: '2.5rem' }}>-</StatButton>
-              <StatButton onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ width: '2.5rem' }}>+</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setStrength, '-', 'strength', strength)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setStrength, '+', 'strength', strength)}
+                style={{ width: '2.5rem' }}>+</StatButton>
             </SStatName>
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
@@ -260,8 +276,12 @@ const CharacterCreator: React.FC = () => {
               src={images.enduranceIcon} />
             <EStatName id='statName'>
               <span>Endurance: </span><span> {newChar.endurance}</span>
-              <StatButton onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)} style={{ width: '2.5rem' }}>-</StatButton>
-              <StatButton onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)} style={{ width: '2.5rem' }}>+</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)}
+                style={{ width: '2.5rem' }}>+</StatButton>
             </EStatName>
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
@@ -269,8 +289,12 @@ const CharacterCreator: React.FC = () => {
               src={images.moodIcon} />
             <MStatName id='statName'>
               <span>Mood: </span><span> {newChar.mood}</span>
-              <StatButton onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ width: '2.5rem' }}>-</StatButton>
-              <StatButton onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ width: '2.5rem' }}>+</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setMood, '-', 'mood', mood)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setMood, '+', 'mood', mood)}
+                style={{ width: '2.5rem' }}>+</StatButton>
             </MStatName>
           </StatIconContainer>
           <SaveBox>
@@ -278,13 +302,15 @@ const CharacterCreator: React.FC = () => {
               bottom: '1.7rem',
               position: 'relative'
             }}>Stat Pool: {statPool}</h3>
-            <StatButton style={{ bottom: '0.6rem', position: 'relative', height: '2.3rem' }} onClick={() => {
-              if (!inputName.length) {
-                nameInputRef.current?.focus();
-              } else {
-                handleSaveChar();
-              }
-            }}>SAVE</StatButton>
+            <StatButton
+              style={{ bottom: '0.6rem', position: 'relative', height: '2.3rem' }}
+              onClick={() => {
+                if (!inputName.length) {
+                  nameInputRef.current?.focus();
+                } else {
+                  handleSaveChar();
+                }
+              }}>SAVE</StatButton>
           </SaveBox>
         </StatsContainer>
         <RightSpacer id='RSpacer'></RightSpacer>
@@ -293,7 +319,13 @@ const CharacterCreator: React.FC = () => {
         <div style={{ height: '0.5rem' }}>
           {startFail && <motion.h6
             animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
-            style={{ color: 'red', maxWidth: '34.4rem', position: 'relative', left: '25rem', bottom: '1rem' }}
+            style={{
+              color: 'red',
+              maxWidth: '34.4rem',
+              position: 'relative',
+              left: '25rem',
+              bottom: '1rem'
+            }}
             transition={{ duration: .3 }}
           // exit={{ opacity: 0, scale: 0 }}
           >SAVE A CHARACTER TO PLAY</motion.h6>}
