@@ -596,7 +596,7 @@ const GameView = (props: GameViewProps) => {
     } else {
       setLocation(location => ({
         ...location,
-        graffiti_msg2: inputValue
+        graffiti_msg3: inputValue
       }));
     }
     setInputValue('');
@@ -837,7 +837,7 @@ const GameView = (props: GameViewProps) => {
                   <HudButton onClick={() => setModalText(`You looked around and found a messages in graffiti that said: "${location.graffiti_msg1}", "${location.graffiti_msg2}", and "${location.graffiti_msg3}"`)}>Look for graffiti</HudButton>
                   <div style={{ display: 'flex' }}>
                     <input type="text" maxLength={23} style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
-                    <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
+                    <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(), handleClose(), setModalText(''); }}>Tag</HudButton>
                   </div>
                 </ModalBodyContainer>
               </Modal.Body>
@@ -860,9 +860,9 @@ const GameView = (props: GameViewProps) => {
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src={ images.healthIcon } />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={ images.moodIcon } />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={ images.strengthIcon } />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={ images.enduranceIcon } />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={ images.moodIcon } />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
