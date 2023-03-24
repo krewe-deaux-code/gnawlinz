@@ -36,8 +36,8 @@ const LeaderBoard: React.FC = () => {
           <Th>Avatar</Th>
           <Th>Character</Th>
           <Th>Health</Th>
-          <Th>Mood</Th>
           <Th>Strength</Th>
+          <Th>Mood</Th>
         </tr>
       </thead>
       <tbody>
@@ -47,8 +47,8 @@ const LeaderBoard: React.FC = () => {
             <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '100%', height: '100%' }} /></Td>
             <Td>{leader.name}</Td>
             <Td>{leader.health}</Td>
-            <Td>{leader.mood}</Td>
             <Td>{leader.strength}</Td>
+            <Td>{leader.mood}</Td>
           </TableRow>
         ))}
       </tbody>
