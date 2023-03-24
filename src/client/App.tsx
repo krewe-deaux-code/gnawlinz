@@ -55,11 +55,9 @@ const App = () => {
       axios.get(`/item/${item}`));
     Promise.all(currentInventory)
       .then(items => {
-        console.log('currentInventory in App.tsx', fetchedInventory);
         const inventoryData = items.map(item => item.data);
         setFetchedInventory(inventoryData.sort((a, b) => b._id - a._id));
       })
-      .then(() => console.log('currentInventory in App.tsx after setFetchedInventory', fetchedInventory))
       .catch(err => console.error('Error in fetchItems in App', err));
   };
 

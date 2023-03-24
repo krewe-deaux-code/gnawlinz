@@ -514,12 +514,12 @@ const GameView = (props: GameViewProps) => {
         <div>Health</div>
         <ProgressBarContainer>
           <OverlayValue>{healthOverlayValue}</OverlayValue>
-          <ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} style={{backgroundColor: 'grey'}} />
+          <ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} style={{ backgroundColor: 'grey' }} />
         </ProgressBarContainer>
         <div>Mood</div>
         <ProgressBarContainer>
           <OverlayValue>{moodOverlayValue}</OverlayValue>
-          <ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} style={{backgroundColor: 'grey'}}/>
+          <ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} style={{ backgroundColor: 'grey' }} />
         </ProgressBarContainer>
       </div>
     );
@@ -560,7 +560,7 @@ const GameView = (props: GameViewProps) => {
           const imageUrl = response.data.image_url;
           const imageTag = `<img src='${imageUrl}' alt='${itemName}' style='max-width: 40%; max-height: 40%'/>`;
           setModalText(
-            <div style={{textAlign: 'center'}}>
+            <div style={{ textAlign: 'center' }}>
               You searched for items and found {itemName}.
               <div dangerouslySetInnerHTML={{ __html: imageTag }} />
             </div>);
@@ -740,21 +740,22 @@ const GameView = (props: GameViewProps) => {
             <img src={location.image_url}
               style={{
                 position: 'relative',
-                bottom: '98%'
+                bottom: '98%',
+                zIndex: 0
               }}
             ></img>
           </Page>
           {
             damageToEnemy > 0
               ? <motion.div
+                style={{ color: 'green', zIndex: 6, position: 'relative', bottom: '7.5rem' }}
                 animate={{
-                  scale: [1, 1, 2, 3, 2, 1, 0],
-                  rotate: [30, 0, -30, 0, 30, 0, -30],
+                  scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
                   y: -250,
                   x: 80
                 }}
-                style={{ color: 'green', zIndex: 10 }}
-                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                transition={{ ease: 'easeInOut', duration: 1.5 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToEnemy}
               </motion.div>
@@ -763,13 +764,13 @@ const GameView = (props: GameViewProps) => {
           {
             damageToPlayer > 0
               ? <motion.div
+                style={{ color: 'red', zIndex: 6, position: 'relative', bottom: '7.5rem' }}
                 animate={{
-                  scale: [1, 1, 2, 3, 2, 1, 0],
-                  rotate: [-30, 0, 30, 0, -30, 0, 30],
+                  scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
                   y: -250,
                   x: -80
                 }}
-                style={{ color: 'red', zIndex: 10 }}
                 transition={{ ease: 'easeInOut', duration: 1.8 }}
                 exit={{ opacity: 0, scale: 0 }}
               >{damageToPlayer}
@@ -850,10 +851,10 @@ const GameView = (props: GameViewProps) => {
             <h4 onClick={props.handleSpeak}> {'Score: ' + currentChar.score}</h4>
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
-              <StatIconContainer><TinyStatIconImg src={ images.healthIcon } />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={ images.moodIcon } />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={ images.strengthIcon } />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={ images.enduranceIcon } />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.healthIcon} />{currentChar.health}</StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.moodIcon} />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.strengthIcon} />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.enduranceIcon} />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
