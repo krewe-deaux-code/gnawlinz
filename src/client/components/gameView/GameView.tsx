@@ -2,6 +2,7 @@ import axios from 'axios';
 import Nav from '../nav/NavBar';
 import Result from '../result/Result';
 import ProgressBar from 'react-bootstrap/ProgressBar';
+import { ReactNode } from 'react';
 import images from '../../utility/images';
 
 import { io, Socket } from 'socket.io-client';
@@ -45,7 +46,7 @@ const GameView = (props: GameViewProps) => {
   const [socket, setSocket] = useState<Socket | undefined>();
   const [killFeed, setKillFeed] = useState<string[]>([]);
   // state for investigate modal
-  const [modalText, setModalText] = useState('');
+  const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
   const [locationModalText, setLocationModalText] = useState('');
@@ -70,6 +71,7 @@ const GameView = (props: GameViewProps) => {
   const [temporaryMood, setTemporaryMood] = useState(0);
 
   const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
+  const [tooltip, setTooltip] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
 
   const fetchEvent = () => {
@@ -200,7 +202,20 @@ const GameView = (props: GameViewProps) => {
     fetchEvent();
     setInvestigateDisabled(false);
   };
-
+  const handleToolTip = (button: string) => {
+    if (button === 'engage') {
+      setTooltip('Enter combat to grow your score');
+    } else if (button === 'evade') {
+      setTooltip('Stealthily collect an item \n Failure will result in a forced combat');
+    } else if (button === 'evacuate') {
+      setTooltip('Leave the area without resolving this event');
+    } else if (button === 'wildcard') {
+      setTooltip('Explore the area with your winning personality');
+    }
+  };
+  const handleToolTipOff = () => {
+    setTooltip(null);
+  };
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
 
@@ -541,7 +556,14 @@ const GameView = (props: GameViewProps) => {
     } else {
       axios.get(`item/${location.drop_item_slot}`)
         .then((response: any) => {
-          setModalText(`You searched for items and found ${response.data.name}`);
+          const itemName = response.data.name;
+          const imageUrl = response.data.image_url;
+          const imageTag = `<img src='${imageUrl}' alt='${itemName}' style='max-width: 40%; max-height: 40%'/>`;
+          setModalText(
+            <div style={{textAlign: 'center'}}>
+              You searched for items and found {itemName}.
+              <div dangerouslySetInnerHTML={{ __html: imageTag }} />
+            </div>);
         })
         .catch((err) => {
           console.error('Failed to get item id from item table', err);
@@ -762,6 +784,8 @@ const GameView = (props: GameViewProps) => {
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
+                <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
+                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
                 <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
                 </Modal.Header>
@@ -868,40 +892,58 @@ const GameView = (props: GameViewProps) => {
         </CharStatusContainer>
         <Content2>
           <div>
+            {tooltip && (
+              <InventoryTextBubble>
+                <h5>{tooltip}</h5>
+              </ InventoryTextBubble>
+            )}
+
             <h5>Engage</h5>
-            <ArcadeButton onClick={() => {
-              hit.play();
-              // <-- handleEnemy func ??
-              resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
-              setTemporaryMood(0);
-              setTemporaryEndurance(0);
-              setTemporaryStrength(0);
-            }} /></div>
+            <ArcadeButton
+              onMouseEnter={() => handleToolTip('engage')}
+              onMouseLeave={() => handleToolTipOff()}
+              onClick={() => {
+                hit.play();
+                // <-- handleEnemy func ??
+                resolveChoice(choices.engage, 'engage', currentChar.strength + bonusStrength + temporaryStrength);
+                setTemporaryMood(0);
+                setTemporaryEndurance(0);
+                setTemporaryStrength(0);
+              }} /></div>
           <div><h5>Evade</h5>
-            <ArcadeButton onClick={() => {
-              dodge.play();
-              resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
-              setTemporaryMood(0);
-              setTemporaryEndurance(0);
-              setTemporaryStrength(0);
-            }} /></div>
-          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent}/></div>
+            <ArcadeButton
+              onMouseEnter={() => handleToolTip('evade')}
+              onMouseLeave={() => handleToolTipOff()}
+              onClick={() => {
+                dodge.play();
+                resolveChoice(choices.evade, 'evade', currentChar.endurance + bonusEndurance + temporaryEndurance);
+                setTemporaryMood(0);
+                setTemporaryEndurance(0);
+                setTemporaryStrength(0);
+              }} /></div>
+          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent} /></div>
           <div><h5>Evacuate</h5>
-            <ArcadeButton onClick={() => {
-              evacuate.play();
-              resolveChoice(choices.evacuate, 'evacuate', 0);
-              setTemporaryMood(0);
-              setTemporaryEndurance(0);
-              setTemporaryStrength(0);
-            }} /></div>
+            <ArcadeButton
+              onMouseEnter={() => handleToolTip('evacuate')}
+              onMouseLeave={() => handleToolTipOff()}
+              onClick={() => {
+                evacuate.play();
+                resolveChoice(choices.evacuate, 'evacuate', 0);
+                setTemporaryMood(0);
+                setTemporaryEndurance(0);
+                setTemporaryStrength(0);
+              }} /></div>
           <div><h5>Wildcard</h5>
-            <ArcadeButton onClick={() => {
-              wildCard.play();
-              resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
-              setTemporaryMood(0);
-              setTemporaryStrength(0);
-              setTemporaryStrength(0);
-            }} /></div>
+            <ArcadeButton
+              onMouseEnter={() => handleToolTip('wildcard')}
+              onMouseLeave={() => handleToolTipOff()}
+              onClick={() => {
+                wildCard.play();
+                resolveChoice(choices.wildcard, 'wildcard', currentChar.mood + bonusMood + temporaryMood, 'mood');
+                setTemporaryMood(0);
+                setTemporaryStrength(0);
+                setTemporaryStrength(0);
+              }} /></div>
         </Content2>
 
       </Footer >
