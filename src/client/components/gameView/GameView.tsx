@@ -582,7 +582,6 @@ const GameView = (props: GameViewProps) => {
 
   const updateGraffitiMsg = () => {
     const random: number = Math.floor(Math.random() * 3) + 1;
-    console.log('heeeerrrrre', random);
     if (random === 1) {
       setLocation(location => ({
         ...location,
