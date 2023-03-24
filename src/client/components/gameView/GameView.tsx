@@ -206,11 +206,11 @@ const GameView = (props: GameViewProps) => {
     if (button === 'engage') {
       setTooltip('Enter combat to grow your score');
     } else if (button === 'evade') {
-      setTooltip('Stealthily collect an item \n Failure will result in a forced combat');
+      setTooltip('Risk a combat for chance at item');
     } else if (button === 'evacuate') {
       setTooltip('Leave the area without resolving this event');
     } else if (button === 'wildcard') {
-      setTooltip('Explore the area with your winning personality');
+      setTooltip('Risk depression for chance at ally');
     }
   };
   const handleToolTipOff = () => {
@@ -435,7 +435,7 @@ const GameView = (props: GameViewProps) => {
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
-            setTempText('You defeated the enemy and got a reward!'); // <-- put effects on canvas??
+            setTempText(`You defeated the enemy and got ${currentEnemy.score} points!`); // <-- put effects on canvas??
             // choiceOutcome = 'success';
             setCurrentEnemy({});
           } else { // <-- no Enemy on Event/State (enemy !exist)
