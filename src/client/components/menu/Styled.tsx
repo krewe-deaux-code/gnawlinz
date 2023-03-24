@@ -25,12 +25,91 @@ background-color: #931a03;
   }
 `;
 
+export const CCStartButton = styled.button`
+background-color: #931a03;
+max-width: 114.95px;
+max-height: 56px;
+  color: white !important;
+  font-family: 'Edit Undo BRK', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #60180e;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #60180e;
+  }
+`;
+
+export const SelectStartButton = styled.button`
+  background-color: #931a03;
+  margin-top: 0.75rem; /* <-- new --> */
+  color: white !important;
+  font-family: 'Edit Undo BRK', sans-serif;
+  font-size: 1rem;
+  padding: 1rem 1rem;
+  border-radius: 2em;
+  cursor: pointer;
+  transition: 0.1s ease;
+  border-width: 0;
+  box-shadow: 1px 5px 0 0 #60180e;
+;
+  &:hover {
+    transform: translateY(-4px);
+  box-shadow: 1px 9px 0 0 #60180e;
+  }
+  &:active {
+    transform: translateY(4px);
+  box-shadow: 0px 0px 0 0 #60180e;
+  }
+`;
+
 export const StatName = styled.h5`
     /* display: grid; */
     font-size: 1.5em;
     color: white;
     text-align: center;
   `;
+
+export const HStatName = styled.h5`
+display: grid;
+align-items: center;
+justify-items: start;
+justify-content: space-around;
+grid-template-columns: 122px 53px 50px 50px;
+`;
+
+export const SStatName = styled.h5`
+display: grid;
+align-items: center;
+justify-items: start;
+justify-content: space-around;
+grid-template-columns: 125px 50px 50px 50px;
+`;
+
+export const EStatName = styled.h5`
+display: grid;
+align-items: center;
+justify-items: start;
+justify-content: space-around;
+grid-template-columns: 125px 50px 50px 50px;
+`;
+
+export const MStatName = styled.h5`
+display: grid;
+align-items: center;
+justify-items: start;
+justify-content: space-around;
+grid-template-columns: 125px 50px 50px 23px;
+`;
 
 export const CCStatName = styled.div`
     /* display: grid; */
@@ -47,7 +126,7 @@ export const NameBox = styled.h5`
   text-align: center;
   `;
 
-export const SaveBox = styled.h5`
+export const SaveBox = styled.div`
     margin-left: 5rem;
     top: 2.7rem;
     position: relative;
@@ -71,6 +150,17 @@ export const StatIconContainer = styled.div`
   align-items: center;
   `;
 
+export const CCStatIconContainer = styled.div`
+  padding: 1rem;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+  -webkit-box-pack: center;
+  gap: 1em;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: center;
+  `;
+
 export const IconImg = styled.img`
   cursor: pointer;
   padding: 5px;
@@ -83,6 +173,7 @@ export const Body = styled.div`
   height: 100%;
   background-color: rgb(31, 33, 40); /* changed from black */
   color: white;
+  height: 100vh;
 `;
 
 export const InfoContainer = styled.div`
@@ -224,22 +315,36 @@ export const StatsContainer = styled.div`
   justify-items: start;
   justify-content: center;
   align-content: center;
+  /* box-sizing: content-box !important; */ /* <-- for golden line blur */
 `;
+
+// display: grid;
+// grid-area: stats / stats / stats / stats;
+// grid-template-rows: auto auto auto auto auto auto;
+// height: 100%;
+// width: 100%;
+// background: rgba(173, 173, 173, 0.5);
+// backdrop-filter: blur(15px);
+// border-right: 3px solid darkgoldenrod;
+// justify-items: start;
+// -webkit-box-pack: center;
+// place-content: center;
 
 export const CharacterContainer = styled.div`
   /* grid-template-rows: .10fr .20fr .20fr;
   grid-template-areas:
-    'hair'; */
-    grid-area: character / character / character / character;
-    background: rgba(173, 173, 173, 0.5);
-    backdrop-filter: blur(15px);
-    border-left: 3px solid darkgoldenrod;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    align-items: center;
-    /* padding-top: 40px; */
-    flex-direction: column;
+  'hair'; */
+  grid-area: character / character / character / character;
+  background: rgba(173, 173, 173, 0.5);
+  backdrop-filter: blur(15px);
+  border-left: 3px solid darkgoldenrod;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  align-items: center;
+  /* padding-top: 40px; */
+  flex-direction: column;
+
 `;
 
 export const AvatarContainer = styled.div`
@@ -274,4 +379,18 @@ export const BodySlot = styled.img`
 
 export const NameInput = styled(motion.input)`
 
+`;
+
+export const StatButton = styled.button`
+  border-radius: 2em;
+  border-width: 0.3rem;
+  box-shadow: 1px 1px 0 0 #3b3b3b;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 1px 1px 0 0 #3b3b3b;
+  }
+  &:active {
+    transform: translateY(4px);
+    box-shadow: 0px 0px 0 0 #3b3b3b;
+  }
 `;

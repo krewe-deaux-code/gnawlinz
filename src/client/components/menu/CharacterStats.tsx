@@ -85,26 +85,32 @@ const CharacterStats: React.FC = () => {
   // console.log('CURRENT CHAR', currentChar);
   // console.log('ACTIVE USER', activeUser);
   // console.log('USER CHARS -->', userChars);
-  console.log('Current Acvite User: ', activeUser);
+  // console.log('Current Acvite User: ', activeUser);
   return (
     <>
       <div>
         <h1>Character Select:</h1>
-        <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            userChars.map((char: Character, i: number) => {
-              return <Carousel.Item key={i}>
-                <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
-                <StatName>Name: {char.name}</StatName>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
-                <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png" /><StatName>Location: {locationName}</StatName></IconContainer>
-              </Carousel.Item>;
-            })
-          }
-        </StyledCarousel>
+        {userChars.length ?
+          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+            {
+              userChars.map((char: Character, i: number) => {
+                return <Carousel.Item key={i}>
+                  <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
+                  <StatName>Name: {char.name}</StatName>
+                  <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" /><StatName>Health: {char.health}</StatName></IconContainer>
+                  <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" /><StatName>Strength: {char.strength}</StatName></IconContainer>
+                  <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
+                  <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" /><StatName>Mood: {char.mood}</StatName></IconContainer>
+                  <IconContainer><IconImg src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png" /><StatName>Location: {locationName}</StatName></IconContainer>
+                </Carousel.Item>;
+              })
+            }
+          </StyledCarousel> :
+          <>
+            <img style={{ height: '400px', width: '300px' }} src='https://res.cloudinary.com/de0mhjdfg/image/upload/v1679593379/silhoutteQ_vjnkss.png' />
+            <StatName>Create a Character:</StatName>
+          </>
+        }
       </div>
     </>
   );
