@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 
 import names from '../../utility/names';
+import images from '../../utility/images';
 
 import {
   IconImg, NameBox, SStatName, SaveBox, CharacterContainer, StatButton, HStatName,

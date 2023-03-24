@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+import images from '../../utility/images';
 
 import { StyledCarousel, IconImg, IconContainer, StatName } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
