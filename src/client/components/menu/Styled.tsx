@@ -211,7 +211,10 @@ export const StyledCarousel = styled(Carousel)`
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
     position: relative;
-    background-color: #ff0000 !important;
+    border-radius: 2em;
+    border-width: 0.3rem;
+    box-shadow: 2px 3px 4px 2px #000000;
+    background-color: #da0101 !important;
     z-index: 1 !important;
   }
   /* .carousel-control-next,
@@ -225,12 +228,16 @@ export const HairCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: relative;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
   .carousel-control-prev {
+    border-radius: 2em;
     position: absolute;
     top: 80px;
     height: 32px;
@@ -241,8 +248,11 @@ export const FaceCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: relative;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
@@ -257,8 +267,11 @@ export const BodyCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: absolute;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
