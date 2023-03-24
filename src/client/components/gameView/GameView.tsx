@@ -498,12 +498,12 @@ const GameView = (props: GameViewProps) => {
         <div>Health</div>
         <ProgressBarContainer>
           <OverlayValue>{healthOverlayValue}</OverlayValue>
-          <ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} style={{backgroundColor: 'grey'}} />
+          <ProgressBar variant={health < 30 ? 'danger' : 'success'} now={health} style={{ backgroundColor: 'grey' }} />
         </ProgressBarContainer>
         <div>Mood</div>
         <ProgressBarContainer>
           <OverlayValue>{moodOverlayValue}</OverlayValue>
-          <ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} style={{backgroundColor: 'grey'}}/>
+          <ProgressBar variant={mood < 30 ? 'danger' : 'success'} now={mood} style={{ backgroundColor: 'grey' }} />
         </ProgressBarContainer>
       </div>
     );
@@ -558,10 +558,24 @@ const GameView = (props: GameViewProps) => {
 
 
   const updateGraffitiMsg = () => {
-    setLocation(location => ({
-      ...location,
-      graffiti_msg: inputValue
-    }));
+    const random: number = Math.floor(Math.random() * 3) + 1;
+    console.log('heeeerrrrre', random);
+    if (random === 1) {
+      setLocation(location => ({
+        ...location,
+        graffiti_msg1: inputValue
+      }));
+    } else if (random === 2) {
+      setLocation(location => ({
+        ...location,
+        graffiti_msg2: inputValue
+      }));
+    } else {
+      setLocation(location => ({
+        ...location,
+        graffiti_msg2: inputValue
+      }));
+    }
     setInputValue('');
     setVisited(prevVisited => prevVisited.map(item => {
       if (item.name === location.name) {
@@ -760,11 +774,8 @@ const GameView = (props: GameViewProps) => {
           <Link to="/game-view" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
-              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static'>
-                <Modal.Header closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
-                <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
+                <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >
@@ -800,7 +811,7 @@ const GameView = (props: GameViewProps) => {
                   {/* <div onClick={props.handleSpeak}>Look for items</div> */}
                   <HudButton onClick={() => { retrieveDropItem(); }}>Search for items</HudButton>
                   {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
-                  <HudButton onClick={() => setModalText(`You looked around and found a message in graffiti that said: "${location.graffiti_msg}"`)}>Look for graffiti</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a messages in graffiti that said: "${location.graffiti_msg1}", "${location.graffiti_msg2}", and "${location.graffiti_msg3}"`)}>Look for graffiti</HudButton>
                   <div style={{ display: 'flex' }}>
                     <input type="text" maxLength={23} style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
                     <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(); }}>Tag</HudButton>
@@ -888,7 +899,7 @@ const GameView = (props: GameViewProps) => {
               setTemporaryEndurance(0);
               setTemporaryStrength(0);
             }} /></div>
-          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent}/></div>
+          <div><h5>Toggle Event</h5><ArcadeButton onClick={handleToggleEvent} /></div>
           <div><h5>Evacuate</h5>
             <ArcadeButton onClick={() => {
               evacuate.play();
