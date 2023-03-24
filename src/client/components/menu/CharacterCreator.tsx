@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import axios from 'axios';
 
 import names from '../../utility/names';
+import images from '../../utility/images';
 
 import {
   IconImg, NameBox, CCStatName, SaveBox, CharacterContainer,
@@ -229,7 +230,7 @@ const CharacterCreator: React.FC = () => {
       <StatsContainer id='Stats'>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />
+            src={images.healthIcon} />
           <CCStatName id='statName'>Health: {newChar.health}
             <button onClick={() => handleStatChange(setHealth, '-', 'health', health)} style={{ marginLeft: '4.00rem' }}>-</button>
             <button onClick={() => handleStatChange(setHealth, '+', 'health', health)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -237,7 +238,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />
+            src={images.strengthIcon} />
           <CCStatName id='statName'>Strength: {newChar.strength}
             <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ marginLeft: '2.29rem' }}>-</button>
             <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -245,7 +246,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />
+            src={images.enduranceIcon} />
           <CCStatName id='statName'>Endurance: {newChar.endurance}
             <button onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)} style={{ marginLeft: '1.54rem' }}>-</button>
             <button onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)} style={{ marginLeft: '0.5rem' }}>+</button>
@@ -253,7 +254,7 @@ const CharacterCreator: React.FC = () => {
         </StatIconContainer>
         <StatIconContainer>
           <IconImg
-            src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />
+            src={images.moodIcon} />
           <CCStatName id='statName'>Mood: {newChar.mood}
             <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ marginLeft: '5.24rem' }}>-</button>
             <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ marginLeft: '0.5rem' }}>+</button>

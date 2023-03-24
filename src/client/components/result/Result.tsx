@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
+import images from '../../utility/images';
 import { UserContext } from '../../App'; // <-- holds User object
 import { GameViewProps } from '../../utility/interface';
 import Confetti from 'react-confetti';
@@ -19,7 +20,6 @@ const Result = (props: GameViewProps) => {
   // add win/loss image & resultText to state
   const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
   const [resultText, setResultText] = useState('you died!');
-  const [showConfetti, setShowConfetti] = useState(false);
 
 
   useEffect(() => {
@@ -33,11 +33,11 @@ const Result = (props: GameViewProps) => {
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
-        setShowConfetti(true);
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
+        // setShowConfetti(true);
+        setImage(images.trophyIcon);
         setResultText('you survived!');
       } else {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
+        setImage(images.deathIcon);
         setResultText('you died!');
       }
     };
@@ -47,16 +47,9 @@ const Result = (props: GameViewProps) => {
 
   }, []);
 
-  useEffect(() => {
-    let timeout;
-    if (showConfetti) {
-      timeout = setTimeout(() => {
-        setShowConfetti(false);
-      }, 5000);
-    }
-    return () => clearTimeout(timeout);
-  }, [showConfetti]);
 
+  //set the colors for the confetti
+  const colors = ['rgb(156, 9, 252)', 'rgb(255, 235, 36)', 'rgb(12, 217, 49)'];
   const uniqueEvents = [];
   story.forEach((line) => {
     if (!uniqueEvents.includes(line) && line) {
@@ -68,16 +61,17 @@ const Result = (props: GameViewProps) => {
   console.log('result from story query:', story);
   return (
     <Container>
-      {showConfetti && <Confetti />}
-      {/* {resultText === 'you survived!' ? <div> <Confetti /> </div> : null}; */}
+      {resultText === 'you survived!' ? <div> <Confetti
+        colors={colors}
+      /> </div> : null};
       <Nav isActive={true} />
       <Story>
 
         <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
         <ScrollableContainer >
           {uniqueEvents.map((sentence, index) => (
-            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px' }}>
-              <p onClick={props.handleSpeak}>{sentence}</p>
+            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', paddingTop: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+              <p onClick={props.handleSpeak}>{sentence} </p>
             </div>
           ))}
         </ScrollableContainer>

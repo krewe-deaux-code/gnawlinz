@@ -156,6 +156,7 @@ export const IconImg = styled.img`
   max-height: 2em;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 25%;
 `;
 export const StatBonusColor = styled.div`
 color: #2e8351;
@@ -448,3 +449,20 @@ export const ArcadeButtonToggle = styled(ArcadeButton)`
   background: linear-gradient(to top, rgba(250, 250, 158, 0.3) 0%, rgba(194, 194, 10, 0.1) 100%);
   }
 `;
+
+export const ProgressBarContainer = styled.div`
+  position: relative;
+  margin-bottom: 1rem;
+`;
+
+export const OverlayValue = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: 'white';
+  font-size: 0.8rem;
+`;
+
+
