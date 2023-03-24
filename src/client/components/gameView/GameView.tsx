@@ -205,11 +205,11 @@ const GameView = (props: GameViewProps) => {
     if (button === 'engage') {
       setTooltip('Enter combat to grow your score');
     } else if (button === 'evade') {
-      setTooltip('Stealthily collect an item \n Failure will result in a forced combat');
+      setTooltip('Risk a combat for chance at item');
     } else if (button === 'evacuate') {
       setTooltip('Leave the area without resolving this event');
     } else if (button === 'wildcard') {
-      setTooltip('Explore the area with your winning personality');
+      setTooltip('Risk depression for chance at ally');
     }
   };
   const handleToolTipOff = () => {

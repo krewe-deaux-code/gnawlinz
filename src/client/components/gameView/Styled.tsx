@@ -157,6 +157,7 @@ export const IconImg = styled.img`
   max-height: 2em;
   margin-left: auto;
   margin-right: auto;
+  border-radius: 25%;
 `;
 export const StatBonusColor = styled.div`
 color: #2e8351;
