@@ -399,3 +399,20 @@ export const ArcadeButton = styled.button`
   transition: opacity 200ms;
   }
 `;
+
+export const ProgressBarContainer = styled.div`
+  position: relative;
+  margin-bottom: 1rem;
+`;
+
+export const OverlayValue = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  color: 'white';
+  font-size: 0.8rem;
+`;
+
+

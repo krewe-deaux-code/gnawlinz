@@ -4,6 +4,7 @@ import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider } from './S
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Howler } from 'howler';
+import images from '../../utility/images';
 
 import { UserContext, SettingsContext } from '../../App';
 
@@ -44,8 +45,7 @@ const Nav = ({ isActive }: LinkProps) => {
     return () => clearInterval(interval);
   };
 
-  const defaultAvatar = 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png';
-  const googleAvatar = avatar ? avatar : defaultAvatar;
+  const googleAvatar = avatar ? avatar : images.defaultAvatar;
 
 
   useEffect(() => {
