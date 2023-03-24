@@ -239,7 +239,7 @@ const CharacterCreator: React.FC = () => {
         <StatsContainer id='Stats'>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg
-              src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png" />
+              src={images.healthIcon} />
             <HStatName id='statName'>
               <span>Health: </span><span> {newChar.health}</span>
               <StatButton onClick={() => handleStatChange(setHealth, '-', 'health', health)} style={{ width: '2.5rem' }}>-</StatButton>
@@ -248,7 +248,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg
-              src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png" />
+              src={images.strengthIcon} />
             <SStatName id='statName'>
               <span>Strength: </span><span> {newChar.strength}</span>
               <StatButton onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ width: '2.5rem' }}>-</StatButton>
@@ -257,7 +257,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg
-              src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png" />
+              src={images.enduranceIcon} />
             <EStatName id='statName'>
               <span>Endurance: </span><span> {newChar.endurance}</span>
               <StatButton onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)} style={{ width: '2.5rem' }}>-</StatButton>
@@ -266,7 +266,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg
-              src="https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png" />
+              src={images.moodIcon} />
             <MStatName id='statName'>
               <span>Mood: </span><span> {newChar.mood}</span>
               <StatButton onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ width: '2.5rem' }}>-</StatButton>
