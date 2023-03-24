@@ -8,7 +8,7 @@ import names from '../../utility/names';
 import images from '../../utility/images';
 
 import {
-  IconImg, NameBox, SStatName, SaveBox, CharacterContainer, StatButton, HStatName,
+  IconImg, NameBox, SStatName, SaveBox, CharacterContainer, StatButton, HStatName, StatPoolBox,
   CCContainer, LeftSpacer, RightSpacer, StatIconContainer, NameInput, EStatName,
   StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem, MStatName,
   HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer, CCStartButton
@@ -298,10 +298,9 @@ const CharacterCreator: React.FC = () => {
             </MStatName>
           </StatIconContainer>
           <SaveBox>
-            <h3 style={{
-              bottom: '1.7rem',
-              position: 'relative'
-            }}>Stat Pool: {statPool}</h3>
+            <StatPoolBox>
+              <span>Stat Pool: </span><span> {statPool} </span>
+            </StatPoolBox>
             <StatButton
               style={{ bottom: '0.6rem', position: 'relative', height: '2.3rem' }}
               onClick={() => {

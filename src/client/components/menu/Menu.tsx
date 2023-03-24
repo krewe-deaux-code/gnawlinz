@@ -146,12 +146,12 @@ const Menu: React.FC = () => {
               </div>
             </Content>
           </>
-          {startFail && <motion.h3
+          {startFail && <div style={{ display: 'grid', justifyContent: 'center', }}
+          ><motion.h3
             animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
-            style={{ color: 'red', maxWidth: '34.4rem', position: 'relative', left: '25rem' }}
+            style={{ color: 'red', maxWidth: '34.4rem', position: 'relative' }}
             transition={{ duration: .3 }}
-          // exit={{ opacity: 0, scale: 0 }}
-          >CREATE A CHARACTER TO PLAY</motion.h3>}
+          >CREATE A CHARACTER TO PLAY</motion.h3></div>}
           {!hideStartButton &&
             <SelectStartButton onClick={() => {
               if (currentChar.name === 'Someguy McPlaceholder') {

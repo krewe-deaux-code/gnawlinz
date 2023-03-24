@@ -382,6 +382,10 @@ export const NameInput = styled(motion.input)`
 `;
 
 export const StatButton = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: x-large;
   border-radius: 2em;
   border-width: 0.3rem;
   box-shadow: 1px 1px 0 0 #3b3b3b;
@@ -393,4 +397,15 @@ export const StatButton = styled.button`
     transform: translateY(4px);
     box-shadow: 0px 0px 0 0 #3b3b3b;
   }
+`;
+
+export const StatPoolBox = styled.h3`
+  bottom: 1.4rem;
+  position: relative;
+  display: grid;
+  place-items: center start;
+  -webkit-box-align: center;
+  grid-template-columns: 9rem 2rem;
+  justify-content: space-around;
+  justify-items: center;
 `;
