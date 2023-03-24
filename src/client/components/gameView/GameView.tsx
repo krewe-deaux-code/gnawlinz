@@ -785,8 +785,6 @@ const GameView = (props: GameViewProps) => {
               <HudButton onClick={handleLocationChange}>New Location</HudButton>
               <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
                 <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want go now? </Modal.Title>
-                <Modal.Header style= {{alignItems: 'flex-start'}} closeButton>
                   <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
                 </Modal.Header>
                 <Modal.Body >

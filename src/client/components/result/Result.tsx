@@ -70,7 +70,7 @@ const Result = (props: GameViewProps) => {
         <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
         <ScrollableContainer >
           {uniqueEvents.map((sentence, index) => (
-            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', paddingTop: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <p onClick={props.handleSpeak}>{sentence} </p>
             </div>
           ))}
