@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
+import images from '../../utility/images';
 import { UserContext } from '../../App'; // <-- holds User object
 import { GameViewProps } from '../../utility/interface';
 import Confetti from 'react-confetti';
@@ -33,10 +34,10 @@ const Result = (props: GameViewProps) => {
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
         // setShowConfetti(true);
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png');
+        setImage(images.trophyIcon);
         setResultText('you survived!');
       } else {
-        setImage('https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
+        setImage(images.deathIcon);
         setResultText('you died!');
       }
     };
@@ -69,7 +70,7 @@ const Result = (props: GameViewProps) => {
         <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
         <ScrollableContainer >
           {uniqueEvents.map((sentence, index) => (
-            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', paddingTop: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
               <p onClick={props.handleSpeak}>{sentence} </p>
             </div>
           ))}
