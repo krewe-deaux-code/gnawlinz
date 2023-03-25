@@ -315,14 +315,15 @@ const CharacterCreator: React.FC = () => {
         <RightSpacer id='RSpacer'></RightSpacer>
       </CCContainer>
       <div style={{ bottom: '4.7rem', position: 'relative' }}>
-        <div style={{ height: '0.5rem' }}>
+        <div style={{ height: '0.5rem', display: 'grid', justifyItems: 'center' }}>
           {startFail && <motion.h6
             animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
             style={{
+              display: 'flex',
+              position: 'relative',
+              justifyContent: 'flex-end',
               color: 'red',
               maxWidth: '34.4rem',
-              position: 'relative',
-              left: '25rem',
               bottom: '1rem'
             }}
             transition={{ duration: .3 }}
