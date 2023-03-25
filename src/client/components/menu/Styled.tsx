@@ -84,7 +84,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 122px 53px 50px 50px;
+grid-template-columns: 122px 40px 50px 50px;
 `;
 
 export const SStatName = styled.h5`
@@ -92,7 +92,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 50px;
+grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const EStatName = styled.h5`
@@ -100,7 +100,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 50px;
+grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const MStatName = styled.h5`
@@ -108,7 +108,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 23px;
+grid-template-columns: 125px 37px 50px 23px;
 `;
 
 export const CCStatName = styled.div`
@@ -391,7 +391,7 @@ export const BodySlot = styled.img`
 `;
 
 export const NameInput = styled(motion.input)`
-
+  border: 3px inset;
 `;
 
 export const StatButton = styled.button`
