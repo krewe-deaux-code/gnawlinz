@@ -22,5 +22,54 @@ export const enemySeed = [
     victory: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     defeat: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain by a precision missile strike.',
     contact: 'The object comes into view, a military aircraft of some kind. It does not respond to your attempted communication, instead flying off into the distance.'
-  }
+  },
+  {
+    name: 'Bill Zomberg',
+    image_url: '',
+    weapon1: 'TPS Reports',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'A zombie who was clearly once an office worker shambles toward you. His hoarse moans sound like he wants you to come in on Saturdays.',
+    victory: 'You do NOT work on Saturdays.',
+    defeat: 'Bill Zomberg delivers a fatally infectious bite. You\'re doomed to an eternity of zombie middle-management.',
+    contact: ''
+  },
+  {
+    name: 'Baby Cakes',
+    image_url: '',
+    weapon1: 'Rotten King Cake',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'You see a horrifying amalgamation of man, machine, and BABY vaulting towards you!',
+    victory: 'Baby Cakes\' purple, green, and gold entrails spill out onto the pavement.',
+    defeat: 'You hear a ear piercing wail: "GOO GOO GAGA!" as your vision fades to black.',
+    contact: ''
+  },
+  {
+    name: 'Drunken Shambler',
+    image_url: '',
+    weapon1: 'Broken Bottle',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'Wobbling towards you is a walking corpse, smelling of death, booze, and regret. Zombie or tourist it matters not.',
+    victory: 'You swear you hear it say, "I bet I can tell you where you got your shoes" as you stomp on its head.',
+    defeat: 'The creature vomits a one-hundred and ninety proof corrosive substance dissolving you into Bourbon Street juice.',
+    contact: ''
+  },
+  {
+    name: 'Zombie-Gator',
+    image_url: '',
+    weapon1: 'Noxious Bite',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'Sliding toward you on a layer of gross ooze is a colossal undead alligator!',
+    victory: 'You slew the rotting reptile, and left the carcass',
+    defeat: '',
+    contact: ''
+  },
+
 ];
