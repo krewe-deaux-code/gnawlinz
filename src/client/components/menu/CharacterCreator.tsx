@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -7,19 +8,22 @@ import names from '../../utility/names';
 import images from '../../utility/images';
 
 import {
-  IconImg, NameBox, CCStatName, SaveBox, CharacterContainer,
-  CCContainer, LeftSpacer, RightSpacer, StatIconContainer, NameInput,
-  StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem,
-  HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer
+  IconImg, NameBox, SStatName, SaveBox, CharacterContainer, StatButton, HStatName, StatPoolBox,
+  CCContainer, LeftSpacer, RightSpacer, StatIconContainer, NameInput, EStatName,
+  StatsContainer, HairSlot, FaceSlot, BodySlot, StyledCarouselItem, MStatName,
+  HairCarousel, FaceCarousel, BodyCarousel, AvatarContainer, CCStartButton
 } from './Styled';
 
 import { UserContext } from '../../App';
+import { MenuContext } from './Menu';
 import { Character } from '../../utility/interface';
 
 const CharacterCreator: React.FC = () => {
 
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext);
+  const { hideStartButton, setHideStartButton, startFail, setStartFail } = useContext(MenuContext);
 
+  const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const nameInputRef = useRef<HTMLInputElement>(null);
 
@@ -60,7 +64,7 @@ const CharacterCreator: React.FC = () => {
     const fetchFuncs = [setHairImageUrls, setFaceImageUrls, setBodyImageUrls];
     axios.get('/cloudinary/get', { params: { folder: folderName } })
       .then(response => {
-        console.log('CLOUDINARY FROM SERVER', response); // <-- response.data[0].url
+        // <-- response.data[0].url
         // console.log('TEST', response.data.map(el => el.url));
         fetchFuncs[i](response.data.map(el => el.url));
       })
@@ -134,6 +138,10 @@ const CharacterCreator: React.FC = () => {
     }
   };
 
+  const handleClickStart = () => {
+    navigate('/game-view');
+  };
+
   // *****************
   // <-- useEffect -->
   // *****************
@@ -162,120 +170,177 @@ const CharacterCreator: React.FC = () => {
   }, [activeUser]);
 
   useEffect(() => {
-    if (inputName.length || inputName === '') { setNewChar(prevChar => ({ ...prevChar, name: inputName })); }
+    if (inputName.length || inputName === '') {
+      setNewChar(prevChar => (
+        { ...prevChar, name: inputName }
+      ));
+    }
   }, [inputName]);
 
-  console.log('NEW CHAR from CHAR CREATOR', newChar);
+  // console.log('NEW CHAR from CHAR CREATOR', newChar);
 
   return (
-    <CCContainer id='CCContainer'>
-      <LeftSpacer id='LSpacer'></LeftSpacer>
-      <CharacterContainer id='CharContainer'>
+    <>
+      <CCContainer id='CCContainer'>
+        <LeftSpacer id='LSpacer'></LeftSpacer>
+        <CharacterContainer id='CharContainer'>
 
-        <AvatarContainer id='Avatar Container'>
-          <BodyCarousel
-            id='Body Carousel'
-            slide={false}
-            indicators={false}
-            onSelect={(i) => {
-              handleSelect(i, bodyImageUrls, setChosenBody);
+          <AvatarContainer id='Avatar Container'>
+            <BodyCarousel
+              id='Body Carousel'
+              slide={false}
+              indicators={false}
+              onSelect={(i) => {
+                handleSelect(i, bodyImageUrls, setChosenBody);
+              }}
+              interval={null}>
+              {
+                bodyImageUrls.map((body: string, i: number) => {
+                  return <StyledCarouselItem id='Body Item' key={i}>
+                    <BodySlot src={body} />
+                  </StyledCarouselItem>;
+                })
+              }
+            </BodyCarousel>
+            <FaceCarousel
+              id='Face Carousel'
+              slide={false}
+              indicators={false}
+              onSelect={(i) => {
+                handleSelect(i, faceImageUrls, setChosenFace);
+              }}
+              interval={null}>
+              {
+                faceImageUrls.map((face: string, i: number) => {
+                  return <StyledCarouselItem id='Face Item' key={i}>
+                    <FaceSlot id='FaceSlot' src={face} />
+                  </StyledCarouselItem>;
+                })
+              }
+            </FaceCarousel>
+            <HairCarousel
+              id='Hair Carousel'
+              slide={false}
+              indicators={false}
+              onSelect={(i) => {
+                handleSelect(i, hairImageUrls, setChosenHair);
+              }}
+              interval={null}>
+              {
+                hairImageUrls.map((hair: string, i: number) => {
+                  return <StyledCarouselItem id='Hair Item' key={i}>
+                    <HairSlot id='HairSlot' src={hair} />
+                  </StyledCarouselItem>;
+                })
+              }
+            </HairCarousel>
+          </AvatarContainer>
+          <NameBox>{newChar.name
+            ? <p style={{ color: 'white' }}>Name: {newChar.name}</p>
+            : <motion.p
+              animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
+              style={{ color: 'white' }}
+              transition={{ duration: 0.3 }}
+            >Name: enter your name</motion.p>}<NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} /><StatButton onClick={genRandomName} style={{ marginTop: '1.35rem', marginLeft: '2.4rem', width: '11rem', height: '2.3rem' }}>Randomize</StatButton>
+          </NameBox>
+        </CharacterContainer>
+        <StatsContainer id='Stats'>
+          <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
+            <IconImg
+              src={images.healthIcon} />
+            <HStatName id='statName'>
+              <span>Health: </span><span> {newChar.health}</span>
+              <StatButton
+                onClick={() => handleStatChange(setHealth, '-', 'health', health)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setHealth, '+', 'health', health)}
+                style={{ width: '2.5rem' }}>+</StatButton>
+            </HStatName>
+          </StatIconContainer>
+          <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
+            <IconImg
+              src={images.strengthIcon} />
+            <SStatName id='statName'>
+              <span>Strength: </span><span> {newChar.strength}</span>
+              <StatButton
+                onClick={() => handleStatChange(setStrength, '-', 'strength', strength)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setStrength, '+', 'strength', strength)}
+                style={{ width: '2.5rem' }}>+</StatButton>
+            </SStatName>
+          </StatIconContainer>
+          <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
+            <IconImg
+              src={images.enduranceIcon} />
+            <EStatName id='statName'>
+              <span>Endurance: </span><span> {newChar.endurance}</span>
+              <StatButton
+                onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)}
+                style={{ width: '2.5rem' }}>+</StatButton>
+            </EStatName>
+          </StatIconContainer>
+          <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
+            <IconImg
+              src={images.moodIcon} />
+            <MStatName id='statName'>
+              <span>Mood: </span><span> {newChar.mood}</span>
+              <StatButton
+                onClick={() => handleStatChange(setMood, '-', 'mood', mood)}
+                style={{ width: '2.5rem' }}>-</StatButton>
+              <StatButton
+                onClick={() => handleStatChange(setMood, '+', 'mood', mood)}
+                style={{ width: '2.5rem' }}>+</StatButton>
+            </MStatName>
+          </StatIconContainer>
+          <SaveBox>
+            <StatPoolBox>
+              <span>Stat Pool: </span><span> {statPool} </span>
+            </StatPoolBox>
+            <StatButton
+              style={{ bottom: '0.6rem', position: 'relative', height: '2.3rem' }}
+              onClick={() => {
+                if (!inputName.length) {
+                  nameInputRef.current?.focus();
+                } else {
+                  handleSaveChar();
+                }
+              }}>SAVE</StatButton>
+          </SaveBox>
+        </StatsContainer>
+        <RightSpacer id='RSpacer'></RightSpacer>
+      </CCContainer>
+      <div style={{ bottom: '4.7rem', position: 'relative' }}>
+        <div style={{ height: '0.5rem' }}>
+          {startFail && <motion.h6
+            animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
+            style={{
+              color: 'red',
+              maxWidth: '34.4rem',
+              position: 'relative',
+              left: '25rem',
+              bottom: '1rem'
             }}
-            interval={null}>
-            {
-              bodyImageUrls.map((body: string, i: number) => {
-                return <StyledCarouselItem id='Body Item' key={i}>
-                  <BodySlot src={body} />
-                </StyledCarouselItem>;
-              })
-            }
-          </BodyCarousel>
-          <FaceCarousel
-            id='Face Carousel'
-            slide={false}
-            indicators={false}
-            onSelect={(i) => {
-              handleSelect(i, faceImageUrls, setChosenFace);
-            }}
-            interval={null}>
-            {
-              faceImageUrls.map((face: string, i: number) => {
-                return <StyledCarouselItem id='Face Item' key={i}>
-                  <FaceSlot id='FaceSlot' src={face} />
-                </StyledCarouselItem>;
-              })
-            }
-          </FaceCarousel>
-          <HairCarousel
-            id='Hair Carousel'
-            slide={false}
-            indicators={false}
-            onSelect={(i) => {
-              handleSelect(i, hairImageUrls, setChosenHair);
-            }}
-            interval={null}>
-            {
-              hairImageUrls.map((hair: string, i: number) => {
-                return <StyledCarouselItem id='Hair Item' key={i}>
-                  <HairSlot id='HairSlot' src={hair} />
-                </StyledCarouselItem>;
-              })
-            }
-          </HairCarousel>
-        </AvatarContainer>
-        <NameBox>{newChar.name ? <p style={{ color: 'white' }}>Name: {newChar.name}</p> : <motion.p animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }} style={{ color: 'red' }} transition={{ duration: 0.3 }}>Name: enter your name</motion.p>}
-          <NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} />
-          <button onClick={genRandomName} style={{ 'marginTop': '1.35rem' }}>Randomize</button>
-        </NameBox>
-      </CharacterContainer>
-      <StatsContainer id='Stats'>
-        <StatIconContainer>
-          <IconImg
-            src={images.healthIcon} />
-          <CCStatName id='statName'>Health: {newChar.health}
-            <button onClick={() => handleStatChange(setHealth, '-', 'health', health)} style={{ marginLeft: '4.00rem' }}>-</button>
-            <button onClick={() => handleStatChange(setHealth, '+', 'health', health)} style={{ marginLeft: '0.5rem' }}>+</button>
-          </CCStatName>
-        </StatIconContainer>
-        <StatIconContainer>
-          <IconImg
-            src={images.strengthIcon} />
-          <CCStatName id='statName'>Strength: {newChar.strength}
-            <button onClick={() => handleStatChange(setStrength, '-', 'strength', strength)} style={{ marginLeft: '2.29rem' }}>-</button>
-            <button onClick={() => handleStatChange(setStrength, '+', 'strength', strength)} style={{ marginLeft: '0.5rem' }}>+</button>
-          </CCStatName>
-        </StatIconContainer>
-        <StatIconContainer>
-          <IconImg
-            src={images.enduranceIcon} />
-          <CCStatName id='statName'>Endurance: {newChar.endurance}
-            <button onClick={() => handleStatChange(setEndurance, '-', 'endurance', endurance)} style={{ marginLeft: '1.54rem' }}>-</button>
-            <button onClick={() => handleStatChange(setEndurance, '+', 'endurance', endurance)} style={{ marginLeft: '0.5rem' }}>+</button>
-          </CCStatName>
-        </StatIconContainer>
-        <StatIconContainer>
-          <IconImg
-            src={images.moodIcon} />
-          <CCStatName id='statName'>Mood: {newChar.mood}
-            <button onClick={() => handleStatChange(setMood, '-', 'mood', mood)} style={{ marginLeft: '5.24rem' }}>-</button>
-            <button onClick={() => handleStatChange(setMood, '+', 'mood', mood)} style={{ marginLeft: '0.5rem' }}>+</button>
-          </CCStatName>
-        </StatIconContainer>
-        <SaveBox>
-          <h3 style={{
-            bottom: '1rem',
-            position: 'relative'
-          }}>Stat Pool: {statPool}</h3>
-          <button onClick={() => {
-            if (!inputName.length) {
-              nameInputRef.current?.focus();
+            transition={{ duration: .3 }}
+          // exit={{ opacity: 0, scale: 0 }}
+          >SAVE A CHARACTER TO PLAY</motion.h6>}
+        </div>
+        {hideStartButton &&
+          <CCStartButton onClick={() => {
+            if (currentChar.name === 'Someguy McPlaceholder') {
+              setStartFail(true);
+              return;
             } else {
-              handleSaveChar();
+              handleClickStart();
             }
-          }}>SAVE</button>
-        </SaveBox>
-      </StatsContainer>
-      <RightSpacer id='RSpacer'></RightSpacer>
-    </CCContainer>
+          }}>Start Game</CCStartButton>
+        }
+      </div>
+    </>
   );
 };
 
