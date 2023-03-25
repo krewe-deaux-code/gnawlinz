@@ -83,7 +83,7 @@ const Nav = ({ isActive }: LinkProps) => {
 
         <MenuButton style={{
           padding: '0.2rem',
-          paddingLight: '0.75rem',
+          paddingRight: '0.75rem',
           paddingLeft: '0.75rem'
         }}
         onClick={handleShow}>Settings</MenuButton>
@@ -99,16 +99,21 @@ const Nav = ({ isActive }: LinkProps) => {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header closeButton onClick={handleClose}>
+        <Modal.Header style={{alignItems: 'flex-start'}}closeButton onClick={handleClose}>
           <Modal.Title><h3>Settings</h3></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ModalBodyContainer>
             {/* <div onClick={props.handleSpeak}>Look for items</div> */}
+            <h4>Volume Control</h4>
             <h4>Accessibility</h4>
             <div style={{ display: 'flex' }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
-              <Button style={{ flex: 1 }}>TTS</Button>
+              <label className="switch">
+                <input className="chk" type="checkbox"></input>
+                <span className="slider"></span>
+              </label>
+              {/* <Button style={{ flex: 1 }}>TTS</Button> */}
             </div>
             {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
           </ModalBodyContainer>
