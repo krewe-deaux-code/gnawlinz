@@ -6,9 +6,7 @@ export const locationSeed = [
     random_item_spot2: 'Under the car',
     drop_item_slot: 1,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg1: 'Boom',
-    graffiti_msg2: 'mmm...boom',
-    graffiti_msg3: 'mmm...boom'
+    graffiti_msgs: ['Boom', 'Chomp', 'Chomp-Chomp']
 
   },
   {
@@ -18,9 +16,7 @@ export const locationSeed = [
     random_item_spot2: 'Behind the trash can',
     drop_item_slot: 6,
     graffiti: 'https://ae01.alicdn.com/kf/H4417e29163fe4be0a62e14160d3fcffeZ/EARLFAMILY-13cm-x-12-5cm-For-Pizza-Time-Fine-Decal-Graffiti-Car-Stickers-Waterproof-Vinyl-Material.jpg_640x640.jpg',
-    graffiti_msg1: 'Pizza Time',
-    graffiti_msg2: 'Intuitive',
-    graffiti_msg3: 'Robust',
+    graffiti_msgs: ['Pizza Time', 'Intuitive', 'Robust']
 
 
   },
@@ -31,9 +27,8 @@ export const locationSeed = [
     random_item_spot2: 'Under a table',
     drop_item_slot: 4,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg1: 'mmm...powdered sugar',
-    graffiti_msg2: 'Un-opinionated',
-    graffiti_msg3: 'Flexible'
+    graffiti_msgs: ['mmm...powdered sugar', 'Un-opinionated', 'Flexible']
+
 
 
   },
@@ -44,9 +39,8 @@ export const locationSeed = [
     random_item_spot2: 'In the weeds',
     drop_item_slot: 5,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg1: 'No fun here',
-    graffiti_msg2: 'Scalable',
-    graffiti_msg3: 'Modular'
+    graffiti_msgs: ['No fun here', 'Scalable', 'Modular']
+
 
 
   },
@@ -57,9 +51,7 @@ export const locationSeed = [
     random_item_spot2: 'Behind the deep fryer',
     drop_item_slot: 3,
     graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
-    graffiti_msg1: 'Winner, Winner, Chicken Dinner',
-    graffiti_msg2: 'Innovative',
-    graffiti_msg3: 'Sick Algorithm, dude'
+    graffiti_msgs: ['Winner, Winner, Chicken Dinner', 'Innovative', 'Sick Algorithm, dude']
 
 
   }

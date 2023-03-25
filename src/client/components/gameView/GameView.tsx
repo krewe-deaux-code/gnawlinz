@@ -38,7 +38,7 @@ const GameView = (props: GameViewProps) => {
     prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations,
     location, setLocation, currentChar, setCurrentChar, event, setEvent, selectedChoice,
     setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled,
-    setInvestigateDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
+    setInvestigateDisabled, tagDisabled, setTagDisabled, currentEnemy, setCurrentEnemy, currentAlly, setCurrentAlly,
     metAllyArr, setMetAllyArr, fetchedInventory
   } = useContext(UserContext);
 
@@ -120,6 +120,10 @@ const GameView = (props: GameViewProps) => {
     setShowEvent(showEvent ? false : true);
   };
 
+  const handleTagClick = () => {
+    setTagDisabled(true);
+  };
+
   // NPC
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
@@ -166,6 +170,7 @@ const GameView = (props: GameViewProps) => {
         console.error('Failed to retrieve all locations: ', err);
       });
     setInvestigateDisabled(false);
+    setTagDisabled(false);
   };
 
   // Add a modal to handle location change after all locations have been used
@@ -201,6 +206,7 @@ const GameView = (props: GameViewProps) => {
 
     fetchEvent();
     setInvestigateDisabled(false);
+    setTagDisabled(false);
   };
   const handleToolTip = (button: string) => {
     if (button === 'engage') {
@@ -581,23 +587,11 @@ const GameView = (props: GameViewProps) => {
 
 
   const updateGraffitiMsg = () => {
-    const random: number = Math.floor(Math.random() * 3) + 1;
-    if (random === 1) {
       setLocation(location => ({
         ...location,
-        graffiti_msg1: inputValue
+        graffiti_msgs: [location.graffiti_msgs[1], location.graffiti_msgs[2], inputValue]
       }));
-    } else if (random === 2) {
-      setLocation(location => ({
-        ...location,
-        graffiti_msg2: inputValue
-      }));
-    } else {
-      setLocation(location => ({
-        ...location,
-        graffiti_msg3: inputValue
-      }));
-    }
+
     setInputValue('');
     setVisited(prevVisited => prevVisited.map(item => {
       if (item.name === location.name) {
@@ -839,10 +833,10 @@ const GameView = (props: GameViewProps) => {
                   {/* <div onClick={props.handleSpeak}>Look for items</div> */}
                   <HudButton onClick={() => { retrieveDropItem(); }}>Search for items</HudButton>
                   {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
-                  <HudButton onClick={() => setModalText(`You looked around and found a messages in graffiti that said: "${location.graffiti_msg1}", "${location.graffiti_msg2}", and "${location.graffiti_msg3}"`)}>Look for graffiti</HudButton>
+                  <HudButton onClick={() => setModalText(`You looked around and found a messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`)}>Look for graffiti</HudButton>
                   <div style={{ display: 'flex' }}>
                     <input type="text" maxLength={23} style={{ flex: 1 }} placeholder='Write graffiti' value={inputValue} onChange={handleInputValueChange} />
-                    <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(), handleClose(), setModalText(''); }}>Tag</HudButton>
+                    <HudButton style={{ flex: 1 }} onClick={() => { updateGraffitiMsg(), handleTagClick(), setModalText(''); }} disabled={tagDisabled}>Tag</HudButton>
                   </div>
                 </ModalBodyContainer>
               </Modal.Body>

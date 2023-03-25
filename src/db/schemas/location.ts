@@ -30,14 +30,8 @@ const Location = db.define('location', {
   graffiti: {
     type: DataTypes.STRING
   },
-  graffiti_msg1: {
-    type: DataTypes.TEXT
-  },
-  graffiti_msg2: {
-    type: DataTypes.TEXT
-  },
-  graffiti_msg3: {
-    type: DataTypes.TEXT
+  graffiti_msgs: {
+    type: DataTypes.ARRAY(DataTypes.TEXT)
   }
 });
 
