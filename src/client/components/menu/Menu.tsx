@@ -129,7 +129,7 @@ const Menu: React.FC = () => {
           </InfoContainer>
           <>
             <Content active={active === 0}>
-              <h1>Character Creation:</h1>
+              <h1><u>New Character:</u></h1>
               <CharacterCreator />
             </Content>
             <Content active={active === 1}>

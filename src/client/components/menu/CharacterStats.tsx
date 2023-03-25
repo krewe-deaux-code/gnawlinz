@@ -90,7 +90,7 @@ const CharacterStats: React.FC = () => {
   return (
     <>
       <div>
-        <h1>Character Select:</h1>
+        <h1><u>Character Select:</u></h1>
         {userChars.length ?
           <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
             {
