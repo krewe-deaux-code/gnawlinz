@@ -9,7 +9,7 @@ import Modal from 'react-bootstrap/Modal';
 import { MenuButton } from '../menu/Styled';
 
 import { UserContext, SettingsContext } from '../../App';
-import { Button } from 'react-bootstrap';
+
 
 // Logo link props
 type LinkProps = {
