@@ -86,26 +86,32 @@ const CharacterStats: React.FC = () => {
   // console.log('CURRENT CHAR', currentChar);
   // console.log('ACTIVE USER', activeUser);
   // console.log('USER CHARS -->', userChars);
-  console.log('Current Acvite User: ', activeUser);
+  // console.log('Current Acvite User: ', activeUser);
   return (
     <>
       <div>
         <h1>Character Select:</h1>
-        <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-          {
-            userChars.map((char: Character, i: number) => {
-              return <Carousel.Item key={i}>
-                <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
-                <StatName>Name: {char.name}</StatName>
-                <IconContainer><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainer>
-                <IconContainer><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainer>
-                <IconContainer><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-                <IconContainer><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainer>
-                <IconContainer><IconImg src={images.locationIcon} /><StatName>Location: {locationName}</StatName></IconContainer>
-              </Carousel.Item>;
-            })
-          }
-        </StyledCarousel>
+        {userChars.length ?
+          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
+            {
+              userChars.map((char: Character, i: number) => {
+                return <Carousel.Item key={i}>
+                  <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
+                  <StatName>Name: {char.name}</StatName>
+                  <IconContainer><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainer>
+                  <IconContainer><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainer>
+                  <IconContainer><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
+                  <IconContainer><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainer>
+                  <IconContainer><IconImg src={images.locationIcon} /><StatName>Location: {locationName}</StatName></IconContainer>
+                </Carousel.Item>;
+              })
+            }
+          </StyledCarousel> :
+          <>
+            <img style={{ height: '400px', width: '300px' }} src={images.createCharImage} />
+            <StatName>Create a Character:</StatName>
+          </>
+        }
       </div>
     </>
   );

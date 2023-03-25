@@ -14,7 +14,7 @@ export const GlobalStyle = createGlobalStyle`
     margin: 0;
     background-color: rgb(31, 33, 40) !important; /* changed from black */
     background-size: cover;
-    box-sizing: border-box;
+    /* box-sizing: border-box; */ /* <-- may need this... */
   }
   /* The switch - the box around the slider */
 .switch {
