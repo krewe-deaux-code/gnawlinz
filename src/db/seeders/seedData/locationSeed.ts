@@ -1,7 +1,7 @@
 export const locationSeed = [
   {
     name: 'Chompitoulas Street',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_fit,h_460,w_690/v1677291106/gnawlinzLocations/ChompitoulasPxl_owbcth.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705464/gnawlinzLocations/TchoupStreet_giwlzf.png',
     random_item_spot1: 'Behind the trash can',
     random_item_spot2: 'Under the car',
     drop_item_slot: 1,
@@ -10,7 +10,7 @@ export const locationSeed = [
   },
   {
     name: 'Lake Chompin\' Brain',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677290241/gnawlinzLocations/LakeFrontPxl_y3uxzu.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679703550/gnawlinzLocations/lakefrontFinal_h6b9xm.png',
     random_item_spot1: 'In the water',
     random_item_spot2: 'Behind the trash can',
     drop_item_slot: 6,
@@ -19,7 +19,7 @@ export const locationSeed = [
   },
   {
     name: 'Cafe Dead Mon',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677290836/gnawlinzLocations/CafeDuMondePxl_bivhei.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679702346/gnawlinzLocations/cafeDuMondeNight_ub0odr.png',
     random_item_spot1: 'Behind the counter',
     random_item_spot2: 'Under a table',
     drop_item_slot: 4,
@@ -28,7 +28,7 @@ export const locationSeed = [
   },
   {
     name: 'Jazz Land',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_scale,h_460,w_690/v1678589839/gnawlinzLocations/pxArt_1_ldobgd.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679706198/gnawlinzLocations/jazz_fyjsdt.png',
     random_item_spot1: 'Behind the ticket booth',
     random_item_spot2: 'In the weeds',
     drop_item_slot: 5,
@@ -37,7 +37,7 @@ export const locationSeed = [
   },
   {
     name: 'Man Chew',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_scale,h_460,w_690/v1678588698/gnawlinzLocations/pxArt_e6b3we.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679703769/gnawlinzLocations/manchu_hz5amf.png',
     random_item_spot1: 'In the sink',
     random_item_spot2: 'Behind the deep fryer',
     drop_item_slot: 3,
