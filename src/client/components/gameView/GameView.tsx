@@ -45,6 +45,7 @@ const GameView = (props: GameViewProps) => {
   // state for socket.io
   const [socket, setSocket] = useState<Socket | undefined>();
   const [killFeed, setKillFeed] = useState<string[]>([]);
+
   // state for investigate modal
   const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);

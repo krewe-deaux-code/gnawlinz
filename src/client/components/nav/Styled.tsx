@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import Modal from 'react-bootstrap/Modal';
 
 export const Container = styled.div`
   display: grid;
@@ -49,5 +50,19 @@ export const TopContent2 = styled(TopContent1)``;
 
 export const TopContent3 = styled(TopContent1)``;
 
+export const StyledModal = styled(Modal)`
+  --bs-modal-bg: silver !important;
+  backdrop-filter: blur(4px);
+`;
+
+export const ModalBodyContainer = styled.div`
+  grid-template-rows: auto auto auto;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  gap: 0.25rem;
+  align-content: space-evenly;
+`;
 
 
