@@ -23,7 +23,7 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
 
 
   // <-- move to Title after Auth refactor/move -->
-  const { volume, setVolume } = useContext(SettingsContext);
+  const { volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled } = useContext(SettingsContext);
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
     setVolume(parseFloat(newVolume));
@@ -65,7 +65,19 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const msg = new SpeechSynthesisUtterance();
+  const handleSpeak = (e) => {
+    if (isSpeakingEnabled) {
+      msg.text = e.target.innerText;
+      window.speechSynthesis.speak(msg);
+    }
+  };
 
+  const handleToggleSpeak = () => {
+    setIsSpeakingEnabled(!isSpeakingEnabled);
+  };
+
+console.log('is speaking boolean', isSpeakingEnabled);
   // logic to make logo active/inactive depending on where it is being rendered
   return (
 
@@ -115,12 +127,13 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
             <div style={{ display: 'flex' }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
-                <input className="chk" type="checkbox"></input>
+                <input className="chk" type="checkbox" onClick={handleToggleSpeak}></input>
                 <span className="slider"></span>
               </label>
-              {/* <Button style={{ flex: 1 }}>TTS</Button> */}
             </div>
-            {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
+
+      <button onClick={handleSpeak}>Speak</button>
+      <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
           </ModalBodyContainer>
         </Modal.Body>
         <Modal.Footer>
