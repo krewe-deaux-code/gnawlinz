@@ -4,6 +4,7 @@ import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider, StyledModa
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Howler } from 'howler';
+import { complete } from '../../utility/sounds';
 import images from '../../utility/images';
 import Modal from 'react-bootstrap/Modal';
 import { MenuButton } from '../menu/Styled';
@@ -72,21 +73,13 @@ const Nav = ({ isActive }: LinkProps) => {
         ) : (
           <span className='inactive-link'>GNAWLINZ</span>
         )}
-        {/* move to Title after Auth refactor/move */}
-        <VolumeSlider
-          min={0}
-          max={1}
-          step={0.01}
-          value={volume}
-          onChange={handleVolumeChange}
-        />
 
         <MenuButton style={{
           padding: '0.2rem',
           paddingRight: '0.75rem',
           paddingLeft: '0.75rem'
         }}
-        onClick={handleShow}>Settings</MenuButton>
+          onClick={handleShow}>Settings</MenuButton>
 
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
@@ -99,15 +92,42 @@ const Nav = ({ isActive }: LinkProps) => {
         backdrop="static"
         keyboard={false}
       >
-        <Modal.Header style={{alignItems: 'flex-start'}}closeButton onClick={handleClose}>
+        <Modal.Header style={{ alignItems: 'flex-start' }} closeButton onClick={handleClose}>
           <Modal.Title><h3>Settings</h3></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ModalBodyContainer>
             {/* <div onClick={props.handleSpeak}>Look for items</div> */}
-            <h4>Volume Control</h4>
-            <h4>Accessibility</h4>
-            <div style={{ display: 'flex' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <h4 style={{ height: '1.5rem', width: '1.5rem' }}>
+                {volume <= 0.02
+                  ? <img src={images.soundIcon0} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  : <></>
+                }
+                {volume < 0.51 && volume > 0.02
+                  ? <img src={images.soundIcon1} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  : <></>
+                }
+                {volume < 0.76 && volume > 0.50
+                  ? <img src={images.soundIcon2} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  : <></>
+                }
+                {volume <= 1.00 && volume > 0.75
+                  ? <img src={images.soundIcon3} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  : <></>
+                }
+              </h4>
+              {/* move to Title after Auth refactor/move */}
+              <VolumeSlider
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={handleVolumeChange}
+                onClick={() => { complete.play(); }}
+              />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center', }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
                 <input className="chk" type="checkbox"></input>

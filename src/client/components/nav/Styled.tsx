@@ -53,10 +53,16 @@ export const TopContent3 = styled(TopContent1)``;
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
   backdrop-filter: blur(4px);
+    .modal-dialog {
+      justify-content: center;
+    }
+    .modal-content {
+      width: 20rem;
+    }
 `;
 
 export const ModalBodyContainer = styled.div`
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
@@ -64,5 +70,3 @@ export const ModalBodyContainer = styled.div`
   gap: 0.25rem;
   align-content: space-evenly;
 `;
-
-
