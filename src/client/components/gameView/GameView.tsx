@@ -686,7 +686,7 @@ const GameView = (props: GameViewProps) => {
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
-      <Nav isActive={true} />
+      <Nav isActive={true} showButton={true}/>
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <div>

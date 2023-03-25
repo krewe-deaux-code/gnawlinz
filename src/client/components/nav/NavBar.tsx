@@ -11,12 +11,17 @@ import { MenuButton } from '../menu/Styled';
 import { UserContext, SettingsContext } from '../../App';
 
 
-// Logo link props
+// Logo link props & settings button props
 type LinkProps = {
   isActive: boolean;
+  showButton: boolean;
 };
 
-const Nav = ({ isActive }: LinkProps) => {
+
+
+const Nav = ({ isActive, showButton }: LinkProps) => {
+
+
   // <-- move to Title after Auth refactor/move -->
   const { volume, setVolume } = useContext(SettingsContext);
   const handleVolumeChange = (e) => {
@@ -81,12 +86,12 @@ const Nav = ({ isActive }: LinkProps) => {
           onChange={handleVolumeChange}
         />
 
-        <MenuButton style={{
+          {showButton && <MenuButton style={{
           padding: '0.2rem',
           paddingRight: '0.75rem',
           paddingLeft: '0.75rem'
         }}
-        onClick={handleShow}>Settings</MenuButton>
+        onClick={handleShow}>Settings</MenuButton>}
 
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
