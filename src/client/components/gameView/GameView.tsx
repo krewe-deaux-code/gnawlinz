@@ -20,7 +20,8 @@ import {
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
-  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue, ArcadeButtonInvestigate, ArcadeButtonToggle
+  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue, 
+  ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -45,6 +46,7 @@ const GameView = (props: GameViewProps) => {
   // state for socket.io
   const [socket, setSocket] = useState<Socket | undefined>();
   const [killFeed, setKillFeed] = useState<string[]>([]);
+
   // state for investigate modal
   const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
@@ -695,7 +697,7 @@ const GameView = (props: GameViewProps) => {
       <Nav isActive={true} />
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
-        <div>
+        <LocationDiv>
           {
             showAlly
               ? <AllyImg src={currentAlly.image_url} />
@@ -744,13 +746,13 @@ const GameView = (props: GameViewProps) => {
                 }
               </KillFeed>
             </KillFeedContainer>
-            <img src={location.image_url}
+            <LocationImg src={location.image_url}
               style={{
                 position: 'relative',
                 bottom: '98%',
                 zIndex: 0
               }}
-            ></img>
+            ></LocationImg>
           </Page>
           {
             damageToEnemy > 0
@@ -784,7 +786,7 @@ const GameView = (props: GameViewProps) => {
               </motion.div>
               : <></>
           }
-        </div>
+        </LocationDiv>
       </Main>
       <Footer>
         <Content1>

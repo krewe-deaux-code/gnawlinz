@@ -289,6 +289,14 @@ export const EnemyImg = styled.img`
   top: 0%;
   right: 30%;
 `;
+export const LocationDiv = styled.div`
+position: relative;
+margin-top: 10rem;
+`;
+export const LocationImg = styled.img`
+height: 625px;
+width:  901px;
+`;
 
 export const KillFeedContainer = styled.div`
   z-index: 2;
