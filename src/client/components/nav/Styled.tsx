@@ -70,3 +70,8 @@ export const ModalBodyContainer = styled.div`
   gap: 0.25rem;
   align-content: space-evenly;
 `;
+
+export const SoundIcon = styled.img`
+  height: 1.5rem;
+  width: 1.5rem;
+`;

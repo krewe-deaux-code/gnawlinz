@@ -1,6 +1,6 @@
 //import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react'; //useState,
-import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider, StyledModal, ModalBodyContainer, } from './Styled'; //ContentBox
+import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider, StyledModal, ModalBodyContainer, SoundIcon } from './Styled';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Howler } from 'howler';
@@ -101,19 +101,19 @@ const Nav = ({ isActive }: LinkProps) => {
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <h4 style={{ height: '1.5rem', width: '1.5rem' }}>
                 {volume <= 0.02
-                  ? <img src={images.soundIcon0} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  ? <SoundIcon src={images.soundIcon0}></SoundIcon>
                   : <></>
                 }
                 {volume < 0.51 && volume > 0.02
-                  ? <img src={images.soundIcon1} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  ? <SoundIcon src={images.soundIcon1}></SoundIcon>
                   : <></>
                 }
                 {volume < 0.76 && volume > 0.50
-                  ? <img src={images.soundIcon2} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  ? <SoundIcon src={images.soundIcon2}></SoundIcon>
                   : <></>
                 }
                 {volume <= 1.00 && volume > 0.75
-                  ? <img src={images.soundIcon3} style={{ height: '1.5rem', width: '1.5rem' }}></img>
+                  ? <SoundIcon src={images.soundIcon3}></SoundIcon>
                   : <></>
                 }
               </h4>
