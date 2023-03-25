@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Body, InfoContainer, Tab, Content, IconImg, IconContainer, MenuButton } from './Styled';
+import { Body, InfoContainer, Tab, Content, IconImg, IconContainer, SelectStartButton } from './Styled';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 
 import CharacterCreator from './CharacterCreator';
 import CharacterStats from './CharacterStats';
 import Nav from '../nav/NavBar';
+
+export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
 import { Item, Character } from '../../utility/interface';
@@ -19,6 +22,8 @@ const Menu: React.FC = () => {
 
   const [active, setActive] = useState(0);
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [hideStartButton, setHideStartButton] = useState(true);
+  const [startFail, setStartFail] = useState(false);
   const navigate = useNavigate();
 
   const handleClickStart = () => {
@@ -97,57 +102,68 @@ const Menu: React.FC = () => {
     }
   };
 
-  // const checkInventory = () => {
-  //   if (fetchedInventory.length) {
-  //     fetchedInventory.map((item: Item, i) => {
-  //       return <div
-  //         key={i}
-  //         onClick={() => handleDropItem(item._id)}>
-  //         {item.name}<IconImg src={item.image_url}></IconImg></div>;
-  //     });
-  //   }
-  // };
-
-  //console.log(avatar, stateSession);
+  console.log('currentChar IN MENU', currentChar);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
-    <UserContext.Provider value={{ activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar }}>
-      <Body >
-        <Nav isActive={false} />
-        <InfoContainer >
-          <Tab onClick={handleClick} active={active === 0} id={0}>
-            Character Select
-          </Tab>
-          <Tab onClick={handleClick} active={active === 1} id={1}>
-            Character Creation
-          </Tab>
-          <Tab onClick={(e: any) => { handleClick(e); fetchItems(); }} active={active === 2} id={2}>
-            Inventory
-          </Tab>
-        </InfoContainer>
-        <>
-          <Content active={active === 0}>
-            <CharacterStats />
-          </Content>
-          <Content active={active === 1}>
-            <h1>Character Creation:</h1>
-            <CharacterCreator />
-          </Content>
-          <Content active={active === 2}>
-            <div>
-              {
-                fetchedInventory.map((item: Item, i) => {
-                  return <div key={i}>
-                    <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
-                })
+    <UserContext.Provider value={{ activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar, setStartFail, startFail }}>
+      <MenuContext.Provider value={{ hideStartButton, setHideStartButton, startFail, setStartFail }}>
+        <Body >
+          <Nav isActive={false} />
+          <InfoContainer >
+            <Tab onClick={(e) => {
+              if (startFail) { setStartFail(false); }
+              setHideStartButton(true);
+              handleClick(e);
+            }} active={active === 0} id={0}>
+              Character Creation
+            </Tab>
+            <Tab onClick={(e) => {
+              setHideStartButton(false);
+              handleClick(e);
+            }} active={active === 1} id={1}>
+              Character Select
+            </Tab>
+            <Tab onClick={(e: any) => { handleClick(e); fetchItems(); }} active={active === 2} id={2}>
+              Inventory
+            </Tab>
+          </InfoContainer>
+          <>
+            <Content active={active === 0}>
+              <h1>Character Creation:</h1>
+              <CharacterCreator />
+            </Content>
+            <Content active={active === 1}>
+              <CharacterStats />
+            </Content>
+            <Content active={active === 2}>
+              <div>
+                {
+                  fetchedInventory.map((item: Item, i) => {
+                    return <div key={i}>
+                      <IconContainer>{item.name}<IconImg onClick={() => handleDropItem(item._id)} src={item.image_url}></IconImg></IconContainer></div>;
+                  })
+                }
+              </div>
+            </Content>
+          </>
+          {startFail && <div style={{ display: 'grid', justifyContent: 'center', }}
+          ><motion.h3
+            animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
+            style={{ color: 'red', maxWidth: '34.4rem', position: 'relative' }}
+            transition={{ duration: .3 }}
+          >CREATE A CHARACTER TO PLAY</motion.h3></div>}
+          {!hideStartButton &&
+            <SelectStartButton onClick={() => {
+              if (currentChar.name === 'Someguy McPlaceholder') {
+                setStartFail(true);
+                return;
+              } else {
+                handleClickStart();
               }
-            </div>
-          </Content>
-        </>
-        <MenuButton onClick={handleClickStart}>Start Game
-        </MenuButton>
-
-      </Body >
+            }}>Start Game</SelectStartButton>
+          }
+        </Body >
+      </MenuContext.Provider>
     </UserContext.Provider>
   );
 };
