@@ -217,11 +217,27 @@ export const StyledCarousel = styled(Carousel)`
     background-color: #da0101 !important;
     z-index: 1 !important;
   }
-  /* .carousel-control-next,
+  .carousel-control-next,
   .carousel-control-prev {
-    position: relative;
-    display: contents;
-  } */
+    width: 2%;
+    height: 5%;
+    margin-right: 40rem;
+    margin-left: 40rem;
+    top: 19rem;
+  }
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover,
+  .carousel-control-prev:focus,
+  .carousel-control-next:focus {
+    background-color: none !important;
+    outline: none; // remove default outline on focus
+  }
+  .carousel-control-prev:active,
+  .carousel-control-next:active {
+    background-color: none !important;
+    outline: none; // remove default outline on click
+    box-shadow: none; // remove default box-shadow on click
+  }
 `;
 
 export const HairCarousel = styled(Carousel)`
