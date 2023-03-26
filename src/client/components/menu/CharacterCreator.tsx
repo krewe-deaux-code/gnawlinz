@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
+import { click, enter } from '../../utility/sounds';
 import names from '../../utility/names';
 import images from '../../utility/images';
 
@@ -48,6 +49,7 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleInputValueChange = (e) => {
+    click.play();
     setInputName(e.target.value);
     console.log('INPUT NAME', inputName, 'NEW CHAR', newChar);
   };
@@ -139,6 +141,7 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleClickStart = () => {
+    enter.play();
     navigate('/game-view');
   };
 

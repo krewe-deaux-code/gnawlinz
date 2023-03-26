@@ -12,6 +12,7 @@ export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
 import { Item, Character } from '../../utility/interface';
+import { enter } from '../../utility/sounds';
 
 const Menu: React.FC = () => {
 
@@ -27,6 +28,7 @@ const Menu: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClickStart = () => {
+    enter.play();
     navigate('/game-view');
   };
   // const handleItemLookup = () => {

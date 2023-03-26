@@ -133,13 +133,13 @@ export const SaveBox = styled.div`
     display: grid;
   `;
 
-// export const IconContainer = styled.div`
-//   display: grid;
-//   grid-template-columns: auto auto;
-//   justify-content: center;
-//   grid-gap: 1em;
-//   align-items: center;
-//   `;
+export const IconContainer = styled.div`
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: center;
+  grid-gap: 1em;
+  align-items: center;
+  `;
 
 export const IconContainerInner = styled.div`
   display: grid;
