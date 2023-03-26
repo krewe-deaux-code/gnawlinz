@@ -369,6 +369,126 @@ const clickSound = {
   'sample_size': 8
 };
 
+const pointUpSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.05333414667562269,
+  'p_env_punch': 0.447,
+  'p_env_decay': 0.251,
+  'p_base_freq': 0.296,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.198,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.332,
+  'p_lpf_ramp': 0.001,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.013,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const pointDownSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.05333414667562269,
+  'p_env_punch': 0.447,
+  'p_env_decay': 0.251,
+  'p_base_freq': 0.321,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.197,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.332,
+  'p_lpf_ramp': 0.001,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.013,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const neutralSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.07063965143659512,
+  'p_env_punch': 0.4176416103125491,
+  'p_env_decay': 0.11333750331584112,
+  'p_base_freq': 0.423,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0.2234806839543853,
+  'p_arp_speed': 0.5295919129111916,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.193,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.024,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const cancelSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.314,
+  'p_env_punch': 0.128,
+  'p_env_decay': 0.096,
+  'p_base_freq': 0.191,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.157,
+  'p_freq_dramp': -0.033,
+  'p_vib_strength': 0.85,
+  'p_vib_speed': 0.329,
+  'p_arp_mod': 0.026,
+  'p_arp_speed': 0.927,
+  'p_duty': 0.918,
+  'p_duty_ramp': 1,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': -0.8637981626041724,
+  'p_lpf_resonance': 0.5566874729499105,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.01,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
 /*
   ***********************************
   **********************************
@@ -393,6 +513,10 @@ const enterUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679800513/
 */
 
 export const click = sfxr.toAudio(clickSound);
+export const pointUp = sfxr.toAudio(pointUpSound);
+export const pointDown = sfxr.toAudio(pointDownSound);
+export const neutral = sfxr.toAudio(neutralSound);
+export const cancel = sfxr.toAudio(cancelSound);
 
 export const complete = new Howl({
   src: [completeUrl],
