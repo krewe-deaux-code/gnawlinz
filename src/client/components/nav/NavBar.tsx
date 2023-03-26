@@ -77,7 +77,8 @@ const Nav = ({ isActive }: LinkProps) => {
         <MenuButton style={{
           padding: '0.2rem',
           paddingRight: '0.75rem',
-          paddingLeft: '0.75rem'
+          paddingLeft: '0.75rem',
+          marginLeft: '2rem'
         }}
           onClick={handleShow}>Settings</MenuButton>
 

@@ -133,13 +133,34 @@ export const SaveBox = styled.div`
     display: grid;
   `;
 
-export const IconContainer = styled.div`
+// export const IconContainer = styled.div`
+//   display: grid;
+//   grid-template-columns: auto auto;
+//   justify-content: center;
+//   grid-gap: 1em;
+//   align-items: center;
+//   `;
+
+export const IconContainerInner = styled.div`
   display: grid;
-  grid-template-columns: auto auto;
-  justify-content: center;
-  grid-gap: 1em;
+  grid-template-columns: 3rem 3rem 3rem;
+  -webkit-box-pack: center;
+  justify-content: space-evenly;
+  gap: 1em;
+  -webkit-box-align: center;
   align-items: center;
-  `;
+`;
+
+export const IconContainerOutter = styled.div`
+    display: grid;
+    grid-template-columns: 24rem;
+    -webkit-box-pack: center;
+    justify-content: center;
+    gap: 1em;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-items: center;
+`;
 
 export const StatIconContainer = styled.div`
   padding: 1rem;
@@ -437,4 +458,11 @@ export const StatPoolBox = styled.h3`
   grid-template-columns: 9rem 2rem;
   justify-content: space-around;
   justify-items: center;
+`;
+
+export const CharSelectStatBox = styled.div`
+    display: grid;
+    grid-template-columns: 13% 13%;
+    justify-items: stretch;
+    justify-content: center;
 `;
