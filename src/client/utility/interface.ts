@@ -43,7 +43,9 @@ export interface LocationData {
   random_item_spot2: string;
   drop_item_slot: number;
   graffiti: string;
-  graffiti_msg: string;
+  graffiti_msgs: Array<string>
+
+
 }
 
 export interface Enemy {
