@@ -103,10 +103,10 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
         )}
 
           {showButton && <MenuButton style={{
-          padding: '0.2rem',
-          paddingRight: '0.75rem',
-          paddingLeft: '0.75rem',
-          marginLeft: '2rem'
+          marginLeft: '1rem',
+          minWidth: '95px',
+          minHeight: '45px',
+          padding: '10px'
         }}
         onClick={handleShow}>Settings</MenuButton>}
 

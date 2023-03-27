@@ -27,12 +27,12 @@ background-color: #931a03;
 
 export const CCStartButton = styled.button`
 background-color: #931a03;
-max-width: 114.95px;
-max-height: 56px;
+min-width: 95px;
+min-height: 45px;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
-  padding: 1rem 1rem;
+  padding: 10px;
   border-radius: 2em;
   cursor: pointer;
   transition: 0.1s ease;
