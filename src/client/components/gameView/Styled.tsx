@@ -309,7 +309,7 @@ export const KillFeedContainer = styled.div`
   font-size: 12px;
   height: 465px;
   overflow-y: auto;
-  top: 2%;
+  bottom: 30%;
   &::-webkit-scrollbar {
         /* height: 10px; */
         width: 10px;
@@ -411,10 +411,10 @@ export const ArcadeButton = styled.button`
 
 export const ArcadeButtonInvestigate = styled(ArcadeButton)`
   background-color: #1a0ac2;
-  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), 
-  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
-  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
-  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7), 
+  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7),
   inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(54, 37, 244, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(19, 8, 145, 0.2),
   inset 0 0 0 ${size / 5.5}rem #1a0ac2, inset 0 ${size / 2.5}rem ${size / 7.5}rem #1609aa, inset 0 0 ${size / 10}rem ${size / 6}rem #130891, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
   &:active {

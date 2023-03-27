@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
+import { click, enter, pointUp, pointDown, neutral, complete, cancel } from '../../utility/sounds';
 import names from '../../utility/names';
 import images from '../../utility/images';
 
@@ -48,6 +49,7 @@ const CharacterCreator: React.FC = () => {
   };
 
   const handleInputValueChange = (e) => {
+    click.play();
     setInputName(e.target.value);
     console.log('INPUT NAME', inputName, 'NEW CHAR', newChar);
   };
@@ -118,6 +120,7 @@ const CharacterCreator: React.FC = () => {
 
   const handleStatChange = (fn: any, modifier: string, statName: string, stat: number) => {
     if (modifier === '+' && statPool !== 0) {
+      pointUp.play();
       setNewChar(prevCharStats => ({
         ...prevCharStats,
         [statName]: ++stat
@@ -127,6 +130,7 @@ const CharacterCreator: React.FC = () => {
         setStatPool(prevPool => --prevPool);
       }
     } else if (modifier === '-' && stat > 0) {
+      pointDown.play();
       setNewChar(prevCharStats => ({
         ...prevCharStats,
         [statName]: --stat
@@ -135,10 +139,13 @@ const CharacterCreator: React.FC = () => {
       if (stat > 0) {
         setStatPool(prevPool => ++prevPool);
       }
+    } else {
+      neutral.play();
     }
   };
 
   const handleClickStart = () => {
+    enter.play();
     navigate('/game-view');
   };
 
@@ -191,6 +198,7 @@ const CharacterCreator: React.FC = () => {
               slide={false}
               indicators={false}
               onSelect={(i) => {
+                neutral.play();
                 handleSelect(i, bodyImageUrls, setChosenBody);
               }}
               interval={null}>
@@ -207,6 +215,7 @@ const CharacterCreator: React.FC = () => {
               slide={false}
               indicators={false}
               onSelect={(i) => {
+                neutral.play();
                 handleSelect(i, faceImageUrls, setChosenFace);
               }}
               interval={null}>
@@ -223,6 +232,7 @@ const CharacterCreator: React.FC = () => {
               slide={false}
               indicators={false}
               onSelect={(i) => {
+                neutral.play();
                 handleSelect(i, hairImageUrls, setChosenHair);
               }}
               interval={null}>
@@ -241,7 +251,24 @@ const CharacterCreator: React.FC = () => {
               animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
               style={{ color: 'white' }}
               transition={{ duration: 0.3 }}
-            >Name: enter your name</motion.p>}<NameInput ref={nameInputRef} type="text" value={inputName} onChange={handleInputValueChange} /><StatButton onClick={genRandomName} style={{ marginTop: '1.35rem', marginLeft: '2.4rem', width: '11rem', height: '2.3rem' }}>Randomize</StatButton>
+            >Name: enter your name</motion.p>}
+            <NameInput
+              ref={nameInputRef}
+              type="text"
+              value={inputName}
+              onChange={handleInputValueChange} />
+            <StatButton
+              onClick={() => {
+                genRandomName();
+                complete.play();
+              }}
+              style={{
+                marginTop: '1.35rem',
+                marginLeft: '2.4rem',
+                width: '11rem',
+                height: '2.3rem'
+              }}
+            >Randomize</StatButton>
           </NameBox>
         </CharacterContainer>
         <StatsContainer id='Stats'>
@@ -305,8 +332,10 @@ const CharacterCreator: React.FC = () => {
               style={{ bottom: '0.6rem', position: 'relative', height: '2.3rem' }}
               onClick={() => {
                 if (!inputName.length) {
+                  cancel.play();
                   nameInputRef.current?.focus();
                 } else {
+                  complete.play();
                   handleSaveChar();
                 }
               }}>SAVE</StatButton>
@@ -315,14 +344,15 @@ const CharacterCreator: React.FC = () => {
         <RightSpacer id='RSpacer'></RightSpacer>
       </CCContainer>
       <div style={{ bottom: '4.7rem', position: 'relative' }}>
-        <div style={{ height: '0.5rem' }}>
+        <div style={{ height: '0.5rem', display: 'grid', justifyItems: 'center' }}>
           {startFail && <motion.h6
             animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
             style={{
+              display: 'flex',
+              position: 'relative',
+              justifyContent: 'flex-end',
               color: 'red',
               maxWidth: '34.4rem',
-              position: 'relative',
-              left: '25rem',
               bottom: '1rem'
             }}
             transition={{ duration: .3 }}

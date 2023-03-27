@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import images from '../../utility/images';
 
-import { StyledCarousel, IconImg, IconContainer, StatName } from './Styled';
+import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOutter, } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
@@ -90,19 +90,21 @@ const CharacterStats: React.FC = () => {
   return (
     <>
       <div>
-        <h1>Character Select:</h1>
+        <h1><u>Character Select:</u></h1>
         {userChars.length ?
           <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
             {
               userChars.map((char: Character, i: number) => {
                 return <Carousel.Item key={i}>
                   <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
-                  <StatName>Name: {char.name}</StatName>
-                  <IconContainer><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainer>
-                  <IconContainer><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainer>
-                  <IconContainer><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainer>
-                  <IconContainer><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainer>
-                  <IconContainer><IconImg src={images.locationIcon} /><StatName>Location: {locationName}</StatName></IconContainer>
+                  <StatName><u>Name: {char.name}</u></StatName>
+                  <CharSelectStatBox>
+                    <IconContainerInner><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainerInner>
+                    <IconContainerInner><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainerInner>
+                    <IconContainerInner><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainerInner>
+                    <IconContainerInner><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainerInner>
+                  </CharSelectStatBox>
+                  <IconContainerOutter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOutter>
                 </Carousel.Item>;
               })
             }
