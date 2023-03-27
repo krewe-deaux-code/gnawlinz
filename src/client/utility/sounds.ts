@@ -359,12 +359,12 @@ const clickSound = {
   'p_repeat_speed': 0,
   'p_pha_offset': 0,
   'p_pha_ramp': 0,
-  'p_lpf_freq': 1,
+  'p_lpf_freq': 0.202,
   'p_lpf_ramp': 0,
   'p_lpf_resonance': 0,
-  'p_hpf_freq': 0.9229944910088393,
+  'p_hpf_freq': 0.336,
   'p_hpf_ramp': 0,
-  'sound_vol': 0.031,
+  'sound_vol': 0.084,
   'sample_rate': 44100,
   'sample_size': 8
 };
