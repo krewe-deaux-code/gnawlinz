@@ -107,9 +107,10 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
           minWidth: '95px',
           minHeight: '45px',
           padding: '10px'
-        }}
-        onClick={handleShow}>Settings</MenuButton>}
 
+        }}
+          onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
+        }
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
       <TopContent3>

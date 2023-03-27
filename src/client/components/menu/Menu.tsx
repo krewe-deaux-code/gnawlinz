@@ -94,7 +94,6 @@ const Menu: React.FC = () => {
       }).catch((err) => {
         console.error(err);
       });
-
   }, []);
 
   const handleClick = (e) => {
@@ -104,7 +103,7 @@ const Menu: React.FC = () => {
     }
   };
 
-  console.log('currentChar IN MENU', currentChar);
+  console.log('currentChar IN MENU', currentChar, 'userCHARS', userChars);
   ////add this -->  <img src={avatar} />    <-- somewhere in JSX
   return (
     <UserContext.Provider value={{ activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar, setStartFail, startFail }}>
@@ -120,6 +119,10 @@ const Menu: React.FC = () => {
               Character Creation
             </Tab>
             <Tab onClick={(e) => {
+              if (userChars.length) {
+                console.log('we made it');
+                setCurrentChar(userChars[0]);
+              }
               setHideStartButton(false);
               handleClick(e);
             }} active={active === 1} id={1}>

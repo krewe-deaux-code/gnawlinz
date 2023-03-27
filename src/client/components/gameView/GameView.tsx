@@ -29,7 +29,7 @@ import { UserContext, SettingsContext } from '../../App';
 import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../utility/interface';
 
 import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
-import { complete, hit, dodge, evacuate, wildCard, click } from '../../utility/sounds';
+import { complete, hit, dodge, evacuate, wildCard, click, neutral, heartBeat } from '../../utility/sounds';
 import { ModalBody } from 'react-bootstrap';
 
 
@@ -590,10 +590,10 @@ const GameView = (props: GameViewProps) => {
 
 
   const updateGraffitiMsg = () => {
-      setLocation(location => ({
-        ...location,
-        graffiti_msgs: [location.graffiti_msgs[1], location.graffiti_msgs[2], inputValue]
-      }));
+    setLocation(location => ({
+      ...location,
+      graffiti_msgs: [location.graffiti_msgs[1], location.graffiti_msgs[2], inputValue]
+    }));
 
     setInputValue('');
     setVisited(prevVisited => prevVisited.map(item => {
@@ -695,7 +695,7 @@ const GameView = (props: GameViewProps) => {
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
-      <Nav isActive={true} showButton={true}/>
+      <Nav isActive={true} showButton={true} />
       <Main>
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <LocationDiv>
@@ -819,8 +819,24 @@ const GameView = (props: GameViewProps) => {
             </Content1>
           </Link>
           <Content2>
-            <div><h5>Investigate</h5><ArcadeButtonInvestigate onClick={() => { handleClickButt(); handleShow(); }} disabled={investigateDisabled} /></div>
-            <div><h5>Toggle Event</h5><ArcadeButtonToggle onClick={handleToggleEvent} /></div>
+            <div>
+              <h5>Investigate</h5>
+              <ArcadeButtonInvestigate
+                disabled={investigateDisabled}
+                onClick={() => {
+                  heartBeat.play();
+                  handleClickButt();
+                  handleShow();
+                }} />
+            </div>
+            <div>
+              <h5>Toggle Event</h5>
+              <ArcadeButtonToggle
+                onClick={() => {
+                  neutral.play();
+                  handleToggleEvent();
+                }} />
+            </div>
             <StyledModal
               centered
               show={show}
