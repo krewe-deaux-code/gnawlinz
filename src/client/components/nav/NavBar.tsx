@@ -97,9 +97,9 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
       <TopContent1>
 
         {isActive ? (
-          <Link to="/menu" className='active-link' >GNAWLINZ</Link>
+          <Link to="/menu" className='active-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></Link>
         ) : (
-          <span className='inactive-link'>GNAWLINZ</span>
+          <span className='inactive-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></span>
         )}
 
           {showButton && <MenuButton style={{

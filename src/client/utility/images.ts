@@ -14,7 +14,7 @@ const images = {
   soundIcon1: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-2_glabnd.png',
   soundIcon2: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679707976/gnawlinzIcons/noun-volume-3_wa0mkl.png',
   soundIcon3: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-4_jyml72.png',
-
+  zombieG: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1678499597/gnawlinzIcons/GnawlinzHeadSmaller_ru4muz.png'
 };
 
 export default images;
