@@ -63,7 +63,7 @@ const Result = (props: GameViewProps) => {
     <Container>
       {resultText === 'you survived!' ? <div> <Confetti
         colors={colors}
-      /> </div> : null};
+      /> </div> : null}
       <Nav isActive={true} />
       <Story>
 
