@@ -1,6 +1,6 @@
 //import iconsData from '../seederObjects/icons.json';
 import Location from '../schemas/location';
-const locationSeeder = async (locationArr) => {
+const locationSeeder = async (locationArr: any) => {
   // Iterate over the icons in the JSON file
   for (let i = 0; i < locationArr.length; i++) {
     // Create a new icon instance with the data from the JSON file
