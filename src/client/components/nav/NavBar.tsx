@@ -33,11 +33,11 @@ const Nav = ({ isActive }: LinkProps) => {
   const [show, setShow] = useState(false);
 
   const calculateRemainingTime = () => {
+
     const interval = setInterval(() => {
-      const daysLeft = 3;
-      const startTime = dayjs();
-      const endTime = startTime.add(daysLeft, 'day').startOf('day');
-      const remainingTime = endTime.diff(dayjs(), 'millisecond');
+      const now = dayjs();
+      const nextResetTime = now.add(3 - (now.day() % 3), 'day').startOf('day');
+      const remainingTime = nextResetTime.diff(now, 'millisecond');
       const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
       const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
       const remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
