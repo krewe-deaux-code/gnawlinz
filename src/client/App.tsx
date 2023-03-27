@@ -46,6 +46,7 @@ const App = () => {
   const [allLocations, setAllLocations] = useState<LocationData[]>([]);
   const [visited, setVisited] = useState<LocationData[]>([]);
   const [investigateDisabled, setInvestigateDisabled] = useState();
+  const [tagDisabled, setTagDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
@@ -116,7 +117,7 @@ const App = () => {
 
   return (
     <SettingsContext.Provider value={{ volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled }}>
-      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled, fetchedInventory, setFetchedInventory }}>
+      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled, tagDisabled, setTagDisabled, fetchedInventory, setFetchedInventory }}>
         <BrowserRouter>
           <GlobalStyle />
 

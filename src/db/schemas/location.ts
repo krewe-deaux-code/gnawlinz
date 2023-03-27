@@ -30,9 +30,9 @@ const Location = db.define('location', {
   graffiti: {
     type: DataTypes.STRING
   },
-  graffiti_msg: {
-    type: DataTypes.TEXT
-  },
+  graffiti_msgs: {
+    type: DataTypes.ARRAY(DataTypes.TEXT)
+  }
 });
 
 export default Location;

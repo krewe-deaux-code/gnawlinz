@@ -12,6 +12,7 @@ export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
 import { Item, Character } from '../../utility/interface';
+import { enter } from '../../utility/sounds';
 
 const Menu: React.FC = () => {
 
@@ -27,6 +28,7 @@ const Menu: React.FC = () => {
   const navigate = useNavigate();
 
   const handleClickStart = () => {
+    enter.play();
     navigate('/game-view');
   };
   // const handleItemLookup = () => {
@@ -129,7 +131,7 @@ const Menu: React.FC = () => {
           </InfoContainer>
           <>
             <Content active={active === 0}>
-              <h1>Character Creation:</h1>
+              <h1><u>New Character:</u></h1>
               <CharacterCreator />
             </Content>
             <Content active={active === 1}>
