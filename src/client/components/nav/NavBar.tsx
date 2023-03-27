@@ -78,7 +78,7 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
   };
 
-console.log('is speaking boolean', isSpeakingEnabled);
+  console.log('is speaking boolean', isSpeakingEnabled);
   // logic to make logo active/inactive depending on where it is being rendered
   return (
 
@@ -91,14 +91,14 @@ console.log('is speaking boolean', isSpeakingEnabled);
           <span className='inactive-link'>GNAWLINZ</span>
         )}
 
-          {showButton && <MenuButton style={{
+        {showButton && <MenuButton style={{
           padding: '0.2rem',
           paddingRight: '0.75rem',
           paddingLeft: '0.75rem',
           marginLeft: '2rem'
         }}
-        onClick={handleShow}>Settings</MenuButton>}
-
+          onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
+        }
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
       <TopContent3>
@@ -153,8 +153,8 @@ console.log('is speaking boolean', isSpeakingEnabled);
               </label>
             </div>
 
-      <button onClick={handleSpeak}>Speak</button>
-      <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
+            <button onClick={handleSpeak}>Speak</button>
+            <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
           </ModalBodyContainer>
         </Modal.Body>
         <Modal.Footer>
