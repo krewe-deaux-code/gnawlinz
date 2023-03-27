@@ -234,19 +234,22 @@ export const EventText = styled.div`
   border: 1px solid;
   border-radius: 5px;
   position: absolute;
-  height: 28%;
+  height: 38%;
   width: 42%;
-  top: 69%;
+  top: 60%;
   left: 29%;
   overflow: auto;
   ${props => (props.show ? '' : 'visibility: hidden')}
 `;
 
 export const ScrollableContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    position: relative;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
     &::-webkit-scrollbar {
         /* height: 10px; */
         width: 10px;

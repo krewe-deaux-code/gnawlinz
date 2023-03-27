@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
+
+import { neutral } from '../../utility/sounds';
 import images from '../../utility/images';
 
 import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOutter, } from './Styled';
@@ -21,6 +23,7 @@ const CharacterStats: React.FC = () => {
 
 
   const handleSelect = (selectedIndex: number) => {
+    neutral.play();
     setIndex(selectedIndex);
     setCurrentChar(userChars[selectedIndex]);
   };
