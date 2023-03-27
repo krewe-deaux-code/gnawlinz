@@ -1,12 +1,15 @@
 //import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react'; //useState,
-import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider } from './Styled'; //ContentBox
+import { NavBar, TopContent1, TopContent2, TopContent3, VolumeSlider, StyledModal, ModalBodyContainer, } from './Styled'; //ContentBox
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import { Howler } from 'howler';
 import images from '../../utility/images';
+import Modal from 'react-bootstrap/Modal';
+import { MenuButton } from '../menu/Styled';
 
 import { UserContext, SettingsContext } from '../../App';
+
 
 // Logo link props
 type LinkProps = {
@@ -27,13 +30,14 @@ const Nav = ({ isActive }: LinkProps) => {
 
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<string>('');
+  const [show, setShow] = useState(false);
 
   const calculateRemainingTime = () => {
+
     const interval = setInterval(() => {
-      const daysLeft = 3;
-      const startTime = dayjs();
-      const endTime = startTime.add(daysLeft, 'day').startOf('day');
-      const remainingTime = endTime.diff(dayjs(), 'millisecond');
+      const now = dayjs();
+      const nextResetTime = now.add(3 - (now.day() % 3), 'day').startOf('day');
+      const remainingTime = nextResetTime.diff(now, 'millisecond');
       const remainingHours = Math.floor(remainingTime / (1000 * 60 * 60));
       const remainingMinutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
       const remainingSeconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
@@ -52,7 +56,9 @@ const Nav = ({ isActive }: LinkProps) => {
     calculateRemainingTime();
   }, []);
 
-
+  // functions for settings modal
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   // logic to make logo active/inactive depending on where it is being rendered
@@ -74,11 +80,49 @@ const Nav = ({ isActive }: LinkProps) => {
           value={volume}
           onChange={handleVolumeChange}
         />
+
+        <MenuButton style={{
+          padding: '0.2rem',
+          paddingRight: '0.75rem',
+          paddingLeft: '0.75rem'
+        }}
+        onClick={handleShow}>Settings</MenuButton>
+
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
       <TopContent3>
         <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
-    </NavBar>
+      <StyledModal
+        centered
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header style={{alignItems: 'flex-start'}}closeButton onClick={handleClose}>
+          <Modal.Title><h3>Settings</h3></Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ModalBodyContainer>
+            {/* <div onClick={props.handleSpeak}>Look for items</div> */}
+            <h4>Volume Control</h4>
+            <h4>Accessibility</h4>
+            <div style={{ display: 'flex' }}>
+              <div style={{ flex: 1 }}>Text To Speech</div>
+              <label className="switch">
+                <input className="chk" type="checkbox"></input>
+                <span className="slider"></span>
+              </label>
+              {/* <Button style={{ flex: 1 }}>TTS</Button> */}
+            </div>
+            {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
+          </ModalBodyContainer>
+        </Modal.Body>
+        <Modal.Footer>
+        </Modal.Footer>
+      </StyledModal>
+
+    </NavBar >
   );
 
 

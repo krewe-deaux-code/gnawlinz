@@ -13,7 +13,7 @@ const locationSeeder = async (locationArr: any) => {
           random_item_spot2: locationArr[i].random_item_spot2,
           drop_item_slot: locationArr[i].drop_item_slot,
           graffiti: locationArr[i].graffiti,
-          graffiti_msg: locationArr[i].graffiti_msg
+          graffiti_msgs: locationArr[i].graffiti_msgs
         }
       })
       .then((success) =>
