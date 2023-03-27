@@ -76,9 +76,20 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
 
   const handleToggleSpeak = () => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    localStorage.setItem('isChecked', newValue.toString());
   };
+  //
+  const [isChecked, setIsChecked] = useState(false);
 
-  console.log('is speaking boolean', isSpeakingEnabled);
+  useEffect(() => {
+    const storedValue = localStorage.getItem('isChecked');
+    if (storedValue !== null) {
+      setIsChecked(storedValue === 'true');
+    }
+  }, []);
+
   // logic to make logo active/inactive depending on where it is being rendered
   return (
 
@@ -86,16 +97,17 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
       <TopContent1>
 
         {isActive ? (
-          <Link to="/menu" className='active-link' >GNAWLINZ</Link>
+          <Link to="/menu" className='active-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></Link>
         ) : (
-          <span className='inactive-link'>GNAWLINZ</span>
+          <span className='inactive-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></span>
         )}
 
-        {showButton && <MenuButton style={{
-          padding: '0.2rem',
-          paddingRight: '0.75rem',
-          paddingLeft: '0.75rem',
-          marginLeft: '2rem'
+          {showButton && <MenuButton style={{
+          marginLeft: '1rem',
+          minWidth: '95px',
+          minHeight: '45px',
+          padding: '10px'
+
         }}
           onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
         }
@@ -148,13 +160,11 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
             <div style={{ display: 'flex', alignItems: 'center', }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
-                <input className="chk" type="checkbox" onClick={handleToggleSpeak}></input>
+                <input className="chk" type="checkbox" checked={isChecked} onClick={handleToggleSpeak}></input>
                 <span className="slider"></span>
               </label>
             </div>
 
-            <button onClick={handleSpeak}>Speak</button>
-            <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
           </ModalBodyContainer>
         </Modal.Body>
         <Modal.Footer>
