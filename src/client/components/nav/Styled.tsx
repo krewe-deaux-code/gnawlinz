@@ -53,10 +53,16 @@ export const TopContent3 = styled(TopContent1)``;
 export const StyledModal = styled(Modal)`
   --bs-modal-bg: silver !important;
   backdrop-filter: blur(4px);
+    .modal-dialog {
+      justify-content: center;
+    }
+    .modal-content {
+      width: 20rem;
+    }
 `;
 
 export const ModalBodyContainer = styled.div`
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   padding: 0.25rem;
   width: 100%;
   height: 100%;
@@ -65,4 +71,7 @@ export const ModalBodyContainer = styled.div`
   align-content: space-evenly;
 `;
 
-
+export const SoundIcon = styled.img`
+  height: 1.5rem;
+  width: 1.5rem;
+`;

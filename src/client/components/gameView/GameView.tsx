@@ -20,7 +20,7 @@ import {
   IconContainer, IconImg, InventoryBorder, InventoryStyle,
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
-  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue, 
+  StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue,
   ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv
 } from './Styled'; //ContentBox
 
@@ -29,7 +29,7 @@ import { UserContext, SettingsContext } from '../../App';
 import { EventData, ChoiceData, Enemy, Ally, Item, Character, GameViewProps } from '../../utility/interface';
 
 import { statCheck, fightEnemy, isEnemy, addItem } from '../../utility/gameUtils';
-import { complete, hit, dodge, evacuate, wildCard } from '../../utility/sounds';
+import { complete, hit, dodge, evacuate, wildCard, click } from '../../utility/sounds';
 import { ModalBody } from 'react-bootstrap';
 
 
@@ -554,6 +554,7 @@ const GameView = (props: GameViewProps) => {
   };
   // for tag it button
   const handleInputValueChange = (event) => {
+    click.play();
     setInputValue(event.target.value);
   };
 

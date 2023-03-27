@@ -84,7 +84,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 122px 53px 50px 50px;
+grid-template-columns: 122px 40px 50px 50px;
 `;
 
 export const SStatName = styled.h5`
@@ -92,7 +92,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 50px;
+grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const EStatName = styled.h5`
@@ -100,7 +100,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 50px;
+grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const MStatName = styled.h5`
@@ -108,7 +108,7 @@ display: grid;
 align-items: center;
 justify-items: start;
 justify-content: space-around;
-grid-template-columns: 125px 50px 50px 23px;
+grid-template-columns: 125px 37px 50px 23px;
 `;
 
 export const CCStatName = styled.div`
@@ -140,6 +140,27 @@ export const IconContainer = styled.div`
   grid-gap: 1em;
   align-items: center;
   `;
+
+export const IconContainerInner = styled.div`
+  display: grid;
+  grid-template-columns: 3rem 3rem 3rem;
+  -webkit-box-pack: center;
+  justify-content: space-evenly;
+  gap: 1em;
+  -webkit-box-align: center;
+  align-items: center;
+`;
+
+export const IconContainerOutter = styled.div`
+    display: grid;
+    grid-template-columns: 24rem;
+    -webkit-box-pack: center;
+    justify-content: center;
+    gap: 1em;
+    -webkit-box-align: center;
+    align-items: center;
+    justify-items: center;
+`;
 
 export const StatIconContainer = styled.div`
   padding: 1rem;
@@ -211,26 +232,49 @@ export const StyledCarousel = styled(Carousel)`
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
     position: relative;
-    background-color: #ff0000 !important;
+    border-radius: 2em;
+    border-width: 0.3rem;
+    box-shadow: 2px 3px 4px 2px #000000;
+    background-color: #da0101 !important;
     z-index: 1 !important;
   }
-  /* .carousel-control-next,
+  .carousel-control-next,
   .carousel-control-prev {
-    position: relative;
-    display: contents;
-  } */
+    width: 2%;
+    height: 5%;
+    margin-right: 40rem;
+    margin-left: 40rem;
+    top: 19rem;
+  }
+  .carousel-control-prev:hover,
+  .carousel-control-next:hover,
+  .carousel-control-prev:focus,
+  .carousel-control-next:focus {
+    background-color: none !important;
+    outline: none; // remove default outline on focus
+  }
+  .carousel-control-prev:active,
+  .carousel-control-next:active {
+    background-color: none !important;
+    outline: none; // remove default outline on click
+    box-shadow: none; // remove default box-shadow on click
+  }
 `;
 
 export const HairCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: relative;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
   .carousel-control-prev {
+    border-radius: 2em;
     position: absolute;
     top: 80px;
     height: 32px;
@@ -241,8 +285,11 @@ export const FaceCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: relative;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
@@ -257,8 +304,11 @@ export const BodyCarousel = styled(Carousel)`
   position: absolute !important;
   .carousel-control-prev-icon,
   .carousel-control-next-icon {
+    border-radius: 2em;
     position: absolute;
-    background-color: #ff0000 !important;
+    border-width: 0.3rem;
+    box-shadow: 3px 4px 3px 0px #3b3b3b;
+    background-color: #940000b9 !important;
     z-index: 1 !important;
   }
   .carousel-control-next,
@@ -378,7 +428,7 @@ export const BodySlot = styled.img`
 `;
 
 export const NameInput = styled(motion.input)`
-
+  border: 3px inset;
 `;
 
 export const StatButton = styled.button`
@@ -408,4 +458,11 @@ export const StatPoolBox = styled.h3`
   grid-template-columns: 9rem 2rem;
   justify-content: space-around;
   justify-items: center;
+`;
+
+export const CharSelectStatBox = styled.div`
+    display: grid;
+    grid-template-columns: 13% 13%;
+    justify-items: stretch;
+    justify-content: center;
 `;
