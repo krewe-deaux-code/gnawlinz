@@ -110,7 +110,7 @@ const Menu: React.FC = () => {
     <UserContext.Provider value={{ activeUser, stateSession, avatar, userChars, setUserChars, currentChar, setCurrentChar, setStartFail, startFail }}>
       <MenuContext.Provider value={{ hideStartButton, setHideStartButton, startFail, setStartFail }}>
         <Body >
-          <Nav isActive={false} />
+          <Nav isActive={false} showButton={true} />
           <InfoContainer >
             <Tab onClick={(e) => {
               if (startFail) { setStartFail(false); }
