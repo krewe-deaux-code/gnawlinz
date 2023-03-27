@@ -12,14 +12,19 @@ import { MenuButton } from '../menu/Styled';
 import { UserContext, SettingsContext } from '../../App';
 
 
-// Logo link props
+// Logo link props & settings button props
 type LinkProps = {
   isActive: boolean;
+  showButton: boolean;
 };
 
-const Nav = ({ isActive }: LinkProps) => {
+
+
+const Nav = ({ isActive, showButton }: LinkProps) => {
+
+
   // <-- move to Title after Auth refactor/move -->
-  const { volume, setVolume } = useContext(SettingsContext);
+  const { volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled } = useContext(SettingsContext);
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
     setVolume(parseFloat(newVolume));
@@ -61,7 +66,19 @@ const Nav = ({ isActive }: LinkProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const msg = new SpeechSynthesisUtterance();
+  const handleSpeak = (e) => {
+    if (isSpeakingEnabled) {
+      msg.text = e.target.innerText;
+      window.speechSynthesis.speak(msg);
+    }
+  };
 
+  const handleToggleSpeak = () => {
+    setIsSpeakingEnabled(!isSpeakingEnabled);
+  };
+
+  console.log('is speaking boolean', isSpeakingEnabled);
   // logic to make logo active/inactive depending on where it is being rendered
   return (
 
@@ -74,14 +91,14 @@ const Nav = ({ isActive }: LinkProps) => {
           <span className='inactive-link'>GNAWLINZ</span>
         )}
 
-        <MenuButton style={{
+        {showButton && <MenuButton style={{
           padding: '0.2rem',
           paddingRight: '0.75rem',
           paddingLeft: '0.75rem',
           marginLeft: '2rem'
         }}
           onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
-
+        }
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
       <TopContent3>
@@ -131,12 +148,13 @@ const Nav = ({ isActive }: LinkProps) => {
             <div style={{ display: 'flex', alignItems: 'center', }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
-                <input className="chk" type="checkbox"></input>
+                <input className="chk" type="checkbox" onClick={handleToggleSpeak}></input>
                 <span className="slider"></span>
               </label>
-              {/* <Button style={{ flex: 1 }}>TTS</Button> */}
             </div>
-            {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
+
+            <button onClick={handleSpeak}>Speak</button>
+            <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
           </ModalBodyContainer>
         </Modal.Body>
         <Modal.Footer>

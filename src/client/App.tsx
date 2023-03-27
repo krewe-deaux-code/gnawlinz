@@ -22,6 +22,9 @@ const App = () => {
   const [volume, setVolume] = useState(0.7);
   // const { volume, setVolume } = useContext(SettingsContext);
 
+  // for text to speech toggle button
+  const [isSpeakingEnabled, setIsSpeakingEnabled] = useState(false);
+
   const [userChars, setUserChars] = useState<Character[]>([]);
   const [currentChar, setCurrentChar] = useState<Character>({} as Character);
   const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
@@ -94,9 +97,12 @@ const App = () => {
   const msg = new SpeechSynthesisUtterance();
 
   const handleSpeak = (e) => {
-    msg.text = e.target.innerText;
-    window.speechSynthesis.speak(msg);
+    if (isSpeakingEnabled) {
+      msg.text = e.target.innerText;
+      window.speechSynthesis.speak(msg);
+    }
   };
+
 
   useEffect(() => {
     characterUpdate();
@@ -110,7 +116,7 @@ const App = () => {
   }, [location]);
 
   return (
-    <SettingsContext.Provider value={{ volume, setVolume }}>
+    <SettingsContext.Provider value={{ volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled }}>
       <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled, tagDisabled, setTagDisabled, fetchedInventory, setFetchedInventory }}>
         <BrowserRouter>
           <GlobalStyle />

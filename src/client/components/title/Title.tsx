@@ -13,7 +13,7 @@ const Title: React.FC = () => {
 
   return (
     <TitleContainer>
-      <Nav isActive={false} />
+      <Nav isActive={false} showButton={false}/>
       <Main>
         <TitleLogoImg
           src={images.titleLogo}
