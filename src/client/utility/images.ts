@@ -10,6 +10,10 @@ const images = {
   titleLogo: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679498653/gnawlinzIcons/GnawlinzPixelatedSmaller_wyxezu.png',
   titleImage: 'https://media.discordapp.net/attachments/1054143394194149408/1075618769109528656/TitleScreenV4.png',
   createCharImage: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679593379/silhoutteQ_vjnkss.png',
+  soundIcon0: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-1_gq5es7.png',
+  soundIcon1: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-2_glabnd.png',
+  soundIcon2: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679707976/gnawlinzIcons/noun-volume-3_wa0mkl.png',
+  soundIcon3: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-4_jyml72.png',
 
 };
 

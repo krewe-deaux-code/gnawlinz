@@ -1,4 +1,4 @@
-// import { sfxr } from 'jsfxr';
+import { sfxr } from 'jsfxr';
 import { Howl, Howler } from 'howler';
 
 /*
@@ -249,7 +249,7 @@ const popBurn = {
   'sample_size': 8
 };
 
-const longBurn = {
+const longBurn = { // **
   'oldParams': true,
   'wave_type': 3,
   'p_env_attack': 0,
@@ -275,6 +275,36 @@ const longBurn = {
   'p_hpf_freq': 0,
   'p_hpf_ramp': 0,
   'sound_vol': 0.129,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const enterSound = { // **
+  'oldParams': true,
+  'wave_type': 3,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.32279621528598357,
+  'p_env_punch': 0.5986362017834299,
+  'p_env_decay': 0.535,
+  'p_base_freq': 0.042851606687422,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.122,
+  'p_freq_dramp': 0.241,
+  'p_vib_strength': 0.486,
+  'p_vib_speed': 0.318,
+  'p_arp_mod': 0.071,
+  'p_arp_speed': 0.803,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.3258507366785141,
+  'p_pha_offset': -0.234,
+  'p_pha_ramp': -0.117,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.097,
   'sample_rate': 44100,
   'sample_size': 8
 };
@@ -309,6 +339,156 @@ const longSlide = {
   'sample_size': 8
 };
 
+const clickSound = {
+  'oldParams': true,
+  'wave_type': 0,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.015801133073791596,
+  'p_env_punch': 0,
+  'p_env_decay': 0.043,
+  'p_base_freq': 0.727,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.12169843284841453,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0.5257613394880012,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.202,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0.336,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.084,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const pointUpSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.05333414667562269,
+  'p_env_punch': 0.447,
+  'p_env_decay': 0.251,
+  'p_base_freq': 0.296,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.198,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.332,
+  'p_lpf_ramp': 0.001,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.013,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const pointDownSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.05333414667562269,
+  'p_env_punch': 0.447,
+  'p_env_decay': 0.251,
+  'p_base_freq': 0.321,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.197,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.332,
+  'p_lpf_ramp': 0.001,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.013,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const neutralSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.07063965143659512,
+  'p_env_punch': 0.4176416103125491,
+  'p_env_decay': 0.11333750331584112,
+  'p_base_freq': 0.423,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0.2234806839543853,
+  'p_arp_speed': 0.5295919129111916,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.193,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.024,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const cancelSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.314,
+  'p_env_punch': 0.128,
+  'p_env_decay': 0.096,
+  'p_base_freq': 0.191,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.157,
+  'p_freq_dramp': -0.033,
+  'p_vib_strength': 0.85,
+  'p_vib_speed': 0.329,
+  'p_arp_mod': 0.026,
+  'p_arp_speed': 0.927,
+  'p_duty': 0.918,
+  'p_duty_ramp': 1,
+  'p_repeat_speed': 0,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': -0.8637981626041724,
+  'p_lpf_resonance': 0.5566874729499105,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.01,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
 /*
   ***********************************
   **********************************
@@ -322,6 +502,7 @@ const hitUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677436361/so
 const dodgeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677444831/sounds/evade_mlgwsf.wav';
 const evacuateUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466224/sounds/evacuate_mcndzl.wav';
 const wildCardUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466376/sounds/wildcard_ndvygk.wav';
+const enterUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679800513/sounds/enter_vb3mmd.wav';
 
 /*
   *******************************
@@ -330,6 +511,12 @@ const wildCardUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v16774663
   **********************************
   ***********************************
 */
+
+export const click = sfxr.toAudio(clickSound);
+export const pointUp = sfxr.toAudio(pointUpSound);
+export const pointDown = sfxr.toAudio(pointDownSound);
+export const neutral = sfxr.toAudio(neutralSound);
+export const cancel = sfxr.toAudio(cancelSound);
 
 export const complete = new Howl({
   src: [completeUrl],
@@ -355,5 +542,15 @@ export const wildCard = new Howl({
   src: [wildCardUrl],
   volume: 1.0
 });
+
+export const enter = new Howl({
+  src: [enterUrl],
+  volume: 0.9
+});
+
+// export const click = new Howl({
+//   src: [clickUrl],
+//   volume: 1.0
+// });
 
 // Howler.volume(0.7);
