@@ -113,15 +113,15 @@ padding-right: 0.5em;
 
 export const InventoryStyle = styled.div`
   display: grid;
-  height: auto;
-  width: auto;
+  justify-content: stretch;
+  align-items: center;
  grid-template-areas: "item item item item item item item item";
   `;
 
 export const InventoryBorder = styled.div`
 border: .2em solid white;
 justify-content: center;
-border-radius: 2%;
+border-radius: 10px;
 width: 100%;
 height: 100%;
 grid-area: inventory;
@@ -152,11 +152,8 @@ export const IconImg = styled.img`
   padding: auto;
   width: auto;
   height: auto;
-  max-width: 2em;
-  max-height: 2em;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 25%;
+  max-width: 4em;
+  max-height: 4em;
 `;
 export const StatBonusColor = styled.div`
 color: #2e8351;
@@ -194,6 +191,7 @@ export const StatContainer2 = styled(StatContainer)`
 
 export const InventoryTextBubble = styled.div`
 position: absolute;
+z-index: 4;
 bottom: 5rem;
 padding: 5px;
 font-size: 1rem;

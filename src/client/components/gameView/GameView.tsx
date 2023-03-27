@@ -864,7 +864,8 @@ const GameView = (props: GameViewProps) => {
             {hoveredItem && (
               <InventoryTextBubble>
                 {hoveredItem.modifier0 && (
-                  <><h5>{hoveredItem.consumable === true ? 'Consumable' : ''}</h5>
+                  <><h5>{hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}</h5>
+                    <h5>{hoveredItem.consumable === true ? 'Consumable' : ''}</h5>
                     <h5> {hoveredItem.modifier0} + {hoveredItem.modified_stat0}</h5>
                     <br />
                   </>
@@ -888,8 +889,7 @@ const GameView = (props: GameViewProps) => {
                   onMouseLeave={() => handleOnMouseLeave()}
                 >
                   <IconContainer>
-                    {item.name}
-                    <IconImg src={item.image_url} />
+                    <IconImg src={item._id !== 1 && item.image_url} />
                   </IconContainer>
                 </div>
               ))}
