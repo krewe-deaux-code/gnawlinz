@@ -113,15 +113,15 @@ padding-right: 0.5em;
 
 export const InventoryStyle = styled.div`
   display: grid;
-  height: auto;
-  width: auto;
+  justify-content: stretch;
+  align-items: center;
  grid-template-areas: "item item item item item item item item";
   `;
 
 export const InventoryBorder = styled.div`
 border: .2em solid white;
 justify-content: center;
-border-radius: 2%;
+border-radius: 10px;
 width: 100%;
 height: 100%;
 grid-area: inventory;
@@ -152,11 +152,8 @@ export const IconImg = styled.img`
   padding: auto;
   width: auto;
   height: auto;
-  max-width: 2em;
-  max-height: 2em;
-  margin-left: auto;
-  margin-right: auto;
-  border-radius: 25%;
+  max-width: 4em;
+  max-height: 4em;
 `;
 export const StatBonusColor = styled.div`
 color: #2e8351;
@@ -194,6 +191,7 @@ export const StatContainer2 = styled(StatContainer)`
 
 export const InventoryTextBubble = styled.div`
 position: absolute;
+z-index: 4;
 bottom: 5rem;
 padding: 5px;
 font-size: 1rem;
@@ -309,7 +307,7 @@ export const KillFeedContainer = styled.div`
   font-size: 12px;
   height: 465px;
   overflow-y: auto;
-  top: 2%;
+  bottom: 30%;
   &::-webkit-scrollbar {
         /* height: 10px; */
         width: 10px;
@@ -411,10 +409,10 @@ export const ArcadeButton = styled.button`
 
 export const ArcadeButtonInvestigate = styled(ArcadeButton)`
   background-color: #1a0ac2;
-  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), 
-  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
-  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), 
-  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7), 
+  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7),
   inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(54, 37, 244, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(19, 8, 145, 0.2),
   inset 0 0 0 ${size / 5.5}rem #1a0ac2, inset 0 ${size / 2.5}rem ${size / 7.5}rem #1609aa, inset 0 0 ${size / 10}rem ${size / 6}rem #130891, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
   &:active {
