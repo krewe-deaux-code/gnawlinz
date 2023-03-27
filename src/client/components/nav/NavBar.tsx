@@ -76,9 +76,20 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
 
   const handleToggleSpeak = () => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
+    const newValue = !isChecked;
+    setIsChecked(newValue);
+    localStorage.setItem('isChecked', newValue.toString());
   };
+  //
+  const [isChecked, setIsChecked] = useState(false);
 
-console.log('is speaking boolean', isSpeakingEnabled);
+  useEffect(() => {
+    const storedValue = localStorage.getItem('isChecked');
+    if (storedValue !== null) {
+      setIsChecked(storedValue === 'true');
+    }
+  }, []);
+
   // logic to make logo active/inactive depending on where it is being rendered
   return (
 
@@ -148,13 +159,11 @@ console.log('is speaking boolean', isSpeakingEnabled);
             <div style={{ display: 'flex', alignItems: 'center', }}>
               <div style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
-                <input className="chk" type="checkbox" onClick={handleToggleSpeak}></input>
+                <input className="chk" type="checkbox" checked={isChecked} onClick={handleToggleSpeak}></input>
                 <span className="slider"></span>
               </label>
             </div>
 
-      <button onClick={handleSpeak}>Speak</button>
-      <button onClick={handleToggleSpeak}>{isSpeakingEnabled ? 'Disable speaking' : 'Enable speaking'}</button>
           </ModalBodyContainer>
         </Modal.Body>
         <Modal.Footer>
