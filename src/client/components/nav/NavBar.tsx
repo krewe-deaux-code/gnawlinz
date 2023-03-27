@@ -80,7 +80,7 @@ const Nav = ({ isActive }: LinkProps) => {
           paddingLeft: '0.75rem',
           marginLeft: '2rem'
         }}
-          onClick={handleShow}>Settings</MenuButton>
+          onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
 
       </TopContent1>
       <TopContent2>{remainingTime}</TopContent2>
