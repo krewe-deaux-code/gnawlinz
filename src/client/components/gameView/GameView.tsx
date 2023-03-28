@@ -129,7 +129,7 @@ const GameView = (props: GameViewProps) => {
   // NPC
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
         //console.log('Enemy fetched, sending to state...');
