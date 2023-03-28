@@ -21,7 +21,7 @@ import {
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
   StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue,
-  ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv
+  ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv, CRTDiv
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -897,7 +897,7 @@ const GameView = (props: GameViewProps) => {
                   onMouseLeave={() => handleOnMouseLeave()}
                 >
                   <IconContainer>
-                    <IconImg src={item._id !== 1 && item.image_url} />
+                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
                   </IconContainer>
                 </div>
               ))}
