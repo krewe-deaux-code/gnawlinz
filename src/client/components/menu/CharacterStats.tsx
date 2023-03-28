@@ -4,7 +4,7 @@ import axios from 'axios';
 import { neutral } from '../../utility/sounds';
 import images from '../../utility/images';
 
-import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOutter, RedX } from './Styled';
+import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOuter, RedX } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
@@ -114,7 +114,7 @@ const CharacterStats: React.FC = () => {
                       <IconContainerInner><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainerInner>
                       <IconContainerInner><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainerInner>
                     </CharSelectStatBox>
-                    <IconContainerOutter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOutter>
+                    <IconContainerOuter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOuter>
                   </Carousel.Item>
                 );
               })

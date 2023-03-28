@@ -151,7 +151,7 @@ export const IconContainerInner = styled.div`
   align-items: center;
 `;
 
-export const IconContainerOutter = styled.div`
+export const IconContainerOuter = styled.div`
     display: grid;
     grid-template-columns: 24rem;
     -webkit-box-pack: center;
