@@ -34,11 +34,13 @@ const TitleLogoImg = styled(motion.img)`
 `;
 
 const TitleButton = styled.button`
+  min-width: 95px;
+  min-height: 45px;
   background-color: #931a03;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
-  padding: 1rem 1rem;
+  padding: 10px;
   border-radius: 2em;
   cursor: pointer;
   transition: 0.1s ease;
