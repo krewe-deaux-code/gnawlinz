@@ -879,9 +879,9 @@ const GameView = (props: GameViewProps) => {
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src={images.healthIcon} />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={images.moodIcon} />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={images.strengthIcon} />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={images.enduranceIcon} />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.moodIcon} />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
