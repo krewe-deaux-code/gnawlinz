@@ -343,13 +343,13 @@ export const CCContainer = styled.div`
 
 export const LeftSpacer = styled.div`
   grid-area: Lspacer;
-  background: rgba(173, 173, 173, 0.5);
+  /* background: rgba(173, 173, 173, 0.5); */
   backdrop-filter: blur(15px);
 `;
 
 export const RightSpacer = styled.div`
   grid-area: Rspacer;
-  background: rgba(173, 173, 173, 0.5);
+  /* background: rgba(173, 173, 173, 0.5); */
   backdrop-filter: blur(15px);
 `;
 
@@ -361,10 +361,12 @@ export const StatsContainer = styled.div`
   width: 100%;
   background: rgba(173, 173, 173, 0.5);
   backdrop-filter: blur(15px);
-  border-right: 3px solid darkgoldenrod;
+  border-right: 3px solid silver;
   justify-items: start;
   justify-content: center;
   align-content: center;
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
   /* box-sizing: content-box !important; */ /* <-- for golden line blur */
 `;
 
@@ -387,13 +389,15 @@ export const CharacterContainer = styled.div`
   grid-area: character / character / character / character;
   background: rgba(173, 173, 173, 0.5);
   backdrop-filter: blur(15px);
-  border-left: 3px solid darkgoldenrod;
+  border-left: 3px solid silver;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   align-items: center;
   /* padding-top: 40px; */
   flex-direction: column;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
 
 `;
 
