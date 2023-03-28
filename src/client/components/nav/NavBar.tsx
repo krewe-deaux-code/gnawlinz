@@ -108,8 +108,9 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
         }
       </TopContent1>
       <TopContent2 onClick={handleSpeak}>{remainingTime}</TopContent2>
-      <TopContent3>
-        <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
+      <TopContent3 >
+        <img src={googleAvatar} width='18 px' height='18 px' style={{background: 'white', width: '25px', height: '25px'}} ></img>
+        </TopContent3>
       <StyledModal
         centered
         show={show}
