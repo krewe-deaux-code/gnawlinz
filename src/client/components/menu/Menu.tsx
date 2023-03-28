@@ -11,10 +11,10 @@ import Nav from '../nav/NavBar';
 export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
-import { Item, Character } from '../../utility/interface';
+import { Item, Character, GameViewProps } from '../../utility/interface';
 import { enter } from '../../utility/sounds';
 
-const Menu: React.FC = () => {
+const Menu = (props: GameViewProps) => {
 
   const {
     userChars, setUserChars, currentChar, setCurrentChar,
@@ -134,7 +134,7 @@ const Menu: React.FC = () => {
           </InfoContainer>
           <>
             <Content active={active === 0}>
-              <h1><u>New Character:</u></h1>
+              <h1 onClick={props.handleSpeak}><u>New Character:</u></h1>
               <CharacterCreator />
             </Content>
             <Content active={active === 1}>
