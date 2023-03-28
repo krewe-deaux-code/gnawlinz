@@ -747,7 +747,8 @@ const GameView = (props: GameViewProps) => {
                 }
               </KillFeed>
             </KillFeedContainer>
-            <LocationImg src={location.image_url}
+            <LocationImg
+              src={location.image_url}
               style={{
                 position: 'relative',
                 bottom: '98%',
@@ -790,34 +791,34 @@ const GameView = (props: GameViewProps) => {
         </LocationDiv>
       </Main>
       <Footer>
-        <Content1>
+        <Content1 id='outter Content 1'>
           {/* <Link to="/result" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
           </Link> */}
-          <Link to="/game-view" style={{ textDecoration: 'none' }}>
-            <Content1>
-              {/* <HudButton onClick={handleLocationChange}>New Location</HudButton> */}
-              <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
-                <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
-                  <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
-                </Modal.Header>
-                <Modal.Body >
-                  <ModalBodyContainer>
-                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p> */}
-                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
-                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p> */}
-                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
-                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p> */}
-                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
-                    {/* <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p> */}
-                    <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
-                  </ModalBodyContainer>
-                </Modal.Body>
-              </StyledModal>
-            </Content1>
-          </Link>
+          {/* <Link to="/game-view" style={{ textDecoration: 'none' }}> */}
+          <div id='inner Content 1'>
+            {/* <HudButton onClick={handleLocationChange}>New Location</HudButton> */}
+            <StyledModal centered show={showLocationModal} onHide={handleCloseLocationModal} backdrop='static' >
+              <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
+                <Modal.Title onClick={props.handleSpeak}>You have visited all locations, where do you want to go now? </Modal.Title>
+              </Modal.Header>
+              <Modal.Body >
+                <ModalBodyContainer>
+                  {/* <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p> */}
+                  <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(0); handleCloseLocationModal(); }}>{localStorage.getItem('0')} </HudButton>
+                  {/* <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p> */}
+                  <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(1); handleCloseLocationModal(); }}>{localStorage.getItem('1')} </HudButton>
+                  {/* <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p> */}
+                  <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(2); handleCloseLocationModal(); }}>{localStorage.getItem('2')} </HudButton>
+                  {/* <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p> */}
+                  <HudButton style={{ fontSize: '1.3rem' }} onClick={() => { getAllLocations(3); handleCloseLocationModal(); }}>{localStorage.getItem('3')} </HudButton>
+                </ModalBodyContainer>
+              </Modal.Body>
+            </StyledModal>
+          </div>
+          {/* </Link> */}
           <Content2>
             <div>
               <h5>Investigate</h5>
@@ -920,15 +921,14 @@ const GameView = (props: GameViewProps) => {
             </InventoryStyle>
           </InventoryBorder>
         </CharStatusContainer>
-        <Content2>
+        <Content3>
           <div>
             {tooltip && (
               <InventoryTextBubble>
                 <h5>{tooltip}</h5>
               </ InventoryTextBubble>
             )}
-
-            <h5>Engage</h5>
+            <h5 style={{ marginTop: '0.5rem' }}>Engage</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('engage')}
               onMouseLeave={() => handleToolTipOff()}
@@ -939,8 +939,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Evade</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Evade</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evade')}
               onMouseLeave={() => handleToolTipOff()}
@@ -950,8 +952,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Evacuate</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Evacuate</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evacuate')}
               onMouseLeave={() => handleToolTipOff()}
@@ -961,8 +965,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Wildcard</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Wildcard</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('wildcard')}
               onMouseLeave={() => handleToolTipOff()}
@@ -972,8 +978,9 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryStrength(0);
                 setTemporaryStrength(0);
-              }} /></div>
-        </Content2>
+              }} />
+          </div>
+        </Content3>
 
       </Footer >
     </Container >

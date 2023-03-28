@@ -162,6 +162,8 @@ const Menu = (props: GameViewProps) => {
               if (currentChar.name === 'Someguy McPlaceholder') {
                 setStartFail(true);
                 return;
+              } else if (currentChar.health < 1 || currentChar.mood < 1) {
+                return;
               } else {
                 handleClickStart();
               }
