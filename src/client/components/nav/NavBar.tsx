@@ -7,9 +7,10 @@ import { Howler } from 'howler';
 import { complete } from '../../utility/sounds';
 import images from '../../utility/images';
 import Modal from 'react-bootstrap/Modal';
-import { MenuButton } from '../menu/Styled';
+import { MenuButton, StatButton } from '../menu/Styled';
 
 import { UserContext, SettingsContext } from '../../App';
+
 
 
 // Logo link props & settings button props
@@ -24,7 +25,7 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
 
 
   // <-- move to Title after Auth refactor/move -->
-  const { volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled } = useContext(SettingsContext);
+  const { volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled, isChecked, setIsChecked } = useContext(SettingsContext);
   const handleVolumeChange = (e) => {
     const newVolume = e.target.value;
     setVolume(parseFloat(newVolume));
@@ -37,6 +38,8 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
   const { avatar } = useContext(UserContext);
   const [remainingTime, setRemainingTime] = useState<string>('');
   const [show, setShow] = useState(false);
+
+
 
   const calculateRemainingTime = () => {
 
@@ -66,6 +69,7 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // text to speak functions
   const msg = new SpeechSynthesisUtterance();
   const handleSpeak = (e) => {
     if (isSpeakingEnabled) {
@@ -78,17 +82,9 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
     const newValue = !isChecked;
     setIsChecked(newValue);
-    localStorage.setItem('isChecked', newValue.toString());
-  };
-  //
-  const [isChecked, setIsChecked] = useState(false);
 
-  useEffect(() => {
-    const storedValue = localStorage.getItem('isChecked');
-    if (storedValue !== null) {
-      setIsChecked(storedValue === 'true');
-    }
-  }, []);
+  };
+
 
   // logic to make logo active/inactive depending on where it is being rendered
   return (
@@ -102,17 +98,16 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
           <span className='inactive-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></span>
         )}
 
-          {showButton && <MenuButton style={{
+          {showButton && <StatButton style={{
           marginLeft: '1rem',
-          minWidth: '95px',
-          minHeight: '45px',
-          padding: '10px'
+          display: 'initial',
+          fontSize: 'large'
 
         }}
-          onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
+          onClick={() => { complete.play(); handleShow(); }}>Settings</StatButton>
         }
       </TopContent1>
-      <TopContent2>{remainingTime}</TopContent2>
+      <TopContent2 onClick={handleSpeak}>{remainingTime}</TopContent2>
       <TopContent3>
         <img src={googleAvatar} width='18 px' height='18 px' ></img></TopContent3>
       <StyledModal
@@ -123,11 +118,10 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
         keyboard={false}
       >
         <Modal.Header style={{ alignItems: 'flex-start' }} closeButton onClick={handleClose}>
-          <Modal.Title><h3>Settings</h3></Modal.Title>
+          <Modal.Title onClick={handleSpeak}><h3>Settings</h3></Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <ModalBodyContainer>
-            {/* <div onClick={props.handleSpeak}>Look for items</div> */}
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               <h4 style={{ height: '1.5rem', width: '1.5rem' }}>
                 {volume <= 0.02
@@ -158,9 +152,9 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
               />
             </div>
             <div style={{ display: 'flex', alignItems: 'center', }}>
-              <div style={{ flex: 1 }}>Text To Speech</div>
+              <div onClick={handleSpeak} style={{ flex: 1 }}>Text To Speech</div>
               <label className="switch">
-                <input className="chk" type="checkbox" checked={isChecked} onClick={handleToggleSpeak}></input>
+                <input className="chk" type="checkbox" defaultChecked={isChecked} onClick={handleToggleSpeak}></input>
                 <span className="slider"></span>
               </label>
             </div>
