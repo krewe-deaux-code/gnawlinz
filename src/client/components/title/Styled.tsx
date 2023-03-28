@@ -62,6 +62,7 @@ const TitleImg = styled(motion.img)`
   height: auto;
   border-radius: 1rem;
   padding: .25rem;
+  border: 1px solid #959595;
 `;
 
 const NavBar = styled.nav`
