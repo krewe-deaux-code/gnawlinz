@@ -4,7 +4,7 @@ import axios from 'axios';
 import { neutral } from '../../utility/sounds';
 import images from '../../utility/images';
 
-import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOutter, } from './Styled';
+import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOutter, RedX } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
@@ -98,17 +98,25 @@ const CharacterStats: React.FC = () => {
           <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
             {
               userChars.map((char: Character, i: number) => {
-                return <Carousel.Item key={i}>
-                  <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
-                  <StatName><u>Name: {char.name}</u></StatName>
-                  <CharSelectStatBox>
-                    <IconContainerInner><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainerInner>
-                    <IconContainerInner><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainerInner>
-                    <IconContainerInner><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainerInner>
-                    <IconContainerInner><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainerInner>
-                  </CharSelectStatBox>
-                  <IconContainerOutter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOutter>
-                </Carousel.Item>;
+                console.log('INSIDE MAP', char);
+                return (
+                  <Carousel.Item key={i}>
+                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      {
+                        char.mood < 1 || char.health < 1 ? <RedX src={images.redX}></RedX> : <></>
+                      }
+                      <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
+                    </div>
+                    <StatName><u>Name: {char.name}</u></StatName>
+                    <CharSelectStatBox>
+                      <IconContainerInner><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainerInner>
+                      <IconContainerInner><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainerInner>
+                      <IconContainerInner><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainerInner>
+                      <IconContainerInner><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainerInner>
+                    </CharSelectStatBox>
+                    <IconContainerOutter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOutter>
+                  </Carousel.Item>
+                );
               })
             }
           </StyledCarousel> :

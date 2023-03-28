@@ -928,8 +928,7 @@ const GameView = (props: GameViewProps) => {
                 <h5>{tooltip}</h5>
               </ InventoryTextBubble>
             )}
-
-            <h5>Engage</h5>
+            <h5 style={{ marginTop: '0.5rem' }}>Engage</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('engage')}
               onMouseLeave={() => handleToolTipOff()}
@@ -940,8 +939,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Evade</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Evade</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evade')}
               onMouseLeave={() => handleToolTipOff()}
@@ -951,8 +952,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Evacuate</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Evacuate</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evacuate')}
               onMouseLeave={() => handleToolTipOff()}
@@ -962,8 +965,10 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
-              }} /></div>
-          <div><h5>Wildcard</h5>
+              }} />
+          </div>
+          <div>
+            <h5 style={{ marginTop: '0.5rem' }}>Wildcard</h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('wildcard')}
               onMouseLeave={() => handleToolTipOff()}
@@ -973,7 +978,8 @@ const GameView = (props: GameViewProps) => {
                 setTemporaryMood(0);
                 setTemporaryStrength(0);
                 setTemporaryStrength(0);
-              }} /></div>
+              }} />
+          </div>
         </Content3>
 
       </Footer >

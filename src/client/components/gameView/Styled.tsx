@@ -153,7 +153,7 @@ export const IconContainer = styled.div`
 
 export const StatIconContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 1.6rem 1.6rem 2rem auto;
   width: 30%;
   padding: 3px;
   text-align: center;
@@ -310,6 +310,7 @@ export const LocationImg = styled.img`
 height: 625px;
 width:  901px;
 border: 3px double;
+border-radius: 5px;
 `;
 
 export const KillFeedContainer = styled.div`

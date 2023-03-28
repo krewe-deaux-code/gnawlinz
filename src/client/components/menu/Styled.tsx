@@ -466,3 +466,14 @@ export const CharSelectStatBox = styled.div`
     justify-items: stretch;
     justify-content: center;
 `;
+
+export const RedX = styled.img`
+  z-index: 3;
+  position: fixed;
+  display: flex;
+  margin-left: 10rem;
+  margin-top: -7.34rem;
+  height: auto;
+  width: 21rem;
+  filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.5rem 0.6rem 0.11rem);
+`;
