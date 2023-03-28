@@ -1,8 +1,8 @@
 const images = {
-  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679971567/gnawlinzIcons/heart_shadow2_cplgnb.png',
-  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679971482/gnawlinzIcons/mood_shadow1_tx9bcq.png',
-  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679971347/gnawlinzIcons/arm_shadow_cyurpj.png',
-  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679971347/gnawlinzIcons/shield_shadow_nave5h.png',
+  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679520244/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png',
+  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969441/gnawlinzIcons/mood_color_nrfcrm.png',
+  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969441/gnawlinzIcons/arm_color_nbvrsk.png',
+  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969598/gnawlinzIcons/shield_color_mm8m8g.png',
   locationIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png',
   defaultAvatar: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png',
   trophyIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png',
@@ -14,7 +14,7 @@ const images = {
   soundIcon1: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-2_glabnd.png',
   soundIcon2: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679707976/gnawlinzIcons/noun-volume-3_wa0mkl.png',
   soundIcon3: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-4_jyml72.png',
-  redX: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679964524/gnawlinzIcons/grid_landscape_bgdkgb.png',
+  redX: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679953333/gnawlinzIcons/x1_gwq5ad.png',
   zombieG: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1678499597/gnawlinzIcons/GnawlinzHeadSmaller_ru4muz.png'
 };
 
