@@ -7,7 +7,7 @@ import { Howler } from 'howler';
 import { complete } from '../../utility/sounds';
 import images from '../../utility/images';
 import Modal from 'react-bootstrap/Modal';
-import { MenuButton } from '../menu/Styled';
+import { MenuButton, StatButton } from '../menu/Styled';
 
 import { UserContext, SettingsContext } from '../../App';
 
@@ -98,14 +98,13 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
           <span className='inactive-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></span>
         )}
 
-          {showButton && <MenuButton style={{
+          {showButton && <StatButton style={{
           marginLeft: '1rem',
-          minWidth: '95px',
-          minHeight: '45px',
-          padding: '10px'
+          display: 'initial',
+          fontSize: 'large'
 
         }}
-          onClick={() => { complete.play(); handleShow(); }}>Settings</MenuButton>
+          onClick={() => { complete.play(); handleShow(); }}>Settings</StatButton>
         }
       </TopContent1>
       <TopContent2 onClick={handleSpeak}>{remainingTime}</TopContent2>
