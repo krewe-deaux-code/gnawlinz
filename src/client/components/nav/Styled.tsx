@@ -26,6 +26,7 @@ export const Container = styled.div`
 `;
 
 export const NavBar = styled.nav`
+  height: fit-content;
   background: url('http://www.transparenttextures.com/patterns/bo-play.png');
   grid-area: nav;
   padding: 0.25rem;
