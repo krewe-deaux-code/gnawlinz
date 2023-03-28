@@ -26,7 +26,7 @@ export const Container = styled.div`
 `;
 
 export const NavBar = styled.nav`
-  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679592472/gnawlinzIcons/3px-tile-1920x1080_1_g5udzm.png');
+  background: url('http://www.transparenttextures.com/patterns/bo-play.png');
   grid-area: nav;
   padding: 0.25rem;
   display: flex;
