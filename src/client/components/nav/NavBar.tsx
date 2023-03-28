@@ -93,12 +93,12 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
       <TopContent1>
 
         {isActive ? (
-          <Link to="/menu" className='active-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></Link>
+          <Link to="/menu" className='active-link' ><img src={images.zombieG} style={{ width: '38px', height: '37px', paddingBottom: '5px' }}></img></Link>
         ) : (
-          <span className='inactive-link' ><img src={images.zombieG} style={{ width: '25px', height: '25px' }}></img></span>
+          <span className='inactive-link' ><img src={images.zombieG} style={{ width: '38px', height: '37px', paddingBottom: '5px' }}></img></span>
         )}
 
-          {showButton && <StatButton style={{
+        {showButton && <StatButton style={{
           marginLeft: '1rem',
           display: 'initial',
           fontSize: 'large'
