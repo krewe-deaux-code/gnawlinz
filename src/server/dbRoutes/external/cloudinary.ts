@@ -30,7 +30,7 @@ cloudinaryRouter.post('/post', (req, res) => {
 
   const { topImageUrl, middleImageUrl, bottomImageUrl, characterObj } = req.body;
 
-  const findPublicID = (imageUrl, folderName) => {
+  const findPublicID = (imageUrl: string, folderName: string) => {
     const startIndex = imageUrl.search(folderName);
     return imageUrl.slice(startIndex, -4);
   };
