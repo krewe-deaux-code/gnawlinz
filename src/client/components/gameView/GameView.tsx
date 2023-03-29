@@ -439,7 +439,12 @@ const GameView = (props: GameViewProps) => {
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) { // <-- enemy exists, enemy dead
-            setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
+            axios.post(`story/ending/${currentChar._id}`, // <-- ADD PLAYER KILL ENEMY TO STORY
+                  {
+                    result: currentEnemy.victory
+                  })
+                  .catch((err) => (console.error('Failed to add story on death: ', err)));
+                setOutcome(choiceOutcome);
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
