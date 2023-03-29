@@ -59,8 +59,10 @@ export const Main = styled.main`
 `;
 
 export const Content1 = styled.div`
-  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679600452/gnawlinzIcons/dark-wood-1920x1080_cwlol9.png');
+  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
   padding: 0.125rem;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
   width: 100%;
   height: 100%;
   display: grid;
@@ -70,7 +72,7 @@ export const Content1 = styled.div`
 `;
 
 export const Content2 = styled.div`
-  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679600452/gnawlinzIcons/dark-wood-1920x1080_cwlol9.png');
+  /* background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679600452/gnawlinzIcons/dark-wood-1920x1080_cwlol9.png'); */
   padding: 0.25rem;
   width: 100%;
   height: 100%;
@@ -80,7 +82,17 @@ export const Content2 = styled.div`
 `;
 
 
-export const Content3 = styled(Content2)``;
+export const Content3 = styled(Content2)`
+  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  padding: 0.25rem;
+  width: 100%;
+  height: 100%;
+  display: grid;
+  align-content: space-around;
+  grid-template-columns: auto auto;
+`;
 
 export const Footer = styled.footer`
   background: black;
@@ -141,7 +153,7 @@ export const IconContainer = styled.div`
 
 export const StatIconContainer = styled.div`
   display: grid;
-  grid-template-columns: auto auto auto auto;
+  grid-template-columns: 1.6rem 1.6rem 2rem auto;
   width: 30%;
   padding: 3px;
   text-align: center;
@@ -232,19 +244,22 @@ export const EventText = styled.div`
   border: 1px solid;
   border-radius: 5px;
   position: absolute;
-  height: 28%;
+  height: 38%;
   width: 42%;
-  top: 69%;
+  top: 60%;
   left: 29%;
   overflow: auto;
   ${props => (props.show ? '' : 'visibility: hidden')}
 `;
 
 export const ScrollableContainer = styled.div`
-    width: 100%;
-    height: 100%;
-    overflow-y: auto;
-    position: relative;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  position: relative;
     &::-webkit-scrollbar {
         /* height: 10px; */
         width: 10px;
@@ -294,6 +309,8 @@ margin-top: 10rem;
 export const LocationImg = styled.img`
 height: 625px;
 width:  901px;
+border: 3px double;
+border-radius: 5px;
 `;
 
 export const KillFeedContainer = styled.div`

@@ -27,12 +27,12 @@ background-color: #931a03;
 
 export const CCStartButton = styled.button`
 background-color: #931a03;
-max-width: 114.95px;
-max-height: 56px;
+min-width: 95px;
+min-height: 45px;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
-  padding: 1rem 1rem;
+  padding: 10px;
   border-radius: 2em;
   cursor: pointer;
   transition: 0.1s ease;
@@ -151,7 +151,7 @@ export const IconContainerInner = styled.div`
   align-items: center;
 `;
 
-export const IconContainerOutter = styled.div`
+export const IconContainerOuter = styled.div`
     display: grid;
     grid-template-columns: 24rem;
     -webkit-box-pack: center;
@@ -343,13 +343,13 @@ export const CCContainer = styled.div`
 
 export const LeftSpacer = styled.div`
   grid-area: Lspacer;
-  background: rgba(173, 173, 173, 0.5);
+  /* background: rgba(173, 173, 173, 0.5); */
   backdrop-filter: blur(15px);
 `;
 
 export const RightSpacer = styled.div`
   grid-area: Rspacer;
-  background: rgba(173, 173, 173, 0.5);
+  /* background: rgba(173, 173, 173, 0.5); */
   backdrop-filter: blur(15px);
 `;
 
@@ -361,10 +361,12 @@ export const StatsContainer = styled.div`
   width: 100%;
   background: rgba(173, 173, 173, 0.5);
   backdrop-filter: blur(15px);
-  border-right: 3px solid darkgoldenrod;
+  border-right: 3px solid silver;
   justify-items: start;
   justify-content: center;
   align-content: center;
+  border-top-right-radius: 9px;
+  border-bottom-right-radius: 9px;
   /* box-sizing: content-box !important; */ /* <-- for golden line blur */
 `;
 
@@ -387,13 +389,15 @@ export const CharacterContainer = styled.div`
   grid-area: character / character / character / character;
   background: rgba(173, 173, 173, 0.5);
   backdrop-filter: blur(15px);
-  border-left: 3px solid darkgoldenrod;
+  border-left: 3px solid silver;
   display: flex;
   -webkit-box-pack: center;
   justify-content: center;
   align-items: center;
   /* padding-top: 40px; */
   flex-direction: column;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
 
 `;
 
@@ -465,4 +469,15 @@ export const CharSelectStatBox = styled.div`
     grid-template-columns: 13% 13%;
     justify-items: stretch;
     justify-content: center;
+`;
+
+export const RedX = styled.img`
+  z-index: 3;
+  position: fixed;
+  display: flex;
+  margin-left: 10rem;
+  margin-top: -7.34rem;
+  height: auto;
+  width: 21rem;
+  filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.5rem 0.6rem 0.11rem);
 `;

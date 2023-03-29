@@ -21,7 +21,7 @@ const TitleContainer = styled.div`
       "footer";
   }
   color: white;
-  background-color: #121212;
+  background-color: rgb(31, 33, 40);
 `;
 
 const TitleLogoImg = styled(motion.img)`
@@ -34,11 +34,13 @@ const TitleLogoImg = styled(motion.img)`
 `;
 
 const TitleButton = styled.button`
+  min-width: 95px;
+  min-height: 45px;
   background-color: #931a03;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
-  padding: 1rem 1rem;
+  padding: 10px;
   border-radius: 2em;
   cursor: pointer;
   transition: 0.1s ease;
@@ -60,6 +62,7 @@ const TitleImg = styled(motion.img)`
   height: auto;
   border-radius: 1rem;
   padding: .25rem;
+  border: 1px solid #959595;
 `;
 
 const NavBar = styled.nav`
@@ -80,7 +83,7 @@ const Main = styled.main`
   grid-template-rows: auto auto auto auto;
   align-items: center;
   justify-content: center;
-  background: #121212;
+  background: rgb(31, 33, 40);
   color: white;
   grid-area: main;
   padding: 0.25rem;
@@ -94,7 +97,7 @@ const Content1 = styled.div`
 const Content2 = styled(Content1)``;
 const Content3 = styled(Content1)``;
 const Footer = styled.footer`
-  background: #121212;
+  background: rgb(31, 33, 40);
   grid-area: footer;
   padding: 0.25rem;
 `;

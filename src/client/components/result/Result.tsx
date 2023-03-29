@@ -63,8 +63,8 @@ const Result = (props: GameViewProps) => {
     <Container>
       {resultText === 'you survived!' ? <div> <Confetti
         colors={colors}
-      /> </div> : null};
-      <Nav isActive={true} showButton={true}/>
+      /> </div> : null}
+      <Nav isActive={true} showButton={true} />
       <Story>
 
         <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>

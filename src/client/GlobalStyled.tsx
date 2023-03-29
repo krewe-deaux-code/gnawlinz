@@ -4,7 +4,7 @@ import { createGlobalStyle } from 'styled-components';
 export const GlobalStyle = createGlobalStyle`
 
   HTML {
-    background-color: #121212;
+    background-color: rgb(31, 33, 40);
     background-size:  100%;
   }
   body {
