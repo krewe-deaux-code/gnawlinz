@@ -686,9 +686,7 @@ const GameView = (props: GameViewProps) => {
     console.log('selectedChoice: ', selectedChoice);
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
-    return <Result handleSpeak={function (e: any): void {
-      throw new Error('Function not implemented.');
-    }} />;
+    return <Result />;
   }
   // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
