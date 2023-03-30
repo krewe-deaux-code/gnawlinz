@@ -129,7 +129,7 @@ const GameView = (props: GameViewProps) => {
   // NPC
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
         //console.log('Enemy fetched, sending to state...');
@@ -439,7 +439,12 @@ const GameView = (props: GameViewProps) => {
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) { // <-- enemy exists, enemy dead
-            setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
+            axios.post(`story/ending/${currentChar._id}`, // <-- ADD PLAYER KILL ENEMY TO STORY
+                  {
+                    result: currentEnemy.victory
+                  })
+                  .catch((err) => (console.error('Failed to add story on death: ', err)));
+                setOutcome(choiceOutcome);
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
@@ -905,7 +910,7 @@ const GameView = (props: GameViewProps) => {
                   onMouseLeave={() => handleOnMouseLeave()}
                 >
                   <IconContainer>
-                    <IconImg src={item._id !== 1 && item.image_url} />
+                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
                   </IconContainer>
                 </div>
               ))}
