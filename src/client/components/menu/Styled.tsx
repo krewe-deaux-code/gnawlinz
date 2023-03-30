@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export const MenuButton = styled.button`
-background-color: #931a03;
+  background-color: #931a03;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
@@ -14,21 +14,20 @@ background-color: #931a03;
   transition: 0.1s ease;
   border-width: 0;
   box-shadow: 1px 5px 0 0 #60180e;
-;
   &:hover {
     transform: translateY(-4px);
-  box-shadow: 1px 9px 0 0 #60180e;
+    box-shadow: 1px 9px 0 0 #60180e;
   }
   &:active {
     transform: translateY(4px);
-  box-shadow: 0px 0px 0 0 #60180e;
+    box-shadow: 0px 0px 0 0 #60180e;
   }
 `;
 
 export const CCStartButton = styled.button`
-background-color: #931a03;
-min-width: 95px;
-min-height: 45px;
+  background-color: #931a03;
+  min-width: 95px;
+  min-height: 45px;
   color: white !important;
   font-family: 'Edit Undo BRK', sans-serif;
   font-size: 1rem;
@@ -38,14 +37,13 @@ min-height: 45px;
   transition: 0.1s ease;
   border-width: 0;
   box-shadow: 1px 5px 0 0 #60180e;
-;
   &:hover {
     transform: translateY(-4px);
-  box-shadow: 1px 9px 0 0 #60180e;
+    box-shadow: 1px 9px 0 0 #60180e;
   }
   &:active {
     transform: translateY(4px);
-  box-shadow: 0px 0px 0 0 #60180e;
+    box-shadow: 0px 0px 0 0 #60180e;
   }
 `;
 
@@ -61,62 +59,61 @@ export const SelectStartButton = styled.button`
   transition: 0.1s ease;
   border-width: 0;
   box-shadow: 1px 5px 0 0 #60180e;
-;
   &:hover {
     transform: translateY(-4px);
-  box-shadow: 1px 9px 0 0 #60180e;
+    box-shadow: 1px 9px 0 0 #60180e;
   }
   &:active {
     transform: translateY(4px);
-  box-shadow: 0px 0px 0 0 #60180e;
+    box-shadow: 0px 0px 0 0 #60180e;
   }
 `;
 
 export const StatName = styled.h5`
-    /* display: grid; */
-    font-size: 1.5em;
-    color: white;
-    text-align: center;
-  `;
+  /* display: grid; */
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+`;
 
 export const HStatName = styled.h5`
-display: grid;
-align-items: center;
-justify-items: start;
-justify-content: space-around;
-grid-template-columns: 122px 40px 50px 50px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  justify-content: space-around;
+  grid-template-columns: 122px 40px 50px 50px;
 `;
 
 export const SStatName = styled.h5`
-display: grid;
-align-items: center;
-justify-items: start;
-justify-content: space-around;
-grid-template-columns: 125px 37px 50px 50px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  justify-content: space-around;
+  grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const EStatName = styled.h5`
-display: grid;
-align-items: center;
-justify-items: start;
-justify-content: space-around;
-grid-template-columns: 125px 37px 50px 50px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  justify-content: space-around;
+  grid-template-columns: 125px 37px 50px 50px;
 `;
 
 export const MStatName = styled.h5`
-display: grid;
-align-items: center;
-justify-items: start;
-justify-content: space-around;
-grid-template-columns: 125px 37px 50px 23px;
+  display: grid;
+  align-items: center;
+  justify-items: start;
+  justify-content: space-around;
+  grid-template-columns: 125px 37px 50px 23px;
 `;
 
 export const CCStatName = styled.div`
-    /* display: grid; */
-    font-size: 1.5em;
-    color: white;
-    text-align: center;
-  `;
+  /* display: grid; */
+  font-size: 1.5em;
+  color: white;
+  text-align: center;
+`;
 
 export const NameBox = styled.h5`
   margin-top: 1rem;
@@ -124,14 +121,14 @@ export const NameBox = styled.h5`
   font-size: 1.5em;
   color: white;
   text-align: center;
-  `;
+`;
 
 export const SaveBox = styled.div`
-    margin-left: 5rem;
-    top: 2.7rem;
-    position: relative;
-    display: grid;
-  `;
+  margin-left: 5rem;
+  top: 2.7rem;
+  position: relative;
+  display: grid;
+`;
 
 export const IconContainer = styled.div`
   display: grid;
@@ -139,7 +136,7 @@ export const IconContainer = styled.div`
   justify-content: center;
   grid-gap: 1em;
   align-items: center;
-  `;
+`;
 
 export const IconContainerInner = styled.div`
   display: grid;
@@ -152,14 +149,14 @@ export const IconContainerInner = styled.div`
 `;
 
 export const IconContainerOuter = styled.div`
-    display: grid;
-    grid-template-columns: 24rem;
-    -webkit-box-pack: center;
-    justify-content: center;
-    gap: 1em;
-    -webkit-box-align: center;
-    align-items: center;
-    justify-items: center;
+  display: grid;
+  grid-template-columns: 24rem;
+  -webkit-box-pack: center;
+  justify-content: center;
+  gap: 1em;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-items: center;
 `;
 
 export const StatIconContainer = styled.div`
@@ -169,7 +166,7 @@ export const StatIconContainer = styled.div`
   justify-content: center;
   grid-gap: 1em;
   align-items: center;
-  `;
+`;
 
 export const CCStatIconContainer = styled.div`
   padding: 1rem;
@@ -180,7 +177,7 @@ export const CCStatIconContainer = styled.div`
   -webkit-box-align: center;
   align-items: center;
   justify-content: center;
-  `;
+`;
 
 export const IconImg = styled.img`
   cursor: pointer;
@@ -201,7 +198,6 @@ export const InfoContainer = styled.div`
   overflow: hidden;
   background: rgb(31, 33, 40); /* changed from black */
   height: 3em;
-
 `;
 
 export const Tab = styled.button`
@@ -213,10 +209,10 @@ export const Tab = styled.button`
 
   margin-right: 0.1em;
   font-size: 1em;
-  border: ${props => (props.active ? '1px solid black' : '')};
-  border-bottom: ${props => (props.active ? 'none' : '')};
-  background-color: ${props => (props.active ? 'gray' : 'lightgray')};
-  height: ${props => (props.active ? '3em' : '2.6em; top:.4em')};
+  border: ${(props) => (props.active ? '1px solid black' : '')};
+  border-bottom: ${(props) => (props.active ? 'none' : '')};
+  background-color: ${(props) => (props.active ? 'gray' : 'lightgray')};
+  height: ${(props) => (props.active ? '3em' : '2.6em; top:.4em')};
   transition: background-color 0.5s ease-in-out;
 
   :hover {
@@ -225,7 +221,7 @@ export const Tab = styled.button`
 `;
 
 export const Content = styled.div`
-  ${props => (props.active ? '' : 'display:none')}
+  ${(props) => (props.active ? '' : 'display:none')}
 `;
 
 export const StyledCarousel = styled(Carousel)`
@@ -244,7 +240,7 @@ export const StyledCarousel = styled(Carousel)`
     height: 5%;
     margin-right: 40rem;
     margin-left: 40rem;
-    top: 19rem;
+    top: 20rem;
   }
   .carousel-control-prev:hover,
   .carousel-control-next:hover,
@@ -336,9 +332,8 @@ export const CCContainer = styled.div`
   display: grid;
   height: 80vh;
   width: 100%;
-  grid-template-columns: .20fr .30fr .30fr .20fr;
-  grid-template-areas:
-    'Lspacer character stats Rspacer';
+  grid-template-columns: 0.2fr 0.3fr 0.3fr 0.2fr;
+  grid-template-areas: 'Lspacer character stats Rspacer';
 `;
 
 export const LeftSpacer = styled.div`
@@ -398,7 +393,6 @@ export const CharacterContainer = styled.div`
   flex-direction: column;
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
-
 `;
 
 export const AvatarContainer = styled.div`
@@ -465,18 +459,19 @@ export const StatPoolBox = styled.h3`
 `;
 
 export const CharSelectStatBox = styled.div`
-    display: grid;
-    grid-template-columns: 13% 13%;
-    justify-items: stretch;
-    justify-content: center;
+  display: grid;
+  grid-template-columns: 13% 13%;
+  justify-items: stretch;
+  justify-content: center;
 `;
 
 export const RedX = styled.img`
+  pointer-events: none;
   z-index: 3;
   position: fixed;
   display: flex;
-  margin-left: 10rem;
-  margin-top: -7.34rem;
+  margin-left: 9rem;
+  margin-top: 11.659999999999997rem;
   height: auto;
   width: 21rem;
   filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.5rem 0.6rem 0.11rem);
