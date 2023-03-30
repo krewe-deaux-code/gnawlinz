@@ -211,9 +211,41 @@ export const Footer = styled.footer`
   gap: 0.25rem;
   align-items: center;
   justify-content: center;
-  /* @media (max-width: 550px) {
-    flex-direction: column;
-  } */
+  background-image:radial-gradient(#717171, #111);
+  border-radius: 2.6rem;
+  box-shadow:
+    inset 0 0 30rem black,
+    inset 0 0 30rem black,
+    0 0 2rem -10px #ffffff;
+  &:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  border-radius: 2.5rem;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 4;
+  background-size: 100% 3.4px, 5.1px 100%;
+  pointer-events: none;
+}
+&:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  border-radius: 2.5rem;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 4;
+  pointer-events: none;
+  animation: flicker .15s infinite;
+}
 `;
 
 export const CharImageStyles = styled.img`
@@ -598,4 +630,44 @@ export const OverlayValue = styled.div`
   color: 'white';
   font-size: 0.8rem;
 `;
+
+
+
+
+
+
+
+export const CRTDiv = styled.div`
+
+&:before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 2;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+&:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(18, 16, 16, 0.1);
+  opacity: 0;
+  z-index: 2;
+  pointer-events: none;
+  animation: flicker 0.15s infinite;
+}
+`;
+
+
+
 

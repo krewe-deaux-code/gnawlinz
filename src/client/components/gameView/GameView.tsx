@@ -21,7 +21,7 @@ import {
   StatBonusColor, StatContainer2, StatIconContainer, Page,
   TinyStatIconImg, TempStatBonusColor, ModalBodyContainer,
   StyledModal, ArcadeButton, ProgressBarContainer, OverlayValue,
-  ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv
+  ArcadeButtonInvestigate, ArcadeButtonToggle, LocationImg, LocationDiv, CRTDiv
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
