@@ -24,5 +24,54 @@ export const enemySeed = [
     victory: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     defeat: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain by a precision missile strike.',
     contact: 'The object comes into view, a military aircraft of some kind. It does not respond to your attempted communication, instead flying off into the distance.'
-  }
+  },
+  {
+    name: 'Bill Zomberg',
+    image_url: 'https://www.geekalerts.com/u/Terminator-Genisys-Endoskeleton.jpg',
+    weapon1: 'TPS Reports',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'A zombie who was clearly once an office worker shambles toward you. His hoarse moans sound like he wants you to come in on Saturdays.',
+    victory: 'You do NOT work on Saturdays.',
+    defeat: 'Bill Zomberg delivers a fatally infectious bite. You\'re doomed to an eternity of zombie middle-management.',
+    contact: ''
+  },
+  {
+    name: 'Baby Cakes',
+    image_url: 'https://pbs.twimg.com/profile_images/1351992987291701249/2UapxS8K_400x400.jpg',
+    weapon1: 'Rotten King Cake',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'You see a horrifying amalgamation of man, machine, and BABY vaulting towards you!',
+    victory: 'Baby Cakes\' purple, green, and gold entrails spill out onto the pavement.',
+    defeat: 'You hear a ear piercing wail: "GOO GOO GAGA!" as your vision fades to black.',
+    contact: ''
+  },
+  {
+    name: 'Drunken Shambler',
+    image_url: 'https://cdn.dribbble.com/users/13315581/screenshots/19682705/media/579a532d8f7a97cb4e2e6b1e2a8cd95c.jpg',
+    weapon1: 'Broken Bottle',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'Wobbling towards you is a walking corpse, smelling of death, booze, and regret. Zombie or tourist it matters not.',
+    victory: 'You swear you hear it say, "I bet I can tell you where you got your shoes" as you stomp on its head.',
+    defeat: 'The creature vomits a one-hundred and ninety proof corrosive substance dissolving you into Bourbon Street juice.',
+    contact: ''
+  },
+  {
+    name: 'Zombie-Gator',
+    image_url: 'https://d1vzi28wh99zvq.cloudfront.net/images/17306/387685.png',
+    weapon1: 'Noxious Bite',
+    strength: 5,
+    health: 5,
+    score: 20,
+    initial_text: 'Sliding toward you on a layer of gross ooze is a colossal undead alligator!',
+    victory: 'You slew the rotting reptile, and left the carcass',
+    defeat: '',
+    contact: ''
+  },
+
 ];

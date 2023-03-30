@@ -129,7 +129,7 @@ const GameView = (props: GameViewProps) => {
   // NPC
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
-    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 2) + 1}`)
+    axios.get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
         //console.log('Enemy fetched, sending to state...');
@@ -439,7 +439,12 @@ const GameView = (props: GameViewProps) => {
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) { // <-- enemy exists, enemy dead
-            setOutcome(currentEnemy.victory); // <-- ADD PLAYER KILL ENEMY TO STORY
+            axios.post(`story/ending/${currentChar._id}`, // <-- ADD PLAYER KILL ENEMY TO STORY
+                  {
+                    result: currentEnemy.victory
+                  })
+                  .catch((err) => (console.error('Failed to add story on death: ', err)));
+                setOutcome(choiceOutcome);
             setShowEnemy(false);
             // <-- give the player something...
             setCurrentChar(prevChar => ({ ...prevChar, score: prevChar.score += currentEnemy.score }));
@@ -879,9 +884,9 @@ const GameView = (props: GameViewProps) => {
             <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer><TinyStatIconImg src={images.healthIcon} />{currentChar.health}</StatIconContainer>
-              <StatIconContainer><TinyStatIconImg src={images.moodIcon} />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={images.strengthIcon} />{currentChar.strength}<StatBonusColor>{` +${bonusStrength}`}</StatBonusColor><TempStatBonusColor>{temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}</TempStatBonusColor></StatIconContainer>
               <StatIconContainer><TinyStatIconImg src={images.enduranceIcon} />{currentChar.endurance}<StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>{temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}<TempStatBonusColor></TempStatBonusColor></StatIconContainer>
+              <StatIconContainer><TinyStatIconImg src={images.moodIcon} />{currentChar.mood}<StatBonusColor>{` +${bonusMood}`}</StatBonusColor><TempStatBonusColor>{temporaryMood !== 0 ? ` +${temporaryMood}` : ''}</TempStatBonusColor></StatIconContainer>
             </div>
           </StatContainer2>
           <InventoryBorder>
