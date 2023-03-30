@@ -7,6 +7,8 @@ import images from '../../utility/images';
 import { UserContext } from '../../App'; // <-- holds User object
 import { GameViewProps } from '../../utility/interface';
 import Confetti from 'react-confetti';
+import { StatButton } from '../menu/Styled';
+
 
 
 import axios from 'axios';
@@ -78,7 +80,8 @@ const Result = (props: GameViewProps) => {
         <Content1>
           <Link to="/" style={{ textDecoration: 'none' }} >
             <Content1>
-              <ResultButton>Play Again</ResultButton>
+
+              <StatButton style={{margin: 'auto'}}>Play Again</StatButton>
             </Content1>
           </Link>
         </Content1>
