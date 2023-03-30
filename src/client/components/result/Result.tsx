@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
+import { Container, Story, End, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
 import { SettingsContext, UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
+import { StatButton } from '../menu/Styled';
+
 
 
 import axios from 'axios';
@@ -86,7 +88,7 @@ const Result: React.FC = () => {
         <Content1>
           <Link to="/" style={{ textDecoration: 'none' }} >
             <Content1>
-              <ResultButton>Play Again</ResultButton>
+              <StatButton style={{margin: 'auto'}}>Play Again</StatButton>
             </Content1>
           </Link>
         </Content1>
