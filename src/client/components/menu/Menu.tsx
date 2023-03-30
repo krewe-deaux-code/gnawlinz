@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Body, InfoContainer, Tab, Content, IconImg, IconContainer, SelectStartButton } from './Styled';
+import { Body, InfoContainer, Tab, Content, IconImg, IconContainer, SelectStartButton, ArcadeBackground } from './Styled';
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -158,7 +158,7 @@ const Menu = (props: GameViewProps) => {
             transition={{ duration: .3 }}
           >CREATE A CHARACTER TO PLAY</motion.h3></div>}
           {!hideStartButton &&
-            <SelectStartButton onClick={() => {
+            <ArcadeBackground> <SelectStartButton onClick={() => {
               if (currentChar.name === 'Someguy McPlaceholder') {
                 setStartFail(true);
                 return;
@@ -167,7 +167,7 @@ const Menu = (props: GameViewProps) => {
               } else {
                 handleClickStart();
               }
-            }}>Start Game</SelectStartButton>
+            }}>Start Game</SelectStartButton></ArcadeBackground>
           }
         </Body >
       </MenuContext.Provider>

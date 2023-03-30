@@ -57,12 +57,12 @@ export const End = styled.div`
   overflow: auto;
 `;
 
-export const ResultButton = styled.button`
- font-size: 1.5em;
- background-color: black;
- color: white;
- padding: .25rem;
-`;
+// export const ResultButton = styled.button`
+//  font-size: 1.5em;
+//  background-color: black;
+//  color: white;
+//  padding: .25rem;
+// `;
 
 export const Content1 = styled.div`
   padding: 0.25rem;
@@ -125,19 +125,19 @@ export const ScrollableContainer = styled.div`
 export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
-  border: 2px solid black;
+  border: 2px solid silver;
 
 `;
 
 export const Th = styled.th`
   background-color: black;
-  border: 1px solid #ddd;
+  border: 1px solid silver;
   padding: 8px;
   text-align: center;
 `;
 
 export const Td = styled.td`
-  border: 1px solid #ddd;
+  border: 1px solid silver;
   padding: 8px;
 `;
 
