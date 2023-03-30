@@ -286,7 +286,6 @@ color: #9a8127;
 export const CharStatusContainer = styled.div`
 
   display: grid;
-  z-index: 5;
   grid-template-rows: auto auto auto auto;
   grid-template-areas:
   "stat stat2"
@@ -599,61 +598,4 @@ export const OverlayValue = styled.div`
   color: 'white';
   font-size: 0.8rem;
 `;
-
-export const CrtImage = styled.img`
-  filter: url('#crt-filter');
-
-  @media (max-width: 480px) {
-    filter: none;
-  }
-
-  &:before {
-    content: "";
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    right: -5px;
-    bottom: -5px;
-    border: 5px solid #2f2f2f;
-    z-index: -1;
-  }
-`;
-
-
-
-
-
-export const CRTDiv = styled.div`
-
-&:before {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 2;
-  background-size: 100% 2px, 3px 100%;
-  pointer-events: none;
-}
-&:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 2;
-  pointer-events: none;
-  animation: flicker 0.15s infinite;
-}
-`;
-
-
-
 
