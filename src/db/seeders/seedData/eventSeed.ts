@@ -12,7 +12,7 @@
 
 export const eventSeed = [
   {
-    initial_text: 'You turn a corner, and are suddenly aware you are not alone. In you peripheral vision you catch a glimpse of a dark shape coming toward you!',
+    initial_text: 'You turn a corner, and are suddenly aware you are not alone. In your peripheral vision you catch a glimpse of a dark shape coming toward you!',
     choice0: 2, // fight the shadow
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
