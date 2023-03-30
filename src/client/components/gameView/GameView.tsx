@@ -541,13 +541,6 @@ const GameView = (props: GameViewProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
-  // write graffiti button function, shows input field and tag it button
-  // const handleTextBoxClick = () => {
-  //   setShowTextBox(true);
-  //   setShowButton(true);
-  // };
-
   // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
@@ -561,7 +554,7 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
-      setModalText('You search for items, but didn\'t find anything');
+      setModalText('You searched for items, but didn\'t find anything');
     } else {
       axios.get(`item/${location.drop_item_slot}`)
         .then((response: any) => {
@@ -681,9 +674,7 @@ const GameView = (props: GameViewProps) => {
     console.log('selectedChoice: ', selectedChoice);
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
-    return <Result handleSpeak={function (e: any): void {
-      throw new Error('Function not implemented.');
-    }} />;
+    return <Result />;
   }
   // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.

@@ -127,7 +127,7 @@ const App = () => {
               <Route path='/' element={<Title />} />
               <Route path='menu' element={<Menu handleSpeak={handleSpeak}/>} />
               <Route path='game-view' element={<GameView handleSpeak={handleSpeak} />} />
-              <Route path='result' element={<Result handleSpeak={handleSpeak} />} />
+              <Route path='result' element={<Result />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
 
