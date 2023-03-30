@@ -123,12 +123,16 @@ export const Main = styled.main`
   padding: 0.25rem;
   position: relative;
   background-image:radial-gradient(#717171, #111);
-  border-radius: .6rem;
-  box-shadow: 0 5px 15px 12px #3a5868;
+  border-radius: 2.6rem;
+  box-shadow:
+    inset 0 0 30rem black,
+    inset 0 0 30rem black,
+    0 0 2rem -10px #ffffff;
   &:before {
   content: " ";
   display: block;
   position: absolute;
+  border-radius: 2.5rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -142,6 +146,7 @@ export const Main = styled.main`
   content: " ";
   display: block;
   position: absolute;
+  border-radius: 2.5rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -153,6 +158,13 @@ export const Main = styled.main`
   animation: flicker .15s infinite;
 }
 `;
+
+
+// export const CharacterDisplayDiv = styled(Main).div`
+
+// `;
+
+
 
 export const Content1 = styled.div`
   background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
