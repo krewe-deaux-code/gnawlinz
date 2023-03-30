@@ -197,10 +197,7 @@ const App = () => {
                 path='game-view'
                 element={<GameView handleSpeak={handleSpeak} />}
               />
-              <Route
-                path='result'
-                element={<Result handleSpeak={handleSpeak} />}
-              />
+              <Route path='result' element={<Result />} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </Suspense>

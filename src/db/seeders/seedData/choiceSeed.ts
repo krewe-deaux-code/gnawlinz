@@ -1,6 +1,6 @@
 export const choiceSeed = [
   { // fight jet 1 (keeping for the memories) 1
-    flavor_text: 'You stand you ground and are engaged by a Lockheed Martin F-35 Lightning II.',
+    flavor_text: 'You stand your ground and are engaged by a Lockheed Martin F-35 Lightning II.',
     success: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     failure: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.',
     alignment0: null,
@@ -8,7 +8,7 @@ export const choiceSeed = [
     alignment2: null,
   },
   { // Generic Fight Text 2
-    flavor_text: 'You stand you ground and fight!',
+    flavor_text: 'You stand your ground and fight!',
     success: 'You defeated the banana zombie, and left behind a gross green peel for someone to slip on later.',
     failure: 'The banana zomibe consumed you, and added your biomass to its own.',
     alignment0: null,

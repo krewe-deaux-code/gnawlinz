@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 import {
   Container,
   Main,
@@ -698,12 +698,6 @@ const GameView = (props: GameViewProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  // write graffiti button function, shows input field and tag it button
-  // const handleTextBoxClick = () => {
-  //   setShowTextBox(true);
-  //   setShowButton(true);
-  // };
-
   // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
@@ -717,7 +711,7 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
-      setModalText("You search for items, but didn't find anything");
+      setModalText("You searched for items, but didn't find anything");
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
@@ -839,13 +833,7 @@ const GameView = (props: GameViewProps) => {
     console.log('selectedChoice: ', selectedChoice);
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
-    return (
-      <Result
-        handleSpeak={function (e: any): void {
-          throw new Error('Function not implemented.');
-        }}
-      />
-    );
+    return <Result />;
   }
   // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
@@ -1043,7 +1031,7 @@ const GameView = (props: GameViewProps) => {
           {/* </Link> */}
           <Content2>
             <div>
-              <h5>Investigate</h5>
+              <h5 onClick={props.handleSpeak}>Investigate</h5>
               <ArcadeButtonInvestigate
                 disabled={investigateDisabled}
                 onClick={() => {
@@ -1054,7 +1042,7 @@ const GameView = (props: GameViewProps) => {
               />
             </div>
             <div>
-              <h5>Toggle Event</h5>
+              <h5 onClick={props.handleSpeak}>Toggle Event</h5>
               <ArcadeButtonToggle
                 onClick={() => {
                   neutral.play();
@@ -1120,7 +1108,7 @@ const GameView = (props: GameViewProps) => {
                   </div>
                 </ModalBodyContainer>
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer style={{ justifyContent: 'space-evenly' }}>
                 <p onClick={props.handleSpeak}>{modalText}</p>
               </Modal.Footer>
             </StyledModal>
@@ -1174,7 +1162,7 @@ const GameView = (props: GameViewProps) => {
             </div>
           </StatContainer2>
           <InventoryBorder>
-            <h4>Inventory</h4>
+            <h4 onClick={props.handleSpeak}>Inventory</h4>
             {hoveredItem && (
               <InventoryTextBubble>
                 {hoveredItem.modifier0 && (
@@ -1228,7 +1216,9 @@ const GameView = (props: GameViewProps) => {
                 <h5>{tooltip}</h5>
               </InventoryTextBubble>
             )}
-            <h5 style={{ marginTop: '0.5rem' }}>Engage</h5>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
+              Engage
+            </h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('engage')}
               onMouseLeave={() => handleToolTipOff()}
@@ -1247,7 +1237,9 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 style={{ marginTop: '0.5rem' }}>Evade</h5>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
+              Evade
+            </h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evade')}
               onMouseLeave={() => handleToolTipOff()}
@@ -1265,7 +1257,9 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 style={{ marginTop: '0.5rem' }}>Evacuate</h5>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
+              Evacuate
+            </h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('evacuate')}
               onMouseLeave={() => handleToolTipOff()}
@@ -1279,7 +1273,9 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 style={{ marginTop: '0.5rem' }}>Wildcard</h5>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
+              Wildcard
+            </h5>
             <ArcadeButton
               onMouseEnter={() => handleToolTip('wildcard')}
               onMouseLeave={() => handleToolTipOff()}

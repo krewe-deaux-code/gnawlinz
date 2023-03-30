@@ -70,8 +70,7 @@ export const enemySeed = [
     score: 20,
     initial_text: 'Sliding toward you on a layer of gross ooze is a colossal undead alligator!',
     victory: 'You slew the rotting reptile, and left the carcass',
-    defeat: '',
+    defeat: 'With a final sickening snap of its jaws, the undead gator swallows you whole.',
     contact: ''
   },
-
 ];
