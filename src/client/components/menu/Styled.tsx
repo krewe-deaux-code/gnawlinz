@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
 export const ArcadeBackground = styled.div`
-width: 100%;
-height: calc(100vh - 767.33px);
-border-radius: 1rem 1rem 0 0;
-/* background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png'); */
+  width: 100%;
+  height: calc(100vh - 767.33px);
+  border-radius: 1rem 1rem 0 0;
+  /* background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png'); */
 `;
 
 export const MenuButton = styled.button`
@@ -246,8 +245,8 @@ export const StyledCarousel = styled(Carousel)`
   .carousel-control-prev {
     width: 2%;
     height: 5%;
-    margin-right: 40rem;
-    margin-left: 40rem;
+    margin-right: 35%;
+    margin-left: 35%;
     top: 20rem;
   }
   .carousel-control-prev:hover,
@@ -477,7 +476,7 @@ export const StatPoolBox = styled.h3`
   display: grid;
   place-items: center start;
   -webkit-box-align: center;
-  grid-template-columns: 9rem 2rem;
+  grid-template-columns: 10rem 2rem;
   justify-content: space-around;
   justify-items: center;
 `;
@@ -500,3 +499,33 @@ export const RedX = styled.img`
   width: 21rem;
   filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.5rem 0.6rem 0.11rem);
 `;
+
+// export const SelectorContainer = styled.div`
+//   /* grid-template-rows: .10fr .20fr .20fr;
+//   grid-template-areas:
+//   'hair'; */
+//   /* grid-area: character / character / character / character; */
+//   z-index: -4;
+//   position: absolute;
+//   background: rgba(173, 173, 173, 0.4);
+//   height: 50%;
+//   width: 33%;
+//   backdrop-filter: blur(15px);
+//   border-left: 3px solid silver;
+//   border-right: 3px solid silver;
+//   display: flex;
+//   -webkit-box-pack: center;
+//   justify-content: center;
+//   align-items: center;
+//   padding-top: 40px;
+//   flex-direction: column;
+//   border-radius: 9px;
+//   ::before {
+//     z-index: -5;
+//     position: absolute;
+//     content: '';
+//     inset: 0;
+//     background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+//     /* filter: blur(3px); */
+//   }
+// `;

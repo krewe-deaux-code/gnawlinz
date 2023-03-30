@@ -11,6 +11,7 @@ import {
   CharSelectStatBox,
   IconContainerInner,
   IconContainerOuter,
+  // SelectorContainer,
   RedX,
 } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
@@ -179,6 +180,7 @@ const CharacterStats: React.FC = () => {
           </>
         )}
       </div>
+      {/* <SelectorContainer></SelectorContainer> */}
     </>
   );
 };
