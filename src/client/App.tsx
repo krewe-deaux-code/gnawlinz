@@ -1,8 +1,23 @@
-import React, { Suspense, lazy, createContext, useContext, useState, useEffect } from 'react';
+import React, {
+  Suspense,
+  lazy,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
-import { Character, Enemy, Ally, EventData, ChoiceData, LocationData, Item } from './utility/interface';
+import {
+  Character,
+  Enemy,
+  Ally,
+  EventData,
+  ChoiceData,
+  LocationData,
+  Item,
+} from './utility/interface';
 // import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -11,14 +26,10 @@ const GameView = lazy(() => import('./components/gameView/GameView'));
 //const NavBar  = lazy(() => import('./components/nav/NavBar'));
 const Result = lazy(() => import('./components/result/Result'));
 
-
-
-export const UserContext = createContext<any>('');
+export const UserContext = createContext<any>(''); // User model / interface User || null
 export const SettingsContext = createContext<any>('');
 
-
 const App = () => {
-
   const [volume, setVolume] = useState(0.7);
   // const { volume, setVolume } = useContext(SettingsContext);
 
@@ -39,7 +50,7 @@ const App = () => {
     engage: 0,
     evade: 0,
     evacuate: 0,
-    wildcard: 0
+    wildcard: 0,
   });
   const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationData);
@@ -53,16 +64,16 @@ const App = () => {
   // item bonus/inventory state
   const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
 
-
   const fetchItems = (charInventory) => {
-    const currentInventory = charInventory.map(item =>
-      axios.get(`/item/${item}`));
+    const currentInventory = charInventory.map((item) =>
+      axios.get(`/item/${item}`)
+    );
     Promise.all(currentInventory)
-      .then(items => {
-        const inventoryData = items.map(item => item.data);
+      .then((items) => {
+        const inventoryData = items.map((item) => item.data);
         setFetchedInventory(inventoryData.sort((a, b) => b._id - a._id));
       })
-      .catch(err => console.error('Error in fetchItems in App', err));
+      .catch((err) => console.error('Error in fetchItems in App', err));
   };
 
   const characterUpdate = () => {
@@ -71,7 +82,11 @@ const App = () => {
       sortedInventoryChar.inventory.sort((a, b) => b - a);
     }
     console.log('WHAT AM I', currentChar);
-    axios.patch<Character>(`/character/update/${currentChar._id}`, sortedInventoryChar)
+    axios
+      .patch<Character>(
+        `/character/update/${currentChar._id}`,
+        sortedInventoryChar
+      )
       .then(() => {
         console.log('character updated (@APP LEVEL)', currentChar);
       })
@@ -88,7 +103,11 @@ const App = () => {
         randomItemLocation.drop_item_slot = randomItem(1, 11);
       }
     }
-    axios.patch<LocationData>(`/location/update/${randomItemLocation._id}`, randomItemLocation)
+    axios
+      .patch<LocationData>(
+        `/location/update/${randomItemLocation._id}`,
+        randomItemLocation
+      )
       .then(() => console.log('location updated (@APP LEVEL)'))
       .catch((err) => console.error('error update from axios front end', err));
   };
@@ -103,7 +122,6 @@ const App = () => {
     }
   };
 
-
   useEffect(() => {
     characterUpdate();
     if (currentChar.inventory) {
@@ -116,21 +134,75 @@ const App = () => {
   }, [location]);
 
   return (
-    <SettingsContext.Provider value={{ volume, setVolume, isSpeakingEnabled, setIsSpeakingEnabled, isChecked, setIsChecked }}>
-      <UserContext.Provider value={{ metAllyArr, setMetAllyArr, currentAlly, setCurrentAlly, currentEnemy, setCurrentEnemy, prevEventId, setPrevEventId, visited, setVisited, allLocations, setAllLocations, location, setLocation, activeUser, stateSession, avatar, setAvatar, userChars, setUserChars, currentChar, setCurrentChar, setActiveUser, setStateSession, event, setEvent, selectedChoice, setSelectedChoice, choices, setChoices, outcome, setOutcome, investigateDisabled, setInvestigateDisabled, tagDisabled, setTagDisabled, fetchedInventory, setFetchedInventory }}>
+    <SettingsContext.Provider
+      value={{
+        volume,
+        setVolume,
+        isSpeakingEnabled,
+        setIsSpeakingEnabled,
+        isChecked,
+        setIsChecked,
+      }}
+    >
+      <UserContext.Provider
+        value={{
+          metAllyArr,
+          setMetAllyArr,
+          currentAlly,
+          setCurrentAlly,
+          currentEnemy,
+          setCurrentEnemy,
+          prevEventId,
+          setPrevEventId,
+          visited,
+          setVisited,
+          allLocations,
+          setAllLocations,
+          location,
+          setLocation,
+          activeUser,
+          stateSession,
+          avatar,
+          setAvatar,
+          userChars,
+          setUserChars,
+          currentChar,
+          setCurrentChar,
+          setActiveUser,
+          setStateSession,
+          event,
+          setEvent,
+          selectedChoice,
+          setSelectedChoice,
+          choices,
+          setChoices,
+          outcome,
+          setOutcome,
+          investigateDisabled,
+          setInvestigateDisabled,
+          tagDisabled,
+          setTagDisabled,
+          fetchedInventory,
+          setFetchedInventory,
+        }}
+      >
         <BrowserRouter>
           <GlobalStyle />
 
           <Suspense fallback={<div>LOADING...</div>}>
-
             <Routes>
               <Route path='/' element={<Title />} />
-              <Route path='menu' element={<Menu handleSpeak={handleSpeak}/>} />
-              <Route path='game-view' element={<GameView handleSpeak={handleSpeak} />} />
-              <Route path='result' element={<Result handleSpeak={handleSpeak} />} />
+              <Route path='menu' element={<Menu handleSpeak={handleSpeak} />} />
+              <Route
+                path='game-view'
+                element={<GameView handleSpeak={handleSpeak} />}
+              />
+              <Route
+                path='result'
+                element={<Result handleSpeak={handleSpeak} />}
+              />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
-
           </Suspense>
         </BrowserRouter>
       </UserContext.Provider>

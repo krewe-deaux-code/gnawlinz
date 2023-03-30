@@ -1,8 +1,8 @@
 const images = {
-  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679520244/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png',
-  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969441/gnawlinzIcons/mood_color_nrfcrm.png',
-  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969441/gnawlinzIcons/arm_color_nbvrsk.png',
-  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679969598/gnawlinzIcons/shield_color_mm8m8g.png',
+  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/health_jiez64.png',
+  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/mood_jip5vd.png',
+  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113820/gnawlinzIcons/strength_iqtlnn.png',
+  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/endurance_lvjccg.png',
   locationIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png',
   defaultAvatar: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png',
   trophyIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png',

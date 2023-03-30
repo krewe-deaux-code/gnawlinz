@@ -1,3 +1,5 @@
+import images from '../../../client/utility/images';
+
 export const enemySeed = [
   {
     name: 'Banana-Zombie',

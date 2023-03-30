@@ -1,6 +1,16 @@
-import React, { useContext, useEffect, useState } from 'react';//
+import React, { Fragment, useContext, useEffect, useState } from 'react'; //
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
+import {
+  Container,
+  Story,
+  End,
+  ResultButton,
+  Content1,
+  ScrollableContainer,
+  StatContainer,
+  CharacterStatContainer,
+  StoryItemCard,
+} from './Styled'; //NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
@@ -8,26 +18,27 @@ import { UserContext } from '../../App'; // <-- holds User object
 import { GameViewProps } from '../../utility/interface';
 import Confetti from 'react-confetti';
 
-
 import axios from 'axios';
 
 const Result = (props: GameViewProps) => {
-
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
 
   const [story, setStory] = useState([]);
 
   // add win/loss image & resultText to state
-  const [image, setImage] = useState('https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png');
+  const [image, setImage] = useState(
+    'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png'
+  );
   const [resultText, setResultText] = useState('you died!');
 
-
   useEffect(() => {
-    axios.get(`story/ending/${currentChar._id}`)
+    axios
+      .get(`story/ending/${currentChar._id}`)
       .then((results) => {
         console.log('result from story query:', results.data);
         setStory(results.data);
-      }).catch((err) => {
+      })
+      .catch((err) => {
         console.error(err);
       });
     // function to determine win/loss based on currentChar health stat
@@ -42,11 +53,7 @@ const Result = (props: GameViewProps) => {
       }
     };
     getWinLoss(); // calling the function once when the component mounts
-
-
-
   }, []);
-
 
   //set the colors for the confetti
   const colors = ['rgb(156, 9, 252)', 'rgb(255, 235, 36)', 'rgb(12, 217, 49)'];
@@ -61,22 +68,29 @@ const Result = (props: GameViewProps) => {
   console.log('result from story query:', story);
   return (
     <Container>
-      {resultText === 'you survived!' ? <div> <Confetti
-        colors={colors}
-      /> </div> : null};
-      <Nav isActive={true} showButton={true}/>
+      {resultText === 'you survived!' ? (
+        <div>
+          {' '}
+          <Confetti colors={colors} />{' '}
+        </div>
+      ) : null}
+      ;
+      <Nav isActive={true} showButton={true} />
       <Story>
-
-        <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
-        <ScrollableContainer >
+        <h1 onClick={props.handleSpeak}>
+          <img src={image} />
+          {resultText}
+          <img src={image} />
+        </h1>
+        <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
-            <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', paddingTop: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+            <StoryItemCard key={index + sentence}>
               <p onClick={props.handleSpeak}>{sentence} </p>
-            </div>
+            </StoryItemCard>
           ))}
         </ScrollableContainer>
         <Content1>
-          <Link to="/" style={{ textDecoration: 'none' }} >
+          <Link to='/' style={{ textDecoration: 'none' }}>
             <Content1>
               <ResultButton>Play Again</ResultButton>
             </Content1>
@@ -94,7 +108,7 @@ const Result = (props: GameViewProps) => {
           <LeaderBoard />
         </ScrollableContainer>
       </End>
-    </Container >
+    </Container>
   );
 };
 
