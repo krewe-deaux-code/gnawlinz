@@ -119,7 +119,6 @@ const GameView = (props: GameViewProps) => {
   const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
-  const [introModal, setIntroModal] = useState(true);
   const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
@@ -715,7 +714,7 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
-      setModalText("You searched for items, but didn't find anything");
+      setModalText('You searched for items, but didn\'t find anything');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
@@ -850,34 +849,33 @@ const GameView = (props: GameViewProps) => {
       </div>
       <Nav isActive={true} showButton={true} />
       <Main>
-        {
-          introModal
-            ? <IntroModal
+        {introModal ? (
+          <IntroModal
             id='intro-modal'
             show={introModal}
             onHide={() => setIntroModal(false)}
-            size="lg"
-            aria-labelledby="contained-modal-title-vcenter"
+            size='lg'
+            aria-labelledby='contained-modal-title-vcenter'
             centered
           >
             <Modal.Header closeButton>
-              <Modal.Title id="contained-modal-title-vcenter">
+              <Modal.Title id='contained-modal-title-vcenter'>
                 Modal heading
               </Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <h4>Centered Modal</h4>
               <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-                dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-                consectetur ac, vestibulum at eros.
+                Cras mattis consectetur purus sit amet fermentum. Cras justo
+                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
+                risus, porta ac consectetur ac, vestibulum at eros.
               </p>
             </Modal.Body>
-            <Modal.Footer>
-            </Modal.Footer>
+            <Modal.Footer></Modal.Footer>
           </IntroModal>
-            : <></>
-        }
+        ) : (
+          <></>
+        )}
 
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <LocationDiv>
