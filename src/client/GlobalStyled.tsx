@@ -9,6 +9,7 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: 'Edit Undo BRK', sans-serif !important;
+    letter-spacing: .1rem;
     height: 100%;
     width: 100%;
     margin: 0;

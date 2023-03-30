@@ -919,7 +919,7 @@ const GameView = (props: GameViewProps) => {
                   onMouseLeave={() => handleOnMouseLeave()}
                 >
                   <IconContainer>
-                    <IconImg src={item._id !== 1 && item.image_url} />
+                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
                   </IconContainer>
                 </div>
               ))}

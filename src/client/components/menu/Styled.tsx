@@ -3,6 +3,14 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
+
+export const ArcadeBackground = styled.div`
+width: 100%;
+height: calc(100vh - 767.33px);
+border-radius: 1rem 1rem 0 0;
+/* background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png'); */
+`;
+
 export const MenuButton = styled.button`
   background-color: #931a03;
   color: white !important;
