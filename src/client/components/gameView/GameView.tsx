@@ -119,6 +119,7 @@ const GameView = (props: GameViewProps) => {
   const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
+  const [introModal, setIntroModal] = useState(true);
   const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
@@ -775,6 +776,7 @@ const GameView = (props: GameViewProps) => {
     }
   }, [socket]);
 
+  // onMount
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
