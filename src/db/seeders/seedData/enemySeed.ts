@@ -1,7 +1,7 @@
 export const enemySeed = [
   {
     name: 'Banana-Zombie',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678057122/gnawlinzAllies/BZombiePxl_fwmu7p.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679946522/GnawlinzEnemies/ZombieBananaGoodPixel_q36qbe.png',
     weapon1: 'Tenta-peel',
     strength: 1,
     health: 2,
