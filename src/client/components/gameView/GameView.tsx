@@ -860,7 +860,7 @@ const GameView = (props: GameViewProps) => {
                   </div>
                 </ModalBodyContainer>
               </Modal.Body>
-              <Modal.Footer>
+              <Modal.Footer style={{justifyContent: 'space-evenly'}}>
                 <p onClick={props.handleSpeak}>{modalText}</p>
               </Modal.Footer>
             </StyledModal>
