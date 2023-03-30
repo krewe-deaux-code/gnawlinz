@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';//
 import { Link } from 'react-router-dom';
-import { Container, Story, End, ResultButton, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
+import { Container, Story, End, Content1, ScrollableContainer, StatContainer, CharacterStatContainer } from './Styled';//NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
@@ -88,7 +88,6 @@ const Result: React.FC = () => {
         <Content1>
           <Link to="/" style={{ textDecoration: 'none' }} >
             <Content1>
-
               <StatButton style={{margin: 'auto'}}>Play Again</StatButton>
             </Content1>
           </Link>
