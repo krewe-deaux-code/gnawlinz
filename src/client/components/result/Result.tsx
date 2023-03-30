@@ -4,17 +4,16 @@ import { Container, Story, End, ResultButton, Content1, ScrollableContainer, Sta
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
-import { UserContext } from '../../App'; // <-- holds User object
-import { GameViewProps } from '../../utility/interface';
+import { SettingsContext, UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
 
 
 import axios from 'axios';
 
-const Result = (props: GameViewProps) => {
+const Result: React.FC = () => {
 
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
-
+  const { isSpeakingEnabled } = useContext(SettingsContext);
   const [story, setStory] = useState([]);
 
   // add win/loss image & resultText to state
@@ -59,6 +58,15 @@ const Result = (props: GameViewProps) => {
   console.log(currentChar.health);
 
   console.log('result from story query:', story);
+
+  const msg = new SpeechSynthesisUtterance();
+  const handleSpeak = (e) => {
+    if (isSpeakingEnabled) {
+      msg.text = e.target.innerText;
+      window.speechSynthesis.speak(msg);
+    }
+  };
+
   return (
     <Container>
       {resultText === 'you survived!' ? <div> <Confetti
@@ -67,11 +75,11 @@ const Result = (props: GameViewProps) => {
       <Nav isActive={true} showButton={true} />
       <Story>
 
-        <h1 onClick={props.handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
+        <h1 onClick={handleSpeak}><img src={image} />{resultText}<img src={image} /></h1>
         <ScrollableContainer >
           {uniqueEvents.map((sentence, index) => (
             <div key={index} style={{ border: '1px solid black', margin: '10px', padding: '10px', paddingTop: '25px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
-              <p onClick={props.handleSpeak}>{sentence} </p>
+              <p onClick={handleSpeak}>{sentence} </p>
             </div>
           ))}
         </ScrollableContainer>
@@ -86,10 +94,10 @@ const Result = (props: GameViewProps) => {
       <End>
         <div>
           {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-          <h2> Your Score: {currentChar.score} </h2>
+          <h2 onClick={handleSpeak}> Your Score: {currentChar.score} </h2>
           <img src={currentChar.image_url} />
         </div>
-        <h2 onClick={props.handleSpeak}>Top Scores</h2>
+        <h2 onClick={handleSpeak}>Top Scores</h2>
         <ScrollableContainer>
           <LeaderBoard />
         </ScrollableContainer>
