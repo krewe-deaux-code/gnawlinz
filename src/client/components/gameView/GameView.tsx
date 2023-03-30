@@ -118,6 +118,7 @@ const GameView = (props: GameViewProps) => {
   const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
+  const [introModal, setIntroModal] = useState(true);
   const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
@@ -771,6 +772,7 @@ const GameView = (props: GameViewProps) => {
     }
   }, [socket]);
 
+  // onMount
   useEffect(() => {
     const newSocket = io();
     setSocket(newSocket);
@@ -1079,7 +1081,7 @@ const GameView = (props: GameViewProps) => {
                   <HudButton
                     onClick={() =>
                       setModalText(
-                        `You looked around and found messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
+                        `You looked around and found a messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
                       )
                     }
                   >

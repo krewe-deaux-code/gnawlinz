@@ -1,7 +1,9 @@
+import images from '../../../client/utility/images';
+
 export const enemySeed = [
   {
     name: 'Banana-Zombie',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679946522/GnawlinzEnemies/ZombieBananaGoodPixel_q36qbe.png',
+    image_url: images.bananaZombie,
     weapon1: 'Tenta-peel',
     strength: 1,
     health: 2,
@@ -61,15 +63,14 @@ export const enemySeed = [
   },
   {
     name: 'Zombie-Gator',
-    image_url: 'https://d1vzi28wh99zvq.cloudfront.net/images/17306/387685.png',
+    image_url: images.zombieGator,
     weapon1: 'Noxious Bite',
     strength: 5,
     health: 5,
     score: 20,
     initial_text: 'Sliding toward you on a layer of gross ooze is a colossal undead alligator!',
     victory: 'You slew the rotting reptile, and left the carcass',
-    defeat: '',
+    defeat: 'With a final sickening snap of its jaws, the undead gator swallows you whole.',
     contact: ''
   },
-
 ];
