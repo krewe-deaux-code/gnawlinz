@@ -3,7 +3,7 @@ import images from '../../../client/utility/images';
 export const enemySeed = [
   {
     name: 'Banana-Zombie',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678057122/gnawlinzAllies/BZombiePxl_fwmu7p.png',
+    image_url: images.bananaZombie,
     weapon1: 'Tenta-peel',
     strength: 1,
     health: 2,
@@ -63,7 +63,7 @@ export const enemySeed = [
   },
   {
     name: 'Zombie-Gator',
-    image_url: 'https://d1vzi28wh99zvq.cloudfront.net/images/17306/387685.png',
+    image_url: images.zombieGator,
     weapon1: 'Noxious Bite',
     strength: 5,
     health: 5,

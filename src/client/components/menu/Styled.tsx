@@ -354,7 +354,7 @@ export const StatsContainer = styled.div`
   grid-template-rows: auto auto auto auto auto auto;
   height: 100%;
   width: 100%;
-  background: rgba(173, 173, 173, 0.5);
+  background: rgba(173, 173, 173, 0.4);
   backdrop-filter: blur(15px);
   border-right: 3px solid silver;
   justify-items: start;
@@ -363,6 +363,14 @@ export const StatsContainer = styled.div`
   border-top-right-radius: 9px;
   border-bottom-right-radius: 9px;
   /* box-sizing: content-box !important; */ /* <-- for golden line blur */
+  ::before {
+    z-index: -1;
+    position: absolute;
+    content: '';
+    inset: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+    /* filter: blur(3px); */
+  }
 `;
 
 // display: grid;
@@ -382,7 +390,7 @@ export const CharacterContainer = styled.div`
   grid-template-areas:
   'hair'; */
   grid-area: character / character / character / character;
-  background: rgba(173, 173, 173, 0.5);
+  background: rgba(173, 173, 173, 0.4);
   backdrop-filter: blur(15px);
   border-left: 3px solid silver;
   display: flex;
@@ -393,6 +401,14 @@ export const CharacterContainer = styled.div`
   flex-direction: column;
   border-top-left-radius: 9px;
   border-bottom-left-radius: 9px;
+  ::before {
+    z-index: -1;
+    position: absolute;
+    content: '';
+    inset: 0;
+    background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+    /* filter: blur(3px); */
+  }
 `;
 
 export const AvatarContainer = styled.div`
