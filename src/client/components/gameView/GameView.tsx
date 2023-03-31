@@ -917,14 +917,13 @@ const GameView = (props: GameViewProps) => {
             centered
             backdrop={false}
           >
-            <ModalStyle>
-              <Modal.Header style={{ background: 'rgb(92 92 92 / 65%)'}} closeButton>
+            <ModalStyle style={{border: '1px solid #fff'}}>
+              <Modal.Header closeButton>
                 <Modal.Title id='contained-modal-title-vcenter'>
                   Introduction
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body
-              style={{ background: 'rgb(92 92 92 / 65%)' }}
               >
                 <h4>Lundi Gras</h4>
                 <p>
@@ -933,8 +932,8 @@ const GameView = (props: GameViewProps) => {
                   vanquish that which should not be.
                 </p>
               </Modal.Body>
+              <Modal.Footer></Modal.Footer>
             </ModalStyle>
-            <Modal.Footer></Modal.Footer>
           </IntroModal>
         ) : (
           <></>
