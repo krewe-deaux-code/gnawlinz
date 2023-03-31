@@ -676,43 +676,57 @@ export const OverlayValue = styled.div`
   font-size: 0.8rem;
 `;
 
-export const IntroModal = styled(Modal)``;
+export const IntroModal = styled(Modal)`
+border-radius: .6rem;
+--bs-modal-bg: rgb(92 92 92 / 65%) !important;
+`;
 
 export const ModalStyle = styled.div`
+color: white;
+  position: relative;
+  border-radius: 0.5rem;
+  &:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 0.5rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 4;
+    background-size: 100% 3.4px, 5.1px 100%;
+    pointer-events: none;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 0.5rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.6);
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
+  .modal-content {
 
- position: relative;
-  border-radius: .5rem;
-   &:before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  border-radius: .5rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 4;
-  background-size: 100% 3.4px, 5.1px 100%;
-  pointer-events: none;
-}
-&:after {
-  content: ' ';
-  display: block;
-  position: absolute;
-  border-radius: .5rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 4;
-  pointer-events: none;
-  animation: flicker .15s infinite;
-
-}`;
-
+  }
+`;
 
 export const ArcadeWoodStyle = styled.div`
  border-image: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1680231879/gnawlinzIcons/redWoodGood_n9ye42.png');
@@ -765,4 +779,3 @@ border-radius: 1rem;
   animation: flicker .15s infinite;
 }
 `;
-
