@@ -679,6 +679,9 @@ height: 65% !important;
 --bs-modal-header-border-width: 0px !important;
 --bs-modal-footer-border-width: 0px !important;
 --bs-modal-width: 800px !important;
+.modal-backdrop {
+  background-color: rgba(255, 255, 255, 0.5);
+}
 `;
 
 export const ModalStyle = styled.div`

@@ -888,6 +888,19 @@ const GameView = (props: GameViewProps) => {
   //     };
   //   }
   // }, [socket]);
+  useEffect(() => {
+    const handleWindowClick = (event) => {
+      if (event.target.id === 'intro-modal') {
+        setIntroModal(false);
+      }
+    };
+
+    window.addEventListener('click', handleWindowClick);
+
+    return () => {
+      window.removeEventListener('click', handleWindowClick);
+    };
+  }, []);
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
@@ -916,12 +929,10 @@ const GameView = (props: GameViewProps) => {
             aria-labelledby='contained-modal-title-vcenter'
             centered
             backdrop={false}
+            onClick={() => setIntroModal(false)}
           >
             <ModalStyle style={{border: '1px solid #fff'}}>
               <Modal.Header closeButton>
-                <Modal.Title id='contained-modal-title-vcenter'>
-                  Introduction
-                </Modal.Title>
               </Modal.Header>
               <Modal.Body
               >
