@@ -74,6 +74,9 @@ const CharacterCreator: React.FC = () => {
   const [endurance, setEndurance] = useState<number>(1);
   const [mood, setMood] = useState<number>(1);
   const [statPool, setStatPool] = useState<number>(18);
+  const [startDisabled, setStartDisabled] = useState<boolean>(true);
+
+
 
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
@@ -125,11 +128,10 @@ const CharacterCreator: React.FC = () => {
         console.log('Success Posting from Client', response);
         userChars.push(response.data);
         setCurrentChar(response.data);
-        axios
-          .post(`/story/begin/${response.data._id}`)
-          .catch((err) =>
-            console.error('beginning story failed to fetch', err)
-          );
+        axios.post(`/story/begin/${response.data._id}`)
+          .catch(err => console.error('beginning story failed to fetch', err));
+      }).then(() => {
+        setStartDisabled(false);
       })
       .catch((err) => console.error('Fail Posting from Client', err));
   };
@@ -469,20 +471,16 @@ const CharacterCreator: React.FC = () => {
             </motion.h6>
           )}
         </div>
-        {hideStartButton && (
-          <CCStartButton
-            onClick={() => {
-              if (currentChar.name === 'Someguy McPlaceholder') {
-                setStartFail(true);
-                return;
-              } else {
-                handleClickStart();
-              }
-            }}
-          >
-            Start Game
-          </CCStartButton>
-        )}
+        {hideStartButton &&
+          <CCStartButton disabled={startDisabled} onClick={() => {
+            if (currentChar.name === 'Someguy McPlaceholder') {
+              setStartFail(true);
+              return;
+            } else {
+              handleClickStart();
+            }
+          }}>Start Game</CCStartButton>
+        }
       </div>
     </>
   );
