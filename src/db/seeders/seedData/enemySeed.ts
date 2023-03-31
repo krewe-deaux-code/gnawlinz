@@ -39,7 +39,7 @@ export const enemySeed = [
   },
   {
     name: 'Baby Cakes',
-    image_url: 'https://pbs.twimg.com/profile_images/1351992987291701249/2UapxS8K_400x400.jpg',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680203640/GnawlinzEnemies/BabyCakes_pzqzlf.png',
     weapon1: 'Rotten King Cake',
     strength: 5,
     health: 5,
@@ -51,7 +51,7 @@ export const enemySeed = [
   },
   {
     name: 'Drunken Shambler',
-    image_url: 'https://cdn.dribbble.com/users/13315581/screenshots/19682705/media/579a532d8f7a97cb4e2e6b1e2a8cd95c.jpg',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680224365/GnawlinzEnemies/DrunkenShamblerFinal_folgdz.png',
     weapon1: 'Broken Bottle',
     strength: 5,
     health: 5,

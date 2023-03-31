@@ -32,7 +32,8 @@ export const MenuButton = styled.button`
 `;
 
 export const CCStartButton = styled.button`
-  background-color: #931a03;
+  background-color: ${props => props.disabled ? '#3d3938' : '#931a03'};
+  border: ${props => props.disabled ? '2px white dashed' : 'none'};
   min-width: 95px;
   min-height: 45px;
   color: white !important;
@@ -40,17 +41,17 @@ export const CCStartButton = styled.button`
   font-size: 1rem;
   padding: 10px;
   border-radius: 2em;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'default' : 'pointer'};
   transition: 0.1s ease;
-  border-width: 0;
-  box-shadow: 1px 5px 0 0 #60180e;
+  box-shadow: ${props => props.disabled ? 'none' : '1px 5px 0 0 #60180e'};
   &:hover {
-    transform: translateY(-4px);
-    box-shadow: 1px 9px 0 0 #60180e;
+    transform: ${props => props.disabled ? 'none' : 'translateY(-4px)'};
+    box-shadow: ${props => props.disabled ? 'none' : '1px 9px 0 0 #60180e'};
   }
+
   &:active {
-    transform: translateY(4px);
-    box-shadow: 0px 0px 0 0 #60180e;
+    transform: ${props => props.disabled ? 'none' : 'translateY(4px)'};
+    box-shadow: ${props => props.disabled ? 'none' : '0px 0px 0 0 #60180e'};
   }
 `;
 
