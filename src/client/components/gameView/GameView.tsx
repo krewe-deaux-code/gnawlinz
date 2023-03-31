@@ -917,14 +917,16 @@ const GameView = (props: GameViewProps) => {
             centered
             backdrop={false}
           >
-            <ModalStyle style={{ textAlign: 'center' }}>
-              <Modal.Header style={{ background: 'rgb(88,35,97)' }} closeButton>
+            <ModalStyle>
+              <Modal.Header style={{ background: 'rgb(92 92 92 / 65%)'}} closeButton>
                 <Modal.Title id='contained-modal-title-vcenter'>
                   Introduction
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body style={{ textAlign: 'center', background: 'silver' }}>
-                <h4 style={{ textAlign: 'center' }}>Lundi Gras</h4>
+              <Modal.Body
+              style={{ background: 'rgb(92 92 92 / 65%)' }}
+              >
+                <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
                   infested New Orleans! You set out to find supplies and
@@ -932,7 +934,7 @@ const GameView = (props: GameViewProps) => {
                 </p>
               </Modal.Body>
             </ModalStyle>
-            {/* <Modal.Footer></Modal.Footer> */}
+            <Modal.Footer></Modal.Footer>
           </IntroModal>
         ) : (
           <></>

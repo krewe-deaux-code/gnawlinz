@@ -672,9 +672,13 @@ export const OverlayValue = styled.div`
   font-size: 0.8rem;
 `;
 
-export const IntroModal = styled(Modal)``;
+export const IntroModal = styled(Modal)`
+border-radius: .6rem;
+--bs-modal-bg: rgb(92 92 92 / 65%) !important;
+`;
 
 export const ModalStyle = styled.div`
+color: white;
   position: relative;
   border-radius: 0.5rem;
   &:before {
@@ -709,10 +713,13 @@ export const ModalStyle = styled.div`
     left: 0;
     bottom: 0;
     right: 0;
-    background: rgba(18, 16, 16, 0.1);
+    background: rgba(18, 16, 16, 0.6);
     opacity: 0;
     z-index: 4;
     pointer-events: none;
     animation: flicker 0.15s infinite;
+  }
+  .modal-content {
+
   }
 `;
