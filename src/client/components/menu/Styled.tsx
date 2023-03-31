@@ -490,6 +490,7 @@ export const CharSelectStatBox = styled.div`
 `;
 
 export const RedX = styled.img`
+  object-fit: contain;
   pointer-events: none;
   z-index: 3;
   position: fixed;

@@ -123,6 +123,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    console.log('EVERY TIME CHAR CHANGES');
     characterUpdate();
     if (currentChar.inventory) {
       fetchItems(currentChar.inventory);
@@ -130,6 +131,7 @@ const App = () => {
   }, [currentChar]);
 
   useEffect(() => {
+    console.log('LOCATION IN APP');
     locationUpdate();
   }, [location]);
 

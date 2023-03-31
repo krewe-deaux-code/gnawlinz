@@ -1,6 +1,7 @@
 import { DataTypes } from 'sequelize';
 import { db } from '../index';
 import Location from './location';
+import Event from './event';
 
 const Boss = db.define('boss',
   {
@@ -28,6 +29,16 @@ const Boss = db.define('boss',
       type: DataTypes.INTEGER,
       references: {
         model: Location,
+        key: '_id'
+      }
+    },
+    score: {
+      type: DataTypes.INTEGER
+    },
+    event: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: Event,
         key: '_id'
       }
     }
