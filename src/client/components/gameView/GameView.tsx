@@ -48,7 +48,8 @@ import {
   ArcadeButtonToggle,
   LocationImg,
   LocationDiv,
-  IntroModal
+  IntroModal,
+  ModalStyle
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -149,6 +150,8 @@ const GameView = (props: GameViewProps) => {
   const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
+
+
 
   const fetchEvent = () => {
     setTempText('');
@@ -848,8 +851,10 @@ const GameView = (props: GameViewProps) => {
         </Link>
       </div>
       <Nav isActive={true} showButton={true} />
-      <Main>
-        {introModal ? (
+
+      <Main blur={introModal} linearGradient={introModal}>
+
+      {introModal ? (
           <IntroModal
             id='intro-modal'
             show={introModal}
@@ -857,26 +862,27 @@ const GameView = (props: GameViewProps) => {
             size='lg'
             aria-labelledby='contained-modal-title-vcenter'
             centered
-          >
-            <Modal.Header closeButton>
+            backdrop={false}
+          ><ModalStyle style={{textAlign: 'center'}}>
+            <Modal.Header style={{background: 'rgb(88,35,97)'}}closeButton>
               <Modal.Title id='contained-modal-title-vcenter'>
-                Modal heading
+                Introduction
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-              <h4>Centered Modal</h4>
+            <Modal.Body style={{textAlign: 'center', background: 'silver'}}>
+              <h4 style={{textAlign: 'center'}}>Lundi Gras</h4>
               <p>
-                Cras mattis consectetur purus sit amet fermentum. Cras justo
-                odio, dapibus ac facilisis in, egestas eget quam. Morbi leo
-                risus, porta ac consectetur ac, vestibulum at eros.
+              You awoke from a Carnival bender to find yourself in a monster infested New Orleans!
+              You set out to find supplies and vanquish that which should not be.
               </p>
             </Modal.Body>
-            <Modal.Footer></Modal.Footer>
+
+          </ModalStyle>
+            {/* <Modal.Footer></Modal.Footer> */}
           </IntroModal>
         ) : (
           <></>
         )}
-
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <LocationDiv>
           {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
@@ -992,6 +998,7 @@ const GameView = (props: GameViewProps) => {
           )}
         </LocationDiv>
       </Main>
+
       <Footer>
         <Content1 id='outter Content 1'>
           {/* <Link to="/result" style={{ textDecoration: 'none' }}>

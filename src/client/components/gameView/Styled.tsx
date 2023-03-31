@@ -119,6 +119,8 @@ export const flicker = keyframes`
 export const Main = styled.main`
   background: #1f2128;
   color: white;
+  filter: ${props => props.blur ? 'blur(4px)' : 'none'};
+  mask: ${props => props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
   grid-area: main;
   padding: 0.25rem;
   position: relative;
@@ -132,7 +134,7 @@ export const Main = styled.main`
   content: " ";
   display: block;
   position: absolute;
-  border-radius: 2.5rem;
+  border-radius: 2.6rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -146,7 +148,7 @@ export const Main = styled.main`
   content: " ";
   display: block;
   position: absolute;
-  border-radius: 2.5rem;
+  border-radius: 2.6rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -600,19 +602,18 @@ export const OverlayValue = styled.div`
 `;
 
 export const IntroModal = styled(Modal)`
-  position: relative;
-  border-radius: 2.6rem;
-  --bs-modal-bg: rgb(92 92 92 / 65%) !important;
-  box-shadow:
-    inset 0 0 30rem black,
-    inset 0 0 30rem black,
-    0 0 2rem -10px #ffffff;
-  backdrop-filter: blur(4px);
-  &:before {
+
+`;
+
+export const ModalStyle = styled.div`
+
+ position: relative;
+  border-radius: .5rem;
+   &:before {
   content: " ";
   display: block;
   position: absolute;
-  border-radius: 2.5rem;
+  border-radius: .5rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -626,7 +627,7 @@ export const IntroModal = styled(Modal)`
   content: " ";
   display: block;
   position: absolute;
-  border-radius: 2.5rem;
+  border-radius: .5rem;
   top: 0;
   left: 0;
   bottom: 0;
@@ -638,4 +639,5 @@ export const IntroModal = styled(Modal)`
   animation: flicker .15s infinite;
 
 }`;
+
 
