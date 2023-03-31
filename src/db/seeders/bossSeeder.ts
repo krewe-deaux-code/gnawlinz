@@ -10,6 +10,8 @@ const bossSeeder = async (bossArr: any) => {
         health: bossArr[i].health,
         strength: bossArr[i].strength,
         location: bossArr[i].location,
+        score: bossArr[i].score,
+        event: bossArr[i].event
       }
     })
       .then(() =>

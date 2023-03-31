@@ -34,11 +34,11 @@ const Result: React.FC = () => {
     axios
       .get(`story/ending/${currentChar._id}`)
       .then((results) => {
-        console.log('result from story query:', results.data);
+        // console.log('result from story query:', results.data);
         setStory(results.data);
       })
       .catch((err) => {
-        console.error(err);
+        console.error('error getting result: \n', err);
       });
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
@@ -48,7 +48,7 @@ const Result: React.FC = () => {
         setResultText('you survived!');
       } else {
         setImage(images.deathIcon);
-        setResultText('you died!');
+        setResultText('R.I.P. ' + currentChar.name);
       }
     };
     getWinLoss(); // calling the function once when the component mounts
@@ -62,9 +62,8 @@ const Result: React.FC = () => {
       uniqueEvents.push(line);
     }
   });
-  console.log(currentChar.health);
 
-  console.log('result from story query:', story);
+  // console.log('result from story query:', story);
 
   const msg = new SpeechSynthesisUtterance();
   const handleSpeak = (e) => {
@@ -72,6 +71,10 @@ const Result: React.FC = () => {
       msg.text = e.target.innerText;
       window.speechSynthesis.speak(msg);
     }
+  };
+
+  const handleClick = () => {
+    window.location.href = '/menu';
   };
 
   return (
@@ -100,7 +103,7 @@ const Result: React.FC = () => {
         <Content1>
           <Link to='/' style={{ textDecoration: 'none' }}>
             <Content1>
-              <StatButton style={{ margin: 'auto' }}>Play Again</StatButton>
+              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>Play Again</StatButton>
             </Content1>
           </Link>
         </Content1>

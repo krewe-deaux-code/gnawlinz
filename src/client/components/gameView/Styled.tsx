@@ -5,21 +5,21 @@ export const Container = styled.div`
   display: grid;
   max-width: 100%;
   height: 100vh;
-  grid-template-rows: 0.10fr .70fr 0.30fr;
+  grid-template-rows: 0.1fr 0.7fr 0.3fr;
   grid-template-areas:
-    "nav nav nav nav"
-    "main main main main"
-    "footer footer footer footer";
+    'nav nav nav nav'
+    'main main main main'
+    'footer footer footer footer';
   text-align: center;
   grid-gap: 0.25rem;
   transition: all 0.25s ease-in-out;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.1fr 0.7fr .3fr;
+    grid-template-rows: 0.1fr 0.7fr 0.3fr;
     grid-template-areas:
-      "nav"
-      "main"
-      "footer";
+      'nav'
+      'main'
+      'footer';
   }
   color: white;
   background-color: #1f2128;
@@ -119,54 +119,59 @@ export const flicker = keyframes`
 export const Main = styled.main`
   background: #1f2128;
   color: white;
-  filter: ${props => props.blur ? 'blur(4px)' : 'none'};
-  mask: ${props => props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
+  filter: ${(props) => (props.blur ? 'blur(4px)' : 'none')};
+  mask: ${(props) =>
+    props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
   grid-area: main;
   padding: 0.25rem;
   position: relative;
-  background-image:radial-gradient(#717171, #111);
+  background-image: radial-gradient(#717171, #111);
   border-radius: 2.6rem;
-  box-shadow:
-    inset 0 0 30rem black,
-    inset 0 0 30rem black,
+  box-shadow: inset 0 0 30rem black, inset 0 0 30rem black,
     0 0 2rem -10px #ffffff;
   &:before {
-  content: " ";
-  display: block;
-  position: absolute;
-  border-radius: 2.6rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 4;
-  background-size: 100% 3.4px, 5.1px 100%;
-  pointer-events: none;
-}
-&:after {
-  content: " ";
-  display: block;
-  position: absolute;
-  border-radius: 2.6rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 4;
-  pointer-events: none;
-  animation: flicker .15s infinite;
-}
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 2.6rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 4;
+    background-size: 100% 3.4px, 5.1px 100%;
+    pointer-events: none;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 2.6rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
 `;
-
 
 // export const CharacterDisplayDiv = styled(Main).div`
 
 // `;
-
-
 
 export const Content1 = styled.div`
   background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
@@ -193,7 +198,6 @@ export const Content2 = styled.div`
   align-content: space-around;
   grid-template-columns: auto auto;
 `;
-
 
 export const Content3 = styled(Content2)`
   background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
@@ -222,12 +226,12 @@ export const Footer = styled.footer`
 `;
 
 export const CharImageStyles = styled.img`
-object-fit: contain;
-padding: auto;
-height: auto;
-width: auto;
-max-height: 276px;
-max-width: 183px;
+  object-fit: contain;
+  padding: auto;
+  height: auto;
+  width: auto;
+  max-height: 276px;
+  max-width: 183px;
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
@@ -236,23 +240,22 @@ padding: 0.1rem;
 padding-right: 0.5em;
 `;
 
-
 export const InventoryStyle = styled.div`
   display: grid;
   justify-content: stretch;
   align-items: center;
- grid-template-areas: "item item item item item item item item";
-  `;
+  grid-template-areas: 'item item item item item item item item';
+`;
 
 export const InventoryBorder = styled.div`
-border: .2em solid white;
-justify-content: center;
-border-radius: 10px;
-width: 100%;
-height: 100%;
-grid-area: inventory;
-padding: auto;
-margin: auto;
+  border: 0.2em solid white;
+  justify-content: center;
+  border-radius: 10px;
+  width: 100%;
+  height: 100%;
+  grid-area: inventory;
+  padding: auto;
+  margin: auto;
 `;
 
 export const IconContainer = styled.div`
@@ -263,7 +266,7 @@ export const IconContainer = styled.div`
   grid-template-rows: auto auto auto auto;
   justify-content: center;
   grid-gap: 1em;
-  `;
+`;
 
 export const StatIconContainer = styled.div`
   display: grid;
@@ -282,53 +285,50 @@ export const IconImg = styled.img`
   max-height: 4em;
 `;
 export const StatBonusColor = styled.div`
-color: #2e8351;
+  color: #2e8351;
 `;
 
 export const TempStatBonusColor = styled.div`
-color: #9a8127;
+  color: #9a8127;
 `;
 
 export const CharStatusContainer = styled.div`
-
   display: grid;
   grid-template-rows: auto auto auto auto;
   grid-template-areas:
-  "stat stat2"
-  "inventory inventory";
+    'stat stat2'
+    'inventory inventory';
   width: 100%;
   height: auto;
   padding: auto;
-  `;
+`;
 
 export const StatContainer = styled.div`
-display: grid;
-grid-area: stat;
-grid-template-rows: auto auto auto auto;
-width: 100%;
-height: auto;
-justify-content: center;
+  display: grid;
+  grid-area: stat;
+  grid-template-rows: auto auto auto auto;
+  width: 100%;
+  height: auto;
+  justify-content: center;
 `;
 
 export const StatContainer2 = styled(StatContainer)`
   grid-area: stat2;
-  grid-template-rows: .5fr 1fr;
+  grid-template-rows: 0.5fr 1fr;
 `;
 
 export const InventoryTextBubble = styled.div`
-position: absolute;
-z-index: 4;
-bottom: 5rem;
-padding: 5px;
-font-size: 1rem;
-color: black;
-background-color: #fff;
-border: 1px solid #ccc;
-box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-white-space: nowrap;
+  position: absolute;
+  z-index: 4;
+  bottom: 5rem;
+  padding: 5px;
+  font-size: 1rem;
+  color: black;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
 `;
-
-
 
 export const TopContent1 = styled.div`
   padding: 0.25rem;
@@ -338,7 +338,6 @@ export const TopContent1 = styled.div`
 
 export const TopContent2 = styled(TopContent1)``;
 
-
 export const HudButton = styled.button`
   font-size: 1.5em;
   background-color: black;
@@ -346,13 +345,12 @@ export const HudButton = styled.button`
   padding: auto;
 `;
 
-
 export const EventText = styled.div`
   z-index: 3;
   background-color: rgb(102 106 104 / 65%);
   backdrop-filter: blur(4px);
   color: white;
-  padding: .4em;
+  padding: 0.4em;
   margin: auto;
   text-align: center;
   border: 1px solid;
@@ -363,7 +361,7 @@ export const EventText = styled.div`
   top: 60%;
   left: 29%;
   overflow: auto;
-  ${props => (props.show ? '' : 'visibility: hidden')}
+  ${(props) => (props.show ? '' : 'visibility: hidden')}
 `;
 
 export const ScrollableContainer = styled.div`
@@ -374,13 +372,13 @@ export const ScrollableContainer = styled.div`
   height: 100%;
   overflow-y: auto;
   position: relative;
-    &::-webkit-scrollbar {
-        /* height: 10px; */
-        width: 10px;
-        border: 1px solid black;
-        border-radius: 5px;
-    }
-      /* Set the background color of the scrollbar */
+  &::-webkit-scrollbar {
+    /* height: 10px; */
+    width: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  /* Set the background color of the scrollbar */
   &&::-webkit-scrollbar-track {
     background: black;
     border-radius: 5px;
@@ -391,7 +389,6 @@ export const ScrollableContainer = styled.div`
     background-color: #f0ac00;
     border-radius: 5px;
     background-size: 100%;
-
   }
 `;
 
@@ -417,17 +414,15 @@ export const EnemyImg = styled.img`
   right: 30%;
 `;
 
-
-
 export const LocationDiv = styled.div`
-position: relative;
-margin-top: 10rem;
+  position: relative;
+  margin-top: 10rem;
 `;
 export const LocationImg = styled.img`
-height: 625px;
-width:  901px;
-border: 3px double;
-border-radius: 5px;
+  height: 625px;
+  width: 901px;
+  border: 3px double;
+  border-radius: 5px;
 `;
 
 export const KillFeedContainer = styled.div`
@@ -443,12 +438,12 @@ export const KillFeedContainer = styled.div`
   overflow-y: auto;
   bottom: 30%;
   &::-webkit-scrollbar {
-        /* height: 10px; */
-        width: 10px;
-        border: 1px solid black;
-        border-radius: 5px;
-    }
-      /* Set the background color of the scrollbar */
+    /* height: 10px; */
+    width: 10px;
+    border: 1px solid black;
+    border-radius: 5px;
+  }
+  /* Set the background color of the scrollbar */
   &&::-webkit-scrollbar-track {
     background: black;
     border-radius: 5px;
@@ -459,7 +454,6 @@ export const KillFeedContainer = styled.div`
     background-color: #f0ac00;
     border-radius: 5px;
     background-size: 100%;
-
   }
 `;
 
@@ -514,79 +508,156 @@ export const ArcadeButton = styled.button`
   border-radius: 50%;
   cursor: pointer;
   transition: box-shadow 200ms;
-  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b, inset 0 -${size / 24}rem ${size / 60}rem #aa2409, 0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 60}rem ${size / 10}rem #611405, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 133, 110, 0.7), inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 71, 37, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 31, 8, 0.2), inset 0 0 0 ${size / 5.5}rem #c2290a, inset 0 ${size / 2.5}rem ${size / 7.5}rem #aa2409, inset 0 0 ${size / 10}rem ${size / 6}rem #911f08, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b,
+    inset 0 -${size / 24}rem ${size / 60}rem #aa2409,
+    0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06,
+    inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+    inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a,
+    inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 60}rem ${size / 10}rem #611405,
+    inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 120}rem ${size / 9.2}rem black,
+    inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 133, 110, 0.7),
+    inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 71, 37, 0.7),
+    inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 31, 8, 0.2),
+    inset 0 0 0 ${size / 5.5}rem #c2290a,
+    inset 0 ${size / 2.5}rem ${size / 7.5}rem #aa2409,
+    inset 0 0 ${size / 10}rem ${size / 6}rem #911f08,
+    0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
 
   &:active {
-    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b, inset 0 -${size / 24}rem ${size / 60}rem #aa2409, 0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5), inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 60}rem ${size / 10}rem #611405, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7), inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 133, 110, 0.2), inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 71, 37, 0.5), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 20, 5, 0.2), inset 0 0 0 ${size / 5.5}rem #b32609, inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b2108, inset 0 0 ${size / 10}rem ${size / 6}rem #791a06, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
-  background-color: #b8270a;
+    box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #da2e0b,
+      inset 0 -${size / 24}rem ${size / 60}rem #aa2409,
+      0 0 ${size / 60}rem #c2290a, inset 0 0 ${size / 30}rem #791a06,
+      inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+      inset 0 0 ${size / 60}rem ${size / 12}rem #c2290a,
+      inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 60}rem ${size / 10}rem #611405,
+      inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 40}rem ${size / 8.5}rem black,
+      inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 133, 110, 0.2),
+      inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 71, 37, 0.5),
+      inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 20, 5, 0.2),
+      inset 0 0 0 ${size / 5.5}rem #b32609,
+      inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b2108,
+      inset 0 0 ${size / 10}rem ${size / 6}rem #791a06,
+      0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+    background-color: #b8270a;
 
-
-&::before {
-   opacity: 0.5;
-}
+    &::before {
+      opacity: 0.5;
+    }
   }
   &:before {
-     content: "";
-  position: absolute;
-  bottom: ${size / 4.5}rem;
-  left: ${size / 3.6}rem;
-  display: block;
-  width: ${size / 2.2}rem;
-  height: ${size / 3.3}rem;
-  background: rgba(247, 133, 110, 0.2);
-  background: linear-gradient(to top, rgba(250, 173, 158, 0.3) 0%, rgba(194, 41, 10, 0.1) 100%);
-  border-radius: 40% 40% 60% 60%;
-  transition: opacity 200ms;
+    content: '';
+    position: absolute;
+    bottom: ${size / 4.5}rem;
+    left: ${size / 3.6}rem;
+    display: block;
+    width: ${size / 2.2}rem;
+    height: ${size / 3.3}rem;
+    background: rgba(247, 133, 110, 0.2);
+    background: linear-gradient(
+      to top,
+      rgba(250, 173, 158, 0.3) 0%,
+      rgba(194, 41, 10, 0.1) 100%
+    );
+    border-radius: 40% 40% 60% 60%;
+    transition: opacity 200ms;
   }
 `;
 
-
 export const ArcadeButtonInvestigate = styled(ArcadeButton)`
   background-color: #1a0ac2;
-  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
-  inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-  inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-  inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7),
-  inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(54, 37, 244, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(19, 8, 145, 0.2),
-  inset 0 0 0 ${size / 5.5}rem #1a0ac2, inset 0 ${size / 2.5}rem ${size / 7.5}rem #1609aa, inset 0 0 ${size / 10}rem ${size / 6}rem #130891, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda,
+    inset 0 -${size / 24}rem ${size / 60}rem #1609aa,
+    0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679,
+    inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+    inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2,
+    inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561,
+    inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 120}rem ${size / 9.2}rem black,
+    inset 0 0 ${size / 120}rem ${size / 8}rem rgba(121, 110, 247, 0.7),
+    inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(54, 37, 244, 0.7),
+    inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(19, 8, 145, 0.2),
+    inset 0 0 0 ${size / 5.5}rem #1a0ac2,
+    inset 0 ${size / 2.5}rem ${size / 7.5}rem #1609aa,
+    inset 0 0 ${size / 10}rem ${size / 6}rem #130891,
+    0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
   &:active {
-    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda, inset 0 -${size / 24}rem ${size / 60}rem #1609aa, 0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
-     inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-      inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-       inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(121, 110, 247, 0.2),
-        inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(54, 37, 244, 0.5),
-         inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(13, 5, 97, 0.2),
-          inset 0 0 0 ${size / 5.5}rem #1809b3, inset 0 ${size / 2.5}rem ${size / 7.5}rem #14089b, inset 0 0 ${size / 10}rem ${size / 6}rem #100679, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
-  background-color: #180ab8;
+    box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #1d0bda,
+      inset 0 -${size / 24}rem ${size / 60}rem #1609aa,
+      0 0 ${size / 60}rem #1a0ac2, inset 0 0 ${size / 30}rem #100679,
+      inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+      inset 0 0 ${size / 60}rem ${size / 12}rem #1a0ac2,
+      inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 60}rem ${size / 10}rem #0d0561,
+      inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 40}rem ${size / 8.5}rem black,
+      inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(121, 110, 247, 0.2),
+      inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(54, 37, 244, 0.5),
+      inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(13, 5, 97, 0.2),
+      inset 0 0 0 ${size / 5.5}rem #1809b3,
+      inset 0 ${size / 2.5}rem ${size / 7.5}rem #14089b,
+      inset 0 0 ${size / 10}rem ${size / 6}rem #100679,
+      0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+    background-color: #180ab8;
   }
   &:before {
-
-  background: rgba(121, 110, 247, 0.2);
-  background: linear-gradient(to top, rgba(166, 158, 250, 0.3) 0%, rgba(26, 10, 194, 0.1) 100%);
+    background: rgba(121, 110, 247, 0.2);
+    background: linear-gradient(
+      to top,
+      rgba(166, 158, 250, 0.3) 0%,
+      rgba(26, 10, 194, 0.1) 100%
+    );
   }
 `;
 
 export const ArcadeButtonToggle = styled(ArcadeButton)`
   background-color: #c2c20a;
-  box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #dada0b, inset 0 -${size / 24}rem ${size / 60}rem #aaaa09, 0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
-   inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-    inset 0 0 ${size / 60}rem ${size / 10}rem #616105, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-     inset 0 0 ${size / 120}rem ${size / 9.2}rem black, inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 247, 110, 0.7),
-      inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 244, 37, 0.7), inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 145, 8, 0.2),
-       inset 0 0 0 ${size / 5.5}rem #c2c20a, inset 0 ${size / 2.5}rem ${size / 7.5}rem #aaaa09, inset 0 0 ${size / 10}rem ${size / 6}rem #919108, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+  box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #dada0b,
+    inset 0 -${size / 24}rem ${size / 60}rem #aaaa09,
+    0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906,
+    inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+    inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a,
+    inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 60}rem ${size / 10}rem #616105,
+    inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+    inset 0 0 ${size / 120}rem ${size / 9.2}rem black,
+    inset 0 0 ${size / 120}rem ${size / 8}rem rgba(247, 247, 110, 0.7),
+    inset 0 ${size / 20}rem 0 ${size / 8.5}rem rgba(244, 244, 37, 0.7),
+    inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.5}rem rgba(145, 145, 8, 0.2),
+    inset 0 0 0 ${size / 5.5}rem #c2c20a,
+    inset 0 ${size / 2.5}rem ${size / 7.5}rem #aaaa09,
+    inset 0 0 ${size / 10}rem ${size / 6}rem #919108,
+    0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
   &:active {
-    box-shadow: 0 .5rem .5rem #000000, inset 0 ${size / 24}rem 0 #dada0b, inset 0 -${size / 24}rem ${size / 60}rem #aaaa09, 0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906, inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
-     inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a, inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-      inset 0 0 ${size / 60}rem ${size / 10}rem #616105, inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
-      inset 0 0 ${size / 40}rem ${size / 8.5}rem black, inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 247, 110, 0.2),
-       inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 244, 37, 0.5),
-        inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 97, 5, 0.2),
-       inset 0 0 0 ${size / 5.5}rem #b3b309, inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b9b08, inset 0 0 ${size / 10}rem ${size / 6}rem #797906, 0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
-  background-color: #b8b80a;
+    box-shadow: 0 0.5rem 0.5rem #000000, inset 0 ${size / 24}rem 0 #dada0b,
+      inset 0 -${size / 24}rem ${size / 60}rem #aaaa09,
+      0 0 ${size / 60}rem #c2c20a, inset 0 0 ${size / 30}rem #797906,
+      inset 0 0 ${size / 30}rem rgba(51, 51, 51, 0.5),
+      inset 0 0 ${size / 60}rem ${size / 12}rem #c2c20a,
+      inset 0 -${size / 30}rem ${size / 40}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 60}rem ${size / 10}rem #616105,
+      inset 0 0 ${size / 60}rem ${size / 10}rem rgba(51, 51, 51, 0.7),
+      inset 0 0 ${size / 40}rem ${size / 8.5}rem black,
+      inset 0 0 ${size / 120}rem ${size / 7.5}rem rgba(247, 247, 110, 0.2),
+      inset 0 ${size / 20}rem 0 ${size / 8.57}rem rgba(244, 244, 37, 0.5),
+      inset 0 -${size / 20}rem ${size / 60}rem ${size / 8.57}rem rgba(97, 97, 5, 0.2),
+      inset 0 0 0 ${size / 5.5}rem #b3b309,
+      inset 0 ${size / 2.5}rem ${size / 7.5}rem #9b9b08,
+      inset 0 0 ${size / 10}rem ${size / 6}rem #797906,
+      0 ${size / 40}rem ${size / 20}rem rgba(0, 0, 0, 0.5);
+    background-color: #b8b80a;
   }
   &:before {
-  background: rgba(247, 247, 110, 0.2);
-  background: linear-gradient(to top, rgba(250, 250, 158, 0.3) 0%, rgba(194, 194, 10, 0.1) 100%);
+    background: rgba(247, 247, 110, 0.2);
+    background: linear-gradient(
+      to top,
+      rgba(250, 250, 158, 0.3) 0%,
+      rgba(194, 194, 10, 0.1) 100%
+    );
   }
 `;
 
@@ -605,16 +676,14 @@ export const OverlayValue = styled.div`
   font-size: 0.8rem;
 `;
 
-export const IntroModal = styled(Modal)`
-
-`;
+export const IntroModal = styled(Modal)``;
 
 export const ModalStyle = styled.div`
 
  position: relative;
   border-radius: .5rem;
    &:before {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   border-radius: .5rem;
@@ -628,7 +697,7 @@ export const ModalStyle = styled.div`
   pointer-events: none;
 }
 &:after {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   border-radius: .5rem;
@@ -667,7 +736,7 @@ border-radius: 1rem;
          3px -1px #85b4ba,
          0px 0px #85b4ba;
   &:before {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   border-radius: 1rem;
@@ -681,7 +750,7 @@ border-radius: 1rem;
   pointer-events: none;
 }
 &:after {
-  content: " ";
+  content: ' ';
   display: block;
   position: absolute;
   border-radius: 1rem;

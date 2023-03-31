@@ -11,6 +11,7 @@ bossRouter.get('/:id', (req, res) => {
     }
   })
     .then((boss) => {
+      console.log('BOSS', boss);
       res.status(200).send(boss?.dataValues);
     })
     .catch((err) => {

@@ -40,5 +40,15 @@ export const eventSeed = [
     enemy_effect: false,
     ally_effect: true,
     item_effect: true,
+  },
+  {
+    initial_text: 'An unnerving quietude fills your ears... then the buzzing... BEEEEEEEEESS!!!!!',
+    choice0: 8, // Barricade yourself inside
+    choice1: 10, // Search the building for supplies
+    choice2: 7, // flee the scene
+    choice3: 9, // Search the building for survivors
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   }
 ];
