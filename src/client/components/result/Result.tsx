@@ -38,7 +38,7 @@ const Result: React.FC = () => {
         setStory(results.data);
       })
       .catch((err) => {
-        // console.error(err);
+        console.error('error getting result: \n', err);
       });
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
