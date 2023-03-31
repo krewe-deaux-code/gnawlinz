@@ -178,9 +178,7 @@ export const Content1 = styled.div`
   padding: 0.125rem;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  box-shadow:  6px 0px #766E94,
-  6px -2px #b292b6,
-         0px -2px #b292b6;
+  box-shadow: 6px 0px #766e94, 6px -2px #b292b6, 0px -2px #b292b6;
   width: 100%;
   height: 100%;
   display: grid;
@@ -207,9 +205,7 @@ export const Content3 = styled(Content2)`
   width: 100%;
   height: 100%;
   display: grid;
-  box-shadow:  -6px 0px #766E94,
-  -6px -2px #b292b6,
-         0px -2px #b292b6;
+  box-shadow: -6px 0px #766e94, -6px -2px #b292b6, 0px -2px #b292b6;
   align-content: space-around;
   grid-template-columns: auto auto;
 `;
@@ -218,9 +214,9 @@ export const Footer = styled.footer`
   background: 1f2128;
   height: 100%;
   grid-area: footer;
- padding-top: 0.5rem;
+  padding-top: 0.5rem;
   display: flex;
-  gap: .8rem;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
 `;
@@ -235,9 +231,9 @@ export const CharImageStyles = styled.img`
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
-width: 2em;
-padding: 0.1rem;
-padding-right: 0.5em;
+  width: 2em;
+  padding: 0.1rem;
+  padding-right: 0.5em;
 `;
 
 export const InventoryStyle = styled.div`
@@ -677,12 +673,12 @@ export const OverlayValue = styled.div`
 `;
 
 export const IntroModal = styled(Modal)`
-border-radius: .6rem;
---bs-modal-bg: rgb(92 92 92 / 65%) !important;
+  border-radius: 0.6rem;
+  --bs-modal-bg: rgb(92 92 92 / 65%) !important;
 `;
 
 export const ModalStyle = styled.div`
-color: white;
+  color: white;
   position: relative;
   border-radius: 0.5rem;
   &:before {
@@ -724,12 +720,11 @@ color: white;
     animation: flicker 0.15s infinite;
   }
   .modal-content {
-
   }
 `;
 
 export const ArcadeWoodStyle = styled.div`
- border-image: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1680231879/gnawlinzIcons/redWoodGood_n9ye42.png');
+  border-image: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1680231879/gnawlinzIcons/redWoodGood_n9ye42.png');
   border: 10px solid;
   border-image-outset: 100px;
   background-color: transparent;
@@ -738,44 +733,49 @@ export const ArcadeWoodStyle = styled.div`
   z-index: 5;
 `;
 export const CRTDiv = styled.div`
-position: relative;
-padding: 1rem;
-background-image:linear-gradient( .25turn, #2f4244, #85b4ba, #2f4244);
-padding: 10px;
-border-radius: 1rem;
-    box-shadow:  0px -1px #85b4ba,
-         -3px 8px #85b4ba,
-         3px 8px #85b4ba,
-         -3px -1px #85b4ba,
-         3px -1px #85b4ba,
-         0px 0px #85b4ba;
+  position: relative;
+  padding: 1rem;
+  background-image: linear-gradient(0.25turn, #2f4244, #85b4ba, #2f4244);
+  padding: 10px;
+  border-radius: 1rem;
+  box-shadow: 0px -1px #85b4ba, -3px 8px #85b4ba, 3px 8px #85b4ba,
+    -3px -1px #85b4ba, 3px -1px #85b4ba, 0px 0px #85b4ba;
   &:before {
-  content: ' ';
-  display: block;
-  position: absolute;
-  border-radius: 1rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
-  z-index: 4;
-  background-size: 100% 2px, 3px 100%;
-  pointer-events: none;
-}
-&:after {
-  content: ' ';
-  display: block;
-  position: absolute;
-  border-radius: 1rem;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(18, 16, 16, 0.1);
-  opacity: 0;
-  z-index: 4;
-  pointer-events: none;
-  animation: flicker .15s infinite;
-}
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 4;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
 `;
