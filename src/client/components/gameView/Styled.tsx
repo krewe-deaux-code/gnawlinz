@@ -178,6 +178,7 @@ export const Content1 = styled.div`
   padding: 0.125rem;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
+  box-shadow: 6px 0px #766e94, 6px -2px #b292b6, 0px -2px #b292b6;
   width: 100%;
   height: 100%;
   display: grid;
@@ -204,22 +205,20 @@ export const Content3 = styled(Content2)`
   width: 100%;
   height: 100%;
   display: grid;
+  box-shadow: -6px 0px #766e94, -6px -2px #b292b6, 0px -2px #b292b6;
   align-content: space-around;
   grid-template-columns: auto auto;
 `;
 
 export const Footer = styled.footer`
-  background: black;
+  background: 1f2128;
   height: 100%;
   grid-area: footer;
-  padding: 0.25rem;
+  padding-top: 0.5rem;
   display: flex;
-  gap: 0.25rem;
+  gap: 0.8rem;
   align-items: center;
   justify-content: center;
-  /* @media (max-width: 550px) {
-    flex-direction: column;
-  } */
 `;
 
 export const CharImageStyles = styled.img`
@@ -233,6 +232,7 @@ export const CharImageStyles = styled.img`
 
 export const TinyStatIconImg = styled(CharImageStyles)`
   width: 2em;
+  padding: 0.1rem;
   padding-right: 0.5em;
 `;
 
@@ -266,7 +266,7 @@ export const IconContainer = styled.div`
 
 export const StatIconContainer = styled.div`
   display: grid;
-  grid-template-columns: 1.6rem 1.6rem 2rem auto;
+  grid-template-columns: 1.6rem 1.6rem 1rem auto;
   width: 30%;
   padding: 3px;
   text-align: center;
@@ -343,7 +343,7 @@ export const HudButton = styled.button`
 
 export const EventText = styled.div`
   z-index: 3;
-  background-color: rgb(92 92 92 / 65%);
+  background-color: rgb(102 106 104 / 65%);
   backdrop-filter: blur(4px);
   color: white;
   padding: 0.4em;
@@ -672,9 +672,13 @@ export const OverlayValue = styled.div`
   font-size: 0.8rem;
 `;
 
-export const IntroModal = styled(Modal)``;
+export const IntroModal = styled(Modal)`
+  border-radius: 0.6rem;
+  --bs-modal-bg: rgb(92 92 92 / 65%) !important;
+`;
 
 export const ModalStyle = styled.div`
+  color: white;
   position: relative;
   border-radius: 0.5rem;
   &:before {
@@ -705,6 +709,65 @@ export const ModalStyle = styled.div`
     display: block;
     position: absolute;
     border-radius: 0.5rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.6);
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    animation: flicker 0.15s infinite;
+  }
+  .modal-content {
+  }
+`;
+
+export const ArcadeWoodStyle = styled.div`
+  border-image: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1680231879/gnawlinzIcons/redWoodGood_n9ye42.png');
+  border: 10px solid;
+  border-image-outset: 100px;
+  background-color: transparent;
+  border-radius: 1rem;
+  position: relative;
+  z-index: 5;
+`;
+export const CRTDiv = styled.div`
+  position: relative;
+  padding: 1rem;
+  background-image: linear-gradient(0.25turn, #2f4244, #85b4ba, #2f4244);
+  padding: 10px;
+  border-radius: 1rem;
+  box-shadow: 0px -1px #85b4ba, -3px 8px #85b4ba, 3px 8px #85b4ba,
+    -3px -1px #85b4ba, 3px -1px #85b4ba, 0px 0px #85b4ba;
+  &:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 1rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 4;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 1rem;
     top: 0;
     left: 0;
     bottom: 0;
