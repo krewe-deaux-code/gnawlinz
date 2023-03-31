@@ -4,7 +4,16 @@ import axios from 'axios';
 import { neutral } from '../../utility/sounds';
 import images from '../../utility/images';
 
-import { StyledCarousel, IconImg, StatName, CharSelectStatBox, IconContainerInner, IconContainerOuter, RedX } from './Styled';
+import {
+  StyledCarousel,
+  IconImg,
+  StatName,
+  CharSelectStatBox,
+  IconContainerInner,
+  IconContainerOuter,
+  // SelectorContainer,
+  RedX,
+} from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
@@ -15,12 +24,11 @@ import { Character } from '../../utility/interface';
 // push dummy char on useEffect (first time render?) into userChars state array...
 
 const CharacterStats: React.FC = () => {
+  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } =
+    useContext(UserContext); // <-- NEED to get user chars below
 
-  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext); // <-- NEED to get user chars below
-
-  const [ /*index*/, setIndex] = useState(0);
+  const [, /*index*/ setIndex] = useState(0);
   const [locationName, setLocationName] = useState('');
-
 
   const handleSelect = (selectedIndex: number) => {
     neutral.play();
@@ -28,14 +36,16 @@ const CharacterStats: React.FC = () => {
     setCurrentChar(userChars[selectedIndex]);
   };
 
-  const getCurrentChar = () => { // this happens on useEffect, hardcoded to re-select Okra
+  const getCurrentChar = () => {
+    // this happens on useEffect, hardcoded to re-select Okra
     const _id = currentChar._id || 1;
     // console.log('currentChar in CharacterStats', currentChar);
-    axios.get<Character>(`/character/${_id}`)
-      .then(({ data }) =>
-        setCurrentChar(data))
+    axios
+      .get<Character>(`/character/${_id}`)
+      .then(({ data }) => setCurrentChar(data))
       .catch((err) =>
-        console.error('Error in getCurrentCharacter in Menu.tsx: ', err));
+        console.error('Error in getCurrentCharacter in Menu.tsx: ', err)
+      );
   };
 
   const fetchUserChars = async () => {
@@ -48,7 +58,8 @@ const CharacterStats: React.FC = () => {
     //   console.log('here handle_id change', handle_id);
     // }
     // axios.get(`/character/user/${activeUser.google_id}`)
-    await axios.get(`/character/user/${activeUser.google_id}`)
+    await axios
+      .get(`/character/user/${activeUser.google_id}`)
       .then(({ data }) => {
         console.log('RETURN USER CHARS from HANDLE_ID from SERVER', data);
         setUserChars(data);
@@ -60,7 +71,8 @@ const CharacterStats: React.FC = () => {
   };
 
   const getLocationById = (locationId) => {
-    axios.get(`/location/${locationId}`)
+    axios
+      .get(`/location/${locationId}`)
       .then(({ data }) => {
         setLocationName(data.name);
       })
@@ -70,7 +82,10 @@ const CharacterStats: React.FC = () => {
   };
 
   useEffect(() => {
-    if (Object.entries(currentChar).length && currentChar.location !== undefined) {
+    if (
+      Object.entries(currentChar).length &&
+      currentChar.location !== undefined
+    ) {
       getLocationById(currentChar.location);
     }
   }, [currentChar]);
@@ -93,39 +108,79 @@ const CharacterStats: React.FC = () => {
   return (
     <>
       <div>
-        <h1><u>Character Select:</u></h1>
-        {userChars.length ?
-          <StyledCarousel slide={false} indicators={false} onSelect={handleSelect} interval={null}>
-            {
-              userChars.map((char: Character, i: number) => {
-                console.log('INSIDE MAP', char);
-                return (
-                  <Carousel.Item key={i}>
-                    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      {
-                        char.mood < 1 || char.health < 1 ? <RedX src={images.redX}></RedX> : <></>
-                      }
-                      <img style={{ height: '400px', width: '300px' }} src={char.image_url} />
-                    </div>
-                    <StatName><u>Name: {char.name}</u></StatName>
-                    <CharSelectStatBox>
-                      <IconContainerInner><IconImg src={images.healthIcon} /><StatName>Health: {char.health}</StatName></IconContainerInner>
-                      <IconContainerInner><IconImg src={images.strengthIcon} /><StatName>Strength: {char.strength}</StatName></IconContainerInner>
-                      <IconContainerInner><IconImg src={images.enduranceIcon} /><StatName>Endurance: {char.endurance}</StatName></IconContainerInner>
-                      <IconContainerInner><IconImg src={images.moodIcon} /><StatName>Mood: {char.mood}</StatName></IconContainerInner>
-                    </CharSelectStatBox>
-                    <IconContainerOuter><StatName style={{ display: 'flex' }}>Location: {locationName}</StatName></IconContainerOuter>
-                  </Carousel.Item>
-                );
-              })
-            }
-          </StyledCarousel> :
+        <h1>
+          <u>Character Select:</u>
+        </h1>
+        {userChars.length ? (
+          <StyledCarousel
+            slide={false}
+            indicators={false}
+            onSelect={handleSelect}
+            interval={null}
+          >
+            {userChars.map((char: Character, i: number) => {
+              console.log('INSIDE MAP', char);
+              return (
+                <Carousel.Item key={i}>
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      pointerEvents: 'none',
+                    }}
+                  >
+                    {char.mood < 1 || char.health < 1 ? (
+                      <RedX src={images.redX}></RedX>
+                    ) : (
+                      <></>
+                    )}
+                    <img
+                      style={{ height: '400px', width: '300px' }}
+                      src={char.image_url}
+                    />
+                  </div>
+                  <StatName>
+                    <u>Name: {char.name}</u>
+                  </StatName>
+                  <CharSelectStatBox>
+                    <IconContainerInner>
+                      <IconImg src={images.healthIcon} />
+                      <StatName>Health: {char.health}</StatName>
+                    </IconContainerInner>
+                    <IconContainerInner>
+                      <IconImg src={images.strengthIcon} />
+                      <StatName>Strength: {char.strength}</StatName>
+                    </IconContainerInner>
+                    <IconContainerInner>
+                      <IconImg src={images.enduranceIcon} />
+                      <StatName>Endurance: {char.endurance}</StatName>
+                    </IconContainerInner>
+                    <IconContainerInner>
+                      <IconImg src={images.moodIcon} />
+                      <StatName>Mood: {char.mood}</StatName>
+                    </IconContainerInner>
+                  </CharSelectStatBox>
+                  <IconContainerOuter>
+                    <StatName style={{ display: 'flex' }}>
+                      Location: {locationName}
+                    </StatName>
+                  </IconContainerOuter>
+                </Carousel.Item>
+              );
+            })}
+          </StyledCarousel>
+        ) : (
           <>
-            <img style={{ height: '400px', width: '300px' }} src={images.createCharImage} />
+            <img
+              style={{ height: '400px', width: '300px' }}
+              src={images.createCharImage}
+            />
             <StatName>Create a Character:</StatName>
           </>
-        }
+        )}
       </div>
+      {/* <SelectorContainer></SelectorContainer> */}
     </>
   );
 };
