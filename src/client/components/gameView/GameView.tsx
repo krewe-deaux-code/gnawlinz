@@ -49,7 +49,7 @@ import {
   LocationImg,
   LocationDiv,
   IntroModal,
-  ModalStyle,,
+  ModalStyle,
   CRTDiv,
   ArcadeWoodStyle,
 } from './Styled'; //ContentBox

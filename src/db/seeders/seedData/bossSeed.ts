@@ -1,7 +1,7 @@
 export const bossSeed = [
   {
     name: 'Nicolas Un-Caged',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680225869/GnawlinzEnemies/NicolasUnCagedFinal_oopml9.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680290130/GnawlinzEnemies/NicolasUnCagedFinal_f2smu4.png',
     weapon1: 'Kukri',
     strength: 5,
     health: 500,
