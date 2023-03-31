@@ -270,7 +270,7 @@ export const IconContainer = styled.div`
 
 export const StatIconContainer = styled.div`
   display: grid;
-  grid-template-columns: 1.6rem 1.6rem 2rem auto;
+  grid-template-columns: 1.6rem 1.6rem 1rem auto;
   width: 30%;
   padding: 3px;
   text-align: center;
