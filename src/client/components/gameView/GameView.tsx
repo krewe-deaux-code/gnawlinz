@@ -899,7 +899,7 @@ const GameView = (props: GameViewProps) => {
     if (currentChar.mood + bonusMood < 1 ) {
       axios
         .post(`story/ending/${currentChar._id}`, {
-          result: currentEnemy.defeat,
+          result: 'You haven\'t the heart to go on. Slumping down to the ground, hopeless, you end your journey here.',
         })
           .catch((err) =>
             console.error('Failed to add story on  Mood-death: ', err)
