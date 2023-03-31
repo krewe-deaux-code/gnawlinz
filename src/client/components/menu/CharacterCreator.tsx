@@ -139,18 +139,18 @@ const CharacterCreator: React.FC = () => {
   // **********************
 
   const loadCharDefaults = () => {
-    const ranItem = Math.floor(Math.random() * 11 + 1);
-    const ranLoc = Math.floor(Math.random() * 3 + 1);
+    const randItem = Math.floor(Math.random() * 11 + 1); // <-- make + 2 ??
+    const randLoc = Math.floor(Math.random() * 3 + 1);
     setNewChar((prevChar) => ({
       ...prevChar,
       handle_id: activeUser.google_id, // <-- activeUser.user_id
       image_url: '',
-      inventory: [ranItem, 1, 1, 1, 1, 1, 1, 1],
+      inventory: [randItem, 1, 1, 1, 1, 1, 1, 1],
       health: 1,
       strength: 1,
       endurance: 1,
       mood: 1,
-      location: ranLoc,
+      location: randLoc,
       ally_count: 0,
       score: 0,
     }));

@@ -892,6 +892,8 @@ const GameView = (props: GameViewProps) => {
     return <Result />;
   }
   // Any hooks between above conditional and below return will crash the page.
+  console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
+
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
@@ -916,17 +918,34 @@ const GameView = (props: GameViewProps) => {
               <Modal.Header
                 style={{ background: 'rgb(92 92 92 / 65%)' }}
                 closeButton
-              >
-                <Modal.Title id='contained-modal-title-vcenter'>
-                  Introduction
-                </Modal.Title>
-              </Modal.Header>
+              ></Modal.Header>
               <Modal.Body style={{ background: 'rgb(92 92 92 / 65%)' }}>
-                <h4>Lundi Gras</h4>
+                <h4>It's Mardi Gras...</h4>
                 <p>
-                  You awoke from a Carnival bender to find yourself in a monster
-                  infested New Orleans! You set out to find supplies and
-                  vanquish that which should not be.
+                  But something isn't right... You come-to from a Carnival
+                  bender, with nothing but {fetchedInventory[0].name} and your
+                  tattered clothes. You can barely remember your own name, but
+                  you remember someone calling you... "{currentChar.name}"? Your
+                  head is pounding and you could swear you hear gurgling and
+                  moaning in the distance... the smell of putrid flesh creeps
+                  into your nostrils... but that might just be Bourbon Street...
+                  You should go find your things and try to get home before
+                  things get any weirder...
+                </p>
+                <p>
+                  You see a grey shape shambling towards you, it looks human
+                  but...{' '}
+                  <i>
+                    you rub your eyes to make sure you aren't hallucinating...
+                  </i>{' '}
+                  the figure shifting towards you has a bone sticking out of its
+                  flesh and gives you a hungry growl...
+                </p>
+                <p>
+                  <i style={{ color: 'goldenrod' }}>
+                    {'['}Use the buttons below to search for supplies and try to
+                    escape this deranged and violent carnival...{']'}
+                  </i>
                 </p>
               </Modal.Body>
             </ModalStyle>

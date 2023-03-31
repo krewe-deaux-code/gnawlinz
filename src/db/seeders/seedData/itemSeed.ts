@@ -11,7 +11,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Banana',
+    name: 'a Banana',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913804/gnawlinzItems/BananaPixelGood_hszmeq.png',
     consumable: true,
     modified_stat0: 'health',
@@ -22,7 +22,7 @@ export const itemSeed = [
     sell_price: 1
   },
   {
-    name: 'Lead Pipe',
+    name: 'a Lead Pipe',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913836/gnawlinzItems/leadpipeGoodPixel_mb9wya.png',
     consumable: false,
     modified_stat0: 'strength',
@@ -44,7 +44,7 @@ export const itemSeed = [
     sell_price: 1
   },
   {
-    name: 'Half Drunk Daiquiri',
+    name: 'a Half Drunk Daiquiri',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913833/gnawlinzItems/halfdrunkdaqGoodPixel_vg96uh.png',
     consumable: true,
     modified_stat0: 'strength',
@@ -55,7 +55,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Moonpie',
+    name: 'a Moonpie',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913839/gnawlinzItems/moonpieGoodPixel_asltxo.png',
     consumable: true,
     modified_stat0: 'health',
@@ -77,7 +77,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Beignet',
+    name: 'a Beignet',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913827/gnawlinzItems/BgoodsGoodPixel_gczw37.png',
     consumable: true,
     modified_stat0: 'health',
@@ -88,7 +88,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Bowl of Gumbo',
+    name: 'a Bowl of Gumbo',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913830/gnawlinzItems/GumboGoodPixel_tb2qwe.png',
     consumable: true,
     modified_stat0: 'health',
@@ -99,7 +99,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Sax',
+    name: 'a Saxaphone',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913842/gnawlinzItems/pixelSax_1_rthsar.png',
     consumable: false,
     modified_stat0: 'mood',
@@ -110,7 +110,7 @@ export const itemSeed = [
     sell_price: 0
   },
   {
-    name: 'Spiked Bat',
+    name: 'a Spiked Bat',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678678949/gnawlinzItems/Bat_e9j6lv.jpg',
     consumable: false,
     modified_stat0: 'strength',
