@@ -54,9 +54,6 @@ const CharacterCreator: React.FC = () => {
 
   const { hideStartButton, setHideStartButton, startFail, setStartFail } =
     useContext(MenuContext);
-  const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext);
-  const { hideStartButton, setHideStartButton, startFail, setStartFail } = useContext(MenuContext);
-
 
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
