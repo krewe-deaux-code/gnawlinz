@@ -92,9 +92,24 @@ const App = () => {
       })
       .catch((err) => console.error('error update from axios front end', err));
   };
+
   const randomItem = (min, max) => {
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
+
+  // const fetchItem = () => {
+  //   const randomNum = randomItem(1, 11);
+  //   // axios.get(`/item/${randomItem(1, 11)}`)
+  //   //   .then(item => {
+
+  //   //   })
+  //   //   .catch(err => console.error('single item fetch fail', err));
+  //   setCurrentChar((prevChar) => ({
+  //     ...prevChar,
+  //     inventory: [randomNum, ...prevChar.inventory],
+  //   }));
+  // };
+
   const locationUpdate = () => {
     console.log('WHAT AM I', location);
     const randomItemLocation = location;
@@ -134,6 +149,8 @@ const App = () => {
     console.log('LOCATION IN APP');
     locationUpdate();
   }, [location]);
+
+  console.log('CURRENT CHAR', currentChar);
 
   return (
     <SettingsContext.Provider

@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-
+import Button from 'react-bootstrap/Button';
 import {
   Container,
   Main,
@@ -50,6 +50,8 @@ import {
   LocationDiv,
   IntroModal,
   ModalStyle,
+  CRTDiv,
+  ArcadeWoodStyle,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -157,6 +159,7 @@ const GameView = (props: GameViewProps) => {
   const fetchEvent = (bossEvent = 0) => {
     setTempText('');
     if (bossEvent) {
+      // <-- EDIT
       axios
         .get<EventData>(`/event/${bossEvent}`)
         .then((event) => {
@@ -184,6 +187,7 @@ const GameView = (props: GameViewProps) => {
           });
           setPrevEventId(event.data._id);
           if (event.data.enemy_effect) {
+            console.log('FETCH ENEMY???', event.data);
             handleEnemyFetch();
             setEvent((prevEvent) => ({
               ...prevEvent,
@@ -248,7 +252,7 @@ const GameView = (props: GameViewProps) => {
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
 
-  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', currentEnemy);
+  // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', currentEnemy);
 
   const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
@@ -274,8 +278,12 @@ const GameView = (props: GameViewProps) => {
           )[0]
         );
         if (!Object.entries(event).length) {
-          console.log('THIS SHOULD BE FETCHING FIRST EVENT');
-          fetchEvent();
+          console.log('!OBJECT.ENTRIES.LENGTH');
+          if (currentChar.location._id === boss?.location) {
+            fetchEvent(4);
+          } else {
+            fetchEvent();
+          }
         }
       })
       .catch((err) => {
@@ -361,7 +369,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItem = async (itemID, i) => {
-    console.log('location in handleDropItem', location);
+    // console.log('location in handleDropItem', location);
     await setLocation((currLocation) => ({
       ...currLocation,
       drop_item_slot: itemID,
@@ -419,7 +427,6 @@ const GameView = (props: GameViewProps) => {
         });
       }
       if (fetchedInventory[i].modified_stat1 === 'health') {
-        console.log('FetchedInventory hit the health pot');
         setCurrentChar((previousStats) => {
           return {
             ...previousStats,
@@ -516,16 +523,6 @@ const GameView = (props: GameViewProps) => {
     stat: number,
     penalty = ''
   ) => {
-    console.log(
-      'choice ID: ',
-      choice_id,
-      'choiceType: ',
-      choiceType,
-      'stat: ',
-      stat,
-      'penalty: ',
-      penalty
-    );
     setPenalty(penalty);
     setTempText('');
     setDamageToEnemy(0);
@@ -558,10 +555,8 @@ const GameView = (props: GameViewProps) => {
               stat,
               currentChar.health
             );
-            console.log('FIGHT RESULT', fightResult);
             // <-- player loses, adjust player health below
             if (fightResult.player || fightResult.player === 0) {
-              //console.log('Middle of IF check when player is damaged.');
               if (fightResult.player <= 0) {
                 axios
                   .post(`story/ending/${currentChar._id}`, {
@@ -583,7 +578,6 @@ const GameView = (props: GameViewProps) => {
               // return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
-              //console.log('Middle of IF check when player is damaged.');
               setDamageToEnemy(fightResult.damage);
               setCurrentEnemy((prevEnemy: any) => ({
                 ...prevEnemy,
@@ -637,7 +631,6 @@ const GameView = (props: GameViewProps) => {
             if (Object.entries(currentAlly).length) {
               setShowAlly(true);
               setTempText(currentAlly.greeting); // add to schema
-              //console.log(currentAlly);
             }
           }
           // <-- evacuate WORKS already...
@@ -733,6 +726,12 @@ const GameView = (props: GameViewProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
+  // const handleTextBoxClick = () => {
+  //   setShowTextBox(true);
+  //   setShowButton(true);
+  // };
+
   // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
@@ -819,11 +818,10 @@ const GameView = (props: GameViewProps) => {
 
   // onMount
   useEffect(() => {
-    console.log('WHY SO RE RENDER???');
     const newSocket = io();
     setSocket(newSocket);
-    getAllLocations();
     fetchBoss();
+    getAllLocations();
     return () => {
       newSocket.disconnect();
     };
@@ -841,7 +839,6 @@ const GameView = (props: GameViewProps) => {
         })
         .then(() => {
           if (penalty !== '') {
-            // console.log('penalty: ', penalty);
             if (outcome === 'failure') {
               setCurrentChar((previousStats) => ({
                 ...previousStats,
@@ -862,10 +859,9 @@ const GameView = (props: GameViewProps) => {
   }, [outcome]);
 
   useEffect(() => {
-    console.log('ALL LOCATIONS / MOUNT USE EFFECT');
-    if (hasMounted) {
+    if (hasMounted && allLocations.length === 4) {
       if (location._id === boss?.location) {
-        complete.play(); // <-- if bunny, gets duplicated... is okay.
+        bunny.play(); // <-- if bunny, gets duplicated... is okay.
         setCurrentEnemy(boss);
         fetchEvent(4);
         setShowEnemy(true);
@@ -895,7 +891,6 @@ const GameView = (props: GameViewProps) => {
     handlePlayerDied();
     return <Result />;
   }
-  // console.log('YOUR SCORE', currentChar.score);
   // Any hooks between above conditional and below return will crash the page.
   return (
     <Container>
@@ -918,14 +913,15 @@ const GameView = (props: GameViewProps) => {
             backdrop={false}
           >
             <ModalStyle>
-              <Modal.Header style={{ background: 'rgb(92 92 92 / 65%)'}} closeButton>
+              <Modal.Header
+                style={{ background: 'rgb(92 92 92 / 65%)' }}
+                closeButton
+              >
                 <Modal.Title id='contained-modal-title-vcenter'>
                   Introduction
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body
-              style={{ background: 'rgb(92 92 92 / 65%)' }}
-              >
+              <Modal.Body style={{ background: 'rgb(92 92 92 / 65%)' }}>
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -1208,101 +1204,105 @@ const GameView = (props: GameViewProps) => {
             </StyledModal>
           </Content2>
         </Content1>
-        <CharStatusContainer>
-          <StatContainer>
-            <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
-            <div
-              className='page'
-              onDrop={handleDropItemOnCharacter}
-              onDragOver={handleDragOver}
-            >
-              <CharImageStyles src={currentChar.image_url} />
-            </div>
-          </StatContainer>
-          <StatContainer2>
-            <h4 onClick={props.handleSpeak}>
-              {' '}
-              {'Score: ' + currentChar.score}
-            </h4>
-            <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={props.handleSpeak}>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.healthIcon} />
-                {currentChar.health}
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.strengthIcon} />
-                {currentChar.strength}
-                <StatBonusColor>{` +${bonusStrength}`}</StatBonusColor>
-                <TempStatBonusColor>
-                  {temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}
-                </TempStatBonusColor>
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.enduranceIcon} />
-                {currentChar.endurance}
-                <StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>
-                {temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}
-                <TempStatBonusColor></TempStatBonusColor>
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.moodIcon} />
-                {currentChar.mood}
-                <StatBonusColor>{` +${bonusMood}`}</StatBonusColor>
-                <TempStatBonusColor>
-                  {temporaryMood !== 0 ? ` +${temporaryMood}` : ''}
-                </TempStatBonusColor>
-              </StatIconContainer>
-            </div>
-          </StatContainer2>
-          <InventoryBorder>
-            <h4 onClick={props.handleSpeak}>Inventory</h4>
-            {hoveredItem && (
-              <InventoryTextBubble>
-                {hoveredItem.modifier0 && (
-                  <>
-                    <h5>
-                      {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
-                    </h5>
-                    <h5>
-                      {hoveredItem.consumable === true ? 'Consumable' : ''}
-                    </h5>
-                    <h5>
-                      {' '}
-                      {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
-                    </h5>
-                    <br />
-                  </>
-                )}
-                {hoveredItem.modifier1 && (
-                  <>
-                    <h5>
-                      {' '}
-                      {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
-                    </h5>
-                    <br />
-                  </>
-                )}
-              </InventoryTextBubble>
-            )}
-            <InventoryStyle className='itemWidgets'>
-              {fetchedInventory.map((item: Item, i) => (
-                <div
-                  key={i}
-                  className='itemWidget'
-                  draggable
-                  onDragStart={(e) => handleOnDragItem(e, item._id, i)}
-                  onMouseEnter={() => handleOnMouseEnter(item)}
-                  onMouseLeave={() => handleOnMouseLeave()}
-                >
-                  <IconContainer>
-                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
-                  </IconContainer>
-                </div>
-              ))}
-            </InventoryStyle>
-          </InventoryBorder>
-        </CharStatusContainer>
+        {/* <ArcadeWoodStyle> */}
+        <CRTDiv>
+          <CharStatusContainer>
+            <StatContainer>
+              <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
+              <div
+                className='page'
+                onDrop={handleDropItemOnCharacter}
+                onDragOver={handleDragOver}
+              >
+                <CharImageStyles src={currentChar.image_url} />
+              </div>
+            </StatContainer>
+            <StatContainer2>
+              <h4 onClick={props.handleSpeak}>
+                {' '}
+                {'Score: ' + currentChar.score}
+              </h4>
+              <div style={{ width: '20em' }}>{StatusBars()}</div>
+              <div onClick={props.handleSpeak}>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.healthIcon} />
+                  {currentChar.health}
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.strengthIcon} />
+                  {currentChar.strength}
+                  <StatBonusColor>{`+${bonusStrength}`}</StatBonusColor>
+                  <TempStatBonusColor>
+                    {temporaryStrength !== 0 ? `+${temporaryStrength}` : ''}
+                  </TempStatBonusColor>
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.enduranceIcon} />
+                  {currentChar.endurance}
+                  <StatBonusColor>{`+${bonusEndurance}`}</StatBonusColor>
+                  {temporaryEndurance !== 0 ? `+${temporaryEndurance}` : ''}
+                  <TempStatBonusColor></TempStatBonusColor>
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.moodIcon} />
+                  {currentChar.mood}
+                  <StatBonusColor>{`+${bonusMood}`}</StatBonusColor>
+                  <TempStatBonusColor>
+                    {temporaryMood !== 0 ? `+${temporaryMood}` : ''}
+                  </TempStatBonusColor>
+                </StatIconContainer>
+              </div>
+            </StatContainer2>
+            <InventoryBorder>
+              <h4 onClick={props.handleSpeak}>Inventory</h4>
+              {hoveredItem && (
+                <InventoryTextBubble>
+                  {hoveredItem.modifier0 && (
+                    <>
+                      <h5>
+                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
+                      </h5>
+                      <h5>
+                        {hoveredItem.consumable === true ? 'Consumable' : ''}
+                      </h5>
+                      <h5>
+                        {' '}
+                        {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
+                      </h5>
+                      <br />
+                    </>
+                  )}
+                  {hoveredItem.modifier1 && (
+                    <>
+                      <h5>
+                        {' '}
+                        {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
+                      </h5>
+                      <br />
+                    </>
+                  )}
+                </InventoryTextBubble>
+              )}
+              <InventoryStyle className='itemWidgets'>
+                {fetchedInventory.map((item: Item, i) => (
+                  <div
+                    key={i}
+                    className='itemWidget'
+                    draggable
+                    onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                    onMouseEnter={() => handleOnMouseEnter(item)}
+                    onMouseLeave={() => handleOnMouseLeave()}
+                  >
+                    <IconContainer>
+                      <IconImg src={item._id !== 1 ? item.image_url : ''} />
+                    </IconContainer>
+                  </div>
+                ))}
+              </InventoryStyle>
+            </InventoryBorder>
+          </CharStatusContainer>
+        </CRTDiv>
+        {/* </ArcadeWoodStyle> */}
         <Content3>
           <div>
             {tooltip && (
