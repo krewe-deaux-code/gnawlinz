@@ -908,6 +908,15 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
     // throttle(handlePlayerDied, 30000);
+    if (currentChar.mood + bonusMood < 1 ) {
+      axios
+        .post(`story/ending/${currentChar._id}`, {
+          result: currentEnemy.defeat,
+        })
+          .catch((err) =>
+            console.error('Failed to add story on  Mood-death: ', err)
+          );
+    }
     handlePlayerDied();
     return <Result />;
   }
