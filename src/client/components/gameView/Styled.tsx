@@ -171,9 +171,9 @@ export const Content1 = styled.div`
   padding: 0.125rem;
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
-  box-shadow:  8px 0px #3f3545,
-  0px -8px #3f3545,
-         8px -8px #3f3545;
+  box-shadow:  6px 0px #766E94,
+  6px -2px #b292b6,
+         0px -2px #b292b6;
   width: 100%;
   height: 100%;
   display: grid;
@@ -201,9 +201,9 @@ export const Content3 = styled(Content2)`
   width: 100%;
   height: 100%;
   display: grid;
-  box-shadow:  -8px 0px #3f3545,
-  0px -8px #3f3545,
-         -8px -8px #3f3545;
+  box-shadow:  -6px 0px #766E94,
+  -6px -2px #b292b6,
+         0px -2px #b292b6;
   align-content: space-around;
   grid-template-columns: auto auto;
 `;
@@ -230,7 +230,7 @@ max-width: 183px;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
 width: 2em;
-padding: 0.25rem;
+padding: 0.1rem;
 padding-right: 0.5em;
 `;
 
@@ -347,7 +347,7 @@ export const HudButton = styled.button`
 
 export const EventText = styled.div`
   z-index: 3;
-  background-color: rgb(92 92 92 / 65%);
+  background-color: rgb(102 106 104 / 65%);
   backdrop-filter: blur(4px);
   color: white;
   padding: .4em;
@@ -603,18 +603,27 @@ export const OverlayValue = styled.div`
   font-size: 0.8rem;
 `;
 
+export const ArcadeWoodStyle = styled.div`
+ border-image: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1680231879/gnawlinzIcons/redWoodGood_n9ye42.png');
+  border: 10px solid;
+  border-image-outset: 100px;
+  background-color: transparent;
+  border-radius: 1rem;
+  position: relative;
+  z-index: 5;
+`;
 export const CRTDiv = styled.div`
 position: relative;
 padding: 1rem;
-background-image:linear-gradient( .25turn, #424242, #a5b7b9, #424242);
+background-image:linear-gradient( .25turn, #2f4244, #85b4ba, #2f4244);
 padding: 10px;
 border-radius: 1rem;
-    border: 1px solid white;
-    box-shadow:  2px -2px #a5b7b9,
-         -2px -1px #a5b7b9,
-         2px -1px #a5b7b9,
-         0px 0px #a5b7b9,
-         0px -3px #a5b7b9;
+    box-shadow:  0px -1px #85b4ba,
+         -3px 8px #85b4ba,
+         3px 8px #85b4ba,
+         -3px -1px #85b4ba,
+         3px -1px #85b4ba,
+         0px 0px #85b4ba;
   &:before {
   content: " ";
   display: block;
@@ -626,7 +635,7 @@ border-radius: 1rem;
   right: 0;
   background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
   z-index: 4;
-  background-size: 100% 3.4px, 5.1px 100%;
+  background-size: 100% 2px, 3px 100%;
   pointer-events: none;
 }
 &:after {

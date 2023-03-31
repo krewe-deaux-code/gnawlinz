@@ -1,7 +1,7 @@
 export const bossSeed = [
   {
     name: 'Nick Un-Caged',
-    image_url: 'https://helios-i.mashable.com/imagery/articles/03LBXfj2MXzQUTY5HiTEjih/images-10.fill.size_2000x1125.v1650320005.jpg',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680225869/GnawlinzEnemies/NicolasUnCagedFinal_oopml9.png',
     weapon1: 'Pistols Akimbo',
     strength: 5,
     health: 20,
