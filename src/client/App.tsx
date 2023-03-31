@@ -130,6 +130,7 @@ const App = () => {
   }, [currentChar]);
 
   useEffect(() => {
+    console.log('LOCATION IN APP');
     locationUpdate();
   }, [location]);
 

@@ -60,6 +60,7 @@ import {
   Item,
   Character,
   GameViewProps,
+  Boss,
 } from '../../utility/interface';
 
 import {
@@ -77,6 +78,7 @@ import {
   click,
   neutral,
   heartBeat,
+  bunny,
 } from '../../utility/sounds';
 import { ModalBody } from 'react-bootstrap';
 
@@ -133,6 +135,7 @@ const GameView = (props: GameViewProps) => {
   const [showAlly, setShowAlly] = useState(false);
   const [damageToEnemy, setDamageToEnemy] = useState(0);
   const [damageToPlayer, setDamageToPlayer] = useState(0);
+  const [boss, setBoss] = useState<Boss | null>(null);
 
   const [bonusStrength, setBonusStrength] = useState(0);
   const [bonusEndurance, setBonusEndurance] = useState(0);
@@ -146,46 +149,58 @@ const GameView = (props: GameViewProps) => {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
 
-  const fetchEvent = () => {
+  const fetchEvent = (bossEvent = 0) => {
     setTempText('');
-    axios
-      .get<EventData>('/event/random', {
-        params: { excludeEventId: prevEventId },
-      })
-      .then((event) => {
-        // console.log('EVENT', event);
-        setEvent(event.data);
-        setChoices({
-          engage: event.data.choice0,
-          evade: event.data.choice1,
-          evacuate: event.data.choice2,
-          wildcard: event.data.choice3,
+    if (bossEvent) {
+      axios
+        .get<EventData>(`/event/${bossEvent}`)
+        .then((event) => {
+          setEvent(event.data);
+          setChoices({
+            engage: event.data.choice0,
+            evade: event.data.choice1,
+            evacuate: event.data.choice2,
+            wildcard: event.data.choice3,
+          });
+        })
+        .catch((err) => console.error('fetch specific event failure', err));
+    } else {
+      axios
+        .get<EventData>('/event/random', {
+          params: { excludeEventId: prevEventId },
+        })
+        .then((event) => {
+          setEvent(event.data);
+          setChoices({
+            engage: event.data.choice0,
+            evade: event.data.choice1,
+            evacuate: event.data.choice2,
+            wildcard: event.data.choice3,
+          });
+          setPrevEventId(event.data._id);
+          if (event.data.enemy_effect) {
+            handleEnemyFetch();
+            setEvent((prevEvent) => ({
+              ...prevEvent,
+              enemy_effect: false,
+            }));
+          } else {
+            setCurrentEnemy({});
+          }
+          if (event.data.ally_effect) {
+            handleAllyFetch();
+            setEvent((prevEvent) => ({
+              ...prevEvent,
+              ally_effect: false,
+            }));
+          } else {
+            setCurrentAlly({});
+          }
+        })
+        .catch((err) => {
+          console.error('RANDOM EVENT FETCH FAILED', err);
         });
-        setPrevEventId(event.data._id);
-        if (event.data.enemy_effect) {
-          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
-          handleEnemyFetch();
-          setEvent((prevEvent) => ({
-            ...prevEvent,
-            enemy_effect: false,
-          }));
-        } else {
-          setCurrentEnemy({});
-        }
-        if (event.data.ally_effect) {
-          // <-- function: handleEnemyFetch() (setCurrentEnemy/Ally, .image_url somewhere)
-          handleAllyFetch();
-          setEvent((prevEvent) => ({
-            ...prevEvent,
-            ally_effect: false,
-          }));
-        } else {
-          setCurrentAlly({});
-        }
-      })
-      .catch((err) => {
-        console.error('RANDOM EVENT FETCH FAILED', err);
-      });
+    }
   };
 
   const handleClickButt = () => {
@@ -206,8 +221,6 @@ const GameView = (props: GameViewProps) => {
       .get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
-        //console.log('Enemy fetched, sending to state...');
-        // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
       })
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
@@ -228,6 +241,8 @@ const GameView = (props: GameViewProps) => {
       })
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
+
+  console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', currentEnemy);
 
   const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
@@ -253,6 +268,7 @@ const GameView = (props: GameViewProps) => {
           )[0]
         );
         if (!Object.entries(event).length) {
+          console.log('THIS SHOULD BE FETCHING FIRST EVENT');
           fetchEvent();
         }
       })
@@ -292,10 +308,24 @@ const GameView = (props: GameViewProps) => {
       localStorage.setItem(i.toString(), location.name);
     });
 
+    if (allLocations[0]._id === boss?.location) {
+      // <-- CODE
+      fetchEvent(boss?.event);
+      setTempText('');
+      setCurrentEnemy(boss);
+      // setTimeout(() => {
+      //   bunny.play();
+      //   setShowEnemy(true);
+      // }, 400); // <-- reduce
+      bunny.play();
+      setShowEnemy(true);
+      return;
+    }
     fetchEvent();
     setInvestigateDisabled(false);
     setTagDisabled(false);
   };
+
   const handleToolTip = (button: string) => {
     if (button === 'engage') {
       setTooltip('Enter combat to grow your score');
@@ -307,6 +337,7 @@ const GameView = (props: GameViewProps) => {
       setTooltip('Risk depression for chance at ally');
     }
   };
+
   const handleToolTipOff = () => {
     setTooltip(null);
   };
@@ -514,8 +545,6 @@ const GameView = (props: GameViewProps) => {
           if (isEnemy(currentEnemy) && currentEnemy.health > 0) {
             // <-- Enemy exists, enemy !dead
             setShowEnemy(true);
-            console.log('ENEMY STATE', currentEnemy);
-            console.log('CURRENT CHAR', currentChar);
             const fightResult = fightEnemy(
               currentEnemy.strength,
               currentEnemy.health,
@@ -760,6 +789,16 @@ const GameView = (props: GameViewProps) => {
     );
   };
 
+  const fetchBoss = () => {
+    axios
+      .get<Boss>('/boss/1')
+      .then((boss: any) => {
+        console.log('BOSS', boss.data);
+        setBoss(boss.data);
+      })
+      .catch((err) => console.error('boss fetch failure', err));
+  };
+
   // *********************************************************************************************************************************************************************************************
 
   useEffect(() => {
@@ -773,9 +812,11 @@ const GameView = (props: GameViewProps) => {
 
   // onMount
   useEffect(() => {
+    console.log('WHY SO RE RENDER???');
     const newSocket = io();
     setSocket(newSocket);
     getAllLocations();
+    fetchBoss();
     return () => {
       newSocket.disconnect();
     };
@@ -813,6 +854,20 @@ const GameView = (props: GameViewProps) => {
     }
   }, [outcome]);
 
+  useEffect(() => {
+    console.log('ALL LOCATIONS / MOUNT USE EFFECT');
+    if (hasMounted) {
+      if (location._id === boss?.location) {
+        complete.play(); // <-- if bunny, gets duplicated... is okay.
+        setCurrentEnemy(boss);
+        fetchEvent(4);
+        setShowEnemy(true);
+      } else {
+        fetchEvent();
+      }
+    }
+  }, [allLocations]); // <-- only when allLocations.length full again
+
   // // <-- useEffect to catch socket emits for killFeed
   // useEffect(() => {
   //   // <-- if socket connection exists...
@@ -829,7 +884,6 @@ const GameView = (props: GameViewProps) => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
-    console.log('selectedChoice: ', selectedChoice);
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
     return <Result />;

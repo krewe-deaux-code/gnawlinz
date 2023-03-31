@@ -5,7 +5,9 @@ export const bossSeed = [
     weapon1: 'Kukri',
     strength: 5,
     health: 500,
-    location: Math.floor(Math.random() * 5 + 1)
+    location: 1, // Math.floor(Math.random() * 4) + 1
+    score: 666,
+    event: 4
   },
   // {
   //   name: 'Bananasaurus',

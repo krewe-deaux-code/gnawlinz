@@ -99,3 +99,14 @@ export interface Leader {
   mood: number;
   strength: number;
 }
+
+export interface Boss {
+  name: string;
+  image_url: string;
+  weapon1: string;
+  strength: number;
+  health: number;
+  location: number;
+  score: number;
+  event: number;
+}
