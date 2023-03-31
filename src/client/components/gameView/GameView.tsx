@@ -206,6 +206,7 @@ const GameView = (props: GameViewProps) => {
   const handleClickButt = () => {
     setInvestigateDisabled(true);
   };
+
   const handleToggleEvent = () => {
     setShowEvent(showEvent ? false : true);
   };
@@ -317,7 +318,7 @@ const GameView = (props: GameViewProps) => {
       //   bunny.play();
       //   setShowEnemy(true);
       // }, 400); // <-- reduce
-      bunny.play();
+      bunny.play(); // both sounds fire (two different spots of the code)
       setShowEnemy(true);
       return;
     }
@@ -428,6 +429,7 @@ const GameView = (props: GameViewProps) => {
     const itemIdIndex = [itemId, i];
     e.dataTransfer.setData('itemWidget', JSON.stringify(itemIdIndex));
   };
+
   const itemBonuses = async () => {
     let strength = 0;
     let endurance = 0;
