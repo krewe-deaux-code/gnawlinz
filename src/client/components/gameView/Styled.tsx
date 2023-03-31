@@ -726,4 +726,7 @@ export const ModalStyle = styled.div`
   .modal-content {
 
   }
+  .btn-close{
+    filter: invert(100%);
+  }
 `;
