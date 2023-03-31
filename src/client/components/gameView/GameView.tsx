@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-
+import Button from 'react-bootstrap/Button';
 import {
   Container,
   Main,
@@ -50,6 +50,8 @@ import {
   LocationDiv,
   IntroModal,
   ModalStyle,
+  CRTDiv,
+  ArcadeWoodStyle,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -733,6 +735,12 @@ const GameView = (props: GameViewProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  // write graffiti button function, shows input field and tag it button
+  // const handleTextBoxClick = () => {
+  //   setShowTextBox(true);
+  //   setShowButton(true);
+  // };
+
   // closes input field
   const handleTextBoxClose = () => {
     setShowTextBox(false);
@@ -918,14 +926,15 @@ const GameView = (props: GameViewProps) => {
             backdrop={false}
           >
             <ModalStyle>
-              <Modal.Header style={{ background: 'rgb(92 92 92 / 65%)'}} closeButton>
+              <Modal.Header
+                style={{ background: 'rgb(92 92 92 / 65%)' }}
+                closeButton
+              >
                 <Modal.Title id='contained-modal-title-vcenter'>
                   Introduction
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body
-              style={{ background: 'rgb(92 92 92 / 65%)' }}
-              >
+              <Modal.Body style={{ background: 'rgb(92 92 92 / 65%)' }}>
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -1208,101 +1217,105 @@ const GameView = (props: GameViewProps) => {
             </StyledModal>
           </Content2>
         </Content1>
-        <CharStatusContainer>
-          <StatContainer>
-            <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
-            <div
-              className='page'
-              onDrop={handleDropItemOnCharacter}
-              onDragOver={handleDragOver}
-            >
-              <CharImageStyles src={currentChar.image_url} />
-            </div>
-          </StatContainer>
-          <StatContainer2>
-            <h4 onClick={props.handleSpeak}>
-              {' '}
-              {'Score: ' + currentChar.score}
-            </h4>
-            <div style={{ width: '20em' }}>{StatusBars()}</div>
-            <div onClick={props.handleSpeak}>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.healthIcon} />
-                {currentChar.health}
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.strengthIcon} />
-                {currentChar.strength}
-                <StatBonusColor>{` +${bonusStrength}`}</StatBonusColor>
-                <TempStatBonusColor>
-                  {temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}
-                </TempStatBonusColor>
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.enduranceIcon} />
-                {currentChar.endurance}
-                <StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>
-                {temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}
-                <TempStatBonusColor></TempStatBonusColor>
-              </StatIconContainer>
-              <StatIconContainer>
-                <TinyStatIconImg src={images.moodIcon} />
-                {currentChar.mood}
-                <StatBonusColor>{` +${bonusMood}`}</StatBonusColor>
-                <TempStatBonusColor>
-                  {temporaryMood !== 0 ? ` +${temporaryMood}` : ''}
-                </TempStatBonusColor>
-              </StatIconContainer>
-            </div>
-          </StatContainer2>
-          <InventoryBorder>
-            <h4 onClick={props.handleSpeak}>Inventory</h4>
-            {hoveredItem && (
-              <InventoryTextBubble>
-                {hoveredItem.modifier0 && (
-                  <>
-                    <h5>
-                      {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
-                    </h5>
-                    <h5>
-                      {hoveredItem.consumable === true ? 'Consumable' : ''}
-                    </h5>
-                    <h5>
-                      {' '}
-                      {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
-                    </h5>
-                    <br />
-                  </>
-                )}
-                {hoveredItem.modifier1 && (
-                  <>
-                    <h5>
-                      {' '}
-                      {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
-                    </h5>
-                    <br />
-                  </>
-                )}
-              </InventoryTextBubble>
-            )}
-            <InventoryStyle className='itemWidgets'>
-              {fetchedInventory.map((item: Item, i) => (
-                <div
-                  key={i}
-                  className='itemWidget'
-                  draggable
-                  onDragStart={(e) => handleOnDragItem(e, item._id, i)}
-                  onMouseEnter={() => handleOnMouseEnter(item)}
-                  onMouseLeave={() => handleOnMouseLeave()}
-                >
-                  <IconContainer>
-                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
-                  </IconContainer>
-                </div>
-              ))}
-            </InventoryStyle>
-          </InventoryBorder>
-        </CharStatusContainer>
+        {/* <ArcadeWoodStyle> */}
+        <CRTDiv>
+          <CharStatusContainer>
+            <StatContainer>
+              <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
+              <div
+                className='page'
+                onDrop={handleDropItemOnCharacter}
+                onDragOver={handleDragOver}
+              >
+                <CharImageStyles src={currentChar.image_url} />
+              </div>
+            </StatContainer>
+            <StatContainer2>
+              <h4 onClick={props.handleSpeak}>
+                {' '}
+                {'Score: ' + currentChar.score}
+              </h4>
+              <div style={{ width: '20em' }}>{StatusBars()}</div>
+              <div onClick={props.handleSpeak}>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.healthIcon} />
+                  {currentChar.health}
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.strengthIcon} />
+                  {currentChar.strength}
+                  <StatBonusColor>{`+${bonusStrength}`}</StatBonusColor>
+                  <TempStatBonusColor>
+                    {temporaryStrength !== 0 ? `+${temporaryStrength}` : ''}
+                  </TempStatBonusColor>
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.enduranceIcon} />
+                  {currentChar.endurance}
+                  <StatBonusColor>{`+${bonusEndurance}`}</StatBonusColor>
+                  {temporaryEndurance !== 0 ? `+${temporaryEndurance}` : ''}
+                  <TempStatBonusColor></TempStatBonusColor>
+                </StatIconContainer>
+                <StatIconContainer>
+                  <TinyStatIconImg src={images.moodIcon} />
+                  {currentChar.mood}
+                  <StatBonusColor>{`+${bonusMood}`}</StatBonusColor>
+                  <TempStatBonusColor>
+                    {temporaryMood !== 0 ? `+${temporaryMood}` : ''}
+                  </TempStatBonusColor>
+                </StatIconContainer>
+              </div>
+            </StatContainer2>
+            <InventoryBorder>
+              <h4 onClick={props.handleSpeak}>Inventory</h4>
+              {hoveredItem && (
+                <InventoryTextBubble>
+                  {hoveredItem.modifier0 && (
+                    <>
+                      <h5>
+                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
+                      </h5>
+                      <h5>
+                        {hoveredItem.consumable === true ? 'Consumable' : ''}
+                      </h5>
+                      <h5>
+                        {' '}
+                        {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
+                      </h5>
+                      <br />
+                    </>
+                  )}
+                  {hoveredItem.modifier1 && (
+                    <>
+                      <h5>
+                        {' '}
+                        {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
+                      </h5>
+                      <br />
+                    </>
+                  )}
+                </InventoryTextBubble>
+              )}
+              <InventoryStyle className='itemWidgets'>
+                {fetchedInventory.map((item: Item, i) => (
+                  <div
+                    key={i}
+                    className='itemWidget'
+                    draggable
+                    onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                    onMouseEnter={() => handleOnMouseEnter(item)}
+                    onMouseLeave={() => handleOnMouseLeave()}
+                  >
+                    <IconContainer>
+                      <IconImg src={item._id !== 1 ? item.image_url : ''} />
+                    </IconContainer>
+                  </div>
+                ))}
+              </InventoryStyle>
+            </InventoryBorder>
+          </CharStatusContainer>
+        </CRTDiv>
+        {/* </ArcadeWoodStyle> */}
         <Content3>
           <div>
             {tooltip && (
