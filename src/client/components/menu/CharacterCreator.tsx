@@ -24,6 +24,7 @@ const CharacterCreator: React.FC = () => {
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } = useContext(UserContext);
   const { hideStartButton, setHideStartButton, startFail, setStartFail } = useContext(MenuContext);
 
+
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -43,6 +44,9 @@ const CharacterCreator: React.FC = () => {
   const [endurance, setEndurance] = useState<number>(1);
   const [mood, setMood] = useState<number>(1);
   const [statPool, setStatPool] = useState<number>(18);
+  const [startDisabled, setStartDisabled] = useState<boolean>(true);
+
+
 
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
@@ -94,6 +98,8 @@ const CharacterCreator: React.FC = () => {
         setCurrentChar(response.data);
         axios.post(`/story/begin/${response.data._id}`)
           .catch(err => console.error('beginning story failed to fetch', err));
+      }).then(() => {
+        setStartDisabled(false);
       })
       .catch(err => console.error('Fail Posting from Client', err));
   };
@@ -360,7 +366,7 @@ const CharacterCreator: React.FC = () => {
           >SAVE A CHARACTER TO PLAY</motion.h6>}
         </div>
         {hideStartButton &&
-          <CCStartButton onClick={() => {
+          <CCStartButton disabled={startDisabled} onClick={() => {
             if (currentChar.name === 'Someguy McPlaceholder') {
               setStartFail(true);
               return;
