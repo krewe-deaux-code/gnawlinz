@@ -119,7 +119,6 @@ const CharacterStats: React.FC = () => {
             interval={null}
           >
             {userChars.map((char: Character, i: number) => {
-              console.log('INSIDE MAP', char);
               return (
                 <Carousel.Item key={i}>
                   <div
