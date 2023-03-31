@@ -1,15 +1,15 @@
-import axios from "axios";
-import Nav from "../nav/NavBar";
-import Result from "../result/Result";
-import ProgressBar from "react-bootstrap/ProgressBar";
-import { ReactNode } from "react";
-import images from "../../utility/images";
+import axios from 'axios';
+import Nav from '../nav/NavBar';
+import Result from '../result/Result';
+import ProgressBar from 'react-bootstrap/ProgressBar';
+import { ReactNode } from 'react';
+import images from '../../utility/images';
 
-import { io, Socket } from "socket.io-client";
-import { motion } from "framer-motion";
+import { io, Socket } from 'socket.io-client';
+import { motion } from 'framer-motion';
 
-import React, { useEffect, useContext, useState } from "react";
-import Modal from "react-bootstrap/Modal";
+import React, { useEffect, useContext, useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
 
 import {
   Container,
@@ -48,10 +48,10 @@ import {
   ArcadeButtonToggle,
   LocationImg,
   LocationDiv,
-} from "./Styled"; //ContentBox
+} from './Styled'; //ContentBox
 
-import { Link } from "react-router-dom";
-import { UserContext, SettingsContext } from "../../App";
+import { Link } from 'react-router-dom';
+import { UserContext, SettingsContext } from '../../App';
 import {
   EventData,
   ChoiceData,
@@ -60,14 +60,14 @@ import {
   Item,
   Character,
   GameViewProps,
-} from "../../utility/interface";
+} from '../../utility/interface';
 
 import {
   statCheck,
   fightEnemy,
   isEnemy,
   addItem,
-} from "../../utility/gameUtils";
+} from '../../utility/gameUtils';
 import {
   complete,
   hit,
@@ -77,8 +77,8 @@ import {
   click,
   neutral,
   heartBeat,
-} from "../../utility/sounds";
-import { ModalBody } from "react-bootstrap";
+} from '../../utility/sounds';
+import { ModalBody } from 'react-bootstrap';
 
 const GameView = (props: GameViewProps) => {
   const {
@@ -118,17 +118,17 @@ const GameView = (props: GameViewProps) => {
   const [killFeed, setKillFeed] = useState<string[]>([]);
 
   // state for investigate modal
-  const [modalText, setModalText] = useState<ReactNode>("");
+  const [modalText, setModalText] = useState<ReactNode>('');
   const [showTextBox, setShowTextBox] = useState(false);
   const [show, setShow] = useState(false);
-  const [locationModalText, setLocationModalText] = useState("");
+  const [locationModalText, setLocationModalText] = useState('');
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [showButton, setShowButton] = useState(false);
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
 
-  const [tempText, setTempText] = useState("");
-  const [penalty, setPenalty] = useState("");
+  const [tempText, setTempText] = useState('');
+  const [penalty, setPenalty] = useState('');
   const [showEnemy, setShowEnemy] = useState(false);
   const [showAlly, setShowAlly] = useState(false);
   const [damageToEnemy, setDamageToEnemy] = useState(0);
@@ -147,9 +147,9 @@ const GameView = (props: GameViewProps) => {
   const [showEvent, setShowEvent] = useState(true);
 
   const fetchEvent = () => {
-    setTempText("");
+    setTempText('');
     axios
-      .get<EventData>("/event/random", {
+      .get<EventData>('/event/random', {
         params: { excludeEventId: prevEventId },
       })
       .then((event) => {
@@ -184,7 +184,7 @@ const GameView = (props: GameViewProps) => {
         }
       })
       .catch((err) => {
-        console.error("RANDOM EVENT FETCH FAILED", err);
+        console.error('RANDOM EVENT FETCH FAILED', err);
       });
   };
 
@@ -209,7 +209,7 @@ const GameView = (props: GameViewProps) => {
         //console.log('Enemy fetched, sending to state...');
         // <-- put enemy.data.image_url somewhere into HUD to indicate enemy
       })
-      .catch((err) => console.error("FETCH ENEMY ERROR", err));
+      .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
 
   const handleAllyFetch = () => {
@@ -226,7 +226,7 @@ const GameView = (props: GameViewProps) => {
         //console.log('ally fetched, sending to state...');
         // <-- put ally.data.image_url somewhere into HUD to indicate enemy
       })
-      .catch((err) => console.error("FETCH ENEMY ERROR", err));
+      .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
 
   const getAllLocations = (buttonClick = -1) => {
@@ -235,7 +235,7 @@ const GameView = (props: GameViewProps) => {
       currentChar.location = visited[buttonClick]._id;
     }
     axios
-      .get("/location/allLocations")
+      .get('/location/allLocations')
       .then((locations) => {
         setVisited(
           locations.data.filter(
@@ -257,7 +257,7 @@ const GameView = (props: GameViewProps) => {
         }
       })
       .catch((err) => {
-        console.error("Failed to retrieve all locations: ", err);
+        console.error('Failed to retrieve all locations: ', err);
       });
     setInvestigateDisabled(false);
     setTagDisabled(false);
@@ -273,10 +273,10 @@ const GameView = (props: GameViewProps) => {
     setTemporaryStrength(0);
     setShowAlly(false);
     setShowEnemy(false);
-    setOutcome("");
+    setOutcome('');
     setSelectedChoice({} as ChoiceData);
     if (!allLocations.length) {
-      setLocationModalText("true");
+      setLocationModalText('true');
       handleShowLocationModal();
       return;
     }
@@ -297,14 +297,14 @@ const GameView = (props: GameViewProps) => {
     setTagDisabled(false);
   };
   const handleToolTip = (button: string) => {
-    if (button === "engage") {
-      setTooltip("Enter combat to grow your score");
-    } else if (button === "evade") {
-      setTooltip("Risk a combat for chance at item");
-    } else if (button === "evacuate") {
-      setTooltip("Leave the area without resolving this event");
-    } else if (button === "wildcard") {
-      setTooltip("Risk depression for chance at ally");
+    if (button === 'engage') {
+      setTooltip('Enter combat to grow your score');
+    } else if (button === 'evade') {
+      setTooltip('Risk a combat for chance at item');
+    } else if (button === 'evacuate') {
+      setTooltip('Leave the area without resolving this event');
+    } else if (button === 'wildcard') {
+      setTooltip('Risk depression for chance at ally');
     }
   };
   const handleToolTipOff = () => {
@@ -324,7 +324,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItem = async (itemID, i) => {
-    console.log("location in handleDropItem", location);
+    console.log('location in handleDropItem', location);
     await setLocation((currLocation) => ({
       ...currLocation,
       drop_item_slot: itemID,
@@ -351,29 +351,29 @@ const GameView = (props: GameViewProps) => {
         };
       });
 
-      if (fetchedInventory[i].modified_stat0 === "strength") {
+      if (fetchedInventory[i].modified_stat0 === 'strength') {
         setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier0);
       }
-      if (fetchedInventory[i].modified_stat1 === "strength") {
+      if (fetchedInventory[i].modified_stat1 === 'strength') {
         setTemporaryStrength(temporaryStrength + fetchedInventory[i].modifier1);
       }
-      if (fetchedInventory[i].modified_stat0 === "endurance") {
+      if (fetchedInventory[i].modified_stat0 === 'endurance') {
         setTemporaryEndurance(
           temporaryEndurance + fetchedInventory[i].modifier0
         );
       }
-      if (fetchedInventory[i].modified_stat1 === "endurance") {
+      if (fetchedInventory[i].modified_stat1 === 'endurance') {
         setTemporaryEndurance(
           temporaryEndurance + fetchedInventory[i].modifier1
         );
       }
-      if (fetchedInventory[i].modified_stat0 === "mood") {
+      if (fetchedInventory[i].modified_stat0 === 'mood') {
         setTemporaryMood(temporaryMood + fetchedInventory[i].modifier0);
       }
-      if (fetchedInventory[i].modified_stat1 === "mood") {
+      if (fetchedInventory[i].modified_stat1 === 'mood') {
         setTemporaryMood(temporaryMood + fetchedInventory[i].modifier1);
       }
-      if (fetchedInventory[i].modified_stat0 === "health") {
+      if (fetchedInventory[i].modified_stat0 === 'health') {
         setCurrentChar((previousStats) => {
           return {
             ...previousStats,
@@ -381,8 +381,8 @@ const GameView = (props: GameViewProps) => {
           };
         });
       }
-      if (fetchedInventory[i].modified_stat1 === "health") {
-        console.log("FetchedInventory hit the health pot");
+      if (fetchedInventory[i].modified_stat1 === 'health') {
+        console.log('FetchedInventory hit the health pot');
         setCurrentChar((previousStats) => {
           return {
             ...previousStats,
@@ -395,7 +395,7 @@ const GameView = (props: GameViewProps) => {
 
   const handleOnDragItem = (e: React.DragEvent, itemId: number, i: number) => {
     const itemIdIndex = [itemId, i];
-    e.dataTransfer.setData("itemWidget", JSON.stringify(itemIdIndex));
+    e.dataTransfer.setData('itemWidget', JSON.stringify(itemIdIndex));
   };
   const itemBonuses = async () => {
     let strength = 0;
@@ -403,22 +403,22 @@ const GameView = (props: GameViewProps) => {
     let mood = 0;
     fetchedInventory.forEach((item) => {
       if (item.consumable === false) {
-        if (item.modified_stat0 === "strength") {
+        if (item.modified_stat0 === 'strength') {
           strength += item.modifier0;
         }
-        if (item.modified_stat1 === "strength") {
+        if (item.modified_stat1 === 'strength') {
           strength += item.modifier1;
         }
-        if (item.modified_stat0 === "endurance") {
+        if (item.modified_stat0 === 'endurance') {
           endurance += item.modifier0;
         }
-        if (item.modified_stat1 === "endurance") {
+        if (item.modified_stat1 === 'endurance') {
           endurance += item.modifier1;
         }
-        if (item.modified_stat0 === "mood") {
+        if (item.modified_stat0 === 'mood') {
           mood += item.modifier0;
         }
-        if (item.modified_stat1 === "mood") {
+        if (item.modified_stat1 === 'mood') {
           mood += item.modifier1;
         }
       }
@@ -429,7 +429,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
-    const itemWidget = e.dataTransfer.getData("itemWidget") as string;
+    const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     if (itemArr[0] !== 1) {
       handleDropItemChar(itemArr[0], itemArr[1]);
@@ -437,27 +437,27 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
-    const itemWidget = e.dataTransfer.getData("itemWidget") as string;
+    const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     const inventoryItem = fetchedInventory[itemArr[1]];
     //  removes item bonus from state when item is dropped
     if (inventoryItem.consumable === false && inventoryItem._id !== 1) {
-      if (inventoryItem.modified_stat0 === "strength") {
+      if (inventoryItem.modified_stat0 === 'strength') {
         setBonusStrength(bonusStrength - inventoryItem.modifier0);
       }
-      if (inventoryItem.modified_stat1 === "strength") {
+      if (inventoryItem.modified_stat1 === 'strength') {
         setBonusStrength(bonusStrength - inventoryItem.modifier1);
       }
-      if (inventoryItem.modified_stat0 === "endurance") {
+      if (inventoryItem.modified_stat0 === 'endurance') {
         setBonusEndurance(bonusEndurance - inventoryItem.modifier0);
       }
-      if (inventoryItem.modified_stat1 === "endurance") {
+      if (inventoryItem.modified_stat1 === 'endurance') {
         setBonusEndurance(bonusEndurance - inventoryItem.modifier1);
       }
-      if (inventoryItem.modified_stat0 === "mood") {
+      if (inventoryItem.modified_stat0 === 'mood') {
         setBonusMood(bonusMood - inventoryItem.modifier0);
       }
-      if (inventoryItem.modified_stat1 === "mood") {
+      if (inventoryItem.modified_stat1 === 'mood') {
         setBonusMood(bonusMood - inventoryItem.modifier1);
       }
     }
@@ -476,25 +476,25 @@ const GameView = (props: GameViewProps) => {
     choice_id: number,
     choiceType: string,
     stat: number,
-    penalty = ""
+    penalty = ''
   ) => {
     console.log(
-      "choice ID: ",
+      'choice ID: ',
       choice_id,
-      "choiceType: ",
+      'choiceType: ',
       choiceType,
-      "stat: ",
+      'stat: ',
       stat,
-      "penalty: ",
+      'penalty: ',
       penalty
     );
     setPenalty(penalty);
-    setTempText("");
+    setTempText('');
     setDamageToEnemy(0);
     setDamageToPlayer(0);
     //console.log('choice from click?', choice_id);
     // ATM evacuate will not fail...
-    if (choiceType === "evacuate") {
+    if (choiceType === 'evacuate') {
       handleLocationChange();
       return;
     }
@@ -507,22 +507,22 @@ const GameView = (props: GameViewProps) => {
         const choiceOutcome = statCheck(stat); // <-- argument from action Button click
         // <-- choices valid for combat -->
         if (
-          choiceType === "engage" ||
-          (choiceType === "evade" && choiceOutcome === "failure")
+          choiceType === 'engage' ||
+          (choiceType === 'evade' && choiceOutcome === 'failure')
         ) {
           // <-- enemy Effect TRUE on choice to hit below IF block -->
           if (isEnemy(currentEnemy) && currentEnemy.health > 0) {
             // <-- Enemy exists, enemy !dead
             setShowEnemy(true);
-            console.log("ENEMY STATE", currentEnemy);
-            console.log("CURRENT CHAR", currentChar);
+            console.log('ENEMY STATE', currentEnemy);
+            console.log('CURRENT CHAR', currentChar);
             const fightResult = fightEnemy(
               currentEnemy.strength,
               currentEnemy.health,
               stat,
               currentChar.health
             );
-            console.log("FIGHT RESULT", fightResult);
+            console.log('FIGHT RESULT', fightResult);
             // <-- player loses, adjust player health below
             if (fightResult.player || fightResult.player === 0) {
               //console.log('Middle of IF check when player is damaged.');
@@ -532,7 +532,7 @@ const GameView = (props: GameViewProps) => {
                     result: currentEnemy.defeat,
                   })
                   .catch((err) =>
-                    console.error("Failed to add story on death: ", err)
+                    console.error('Failed to add story on death: ', err)
                   );
                 setOutcome(choiceOutcome);
               }
@@ -568,7 +568,7 @@ const GameView = (props: GameViewProps) => {
                 }
               )
               .catch((err) =>
-                console.error("Failed to add story on death: ", err)
+                console.error('Failed to add story on death: ', err)
               );
             setOutcome(choiceOutcome);
             setShowEnemy(false);
@@ -594,8 +594,8 @@ const GameView = (props: GameViewProps) => {
           // arbitrate item/ally acquisition with percentage || algorithm
 
           if (
-            (choiceOutcome === "success" && choiceType === "wildcard") ||
-            choiceType === "evade"
+            (choiceOutcome === 'success' && choiceType === 'wildcard') ||
+            choiceType === 'evade'
           ) {
             // --> player gets item || ally
             if (Object.entries(currentAlly).length) {
@@ -610,7 +610,7 @@ const GameView = (props: GameViewProps) => {
         // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
       })
       .catch((err) => {
-        console.error("Failed setting selectedChoice State", err);
+        console.error('Failed setting selectedChoice State', err);
       });
   };
 
@@ -649,7 +649,7 @@ const GameView = (props: GameViewProps) => {
   const handlePlayerDied = () => {
     // **
     socket?.emit(
-      "player_died",
+      'player_died',
       currentChar.name,
       location.name,
       currentEnemy.weapon1
@@ -672,18 +672,18 @@ const GameView = (props: GameViewProps) => {
         <ProgressBarContainer>
           <OverlayValue>{healthOverlayValue}</OverlayValue>
           <ProgressBar
-            variant={health < 30 ? "danger" : "success"}
+            variant={health < 30 ? 'danger' : 'success'}
             now={health}
-            style={{ backgroundColor: "grey" }}
+            style={{ backgroundColor: 'grey' }}
           />
         </ProgressBarContainer>
         <div>Mood</div>
         <ProgressBarContainer>
           <OverlayValue>{moodOverlayValue}</OverlayValue>
           <ProgressBar
-            variant={mood < 30 ? "danger" : "success"}
+            variant={mood < 30 ? 'danger' : 'success'}
             now={mood}
-            style={{ backgroundColor: "grey" }}
+            style={{ backgroundColor: 'grey' }}
           />
         </ProgressBarContainer>
       </div>
@@ -719,14 +719,14 @@ const GameView = (props: GameViewProps) => {
           const imageUrl = response.data.image_url;
           const imageTag = `<img src='${imageUrl}' alt='${itemName}' style='max-width: 40%; max-height: 40%'/>`;
           setModalText(
-            <div style={{ textAlign: "center" }}>
+            <div style={{ textAlign: 'center' }}>
               You searched for items and found {itemName}.
               <div dangerouslySetInnerHTML={{ __html: imageTag }} />
             </div>
           );
         })
         .catch((err) => {
-          console.error("Failed to get item id from item table", err);
+          console.error('Failed to get item id from item table', err);
         });
       setCurrentChar((prevChar) => ({
         ...prevChar,
@@ -749,7 +749,7 @@ const GameView = (props: GameViewProps) => {
       ],
     }));
 
-    setInputValue("");
+    setInputValue('');
     setVisited((prevVisited) =>
       prevVisited.map((item) => {
         if (item.name === location.name) {
@@ -764,9 +764,9 @@ const GameView = (props: GameViewProps) => {
 
   useEffect(() => {
     if (socket) {
-      socket.on("kill_feed", (death) => appendToKillFeed(death));
+      socket.on('kill_feed', (death) => appendToKillFeed(death));
       return () => {
-        socket.off("kill_feed", appendToKillFeed);
+        socket.off('kill_feed', appendToKillFeed);
       };
     }
   }, [socket]);
@@ -791,14 +791,14 @@ const GameView = (props: GameViewProps) => {
           result: selectedChoice[outcome],
         })
         .then(() => {
-          if (penalty !== "") {
+          if (penalty !== '') {
             // console.log('penalty: ', penalty);
-            if (outcome === "failure") {
+            if (outcome === 'failure') {
               setCurrentChar((previousStats) => ({
                 ...previousStats,
                 [penalty]: previousStats[penalty] - 2,
               }));
-            } else if (outcome === "success") {
+            } else if (outcome === 'success') {
               setCurrentChar((previousStats) => ({
                 ...previousStats,
                 [penalty]: previousStats[penalty] + 1, // this may need to be adjusted to avoid infinite scaling...
@@ -806,7 +806,7 @@ const GameView = (props: GameViewProps) => {
             }
           }
         })
-        .catch((err) => console.error("axios AMEND to STORY", err));
+        .catch((err) => console.error('axios AMEND to STORY', err));
     } else {
       setHasMounted(true);
     }
@@ -828,7 +828,7 @@ const GameView = (props: GameViewProps) => {
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
-    console.log("selectedChoice: ", selectedChoice);
+    console.log('selectedChoice: ', selectedChoice);
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
     return <Result />;
@@ -837,8 +837,8 @@ const GameView = (props: GameViewProps) => {
   // Any hooks between above conditional and below return will crash the page.
   return (
     <Container>
-      <div style={{ position: "absolute", opacity: 0 }}>
-        <Link to="/result" style={{ textDecoration: "none" }}>
+      <div style={{ position: 'absolute', opacity: 0 }}>
+        <Link to='/result' style={{ textDecoration: 'none' }}>
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
@@ -856,28 +856,28 @@ const GameView = (props: GameViewProps) => {
                 <></>
               )}
               {Object.entries(selectedChoice).length ? (
-                <p onClick={props.handleSpeak} style={{ margin: "1rem" }}>
+                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
                   {selectedChoice.flavor_text}
                 </p>
               ) : (
                 <>
-                  <p onClick={props.handleSpeak} style={{ margin: "1rem" }}>
+                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
                     What do you do?
                   </p>
-                  <p onClick={props.handleSpeak} style={{ margin: "1rem" }}>
+                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
                     Select an option below...
                   </p>
                 </>
               )}
               {outcome.length ? (
-                <p onClick={props.handleSpeak} style={{ margin: "1rem" }}>
+                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
                   {outcome}
                 </p>
               ) : (
                 <></>
               )}
               {tempText.length ? (
-                <p onClick={props.handleSpeak} style={{ margin: "1rem" }}>
+                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
                   {tempText}
                 </p>
               ) : (
@@ -886,7 +886,7 @@ const GameView = (props: GameViewProps) => {
             </ScrollableContainer>
           </EventText>
           <Page
-            className="page"
+            className='page'
             onDrop={handleDropItemOnLocation}
             onDragOver={handleDragOver}
           >
@@ -907,8 +907,8 @@ const GameView = (props: GameViewProps) => {
             <LocationImg
               src={location.image_url}
               style={{
-                position: "relative",
-                bottom: "98%",
+                position: 'relative',
+                bottom: '98%',
                 zIndex: 0,
               }}
             ></LocationImg>
@@ -916,10 +916,10 @@ const GameView = (props: GameViewProps) => {
           {damageToEnemy > 0 ? (
             <motion.div
               style={{
-                color: "green",
+                color: 'green',
                 zIndex: 6,
-                position: "relative",
-                bottom: "7.5rem",
+                position: 'relative',
+                bottom: '7.5rem',
               }}
               animate={{
                 scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
@@ -927,7 +927,7 @@ const GameView = (props: GameViewProps) => {
                 y: -250,
                 x: 80,
               }}
-              transition={{ ease: "easeInOut", duration: 1.5 }}
+              transition={{ ease: 'easeInOut', duration: 1.5 }}
               exit={{ opacity: 0, scale: 0 }}
             >
               {damageToEnemy}
@@ -938,10 +938,10 @@ const GameView = (props: GameViewProps) => {
           {damageToPlayer > 0 ? (
             <motion.div
               style={{
-                color: "red",
+                color: 'red',
                 zIndex: 6,
-                position: "relative",
-                bottom: "7.5rem",
+                position: 'relative',
+                bottom: '7.5rem',
               }}
               animate={{
                 scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
@@ -949,7 +949,7 @@ const GameView = (props: GameViewProps) => {
                 y: -250,
                 x: -80,
               }}
-              transition={{ ease: "easeInOut", duration: 1.8 }}
+              transition={{ ease: 'easeInOut', duration: 1.8 }}
               exit={{ opacity: 0, scale: 0 }}
             >
               {damageToPlayer}
@@ -960,67 +960,67 @@ const GameView = (props: GameViewProps) => {
         </LocationDiv>
       </Main>
       <Footer>
-        <Content1 id="outter Content 1">
+        <Content1 id='outter Content 1'>
           {/* <Link to="/result" style={{ textDecoration: 'none' }}>
             <Content1>
               <HudButton onClick={() => complete.play()}>Continue</HudButton>
             </Content1>
           </Link> */}
           {/* <Link to="/game-view" style={{ textDecoration: 'none' }}> */}
-          <div id="inner Content 1">
+          <div id='inner Content 1'>
             {/* <HudButton onClick={handleLocationChange}>New Location</HudButton> */}
             <StyledModal
               centered
               show={showLocationModal}
               onHide={handleCloseLocationModal}
-              backdrop="static"
+              backdrop='static'
             >
-              <Modal.Header style={{ alignItems: "flex-start" }} closeButton>
+              <Modal.Header style={{ alignItems: 'flex-start' }} closeButton>
                 <Modal.Title onClick={props.handleSpeak}>
-                  You have visited all locations, where do you want to go now?{" "}
+                  You have visited all locations, where do you want to go now?{' '}
                 </Modal.Title>
               </Modal.Header>
               <Modal.Body>
                 <ModalBodyContainer>
                   {/* <p onClick={props.handleSpeak}>{localStorage.getItem('0')}</p> */}
                   <HudButton
-                    style={{ fontSize: "1.3rem" }}
+                    style={{ fontSize: '1.3rem' }}
                     onClick={() => {
                       getAllLocations(0);
                       handleCloseLocationModal();
                     }}
                   >
-                    {localStorage.getItem("0")}{" "}
+                    {localStorage.getItem('0')}{' '}
                   </HudButton>
                   {/* <p onClick={props.handleSpeak}>{localStorage.getItem('1')}</p> */}
                   <HudButton
-                    style={{ fontSize: "1.3rem" }}
+                    style={{ fontSize: '1.3rem' }}
                     onClick={() => {
                       getAllLocations(1);
                       handleCloseLocationModal();
                     }}
                   >
-                    {localStorage.getItem("1")}{" "}
+                    {localStorage.getItem('1')}{' '}
                   </HudButton>
                   {/* <p onClick={props.handleSpeak}>{localStorage.getItem('2')}</p> */}
                   <HudButton
-                    style={{ fontSize: "1.3rem" }}
+                    style={{ fontSize: '1.3rem' }}
                     onClick={() => {
                       getAllLocations(2);
                       handleCloseLocationModal();
                     }}
                   >
-                    {localStorage.getItem("2")}{" "}
+                    {localStorage.getItem('2')}{' '}
                   </HudButton>
                   {/* <p onClick={props.handleSpeak}>{localStorage.getItem('3')}</p> */}
                   <HudButton
-                    style={{ fontSize: "1.3rem" }}
+                    style={{ fontSize: '1.3rem' }}
                     onClick={() => {
                       getAllLocations(3);
                       handleCloseLocationModal();
                     }}
                   >
-                    {localStorage.getItem("3")}{" "}
+                    {localStorage.getItem('3')}{' '}
                   </HudButton>
                 </ModalBodyContainer>
               </Modal.Body>
@@ -1052,7 +1052,7 @@ const GameView = (props: GameViewProps) => {
               centered
               show={show}
               onHide={handleClose}
-              backdrop="static"
+              backdrop='static'
               keyboard={false}
             >
               <Modal.Header
@@ -1060,7 +1060,7 @@ const GameView = (props: GameViewProps) => {
                 onClick={() => {
                   handleTextBoxClose();
                   handleClose();
-                  setModalText("");
+                  setModalText('');
                 }}
               >
                 <Modal.Title>You investigated the area.</Modal.Title>
@@ -1085,19 +1085,19 @@ const GameView = (props: GameViewProps) => {
                   >
                     Look for graffiti
                   </HudButton>
-                  <div style={{ display: "flex" }}>
+                  <div style={{ display: 'flex' }}>
                     <input
-                      type="text"
+                      type='text'
                       maxLength={23}
                       style={{ flex: 1 }}
-                      placeholder="Write graffiti"
+                      placeholder='Write graffiti'
                       value={inputValue}
                       onChange={handleInputValueChange}
                     />
                     <HudButton
                       style={{ flex: 1 }}
                       onClick={() => {
-                        updateGraffitiMsg(), handleTagClick(), setModalText("");
+                        updateGraffitiMsg(), handleTagClick(), setModalText('');
                       }}
                       disabled={tagDisabled}
                     >
@@ -1106,7 +1106,7 @@ const GameView = (props: GameViewProps) => {
                   </div>
                 </ModalBodyContainer>
               </Modal.Body>
-              <Modal.Footer style={{ justifyContent: "space-evenly" }}>
+              <Modal.Footer style={{ justifyContent: 'space-evenly' }}>
                 <p onClick={props.handleSpeak}>{modalText}</p>
               </Modal.Footer>
             </StyledModal>
@@ -1116,7 +1116,7 @@ const GameView = (props: GameViewProps) => {
           <StatContainer>
             <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
             <div
-              className="page"
+              className='page'
               onDrop={handleDropItemOnCharacter}
               onDragOver={handleDragOver}
             >
@@ -1125,10 +1125,10 @@ const GameView = (props: GameViewProps) => {
           </StatContainer>
           <StatContainer2>
             <h4 onClick={props.handleSpeak}>
-              {" "}
-              {"Score: " + currentChar.score}
+              {' '}
+              {'Score: ' + currentChar.score}
             </h4>
-            <div style={{ width: "20em" }}>{StatusBars()}</div>
+            <div style={{ width: '20em' }}>{StatusBars()}</div>
             <div onClick={props.handleSpeak}>
               <StatIconContainer>
                 <TinyStatIconImg src={images.healthIcon} />
@@ -1139,14 +1139,14 @@ const GameView = (props: GameViewProps) => {
                 {currentChar.strength}
                 <StatBonusColor>{` +${bonusStrength}`}</StatBonusColor>
                 <TempStatBonusColor>
-                  {temporaryStrength !== 0 ? ` +${temporaryStrength}` : ""}
+                  {temporaryStrength !== 0 ? ` +${temporaryStrength}` : ''}
                 </TempStatBonusColor>
               </StatIconContainer>
               <StatIconContainer>
                 <TinyStatIconImg src={images.enduranceIcon} />
                 {currentChar.endurance}
                 <StatBonusColor>{` +${bonusEndurance}`}</StatBonusColor>
-                {temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ""}
+                {temporaryEndurance !== 0 ? ` +${temporaryEndurance}` : ''}
                 <TempStatBonusColor></TempStatBonusColor>
               </StatIconContainer>
               <StatIconContainer>
@@ -1154,7 +1154,7 @@ const GameView = (props: GameViewProps) => {
                 {currentChar.mood}
                 <StatBonusColor>{` +${bonusMood}`}</StatBonusColor>
                 <TempStatBonusColor>
-                  {temporaryMood !== 0 ? ` +${temporaryMood}` : ""}
+                  {temporaryMood !== 0 ? ` +${temporaryMood}` : ''}
                 </TempStatBonusColor>
               </StatIconContainer>
             </div>
@@ -1166,13 +1166,13 @@ const GameView = (props: GameViewProps) => {
                 {hoveredItem.modifier0 && (
                   <>
                     <h5>
-                      {hoveredItem._id === 1 ? "" : `${hoveredItem.name}`}
+                      {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
                     </h5>
                     <h5>
-                      {hoveredItem.consumable === true ? "Consumable" : ""}
+                      {hoveredItem.consumable === true ? 'Consumable' : ''}
                     </h5>
                     <h5>
-                      {" "}
+                      {' '}
                       {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
                     </h5>
                     <br />
@@ -1181,26 +1181,26 @@ const GameView = (props: GameViewProps) => {
                 {hoveredItem.modifier1 && (
                   <>
                     <h5>
-                      {" "}
-                      {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{" "}
+                      {' '}
+                      {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
                     </h5>
                     <br />
                   </>
                 )}
               </InventoryTextBubble>
             )}
-            <InventoryStyle className="itemWidgets">
+            <InventoryStyle className='itemWidgets'>
               {fetchedInventory.map((item: Item, i) => (
                 <div
                   key={i}
-                  className="itemWidget"
+                  className='itemWidget'
                   draggable
                   onDragStart={(e) => handleOnDragItem(e, item._id, i)}
                   onMouseEnter={() => handleOnMouseEnter(item)}
                   onMouseLeave={() => handleOnMouseLeave()}
                 >
                   <IconContainer>
-                    <IconImg src={item._id !== 1 ? item.image_url : ""} />
+                    <IconImg src={item._id !== 1 ? item.image_url : ''} />
                   </IconContainer>
                 </div>
               ))}
@@ -1214,18 +1214,18 @@ const GameView = (props: GameViewProps) => {
                 <h5>{tooltip}</h5>
               </InventoryTextBubble>
             )}
-            <h5 onClick={props.handleSpeak} style={{ marginTop: "0.5rem" }}>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
               Engage
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip("engage")}
+              onMouseEnter={() => handleToolTip('engage')}
               onMouseLeave={() => handleToolTipOff()}
               onClick={() => {
                 hit.play();
                 // <-- handleEnemy func ??
                 resolveChoice(
                   choices.engage,
-                  "engage",
+                  'engage',
                   currentChar.strength + bonusStrength + temporaryStrength
                 );
                 setTemporaryMood(0);
@@ -1235,17 +1235,17 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 onClick={props.handleSpeak} style={{ marginTop: "0.5rem" }}>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
               Evade
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip("evade")}
+              onMouseEnter={() => handleToolTip('evade')}
               onMouseLeave={() => handleToolTipOff()}
               onClick={() => {
                 dodge.play();
                 resolveChoice(
                   choices.evade,
-                  "evade",
+                  'evade',
                   currentChar.endurance + bonusEndurance + temporaryEndurance
                 );
                 setTemporaryMood(0);
@@ -1255,15 +1255,15 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 onClick={props.handleSpeak} style={{ marginTop: "0.5rem" }}>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
               Evacuate
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip("evacuate")}
+              onMouseEnter={() => handleToolTip('evacuate')}
               onMouseLeave={() => handleToolTipOff()}
               onClick={() => {
                 evacuate.play();
-                resolveChoice(choices.evacuate, "evacuate", 0);
+                resolveChoice(choices.evacuate, 'evacuate', 0);
                 setTemporaryMood(0);
                 setTemporaryEndurance(0);
                 setTemporaryStrength(0);
@@ -1271,19 +1271,19 @@ const GameView = (props: GameViewProps) => {
             />
           </div>
           <div>
-            <h5 onClick={props.handleSpeak} style={{ marginTop: "0.5rem" }}>
+            <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
               Wildcard
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip("wildcard")}
+              onMouseEnter={() => handleToolTip('wildcard')}
               onMouseLeave={() => handleToolTipOff()}
               onClick={() => {
                 wildCard.play();
                 resolveChoice(
                   choices.wildcard,
-                  "wildcard",
+                  'wildcard',
                   currentChar.mood + bonusMood + temporaryMood,
-                  "mood"
+                  'mood'
                 );
                 setTemporaryMood(0);
                 setTemporaryStrength(0);
