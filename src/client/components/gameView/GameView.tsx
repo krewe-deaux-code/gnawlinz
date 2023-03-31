@@ -926,14 +926,15 @@ const GameView = (props: GameViewProps) => {
             backdrop={false}
           >
             <ModalStyle>
-              <Modal.Header style={{ background: 'rgb(92 92 92 / 65%)'}} closeButton>
+              <Modal.Header
+                style={{ background: 'rgb(92 92 92 / 65%)' }}
+                closeButton
+              >
                 <Modal.Title id='contained-modal-title-vcenter'>
                   Introduction
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body
-              style={{ background: 'rgb(92 92 92 / 65%)' }}
-              >
+              <Modal.Body style={{ background: 'rgb(92 92 92 / 65%)' }}>
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -1314,7 +1315,7 @@ const GameView = (props: GameViewProps) => {
             </InventoryBorder>
           </CharStatusContainer>
         </CRTDiv>
-         {/* </ArcadeWoodStyle> */}
+        {/* </ArcadeWoodStyle> */}
         <Content3>
           <div>
             {tooltip && (
