@@ -48,6 +48,8 @@ import {
   ArcadeButtonToggle,
   LocationImg,
   LocationDiv,
+  IntroModal,
+  ModalStyle,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -128,6 +130,9 @@ const GameView = (props: GameViewProps) => {
   const [hasMounted, setHasMounted] = useState(false);
   const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
+
+  // Intro modal
+  const [introModal, setIntroModal] = useState(true);
 
   const [tempText, setTempText] = useState('');
   const [penalty, setPenalty] = useState('');
@@ -900,7 +905,38 @@ const GameView = (props: GameViewProps) => {
         </Link>
       </div>
       <Nav isActive={true} showButton={true} />
-      <Main>
+
+      <Main blur={introModal} linearGradient={introModal}>
+        {introModal ? (
+          <IntroModal
+            id='intro-modal'
+            show={introModal}
+            onHide={() => setIntroModal(false)}
+            size='lg'
+            aria-labelledby='contained-modal-title-vcenter'
+            centered
+            backdrop={false}
+          >
+            <ModalStyle style={{ textAlign: 'center' }}>
+              <Modal.Header style={{ background: 'rgb(88,35,97)' }} closeButton>
+                <Modal.Title id='contained-modal-title-vcenter'>
+                  Introduction
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body style={{ textAlign: 'center', background: 'silver' }}>
+                <h4 style={{ textAlign: 'center' }}>Lundi Gras</h4>
+                <p>
+                  You awoke from a Carnival bender to find yourself in a monster
+                  infested New Orleans! You set out to find supplies and
+                  vanquish that which should not be.
+                </p>
+              </Modal.Body>
+            </ModalStyle>
+            {/* <Modal.Footer></Modal.Footer> */}
+          </IntroModal>
+        ) : (
+          <></>
+        )}
         <h2 onClick={props.handleSpeak}>{location.name}</h2>
         <LocationDiv>
           {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
@@ -1016,6 +1052,7 @@ const GameView = (props: GameViewProps) => {
           )}
         </LocationDiv>
       </Main>
+
       <Footer>
         <Content1 id='outter Content 1'>
           {/* <Link to="/result" style={{ textDecoration: 'none' }}>
@@ -1136,7 +1173,7 @@ const GameView = (props: GameViewProps) => {
                   <HudButton
                     onClick={() =>
                       setModalText(
-                        `You looked around and found a messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
+                        `You looked around and found messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
                       )
                     }
                   >
