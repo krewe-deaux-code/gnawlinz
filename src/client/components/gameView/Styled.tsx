@@ -216,7 +216,7 @@ export const Footer = styled.footer`
   grid-area: footer;
  padding-top: 0.5rem;
   display: flex;
-  gap: 1rem;
+  gap: .8rem;
   align-items: center;
   justify-content: center;
 `;
