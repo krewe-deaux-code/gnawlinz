@@ -682,6 +682,9 @@ height: 65% !important;
 .modal-backdrop {
   background-color: rgba(255, 255, 255, 0.5);
 }
+.btn-close{
+    filter: invert(100%);
+  }
 `;
 
 export const ModalStyle = styled.div`
@@ -785,8 +788,4 @@ export const CRTDiv = styled.div`
     pointer-events: none;
     animation: flicker 0.15s infinite;
   }
-  .btn-close{
-    filter: invert(100%);
-  }
- 
 `;
