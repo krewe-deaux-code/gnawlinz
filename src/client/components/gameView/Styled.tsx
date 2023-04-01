@@ -261,7 +261,6 @@ export const IconContainer = styled.div`
   margin: auto;
   grid-template-rows: auto auto auto auto;
   justify-content: center;
-  grid-gap: 1em;
 `;
 
 export const StatIconContainer = styled.div`
@@ -279,6 +278,7 @@ export const IconImg = styled.img`
   height: auto;
   max-width: 4em;
   max-height: 4em;
+  filter: drop-shadow(.6rem .6rem .5rem rgba(0, 0, 0, 0.5));
 `;
 export const StatBonusColor = styled.div`
   color: #2e8351;
@@ -327,9 +327,10 @@ export const InventoryBottomTextBubble = styled.div`
   opacity: .5;
   color: black;
   background-color: #fff;
-  border: 2px solid #7f7f7f;
+  border: 3px solid #06f932e5;
   box-shadow: 10px 1px 5px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
+  vertical-align: middle;
   text-align: center;
   word-break: break-all;
 `;
@@ -340,8 +341,8 @@ export const InventoryBottomTextBubble = styled.div`
 
 export const InventoryTextBubble = styled.div`
   position: absolute;
-  bottom: 11.5rem;
-  height: 106px;
+  bottom: 11.3rem;
+  height: 111px;
   width: 200px;
   left: 19.5rem;
   padding: 5px;
@@ -350,10 +351,11 @@ export const InventoryTextBubble = styled.div`
   opacity: .5;
   color: black;
   background-color: #fff;
-  border: 2px solid #7f7f7f;
+  border: 3px solid #06f932e5;
   box-shadow: 10px 1px 5px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
   text-align: center;
+  vertical-align: middle;
   word-break: break-all;
 `;
 

@@ -1240,43 +1240,6 @@ const GameView = (props: GameViewProps) => {
                 {'Score: ' + currentChar.score}
               </h4>
               <div style={{ width: '20em' }}>{StatusBars()}</div>
-              {hoveredItem && (
-                <>
-                <InventoryTextBubble>
-                  {hoveredItem.modifier0 && (
-
-                    <div>
-                      <InventoryBubbleText>
-                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
-                      </InventoryBubbleText>
-                      <InventoryBubbleText>
-                        {hoveredItem.consumable === true ? 'Consumable' : ''}
-                      </InventoryBubbleText>
-                      <InventoryBubbleText>
-                        {hoveredItem.modified_stat0} + {hoveredItem.modifier0}
-                      </InventoryBubbleText>
-                      {hoveredItem.modifier1 && (
-                        <InventoryBubbleText>
-                        {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
-                        </InventoryBubbleText>
-                      )}
-                    </div>
-
-                  )}
-                </InventoryTextBubble><InventoryBottomTextBubble>
-                  {
-                hoveredItem.consumable === true ?
-                 'Drag and drop item on character to use or location to drop' :
-                  'drag item over location image to drop item on location'
-                  }
-                </InventoryBottomTextBubble>
-                </>
-              )}
-              {tooltip && (
-                <InventoryTextBubble>
-                  <InventoryBubbleText>{tooltip}</InventoryBubbleText>
-                </InventoryTextBubble>
-              )}
               <div onClick={props.handleSpeak}>
                 <StatIconContainer>
                   <TinyStatIconImg src={images.healthIcon} />
@@ -1325,8 +1288,46 @@ const GameView = (props: GameViewProps) => {
                   </div>
                 ))}
               </InventoryStyle>
+              <div style={{height: '48px'}}/>
             </InventoryBorder>
           </CharStatusContainer>
+          {hoveredItem && (
+                <>
+                <InventoryTextBubble>
+                  {hoveredItem.modifier0 && (
+
+                    <div>
+                      <InventoryBubbleText>
+                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
+                      </InventoryBubbleText>
+                      <InventoryBubbleText>
+                        {hoveredItem.consumable === true ? 'Consumable' : ''}
+                      </InventoryBubbleText>
+                      <InventoryBubbleText>
+                        {hoveredItem.modified_stat0} + {hoveredItem.modifier0}
+                      </InventoryBubbleText>
+                      {hoveredItem.modifier1 && (
+                        <InventoryBubbleText>
+                        {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
+                        </InventoryBubbleText>
+                      )}
+                    </div>
+
+                  )}
+                </InventoryTextBubble><InventoryBottomTextBubble>
+                  {
+                hoveredItem.consumable === true ?
+                 'Drag and drop item on character to use or location to drop' :
+                  'drag item over location image to drop item on location'
+                  }
+                </InventoryBottomTextBubble>
+                </>
+              )}
+              {tooltip && (
+                <InventoryTextBubble>
+                  <InventoryBubbleText>{tooltip}</InventoryBubbleText>
+                </InventoryTextBubble>
+              )}
         </CRTDiv>
         {/* </ArcadeWoodStyle> */}
         <Content3>
