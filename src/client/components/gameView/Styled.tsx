@@ -286,6 +286,7 @@ export const StatBonusColor = styled.div`
 
 export const TempStatBonusColor = styled.div`
   color: #9a8127;
+  padding-left: .6rem;
 `;
 
 export const CharStatusContainer = styled.div`
@@ -315,15 +316,30 @@ export const StatContainer2 = styled(StatContainer)`
 
 export const InventoryTextBubble = styled.div`
   position: absolute;
-  z-index: 4;
-  bottom: 5rem;
+  bottom: 11.5rem;
+  height: 106px;
+  width: 200px;
+  left: 19rem;
   padding: 5px;
   font-size: 1rem;
+  border-radius: 10px;
+  opacity: .5;
   color: black;
   background-color: #fff;
   border: 1px solid #ccc;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
+  text-align: center;
+  word-break: break-all;
+`;
+
+
+
+
+export const InventoryBubbleText = styled.div`
+font-size: 1rem;
+word-break: break-word;
+    white-space: normal;
 `;
 
 export const TopContent1 = styled.div`
