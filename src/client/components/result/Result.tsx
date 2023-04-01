@@ -43,7 +43,6 @@ const Result: React.FC = () => {
     // function to determine win/loss based on currentChar health stat
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
-        // setShowConfetti(true);
         setImage(images.trophyIcon);
         setResultText('you survived!');
       } else {
@@ -82,10 +81,9 @@ const Result: React.FC = () => {
       {resultText === 'you survived!' ? (
         <div>
           {' '}
-          <Confetti colors={colors} />{' '}
+          <Confetti colors={colors} gravity={.2}/>{' '}
         </div>
       ) : null}
-      ;
       <Nav isActive={true} showButton={true} />
       <Story>
         <h1 onClick={handleSpeak}>

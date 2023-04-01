@@ -36,7 +36,8 @@ export const NavBar = styled.nav`
   }
 `;
 export const Story = styled.main`
-  background: rgba(173, 173, 173, 0.5);
+  background: rgba(173, 173, 173, 0.4);
+  backdrop-filter: blur(15px);
   color: white;
   grid-area: story;
   padding: 0.25rem;
@@ -45,16 +46,20 @@ export const Story = styled.main`
   grid-template-rows: auto auto auto;
   justify-content: center;
   overflow: auto;
+  background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+
 `;
 export const End = styled.div`
-  background: rgba(173, 173, 173, 0.5);
-  grid-area: end;
+  background: rgba(173, 173, 173, 0.4);
+  backdrop-filter: blur(15px);  grid-area: end;
   padding: 0.25rem;
   display: grid;
   align-content: space-evenly;
   grid-template-rows: auto auto auto;
   justify-content: center;
   overflow: auto;
+  background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
+
 `;
 
 // export const ResultButton = styled.button`

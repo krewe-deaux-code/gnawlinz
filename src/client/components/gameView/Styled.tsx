@@ -119,7 +119,7 @@ export const flicker = keyframes`
 export const Main = styled.main`
   background: #1f2128;
   color: white;
-  filter: ${(props) => (props.blur ? 'blur(4px)' : 'none')};
+  filter: ${(props) => (props.blur ? 'blur(6px)' : 'none')};
   mask: ${(props) =>
     props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
   grid-area: main;
@@ -714,12 +714,22 @@ export const OverlayValue = styled.div`
 `;
 
 export const IntroModal = styled(Modal)`
-  border-radius: 0.6rem;
-  --bs-modal-bg: rgb(92 92 92 / 65%) !important;
+border-radius: .5rem;
+height: 65% !important;
+--bs-modal-bg: rgb(92 92 92 / 65%) !important;
+--bs-modal-header-border-width: 0px !important;
+--bs-modal-footer-border-width: 0px !important;
+--bs-modal-width: 800px !important;
+.modal-backdrop {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+.btn-close{
+    filter: invert(100%);
+  }
 `;
 
 export const ModalStyle = styled.div`
-  color: white;
+    color: white;
   position: relative;
   border-radius: 0.5rem;
   &:before {
