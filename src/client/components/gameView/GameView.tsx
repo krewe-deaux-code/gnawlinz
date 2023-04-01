@@ -53,6 +53,7 @@ import {
   CRTDiv,
   ArcadeWoodStyle,
   InventoryBubbleText,
+  InventoryBottomTextBubble,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -345,19 +346,19 @@ const GameView = (props: GameViewProps) => {
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
-        setTooltip('Enter combat to grow your score');
+        setTooltip('Attack any present threat using your strength stat');
       } else if (itemOrButton === 'evade') {
-        setTooltip('Risk a combat for chance at item');
+        setTooltip('Use your endurance stat to potentially evade an attack and find an item');
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Leave the area without resolving this event');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip('Risk depression for chance at ally');
+        setTooltip('Risk depression for chance at acquiring an ally');
       }
     } else {
-    if (itemOrButton._id !== 1) {
-      setHoveredItem(itemOrButton);
+      if (itemOrButton._id !== 1) {
+        setHoveredItem(itemOrButton);
+      }
     }
-  }
   };
 
   const handleOnMouseLeave = () => {
@@ -1140,7 +1141,7 @@ const GameView = (props: GameViewProps) => {
               <h5 onClick={props.handleSpeak}>Investigate</h5>
               <ArcadeButtonInvestigate
                 onMouseEnter={() => handleOnMouseEnter('investigate')}
-              onMouseLeave={() => handleOnMouseLeave()}
+                onMouseLeave={() => handleOnMouseLeave()}
                 disabled={investigateDisabled}
                 onClick={() => {
                   heartBeat.play();
@@ -1153,7 +1154,7 @@ const GameView = (props: GameViewProps) => {
               <h5 onClick={props.handleSpeak}>Toggle Event</h5>
               <ArcadeButtonToggle
                 onMouseEnter={() => handleOnMouseEnter('toggle')}
-              onMouseLeave={() => handleOnMouseLeave()}
+                onMouseLeave={() => handleOnMouseLeave()}
                 onClick={() => {
                   neutral.play();
                   handleToggleEvent();
@@ -1244,6 +1245,7 @@ const GameView = (props: GameViewProps) => {
               </h4>
               <div style={{ width: '20em' }}>{StatusBars()}</div>
               {hoveredItem && (
+                <>
                 <InventoryTextBubble>
                   {hoveredItem.modifier0 && (
 
@@ -1255,23 +1257,30 @@ const GameView = (props: GameViewProps) => {
                         {hoveredItem.consumable === true ? 'Consumable' : ''}
                       </InventoryBubbleText>
                       <InventoryBubbleText>
-                        {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
+                        {hoveredItem.modified_stat0} + {hoveredItem.modifier0}
                       </InventoryBubbleText>
                       {hoveredItem.modifier1 && (
-                    <InventoryBubbleText>
-                      {hoveredItem.modifier1} + {hoveredItem.modified_stat1}
-                    </InventoryBubbleText>
-                  )}
+                        <InventoryBubbleText>
+                        {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
+                        </InventoryBubbleText>
+                      )}
                     </div>
 
                   )}
+                </InventoryTextBubble><InventoryBottomTextBubble>
+                  {
+                hoveredItem.consumable === true ?
+                 'Drag and drop item on character to use or location to drop' :
+                  'drag item over location image to drop item on location'
+                  }
+                </InventoryBottomTextBubble>
+                </>
+              )}
+              {tooltip && (
+                <InventoryTextBubble>
+                  <InventoryBubbleText>{tooltip}</InventoryBubbleText>
                 </InventoryTextBubble>
               )}
-               {tooltip && (
-              <InventoryTextBubble>
-                <InventoryBubbleText>{tooltip}</InventoryBubbleText>
-              </InventoryTextBubble>
-            )}
               <div onClick={props.handleSpeak}>
                 <StatIconContainer>
                   <TinyStatIconImg src={images.healthIcon} />

@@ -314,20 +314,44 @@ export const StatContainer2 = styled(StatContainer)`
   grid-template-rows: 0.5fr 1fr;
 `;
 
+
+export const InventoryBottomTextBubble = styled.div`
+  position: absolute;
+  bottom: 1rem;
+  height: 34px;
+  width: 491px;
+  left: 1rem;
+  padding: 5px;
+  font-size: .8em;
+  border-radius: 10px;
+  opacity: .5;
+  color: black;
+  background-color: #fff;
+  border: 2px solid #7f7f7f;
+  box-shadow: 10px 1px 5px rgba(0, 0, 0, 0.3);
+  white-space: nowrap;
+  text-align: center;
+  word-break: break-all;
+`;
+
+
+
+
+
 export const InventoryTextBubble = styled.div`
   position: absolute;
   bottom: 11.5rem;
   height: 106px;
   width: 200px;
-  left: 19rem;
+  left: 19.5rem;
   padding: 5px;
   font-size: 1rem;
   border-radius: 10px;
   opacity: .5;
   color: black;
   background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+  border: 2px solid #7f7f7f;
+  box-shadow: 10px 1px 5px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
   text-align: center;
   word-break: break-all;
@@ -337,6 +361,7 @@ export const InventoryTextBubble = styled.div`
 
 
 export const InventoryBubbleText = styled.div`
+ color: black;
 font-size: 1rem;
 word-break: break-word;
     white-space: normal;
