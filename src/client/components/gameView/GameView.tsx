@@ -884,6 +884,19 @@ const GameView = (props: GameViewProps) => {
   //     };
   //   }
   // }, [socket]);
+  useEffect(() => {
+    const handleWindowClick = (event) => {
+      if (event.target.id === 'intro-modal') {
+        setIntroModal(false);
+      }
+    };
+
+    window.addEventListener('click', handleWindowClick);
+
+    return () => {
+      window.removeEventListener('click', handleWindowClick);
+    };
+  }, []);
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
@@ -911,17 +924,13 @@ const GameView = (props: GameViewProps) => {
             aria-labelledby='contained-modal-title-vcenter'
             centered
             backdrop={false}
+            onClick={() => setIntroModal(false)}
           >
-            <ModalStyle>
-              <Modal.Header
-                style={{ background: 'rgb(92 92 92 / 65%)' }}
-                closeButton
-              >
-                <Modal.Title id='contained-modal-title-vcenter'>
-                  Introduction
-                </Modal.Title>
+            <ModalStyle style={{border: '1px solid #fff'}}>
+              <Modal.Header closeButton>
               </Modal.Header>
-              <Modal.Body style={{ background: 'rgb(92 92 92 / 65%)' }}>
+              <Modal.Body
+              >
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -929,8 +938,8 @@ const GameView = (props: GameViewProps) => {
                   vanquish that which should not be.
                 </p>
               </Modal.Body>
+              <Modal.Footer></Modal.Footer>
             </ModalStyle>
-            <Modal.Footer></Modal.Footer>
           </IntroModal>
         ) : (
           <></>
