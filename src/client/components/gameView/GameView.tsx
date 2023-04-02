@@ -131,6 +131,7 @@ const GameView = (props: GameViewProps) => {
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [tagButtonDisabled, setTagButtonDisabled] = useState(true);
 
   // Intro modal
   const [introModal, setIntroModal] = useState(true);
@@ -1177,14 +1178,18 @@ const GameView = (props: GameViewProps) => {
                       style={{ flex: 1 }}
                       placeholder='Write graffiti'
                       value={inputValue}
-                      onChange={handleInputValueChange}
+                      // onChange={handleInputValueChange}
+                      onChange={(e) => {
+                        handleInputValueChange(e);
+                        setTagButtonDisabled(e.target.value === '');
+                      }}
                     />
                     <HudButton
                       style={{ flex: 1 }}
                       onClick={() => {
                         updateGraffitiMsg(), handleTagClick(), setModalText('');
                       }}
-                      disabled={tagDisabled}
+                      disabled={tagButtonDisabled}
                     >
                       Tag
                     </HudButton>
