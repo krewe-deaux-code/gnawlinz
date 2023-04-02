@@ -130,7 +130,6 @@ const GameView = (props: GameViewProps) => {
   const [locationModalText, setLocationModalText] = useState('');
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
 
   // Intro modal
@@ -884,19 +883,6 @@ const GameView = (props: GameViewProps) => {
   //     };
   //   }
   // }, [socket]);
-  useEffect(() => {
-    const handleWindowClick = (event) => {
-      if (event.target.id === 'intro-modal') {
-        setIntroModal(false);
-      }
-    };
-
-    window.addEventListener('click', handleWindowClick);
-
-    return () => {
-      window.removeEventListener('click', handleWindowClick);
-    };
-  }, []);
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
@@ -1168,7 +1154,6 @@ const GameView = (props: GameViewProps) => {
               </Modal.Header>
               <Modal.Body>
                 <ModalBodyContainer>
-                  {/* <div onClick={props.handleSpeak}>Look for items</div> */}
                   <HudButton
                     onClick={() => {
                       retrieveDropItem();
@@ -1176,7 +1161,6 @@ const GameView = (props: GameViewProps) => {
                   >
                     Search for items
                   </HudButton>
-                  {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
                   <HudButton
                     onClick={() =>
                       setModalText(
