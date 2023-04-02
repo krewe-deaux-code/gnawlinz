@@ -302,10 +302,10 @@ export const StatContainer2 = styled(StatContainer)`
 
 export const InventoryBottomTextBubble = styled.div`
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.4rem;
   height: 34px;
   width: 491px;
-  left: 1rem;
+  left: 1.35rem;
   padding: 5px;
   font-size: .8em;
   border-radius: 10px;
@@ -329,7 +329,7 @@ export const InventoryTextBubble = styled.div`
   bottom: 11.2rem;
   height: 111px;
   width: 200px;
-  left: 19.5rem;
+  left: 19.85rem;
   padding: 5px;
   font-size: 1rem;
   border-radius: 10px;
