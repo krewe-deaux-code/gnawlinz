@@ -913,11 +913,9 @@ const GameView = (props: GameViewProps) => {
             backdrop={false}
             onClick={() => setIntroModal(false)}
           >
-            <ModalStyle style={{border: '1px solid #fff'}}>
-              <Modal.Header closeButton>
-              </Modal.Header>
-              <Modal.Body
-              >
+            <ModalStyle style={{ border: '1px solid #fff' }}>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -1185,7 +1183,12 @@ const GameView = (props: GameViewProps) => {
                       }}
                     />
                     <HudButton
-                      style={{ flex: 1 }}
+                      style={{
+                        flex: 1,
+                        backgroundColor: tagButtonDisabled ? '#3d3938' : null,
+                        border: tagButtonDisabled ? '2px white dashed' : null,
+                        cursor: tagButtonDisabled ? 'not-allowed' : null,
+                      }}
                       onClick={() => {
                         updateGraffitiMsg(), handleTagClick(), setModalText('');
                       }}
