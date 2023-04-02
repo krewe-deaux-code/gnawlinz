@@ -790,7 +790,7 @@ border-radius: 1rem;
 padding: 1rem;
 box-shadow: -20px 50px 14px #8DADA7,
 20px 50px 14px #8DADA7;
-animation: ${LCDGlowPulse} .15s infinite;
+animation: ${LCDGlowPulse} .25s infinite;
 `;
 
 
@@ -838,6 +838,6 @@ export const LCDDiv = styled.div`
     opacity: 0;
     z-index: 4;
     pointer-events: none;
-    animation: ${LCDFlicker} 0.15s infinite;
+    animation: ${LCDFlicker} 0.25s infinite;
   }
 `;
