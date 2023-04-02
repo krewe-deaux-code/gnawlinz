@@ -58,7 +58,7 @@ export const flicker = keyframes`
   opacity: 0.25;
   }
   50% {
-  opacity: 0.05;
+  opacity: 0.15;
   }
   75% {
   opacity: 0.1;
@@ -87,7 +87,6 @@ export const Main = styled.main`
   mask: ${(props) =>
     props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
   grid-area: main;
-  padding: 0.1rem;
   position: relative;
   background-image: radial-gradient(#717171, #111);
   border-radius: 2.6rem;
@@ -135,26 +134,25 @@ export const Main = styled.main`
 
 export const glowPulse = keyframes`
 0% {
-  box-shadow: 0 20px 100px 12.25px #B39393;
+  box-shadow: 0 20px 100px 22.25px #B39393;
   }
   25% {
-    box-shadow: 0 20px 100px 13.5px #B39393;
+    box-shadow: 0 20px 100px 23.75px #B39393;
   }
   50% {
-    box-shadow: 0 20px 100px 10.75px #B39393;
+    box-shadow: 0 20px 100px 22.25px #B39393;
   }
   75% {
-    box-shadow: 0 20px 100px 11.5px #B39393;
+    box-shadow: 0 20px 100px 21.5px #B39393;
   }
   100% {
-    box-shadow: 0 20px 100px 13px #B39393;
+    box-shadow: 0 20px 100px 23px #B39393;
   }
 `;
 
-
 export const MainGlow = styled('div')`
 border-radius: 2.6rem;
-box-shadow: 0 20px 100px 10px #B39393;
+box-shadow: 0 20px 100px 20px #B39393;
 animation: ${glowPulse} .15s infinite;
 `;
 
