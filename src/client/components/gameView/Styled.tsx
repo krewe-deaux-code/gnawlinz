@@ -52,67 +52,31 @@ export const NavBar = styled.nav`
 
 export const flicker = keyframes`
   0% {
-  opacity: 0.27861;
-  }
-  5% {
-  opacity: 0.34769;
-  }
-  10% {
-  opacity: 0.23604;
-  }
-  15% {
-  opacity: 0.90626;
-  }
-  20% {
-  opacity: 0.18128;
+  opacity: 0.15;
   }
   25% {
-  opacity: 0.83891;
-  }
-  30% {
-  opacity: 0.65583;
-  }
-  35% {
-  opacity: 0.67807;
-  }
-  40% {
-  opacity: 0.26559;
-  }
-  45% {
-  opacity: 0.84693;
+  opacity: 0.25;
   }
   50% {
-  opacity: 0.96019;
-  }
-  55% {
-  opacity: 0.08594;
-  }
-  60% {
-  opacity: 0.20313;
-  }
-  65% {
-  opacity: 0.71988;
-  }
-  70% {
-  opacity: 0.53455;
+  opacity: 0.05;
   }
   75% {
-  opacity: 0.37288;
-  }
-  80% {
-  opacity: 0.71428;
-  }
-  85% {
-  opacity: 0.70419;
-  }
-  90% {
-  opacity: 0.7003;
-  }
-  95% {
-  opacity: 0.36108;
+  opacity: 0.1;
   }
   100% {
-  opacity: 0.24387;
+  opacity: 0.2;
+  }
+`;
+
+export const LCDFlicker = keyframes`
+  0% {
+  opacity: 0.08;
+  }
+  50% {
+  opacity: 0;
+  }
+  100% {
+  opacity: 0.08;
   }
 `;
 
@@ -123,7 +87,7 @@ export const Main = styled.main`
   mask: ${(props) =>
     props.linearGradient ? 'radial-gradient(transparent, black 60%)' : 'none'};
   grid-area: main;
-  padding: 0.25rem;
+  padding: 0.1rem;
   position: relative;
   background-image: radial-gradient(#717171, #111);
   border-radius: 2.6rem;
@@ -165,51 +129,33 @@ export const Main = styled.main`
     opacity: 0;
     z-index: 4;
     pointer-events: none;
-    animation: flicker 0.15s infinite;
+    animation: ${flicker} 0.15s infinite;
   }
 `;
 
-const glowPulse = keyframes`
+export const glowPulse = keyframes`
 0% {
-  box-shadow: 0 20px 300px -40px #B39393;
+  box-shadow: 0 20px 100px 12.25px #B39393;
   }
-  10% {
-  opacity: 0.23604;
-  }
-  20% {
-  opacity: 0.18128;
-  }
-  30% {
-  opacity: 0.65583;
-  }
-  40% {
-  opacity: 0.26559;
+  25% {
+    box-shadow: 0 20px 100px 13.5px #B39393;
   }
   50% {
-  opacity: 0.96019;
+    box-shadow: 0 20px 100px 10.75px #B39393;
   }
-  60% {
-  opacity: 0.20313;
-  }
-  70% {
-  opacity: 0.53455;
-  }
-  80% {
-  opacity: 0.71428;
-  }
-  90% {
-  opacity: 0.7003;
+  75% {
+    box-shadow: 0 20px 100px 11.5px #B39393;
   }
   100% {
-  opacity: 0.24387;
+    box-shadow: 0 20px 100px 13px #B39393;
   }
 `;
 
 
 export const MainGlow = styled('div')`
-border: 5px radial-gradient(#ffffff, #111);
 border-radius: 2.6rem;
-box-shadow: 0 20px 300px -40px #B39393;
+box-shadow: 0 20px 100px 10px #B39393;
+animation: ${glowPulse} .15s infinite;
 `;
 
 export const Content1 = styled.div`
@@ -380,7 +326,7 @@ export const InventoryBottomTextBubble = styled.div`
 
 export const InventoryTextBubble = styled.div`
   position: absolute;
-  bottom: 11.3rem;
+  bottom: 11.2rem;
   height: 111px;
   width: 200px;
   left: 19.5rem;
@@ -810,7 +756,6 @@ export const ModalStyle = styled.div`
     opacity: 0;
     z-index: 4;
     pointer-events: none;
-    animation: flicker 0.15s infinite;
   }
   .modal-content {
   }
@@ -825,15 +770,40 @@ export const ArcadeWoodStyle = styled.div`
   position: relative;
   z-index: 5;
 `;
+
+export const CRTGlowPulse = keyframes`
+ 0% {
+  box-shadow: -20px 4px 50px 12px #8DADA7,
+20px 4px 50px 14px #8DADA7;
+  }
+  50% {
+    box-shadow: -20px 4px 50px 14px #8DADA7,
+20px 4px 50px 14px #8DADA7;
+  }
+  100% {
+    box-shadow: -20px 4px 50px 12px #8DADA7,
+20px 4px 50px 14px #8DADA7;
+  }
+`;
+
+
+export const CRTGlow = styled('div')`
+border-radius: 1rem;
+padding: 1rem;
+box-shadow: -20px 50px 14px #8DADA7,
+20px 50px 14px #8DADA7;
+animation: ${CRTGlowPulse} .15s infinite;
+`;
+
+
 export const CRTDiv = styled.div`
+  display: flex;
   position: relative;
-  padding: 1rem;
-  background-image: linear-gradient(0.25turn, #2f4244, #85b4ba, #2f4244);
-  padding: 10px;
+  background-image: linear-gradient(0.25turn, #517073, #85b4ba, #517073);
   border-radius: 1rem;
-  text-shadow: 0px 1px 1px #131313;
   box-shadow: 0px -1px #85b4ba, -3px 8px #85b4ba, 3px 8px #85b4ba,
     -3px -1px #85b4ba, 3px -1px #85b4ba, 0px 0px #85b4ba;
+  text-shadow: 0px 1px 1px #131313;
   &:before {
     content: ' ';
     display: block;
@@ -870,6 +840,6 @@ export const CRTDiv = styled.div`
     opacity: 0;
     z-index: 4;
     pointer-events: none;
-    animation: flicker 0.15s infinite;
+    animation: ${LCDFlicker} 0.15s infinite;
   }
 `;

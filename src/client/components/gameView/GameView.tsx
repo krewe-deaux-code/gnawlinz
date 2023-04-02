@@ -55,6 +55,7 @@ import {
   InventoryBubbleText,
   InventoryBottomTextBubble,
   MainGlow,
+  CRTGlow
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -1226,6 +1227,7 @@ const GameView = (props: GameViewProps) => {
         </Content1>
         {/* <ArcadeWoodStyle> */}
         <CRTDiv>
+          <CRTGlow>
           <CharStatusContainer>
             <StatContainer>
               <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
@@ -1331,6 +1333,7 @@ const GameView = (props: GameViewProps) => {
                   <InventoryBubbleText>{tooltip}</InventoryBubbleText>
                 </InventoryTextBubble>
               )}
+              </CRTGlow>
         </CRTDiv>
         {/* </ArcadeWoodStyle> */}
         <Content3>
