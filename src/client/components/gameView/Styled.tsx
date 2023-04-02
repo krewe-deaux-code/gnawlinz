@@ -773,16 +773,16 @@ export const ArcadeWoodStyle = styled.div`
 
 export const CRTGlowPulse = keyframes`
  0% {
-  box-shadow: -20px 4px 50px 12px #8DADA7,
-20px 4px 50px 14px #8DADA7;
+  box-shadow: -20px 4px 50px 13px #8DADA7,
+20px 4px 50px 13px #8DADA7;
   }
   50% {
     box-shadow: -20px 4px 50px 14px #8DADA7,
 20px 4px 50px 14px #8DADA7;
   }
   100% {
-    box-shadow: -20px 4px 50px 12px #8DADA7,
-20px 4px 50px 14px #8DADA7;
+    box-shadow: -20px 4px 50px 13px #8DADA7,
+20px 4px 50px 13px #8DADA7;
   }
 `;
 
