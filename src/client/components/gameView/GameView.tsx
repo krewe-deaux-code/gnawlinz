@@ -54,6 +54,7 @@ import {
   ArcadeWoodStyle,
   InventoryBubbleText,
   InventoryBottomTextBubble,
+  MainGlow,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -919,6 +920,7 @@ const GameView = (props: GameViewProps) => {
       <Nav isActive={true} showButton={true} />
 
       <Main blur={introModal} linearGradient={introModal}>
+        <MainGlow>
         {introModal ? (
           <IntroModal
             id='intro-modal'
@@ -1062,6 +1064,7 @@ const GameView = (props: GameViewProps) => {
             <></>
           )}
         </LocationDiv>
+        </MainGlow>
       </Main>
 
       <Footer>

@@ -169,9 +169,48 @@ export const Main = styled.main`
   }
 `;
 
-// export const CharacterDisplayDiv = styled(Main).div`
+const glowPulse = keyframes`
+0% {
+  box-shadow: 0 20px 300px -40px #B39393;
+  }
+  10% {
+  opacity: 0.23604;
+  }
+  20% {
+  opacity: 0.18128;
+  }
+  30% {
+  opacity: 0.65583;
+  }
+  40% {
+  opacity: 0.26559;
+  }
+  50% {
+  opacity: 0.96019;
+  }
+  60% {
+  opacity: 0.20313;
+  }
+  70% {
+  opacity: 0.53455;
+  }
+  80% {
+  opacity: 0.71428;
+  }
+  90% {
+  opacity: 0.7003;
+  }
+  100% {
+  opacity: 0.24387;
+  }
+`;
 
-// `;
+
+export const MainGlow = styled('div')`
+border: 5px radial-gradient(#ffffff, #111);
+border-radius: 2.6rem;
+box-shadow: 0 20px 300px -40px #B39393;
+`;
 
 export const Content1 = styled.div`
   background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
@@ -703,6 +742,7 @@ export const ArcadeButtonToggle = styled(ArcadeButton)`
 export const ProgressBarContainer = styled.div`
   position: relative;
   margin-bottom: 1rem;
+  filter: drop-shadow(.6rem .6rem .5rem rgba(0, 0, 0, 0.5));
 `;
 
 export const OverlayValue = styled.div`
@@ -791,6 +831,7 @@ export const CRTDiv = styled.div`
   background-image: linear-gradient(0.25turn, #2f4244, #85b4ba, #2f4244);
   padding: 10px;
   border-radius: 1rem;
+  text-shadow: 0px 1px 1px #131313;
   box-shadow: 0px -1px #85b4ba, -3px 8px #85b4ba, 3px 8px #85b4ba,
     -3px -1px #85b4ba, 3px -1px #85b4ba, 0px 0px #85b4ba;
   &:before {
