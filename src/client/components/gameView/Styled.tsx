@@ -771,7 +771,7 @@ export const ArcadeWoodStyle = styled.div`
   z-index: 5;
 `;
 
-export const CRTGlowPulse = keyframes`
+export const LCDGlowPulse = keyframes`
  0% {
   box-shadow: -20px 4px 50px 13px #8DADA7,
 20px 4px 50px 13px #8DADA7;
@@ -787,16 +787,16 @@ export const CRTGlowPulse = keyframes`
 `;
 
 
-export const CRTGlow = styled('div')`
+export const LCDGlow = styled('div')`
 border-radius: 1rem;
 padding: 1rem;
 box-shadow: -20px 50px 14px #8DADA7,
 20px 50px 14px #8DADA7;
-animation: ${CRTGlowPulse} .15s infinite;
+animation: ${LCDGlowPulse} .15s infinite;
 `;
 
 
-export const CRTDiv = styled.div`
+export const LCDDiv = styled.div`
   display: flex;
   position: relative;
   background-image: linear-gradient(0.25turn, #517073, #85b4ba, #517073);

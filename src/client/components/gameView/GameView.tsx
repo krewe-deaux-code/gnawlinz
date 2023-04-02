@@ -50,12 +50,12 @@ import {
   LocationDiv,
   IntroModal,
   ModalStyle,
-  CRTDiv,
+  LCDDiv,
   ArcadeWoodStyle,
   InventoryBubbleText,
   InventoryBottomTextBubble,
   MainGlow,
-  CRTGlow
+  LCDGlow
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -1226,8 +1226,8 @@ const GameView = (props: GameViewProps) => {
           </Content2>
         </Content1>
         {/* <ArcadeWoodStyle> */}
-        <CRTDiv>
-          <CRTGlow>
+        <LCDDiv>
+          <LCDGlow>
           <CharStatusContainer>
             <StatContainer>
               <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
@@ -1333,8 +1333,8 @@ const GameView = (props: GameViewProps) => {
                   <InventoryBubbleText>{tooltip}</InventoryBubbleText>
                 </InventoryTextBubble>
               )}
-              </CRTGlow>
-        </CRTDiv>
+              </LCDGlow>
+        </LCDDiv>
         {/* </ArcadeWoodStyle> */}
         <Content3>
           <div>
