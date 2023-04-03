@@ -22,8 +22,6 @@ import { GameViewProps } from '../../utility/interface';
 
 
 const Result = (props: GameViewProps) => {
-const Result: React.FC = () => {
-
   window.onerror = () => {
     window.location.href = '/menu';
   };
