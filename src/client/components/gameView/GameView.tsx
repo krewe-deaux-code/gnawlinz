@@ -134,8 +134,8 @@ const GameView = (props: GameViewProps) => {
   const [locationModalText, setLocationModalText] = useState('');
   const [showLocationModal, setShowLocationModal] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [showButton, setShowButton] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [tagButtonDisabled, setTagButtonDisabled] = useState(true);
 
   // Intro modal
   const [introModal, setIntroModal] = useState(true);
@@ -890,19 +890,6 @@ const GameView = (props: GameViewProps) => {
   //     };
   //   }
   // }, [socket]);
-  useEffect(() => {
-    const handleWindowClick = (event) => {
-      if (event.target.id === 'intro-modal') {
-        setIntroModal(false);
-      }
-    };
-
-    window.addEventListener('click', handleWindowClick);
-
-    return () => {
-      window.removeEventListener('click', handleWindowClick);
-    };
-  }, []);
 
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
@@ -933,11 +920,9 @@ const GameView = (props: GameViewProps) => {
             backdrop={false}
             onClick={() => setIntroModal(false)}
           >
-            <ModalStyle style={{border: '1px solid #fff'}}>
-              <Modal.Header closeButton>
-              </Modal.Header>
-              <Modal.Body
-              >
+            <ModalStyle style={{ border: '1px solid #fff' }}>
+              <Modal.Header closeButton></Modal.Header>
+              <Modal.Body>
                 <h4>Lundi Gras</h4>
                 <p>
                   You awoke from a Carnival bender to find yourself in a monster
@@ -1180,7 +1165,6 @@ const GameView = (props: GameViewProps) => {
               </Modal.Header>
               <Modal.Body>
                 <ModalBodyContainer>
-                  {/* <div onClick={props.handleSpeak}>Look for items</div> */}
                   <HudButton
                     onClick={() => {
                       retrieveDropItem();
@@ -1188,7 +1172,6 @@ const GameView = (props: GameViewProps) => {
                   >
                     Search for items
                   </HudButton>
-                  {/* <div onClick={props.handleSpeak}>Look for graffiti</div> */}
                   <HudButton
                     onClick={() =>
                       setModalText(
@@ -1205,14 +1188,23 @@ const GameView = (props: GameViewProps) => {
                       style={{ flex: 1 }}
                       placeholder='Write graffiti'
                       value={inputValue}
-                      onChange={handleInputValueChange}
+                      // onChange={handleInputValueChange}
+                      onChange={(e) => {
+                        handleInputValueChange(e);
+                        setTagButtonDisabled(e.target.value === '');
+                      }}
                     />
                     <HudButton
-                      style={{ flex: 1 }}
+                      style={{
+                        flex: 1,
+                        backgroundColor: tagButtonDisabled ? '#3d3938' : null,
+                        border: tagButtonDisabled ? '2px white dashed' : null,
+                        cursor: tagButtonDisabled ? 'not-allowed' : null,
+                      }}
                       onClick={() => {
                         updateGraffitiMsg(), handleTagClick(), setModalText('');
                       }}
-                      disabled={tagDisabled}
+                      disabled={tagButtonDisabled}
                     >
                       Tag
                     </HudButton>
