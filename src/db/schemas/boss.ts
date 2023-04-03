@@ -41,7 +41,16 @@ const Boss = db.define('boss',
         model: Event,
         key: '_id'
       }
-    }
+    },
+    victory: {
+      type: DataTypes.TEXT
+    },
+    defeat: {
+      type: DataTypes.TEXT
+    },
+    contact: {
+      type: DataTypes.TEXT
+    },
   });
 
 export default Boss;

@@ -128,9 +128,13 @@ const CharacterCreator = (props: GameViewProps) => {
         console.log('Success Posting from Client', response);
         userChars.push(response.data);
         setCurrentChar(response.data);
-        axios.post(`/story/begin/${response.data._id}`)
-          .catch(err => console.error('beginning story failed to fetch', err));
-      }).then(() => {
+        axios
+          .post(`/story/begin/${response.data._id}`)
+          .catch((err) =>
+            console.error('beginning story failed to fetch', err)
+          );
+      })
+      .then(() => {
         setStartDisabled(false);
       })
       .catch((err) => console.error('Fail Posting from Client', err));
@@ -141,7 +145,7 @@ const CharacterCreator = (props: GameViewProps) => {
   // **********************
 
   const loadCharDefaults = () => {
-    const randItem = Math.floor(Math.random() * 11 + 1); // <-- make + 2 ??
+    const randItem = Math.floor(Math.random() * 11 + 2); // <-- make + 2 ??
     const randLoc = Math.floor(Math.random() * 3 + 1);
     setNewChar((prevChar) => ({
       ...prevChar,
@@ -301,7 +305,9 @@ const CharacterCreator = (props: GameViewProps) => {
           </AvatarContainer>
           <NameBox>
             {newChar.name ? (
-              <p onClick={props.handleSpeak} style={{ color: 'white' }}>Name: {newChar.name}</p>
+              <p onClick={props.handleSpeak} style={{ color: 'white' }}>
+                Name: {newChar.name}
+              </p>
             ) : (
               <motion.p
                 animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
@@ -472,16 +478,21 @@ const CharacterCreator = (props: GameViewProps) => {
             </motion.h6>
           )}
         </div>
-        {hideStartButton &&
-          <CCStartButton disabled={startDisabled} onClick={() => {
-            if (currentChar.name === 'Someguy McPlaceholder') {
-              setStartFail(true);
-              return;
-            } else {
-              handleClickStart();
-            }
-          }}>Start Game</CCStartButton>
-        }
+        {hideStartButton && (
+          <CCStartButton
+            disabled={startDisabled}
+            onClick={() => {
+              if (currentChar.name === 'Someguy McPlaceholder') {
+                setStartFail(true);
+                return;
+              } else {
+                handleClickStart();
+              }
+            }}
+          >
+            Start Game
+          </CCStartButton>
+        )}
       </div>
     </>
   );

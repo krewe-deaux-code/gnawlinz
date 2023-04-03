@@ -9,6 +9,8 @@ import {
   IconContainer,
   SelectStartButton,
   ArcadeBackground,
+  CRTGlow,
+  ArcadeGlowContainer
 } from './Styled';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -156,6 +158,8 @@ const Menu = (props: GameViewProps) => {
       >
         <Body>
           <Nav isActive={false} showButton={true} />
+          <ArcadeGlowContainer>
+            <CRTGlow>
           <InfoContainer>
             <Tab
               onClick={(e) => {
@@ -257,6 +261,8 @@ const Menu = (props: GameViewProps) => {
               </SelectStartButton>
             </ArcadeBackground>
           )}
+          </CRTGlow>
+          </ArcadeGlowContainer>
         </Body>
       </MenuContext.Provider>
     </UserContext.Provider>
