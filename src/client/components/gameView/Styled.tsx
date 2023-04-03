@@ -303,7 +303,7 @@ export const InventoryBottomTextBubble = styled.div`
   bottom: 1.4rem;
   height: 34px;
   width: 491px;
-  left: 1.35rem;
+  left: 1.37rem;
   padding: 5px;
   font-size: .8em;
   border-radius: 10px;
@@ -326,8 +326,8 @@ export const InventoryTextBubble = styled.div`
   position: absolute;
   bottom: 11.2rem;
   height: 111px;
-  width: 200px;
-  left: 19.85rem;
+  width: 207px;
+  left: 19.4rem;
   padding: 5px;
   font-size: 1rem;
   border-radius: 10px;
