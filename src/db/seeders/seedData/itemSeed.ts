@@ -122,7 +122,7 @@ export const itemSeed = [
   },
   {
     name: '',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678678949/gnawlinzItems/Bat_e9j6lv.jpg',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679914817/gnawlinzItems/Empty_nobbaw.png',
     consumable: false,
     modified_stat0: 'strength',
     modified_stat1: 'endurance',

@@ -26,8 +26,8 @@ export const enemySeed = [
     contact: 'The object comes into view, a military aircraft of some kind. It does not respond to your attempted communication, instead flying off into the distance.'
   },
   {
-    name: 'Bill Zomberg',
-    image_url: 'https://www.geekalerts.com/u/Terminator-Genisys-Endoskeleton.jpg',
+    name: 'Bill Zombergh',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680334309/GnawlinzEnemies/BillZombergh_rs7otp.png',
     weapon1: 'TPS Reports',
     strength: 5,
     health: 5,
