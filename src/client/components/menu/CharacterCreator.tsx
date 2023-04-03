@@ -57,7 +57,6 @@ const CharacterCreator: React.FC = () => {
 
   const { isSpeakingEnabled } = useContext(SettingsContext);
 
-
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
   const nameInputRef = useRef<HTMLInputElement>(null);
@@ -78,8 +77,6 @@ const CharacterCreator: React.FC = () => {
   const [mood, setMood] = useState<number>(1);
   const [statPool, setStatPool] = useState<number>(18);
   const [startDisabled, setStartDisabled] = useState<boolean>(true);
-
-
 
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
@@ -139,9 +136,13 @@ const CharacterCreator: React.FC = () => {
         console.log('Success Posting from Client', response);
         userChars.push(response.data);
         setCurrentChar(response.data);
-        axios.post(`/story/begin/${response.data._id}`)
-          .catch(err => console.error('beginning story failed to fetch', err));
-      }).then(() => {
+        axios
+          .post(`/story/begin/${response.data._id}`)
+          .catch((err) =>
+            console.error('beginning story failed to fetch', err)
+          );
+      })
+      .then(() => {
         setStartDisabled(false);
       })
       .catch((err) => console.error('Fail Posting from Client', err));
@@ -152,7 +153,7 @@ const CharacterCreator: React.FC = () => {
   // **********************
 
   const loadCharDefaults = () => {
-    const randItem = Math.floor(Math.random() * 11 + 1); // <-- make + 2 ??
+    const randItem = Math.floor(Math.random() * 11 + 2); // <-- make + 2 ??
     const randLoc = Math.floor(Math.random() * 3 + 1);
     setNewChar((prevChar) => ({
       ...prevChar,
@@ -312,7 +313,9 @@ const CharacterCreator: React.FC = () => {
           </AvatarContainer>
           <NameBox>
             {newChar.name ? (
-              <p onClick={handleSpeak} style={{ color: 'white' }}>Name: {newChar.name}</p>
+              <p onClick={handleSpeak} style={{ color: 'white' }}>
+                Name: {newChar.name}
+              </p>
             ) : (
               <motion.p
                 animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
@@ -483,16 +486,21 @@ const CharacterCreator: React.FC = () => {
             </motion.h6>
           )}
         </div>
-        {hideStartButton &&
-          <CCStartButton disabled={startDisabled} onClick={() => {
-            if (currentChar.name === 'Someguy McPlaceholder') {
-              setStartFail(true);
-              return;
-            } else {
-              handleClickStart();
-            }
-          }}>Start Game</CCStartButton>
-        }
+        {hideStartButton && (
+          <CCStartButton
+            disabled={startDisabled}
+            onClick={() => {
+              if (currentChar.name === 'Someguy McPlaceholder') {
+                setStartFail(true);
+                return;
+              } else {
+                handleClickStart();
+              }
+            }}
+          >
+            Start Game
+          </CCStartButton>
+        )}
       </div>
     </>
   );

@@ -151,9 +151,9 @@ export const glowPulse = keyframes`
 `;
 
 export const MainGlow = styled('div')`
-border-radius: 2.6rem;
-box-shadow: 0 20px 100px 20px #B39393;
-animation: ${glowPulse} .15s infinite;
+  border-radius: 2.6rem;
+  box-shadow: 0 20px 100px 20px #b39393;
+  animation: ${glowPulse} 0.15s infinite;
 `;
 
 export const Content1 = styled.div`
@@ -263,7 +263,7 @@ export const IconImg = styled.img`
   height: auto;
   max-width: 4em;
   max-height: 4em;
-  filter: drop-shadow(.6rem .6rem .5rem rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0.6rem 0.6rem 0.5rem rgba(0, 0, 0, 0.5));
 `;
 export const StatBonusColor = styled.div`
   color: #2e8351;
@@ -271,7 +271,7 @@ export const StatBonusColor = styled.div`
 
 export const TempStatBonusColor = styled.div`
   color: #9a8127;
-  padding-left: .6rem;
+  padding-left: 0.6rem;
 `;
 
 export const CharStatusContainer = styled.div`
@@ -299,7 +299,6 @@ export const StatContainer2 = styled(StatContainer)`
   grid-template-rows: 0.5fr 1fr;
 `;
 
-
 export const InventoryBottomTextBubble = styled.div`
   position: absolute;
   bottom: 1.4rem;
@@ -307,9 +306,9 @@ export const InventoryBottomTextBubble = styled.div`
   width: 491px;
   left: 1.37rem;
   padding: 5px;
-  font-size: .8em;
+  font-size: 0.8em;
   border-radius: 10px;
-  opacity: .5;
+  opacity: 0.5;
   color: black;
   background-color: #fff;
   border: 3px solid #06f932e5;
@@ -319,10 +318,6 @@ export const InventoryBottomTextBubble = styled.div`
   text-align: center;
   word-break: break-all;
 `;
-
-
-
-
 
 export const InventoryTextBubble = styled.div`
   position: absolute;
@@ -333,7 +328,7 @@ export const InventoryTextBubble = styled.div`
   padding: 5px;
   font-size: 1rem;
   border-radius: 10px;
-  opacity: .5;
+  opacity: 0.5;
   color: black;
   background-color: #fff;
   border: 3px solid #06f932e5;
@@ -344,14 +339,11 @@ export const InventoryTextBubble = styled.div`
   word-break: break-all;
 `;
 
-
-
-
 export const InventoryBubbleText = styled.div`
- color: black;
-font-size: 1rem;
-word-break: break-word;
-    white-space: normal;
+  color: black;
+  font-size: 1rem;
+  word-break: break-word;
+  white-space: normal;
 `;
 
 export const TopContent1 = styled.div`
@@ -377,6 +369,7 @@ export const EventText = styled.div`
   padding: 0.4em;
   margin: auto;
   text-align: center;
+  text-shadow: 0px 1px 1px #131313;
   border: 1px solid;
   border-radius: 5px;
   position: absolute;
@@ -427,15 +420,26 @@ export const AllyImg = styled.img`
   right: 32%;
 `;
 
-export const EnemyImg = styled.img`
+export const EnemyImgContainer = styled.div`
   z-index: 1;
   height: 100%;
   width: 100%;
   max-width: 500px;
   max-height: 502px;
   position: absolute;
-  top: 0%;
+  bottom: 13%;
   right: 30%;
+`;
+
+export const EnemyImg = styled.img`
+  /* z-index: 1; */
+  height: 100%;
+  width: 100%;
+  /* max-width: 500px;
+  max-height: 502px;
+  position: absolute;
+  top: 0%;
+  right: 30%; */
 `;
 
 export const LocationDiv = styled.div`
@@ -688,7 +692,7 @@ export const ArcadeButtonToggle = styled(ArcadeButton)`
 export const ProgressBarContainer = styled.div`
   position: relative;
   margin-bottom: 1rem;
-  filter: drop-shadow(.6rem .6rem .5rem rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0.6rem 0.6rem 0.5rem rgba(0, 0, 0, 0.5));
 `;
 
 export const OverlayValue = styled.div`
@@ -702,22 +706,22 @@ export const OverlayValue = styled.div`
 `;
 
 export const IntroModal = styled(Modal)`
-border-radius: .5rem;
-height: 65% !important;
---bs-modal-bg: rgb(92 92 92 / 65%) !important;
---bs-modal-header-border-width: 0px !important;
---bs-modal-footer-border-width: 0px !important;
---bs-modal-width: 800px !important;
-.modal-backdrop {
-  background-color: rgba(255, 255, 255, 0.5);
-}
-.btn-close{
+  border-radius: 0.5rem;
+  height: 87% !important;
+  --bs-modal-bg: rgb(92 92 92 / 65%) !important;
+  --bs-modal-header-border-width: 0px !important;
+  --bs-modal-footer-border-width: 0px !important;
+  --bs-modal-width: 800px !important;
+  .modal-backdrop {
+    background-color: rgba(255, 255, 255, 0.5);
+  }
+  .btn-close {
     filter: invert(100%);
   }
 `;
 
 export const ModalStyle = styled.div`
-    color: white;
+  color: white;
   position: relative;
   border-radius: 0.5rem;
   &:before {
@@ -786,15 +790,12 @@ export const LCDGlowPulse = keyframes`
   }
 `;
 
-
 export const LCDGlow = styled('div')`
-border-radius: 1rem;
-padding: 1rem;
-box-shadow: -10px 0px 11px #8DADA7,
-10px 0px 11px #8DADA7;
-animation: ${LCDGlowPulse} .25s infinite;
+  border-radius: 1rem;
+  padding: 1rem;
+  box-shadow: -10px 0px 11px #8dada7, 10px 0px 11px #8dada7;
+  animation: ${LCDGlowPulse} 0.25s infinite;
 `;
-
 
 export const LCDDiv = styled.div`
   display: flex;

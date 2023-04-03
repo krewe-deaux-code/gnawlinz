@@ -109,4 +109,7 @@ export interface Boss {
   location: number;
   score: number;
   event: number;
+  victory: string;
+  defeat: string;
+  contact: string;
 }

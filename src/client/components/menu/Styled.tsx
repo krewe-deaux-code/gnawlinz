@@ -48,7 +48,7 @@ export const CCStartButton = styled.button`
   font-size: 1rem;
   padding: 10px;
   border-radius: 2em;
-  cursor: ${(props) => (props.disabled ? 'default' : 'pointer')};
+  cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
   transition: 0.1s ease;
   box-shadow: ${(props) => (props.disabled ? 'none' : '1px 5px 0 0 #60180e')};
   &:hover {

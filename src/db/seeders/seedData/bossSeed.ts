@@ -7,7 +7,10 @@ export const bossSeed = [
     health: 500,
     location: 1, // Math.floor(Math.random() * 4) + 1
     score: 666,
-    event: 4
+    event: 4,
+    victory: 'You defeated Nick Un-Caged!',
+    defeat: 'With a sickening squelch, Nick-Uncaged buries his huge kukri knife in your chest.',
+    contact: 'You try to reason with the creature that used to be Academy Award Winning ACtor Nicholas Cage, but he just growls back something about taking your face off. '
   },
   // {
   //   name: 'Bananasaurus',

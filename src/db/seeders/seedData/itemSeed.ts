@@ -111,18 +111,7 @@ export const itemSeed = [
   },
   {
     name: 'a Spiked Bat',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678678949/gnawlinzItems/Bat_e9j6lv.jpg',
-    consumable: false,
-    modified_stat0: 'strength',
-    modified_stat1: 'endurance',
-    modifier0: 2,
-    modifier1: 2,
-    buy_price: 3,
-    sell_price: 0
-  },
-  {
-    name: '',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679914817/gnawlinzItems/Empty_nobbaw.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679913811/gnawlinzItems/BatFinal_wcsxjy.png',
     consumable: false,
     modified_stat0: 'strength',
     modified_stat1: 'endurance',
