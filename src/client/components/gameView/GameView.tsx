@@ -921,13 +921,19 @@ const GameView = (props: GameViewProps) => {
               id='intro-modal'
               show={introModal}
               onHide={() => setIntroModal(false)}
-              size='lg'
+              size='large'
               aria-labelledby='contained-modal-title-vcenter'
               centered
               backdrop={false}
               onClick={() => setIntroModal(false)}
             >
-              <ModalStyle style={{ border: '1px solid #fff' }}>
+              <ModalStyle
+                style={{
+                  border: '1px solid #fff',
+                  textShadow: '0px 1px 1px #131313',
+                  fontSize: '18px',
+                }}
+              >
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                   <h4>It's Mardi Gras...</h4>
@@ -951,11 +957,13 @@ const GameView = (props: GameViewProps) => {
                     the figure shifting towards you has a bone sticking out of
                     its flesh and gives you a hungry growl...
                   </p>
-                  <p>
-                    <i style={{ color: 'goldenrod' }}>
-                      {'['}Use the buttons below to search for supplies and try
-                      to escape this deranged and violent carnival...{']'}
+                  <p style={{ color: 'goldenrod' }}>
+                    {'['}
+                    <i>
+                      Use the buttons below to search for supplies and try to
+                      escape this deranged and violent carnival...
                     </i>
+                    {']'}
                   </p>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
