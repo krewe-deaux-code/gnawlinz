@@ -981,7 +981,7 @@ const GameView = (props: GameViewProps) => {
           ) : (
             <></>
           )}
-          <h2 onClick={props.handleSpeak}>{location.name}</h2>
+          <h2 onClick={props.handleSpeak} style={{paddingTop: '1rem'}}>{location.name}</h2>
           <LocationDiv>
             {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
             {showEnemy ? <EnemyImg src={currentEnemy.image_url} /> : <></>}
