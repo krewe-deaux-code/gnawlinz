@@ -50,8 +50,12 @@ import {
   LocationDiv,
   IntroModal,
   ModalStyle,
-  CRTDiv,
+  LCDDiv,
   ArcadeWoodStyle,
+  InventoryBubbleText,
+  InventoryBottomTextBubble,
+  MainGlow,
+  LCDGlow
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -340,32 +344,34 @@ const GameView = (props: GameViewProps) => {
     setTagDisabled(false);
   };
 
-  const handleToolTip = (button: string) => {
-    if (button === 'engage') {
-      setTooltip('Enter combat to grow your score');
-    } else if (button === 'evade') {
-      setTooltip('Risk a combat for chance at item');
-    } else if (button === 'evacuate') {
-      setTooltip('Leave the area without resolving this event');
-    } else if (button === 'wildcard') {
-      setTooltip('Risk depression for chance at ally');
-    }
-  };
-
-  const handleToolTipOff = () => {
-    setTooltip(null);
-  };
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
 
-  const handleOnMouseEnter = (item: Item) => {
-    if (item._id !== 1) {
-      setHoveredItem(item);
+  const handleOnMouseEnter = (itemOrButton: Item | string) => {
+    if (typeof itemOrButton === 'string') {
+      if (itemOrButton === 'investigate') {
+        setTooltip('Search for an item, search for graffiti, and write graffiti');
+      } else if (itemOrButton === 'toggle') {
+        setTooltip('Toggle story text box on or off');
+      } else if (itemOrButton === 'engage') {
+        setTooltip('Attack any present threat using your strength stat');
+      } else if (itemOrButton === 'evade') {
+        setTooltip('Use your endurance stat to potentially evade an attack and find an item');
+      } else if (itemOrButton === 'evacuate') {
+        setTooltip('Leave the area without resolving this event');
+      } else if (itemOrButton === 'wildcard') {
+        setTooltip('Risk depression for chance at acquiring an ally');
+      }
+    } else {
+      if (itemOrButton._id !== 1) {
+        setHoveredItem(itemOrButton);
+      }
     }
   };
 
   const handleOnMouseLeave = () => {
     setHoveredItem(null);
+    setTooltip(null);
   };
 
   const handleDropItem = async (itemID, i) => {
@@ -902,6 +908,7 @@ const GameView = (props: GameViewProps) => {
       <Nav isActive={true} showButton={true} />
 
       <Main blur={introModal} linearGradient={introModal}>
+        <MainGlow>
         {introModal ? (
           <IntroModal
             id='intro-modal'
@@ -1043,6 +1050,7 @@ const GameView = (props: GameViewProps) => {
             <></>
           )}
         </LocationDiv>
+        </MainGlow>
       </Main>
 
       <Footer>
@@ -1117,6 +1125,8 @@ const GameView = (props: GameViewProps) => {
             <div>
               <h5 onClick={props.handleSpeak}>Investigate</h5>
               <ArcadeButtonInvestigate
+                onMouseEnter={() => handleOnMouseEnter('investigate')}
+                onMouseLeave={() => handleOnMouseLeave()}
                 disabled={investigateDisabled}
                 onClick={() => {
                   heartBeat.play();
@@ -1128,6 +1138,8 @@ const GameView = (props: GameViewProps) => {
             <div>
               <h5 onClick={props.handleSpeak}>Toggle Event</h5>
               <ArcadeButtonToggle
+                onMouseEnter={() => handleOnMouseEnter('toggle')}
+                onMouseLeave={() => handleOnMouseLeave()}
                 onClick={() => {
                   neutral.play();
                   handleToggleEvent();
@@ -1206,7 +1218,8 @@ const GameView = (props: GameViewProps) => {
           </Content2>
         </Content1>
         {/* <ArcadeWoodStyle> */}
-        <CRTDiv>
+        <LCDDiv>
+          <LCDGlow>
           <CharStatusContainer>
             <StatContainer>
               <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
@@ -1232,7 +1245,7 @@ const GameView = (props: GameViewProps) => {
                 <StatIconContainer>
                   <TinyStatIconImg src={images.strengthIcon} />
                   {currentChar.strength}
-                  <StatBonusColor>{`+${bonusStrength}`}</StatBonusColor>
+                  <StatBonusColor>{`+${bonusStrength} `}</StatBonusColor>
                   <TempStatBonusColor>
                     {temporaryStrength !== 0 ? `+${temporaryStrength}` : ''}
                   </TempStatBonusColor>
@@ -1240,14 +1253,14 @@ const GameView = (props: GameViewProps) => {
                 <StatIconContainer>
                   <TinyStatIconImg src={images.enduranceIcon} />
                   {currentChar.endurance}
-                  <StatBonusColor>{`+${bonusEndurance}`}</StatBonusColor>
+                  <StatBonusColor>{`+${bonusEndurance} `}</StatBonusColor>
                   {temporaryEndurance !== 0 ? `+${temporaryEndurance}` : ''}
                   <TempStatBonusColor></TempStatBonusColor>
                 </StatIconContainer>
                 <StatIconContainer>
                   <TinyStatIconImg src={images.moodIcon} />
                   {currentChar.mood}
-                  <StatBonusColor>{`+${bonusMood}`}</StatBonusColor>
+                  <StatBonusColor>{`+${bonusMood} `}</StatBonusColor>
                   <TempStatBonusColor>
                     {temporaryMood !== 0 ? `+${temporaryMood}` : ''}
                   </TempStatBonusColor>
@@ -1256,34 +1269,6 @@ const GameView = (props: GameViewProps) => {
             </StatContainer2>
             <InventoryBorder>
               <h4 onClick={props.handleSpeak}>Inventory</h4>
-              {hoveredItem && (
-                <InventoryTextBubble>
-                  {hoveredItem.modifier0 && (
-                    <>
-                      <h5>
-                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
-                      </h5>
-                      <h5>
-                        {hoveredItem.consumable === true ? 'Consumable' : ''}
-                      </h5>
-                      <h5>
-                        {' '}
-                        {hoveredItem.modifier0} + {hoveredItem.modified_stat0}
-                      </h5>
-                      <br />
-                    </>
-                  )}
-                  {hoveredItem.modifier1 && (
-                    <>
-                      <h5>
-                        {' '}
-                        {hoveredItem.modifier1} + {hoveredItem.modified_stat1}{' '}
-                      </h5>
-                      <br />
-                    </>
-                  )}
-                </InventoryTextBubble>
-              )}
               <InventoryStyle className='itemWidgets'>
                 {fetchedInventory.map((item: Item, i) => (
                   <div
@@ -1300,23 +1285,57 @@ const GameView = (props: GameViewProps) => {
                   </div>
                 ))}
               </InventoryStyle>
+              <div style={{height: '48px'}}/>
             </InventoryBorder>
           </CharStatusContainer>
-        </CRTDiv>
+          {hoveredItem && (
+                <>
+                <InventoryTextBubble>
+                  {hoveredItem.modifier0 && (
+
+                    <div>
+                      <InventoryBubbleText>
+                        {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
+                      </InventoryBubbleText>
+                      <InventoryBubbleText>
+                        {hoveredItem.consumable === true ? 'Consumable' : ''}
+                      </InventoryBubbleText>
+                      <InventoryBubbleText>
+                        {hoveredItem.modified_stat0} + {hoveredItem.modifier0}
+                      </InventoryBubbleText>
+                      {hoveredItem.modifier1 && (
+                        <InventoryBubbleText>
+                        {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
+                        </InventoryBubbleText>
+                      )}
+                    </div>
+
+                  )}
+                </InventoryTextBubble><InventoryBottomTextBubble>
+                  {
+                hoveredItem.consumable === true ?
+                 'Drag and drop item on character to use or location to drop' :
+                  'drag item over location image to drop item on location'
+                  }
+                </InventoryBottomTextBubble>
+                </>
+              )}
+              {tooltip && (
+                <InventoryTextBubble>
+                  <InventoryBubbleText>{tooltip}</InventoryBubbleText>
+                </InventoryTextBubble>
+              )}
+              </LCDGlow>
+        </LCDDiv>
         {/* </ArcadeWoodStyle> */}
         <Content3>
           <div>
-            {tooltip && (
-              <InventoryTextBubble>
-                <h5>{tooltip}</h5>
-              </InventoryTextBubble>
-            )}
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
               Engage
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip('engage')}
-              onMouseLeave={() => handleToolTipOff()}
+              onMouseEnter={() => handleOnMouseEnter('engage')}
+              onMouseLeave={() => handleOnMouseLeave()}
               onClick={() => {
                 hit.play();
                 // <-- handleEnemy func ??
@@ -1336,8 +1355,8 @@ const GameView = (props: GameViewProps) => {
               Evade
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip('evade')}
-              onMouseLeave={() => handleToolTipOff()}
+              onMouseEnter={() => handleOnMouseEnter('evade')}
+              onMouseLeave={() => handleOnMouseLeave()}
               onClick={() => {
                 dodge.play();
                 resolveChoice(
@@ -1356,8 +1375,8 @@ const GameView = (props: GameViewProps) => {
               Evacuate
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip('evacuate')}
-              onMouseLeave={() => handleToolTipOff()}
+              onMouseEnter={() => handleOnMouseEnter('evacuate')}
+              onMouseLeave={() => handleOnMouseLeave()}
               onClick={() => {
                 evacuate.play();
                 resolveChoice(choices.evacuate, 'evacuate', 0);
@@ -1372,8 +1391,8 @@ const GameView = (props: GameViewProps) => {
               Wildcard
             </h5>
             <ArcadeButton
-              onMouseEnter={() => handleToolTip('wildcard')}
-              onMouseLeave={() => handleToolTipOff()}
+              onMouseEnter={() => handleOnMouseEnter('wildcard')}
+              onMouseLeave={() => handleOnMouseLeave()}
               onClick={() => {
                 wildCard.play();
                 resolveChoice(
