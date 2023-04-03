@@ -2,7 +2,7 @@ import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
 import images from '../../utility/images';
-import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg, TitleButton } from './Styled';
+import { TitleContainer, Main, TitleLogoImg, TitleImg, TitleButton, CRTGlow, ArcadeDiv } from './Styled';
 
 
 const Title: React.FC = () => {
@@ -15,6 +15,7 @@ const Title: React.FC = () => {
     <TitleContainer>
       <Nav isActive={false} showButton={false}/>
       <Main>
+          <CRTGlow>
         <TitleLogoImg
           src={images.titleLogo}
           initial={{ filter: 'blur(5px)' }}
@@ -26,12 +27,15 @@ const Title: React.FC = () => {
           animate={{ filter: 'blur(0px)' }}
           transition={{ duration: 1.25 }}
         />
-      </Main>
-      <Footer>
+        <ArcadeDiv>
         <TitleButton onClick={handleSignIn}>
           Sign In
         </TitleButton>
-      </Footer>
+        </ArcadeDiv>
+        </CRTGlow>
+      </Main>
+      {/* <Footer>
+      </Footer> */}
     </TitleContainer>
   );
 };
