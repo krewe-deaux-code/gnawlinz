@@ -211,6 +211,7 @@ export const CharImageStyles = styled.img`
   width: auto;
   max-height: 276px;
   max-width: 183px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.1rem 0.1rem 0.2rem);
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
@@ -771,16 +772,16 @@ export const ArcadeWoodStyle = styled.div`
 
 export const LCDGlowPulse = keyframes`
  0% {
-  box-shadow: -20px 4px 50px 13px #8DADA7,
-20px 4px 50px 13px #8DADA7;
+  box-shadow: -10px 0px 11px #8DADA7,
+10px 0px 11px #8DADA7;
   }
   50% {
-    box-shadow: -20px 4px 50px 14px #8DADA7,
-20px 4px 50px 14px #8DADA7;
+    box-shadow: -10px 0px 10px #8DADA7,
+10px 0px 10px #8DADA7;
   }
   100% {
-    box-shadow: -20px 4px 50px 13px #8DADA7,
-20px 4px 50px 13px #8DADA7;
+    box-shadow: -10px 0px 11px #8DADA7,
+10px 0px 11px #8DADA7;
   }
 `;
 
@@ -788,8 +789,8 @@ export const LCDGlowPulse = keyframes`
 export const LCDGlow = styled('div')`
 border-radius: 1rem;
 padding: 1rem;
-box-shadow: -20px 50px 14px #8DADA7,
-20px 50px 14px #8DADA7;
+box-shadow: -10px 0px 11px #8DADA7,
+10px 0px 11px #8DADA7;
 animation: ${LCDGlowPulse} .25s infinite;
 `;
 

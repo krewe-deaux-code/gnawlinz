@@ -352,7 +352,7 @@ const GameView = (props: GameViewProps) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
         setTooltip(
-          'Search for an item, search for graffiti, and write graffiti'
+          'Search for an item search for graffiti and write graffiti'
         );
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
@@ -363,7 +363,7 @@ const GameView = (props: GameViewProps) => {
           'Use your endurance stat to potentially evade an attack and find an item'
         );
       } else if (itemOrButton === 'evacuate') {
-        setTooltip('Leave the area without resolving this event');
+        setTooltip('Move to new area');
       } else if (itemOrButton === 'wildcard') {
         setTooltip('Risk depression for chance at acquiring an ally');
       }
