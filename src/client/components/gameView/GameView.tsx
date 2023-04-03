@@ -56,6 +56,7 @@ import {
   InventoryBottomTextBubble,
   MainGlow,
   LCDGlow,
+  EnemyImgContainer,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -351,9 +352,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip(
-          'Search for an item search for graffiti and write graffiti'
-        );
+        setTooltip('Search for an item search for graffiti and write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
@@ -938,13 +937,19 @@ const GameView = (props: GameViewProps) => {
               id='intro-modal'
               show={introModal}
               onHide={() => setIntroModal(false)}
-              size='lg'
+              size='large'
               aria-labelledby='contained-modal-title-vcenter'
               centered
               backdrop={false}
               onClick={() => setIntroModal(false)}
             >
-              <ModalStyle style={{ border: '1px solid #fff' }}>
+              <ModalStyle
+                style={{
+                  border: '1px solid #fff',
+                  textShadow: '0px 1px 1px #131313',
+                  fontSize: '18px',
+                }}
+              >
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
                   <h4>It's Mardi Gras...</h4>
@@ -968,11 +973,13 @@ const GameView = (props: GameViewProps) => {
                     the figure shifting towards you has a bone sticking out of
                     its flesh and gives you a hungry growl...
                   </p>
-                  <p>
-                    <i style={{ color: 'goldenrod' }}>
-                      {'['}Use the buttons below to search for supplies and try
-                      to escape this deranged and violent carnival...{']'}
+                  <p style={{ color: 'goldenrod' }}>
+                    {'['}
+                    <i>
+                      Use the buttons below to search for supplies and try to
+                      escape this deranged and violent carnival...
                     </i>
+                    {']'}
                   </p>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
@@ -981,10 +988,41 @@ const GameView = (props: GameViewProps) => {
           ) : (
             <></>
           )}
-          <h2 onClick={props.handleSpeak} style={{paddingTop: '1rem'}}>{location.name}</h2>
-          <LocationDiv>
+          <h2 onClick={props.handleSpeak} style={{ paddingTop: '1rem' }}>
+            {location.name}
+          </h2>
+          <LocationDiv id='location-div'>
             {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
-            {showEnemy ? <EnemyImg src={currentEnemy.image_url} /> : <></>}
+            {showEnemy ? (
+              <EnemyImgContainer id='enemy-img-container'>
+                {/* overlay: `${health / 10} / 10` */}
+                {/* health: currentChar.health * 10 */}
+                {currentEnemy.name === boss?.name ? (
+                  <ProgressBarContainer
+                    style={{
+                      top: '8%',
+                      left: '29%',
+                      maxWidth: '280px',
+                      filter:
+                        'drop-shadow(rgba(0, 0, 0, 0.9) 0.6rem 0.6rem 0.5rem)',
+                    }}
+                  >
+                    <OverlayValue>{currentEnemy.health}</OverlayValue>
+                    <ProgressBar
+                      animated
+                      variant={'danger'}
+                      now={currentEnemy.health}
+                      style={{ backgroundColor: 'grey' }}
+                    />
+                  </ProgressBarContainer>
+                ) : (
+                  <></>
+                )}
+                <EnemyImg src={currentEnemy.image_url} id='enemy-img' />
+              </EnemyImgContainer>
+            ) : (
+              <></>
+            )}
             <EventText show={showEvent}>
               <ScrollableContainer>
                 {Object.entries(event).length ? (
@@ -1055,8 +1093,9 @@ const GameView = (props: GameViewProps) => {
                 style={{
                   color: 'green',
                   zIndex: 6,
-                  position: 'relative',
+                  position: 'absolute',
                   bottom: '7.5rem',
+                  right: '48%',
                 }}
                 animate={{
                   scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
@@ -1077,8 +1116,9 @@ const GameView = (props: GameViewProps) => {
                 style={{
                   color: 'red',
                   zIndex: 6,
-                  position: 'relative',
+                  position: 'absolute',
                   bottom: '7.5rem',
+                  right: '48%',
                 }}
                 animate={{
                   scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
