@@ -1143,11 +1143,16 @@ const GameView = (props: GameViewProps) => {
             <div>
               <h5 onClick={props.handleSpeak}>Investigate</h5>
               <ArcadeButtonInvestigate
-                disabled={investigateDisabled}
+                /* disabled={investigateDisabled} */
+                /* refactored disable state for cancel sound */
                 onClick={() => {
-                  heartBeat.play();
-                  handleClickButt();
-                  handleShow();
+                  if (!investigateDisabled) {
+                    heartBeat.play();
+                    handleClickButt();
+                    handleShow();
+                  } else {
+                    cancel.play();
+                  }
                 }}
               />
             </div>
