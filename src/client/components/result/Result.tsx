@@ -19,7 +19,13 @@ import { StatButton } from '../menu/Styled';
 
 import axios from 'axios';
 
+
 const Result: React.FC = () => {
+
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
+
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
   const { isSpeakingEnabled } = useContext(SettingsContext);
   const [story, setStory] = useState([]);
@@ -81,7 +87,7 @@ const Result: React.FC = () => {
       {resultText === 'you survived!' ? (
         <div>
           {' '}
-          <Confetti colors={colors} gravity={.2}/>{' '}
+          <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
       <Nav isActive={true} showButton={true} />
@@ -101,7 +107,9 @@ const Result: React.FC = () => {
         <Content1>
           <Link to='/' style={{ textDecoration: 'none' }}>
             <Content1>
-              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>Play Again</StatButton>
+              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>
+                Play Again
+              </StatButton>
             </Content1>
           </Link>
         </Content1>

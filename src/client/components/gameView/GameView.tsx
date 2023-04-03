@@ -92,6 +92,9 @@ import {
 import { ModalBody } from 'react-bootstrap';
 
 const GameView = (props: GameViewProps) => {
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
   const {
     prevEventId,
     setPrevEventId,
@@ -351,9 +354,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip(
-          'Search for an item search for graffiti and write graffiti'
-        );
+        setTooltip('Search for an item search for graffiti and write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
@@ -908,7 +909,14 @@ const GameView = (props: GameViewProps) => {
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
-        <Link to='/result' style={{ textDecoration: 'none' }}>
+        {/* <HudButton
+          onClick={() => {
+            complete.play();
+            return <Result />;
+          }}
+        /> */}
+        <Link to='/result'
+        style={{ textDecoration: 'none' }}>
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
