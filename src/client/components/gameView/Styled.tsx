@@ -233,6 +233,7 @@ export const InventoryBorder = styled.div`
   border-radius: 10px;
   width: 100%;
   height: 100%;
+  min-height: 154.8px;
   grid-area: inventory;
   padding: auto;
   margin: auto;
