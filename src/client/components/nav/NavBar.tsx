@@ -76,14 +76,28 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const throttle = (cb, delay = 1000) => {
+    let shouldWait = false;
+    return (...args) => {
+      if (shouldWait) {
+        return;
+      }
+      cb(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, delay);
+    };
+  };
+
   // text to speak functions
   const msg = new SpeechSynthesisUtterance();
-  const handleSpeak = (e) => {
+  const handleSpeak = throttle((e) => {
     if (isSpeakingEnabled) {
       msg.text = e.target.innerText;
       window.speechSynthesis.speak(msg);
     }
-  };
+  });
 
   const handleToggleSpeak = () => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
