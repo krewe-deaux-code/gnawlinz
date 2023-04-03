@@ -11,13 +11,16 @@ const bossSeeder = async (bossArr: any) => {
         strength: bossArr[i].strength,
         location: bossArr[i].location,
         score: bossArr[i].score,
-        event: bossArr[i].event
+        event: bossArr[i].event,
+        victory: bossArr[i].victory,
+        defeat: bossArr[i].defeat,
+        contact: bossArr[i].contact,
       }
     })
       .then(() =>
         console.log('Boss.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Boss.findOrCreate error in src/db/seeders/characterSeeder.ts: ', err));
+        console.error('Error Boss.findOrCreate error in src/db/seeders/bossSeeder.ts: ', err));
   }
 };
 
