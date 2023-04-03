@@ -1300,7 +1300,7 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </StatContainer2>
               <InventoryBorder>
-                <h4 onClick={props.handleSpeak}>Inventory</h4>
+                <h4 onClick={props.handleSpeak}>Inventory {`${fetchedInventory.filter((item)=>item._id !== 1).length}` + '/8'}</h4>
                 <InventoryStyle className='itemWidgets'>
                   {fetchedInventory.map((item: Item, i) => (
                     <div
