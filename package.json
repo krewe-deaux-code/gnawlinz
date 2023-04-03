@@ -81,7 +81,6 @@
     "react-confetti": "^6.1.0",
     "react-dom": "^18.2.0",
     "react-dropzone": "^14.2.3",
-    "react-error-boundary": "^4.0.3",
     "react-router-dom": "^6.7.9",
     "recoil": "^0.7.6",
     "sequelize": "^6.28.0",
