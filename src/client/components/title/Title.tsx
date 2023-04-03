@@ -2,7 +2,7 @@ import React from 'react'; // { useEffect, useContext }
 //import { Link } from 'react-router-dom';
 import Nav from '../nav/NavBar';
 import images from '../../utility/images';
-import { TitleContainer, Main, Footer, TitleLogoImg, TitleImg, TitleButton, CRTGlow, ArcadePurple } from './Styled';
+import { TitleContainer, Main, TitleLogoImg, TitleImg, TitleButton, CRTGlow, ArcadeDiv } from './Styled';
 
 
 const Title: React.FC = () => {
@@ -27,15 +27,15 @@ const Title: React.FC = () => {
           animate={{ filter: 'blur(0px)' }}
           transition={{ duration: 1.25 }}
         />
-        </CRTGlow>
-      </Main>
-      <Footer>
-        <ArcadePurple>
+        <ArcadeDiv>
         <TitleButton onClick={handleSignIn}>
           Sign In
         </TitleButton>
-        </ArcadePurple>
-      </Footer>
+        </ArcadeDiv>
+        </CRTGlow>
+      </Main>
+      {/* <Footer>
+      </Footer> */}
     </TitleContainer>
   );
 };

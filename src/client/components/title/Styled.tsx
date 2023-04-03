@@ -4,21 +4,21 @@ import { motion } from 'framer-motion';
 const TitleContainer = styled.div`
   display: grid;
   height: 97vh;
-  grid-template-rows: 0.20fr .60fr 0.20fr;
+  grid-template-rows: 0.20fr .80fr;
   grid-template-areas:
   "nav nav nav nav"
-  "main main main main"
-  "footer footer footer footer";
+  "main main main main";
+  /* "footer footer footer footer"; */
   text-align: center;
   /* grid-gap: 0.25rem; */
   transition: all 0.25s ease-in-out;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 0.6fr 0.2fr;
+    grid-template-rows: 0.2fr 0.8fr
     grid-template-areas:
       "nav"
-      "main"
-      "footer";
+      "main";
+      /* "footer"; */
   }
   color: white;
   background-color: rgb(31, 33, 40);
@@ -123,9 +123,7 @@ export const CRTGlowPulse = keyframes`
 
 
 const Main = styled.main`
-  background: #1f2128;
   height: 100%;
-  color: white;
   justify-content: center;
   background: rgb(31, 33, 40);
   color: white;
@@ -196,21 +194,20 @@ const Content2 = styled(Content1)``;
 const Content3 = styled(Content1)``;
 
 
-const ArcadePurple = styled.div`
+const ArcadeDiv = styled.div`
   width: 100%;
-  margin-top: 1rem;
-  padding: 26px;
-  border-radius: 3rem 3rem 0 0;
-  background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png');
+  padding: .5rem;
+  /* border-radius: 3rem 3rem 0 0; */
+  /* background: url('https://res.cloudinary.com/de0mhjdfg/image/upload/v1679955903/gnawlinzIcons/purple_cross_stripes_vtgu6o.png'); */
   
 `;
 
-const Footer = styled.footer`
-  grid-area: footer;
-  display: flex; 
-  justify-content: center;
-  width: 100%;
-`;
+// const Footer = styled.footer`
+//   grid-area: footer;
+//   display: flex; 
+//   justify-content: center;
+//   width: 100%;
+// `;
 
 const VolumeSlider = styled.input.attrs({ type: 'range' })`
 
@@ -231,7 +228,7 @@ const VolumeSlider = styled.input.attrs({ type: 'range' })`
 export {
   TitleContainer, NavBar, Main,
   Content1, Content2, Content3,
-  Footer, VolumeSlider, TitleLogoImg,
-  TitleImg, TitleButton, CRTGlow, ArcadePurple
+   VolumeSlider, TitleLogoImg,
+  TitleImg, TitleButton, CRTGlow, ArcadeDiv
 
 };
