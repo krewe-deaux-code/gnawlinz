@@ -56,6 +56,7 @@ import {
   InventoryBottomTextBubble,
   MainGlow,
   LCDGlow,
+  EnemyImgContainer,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -973,9 +974,37 @@ const GameView = (props: GameViewProps) => {
             <></>
           )}
           <h2 onClick={props.handleSpeak}>{location.name}</h2>
-          <LocationDiv>
+          <LocationDiv id='location-div'>
             {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
-            {showEnemy ? <EnemyImg src={currentEnemy.image_url} /> : <></>}
+            {showEnemy ? (
+              <EnemyImgContainer id='enemy-img-container'>
+                {/* overlay: `${health / 10} / 10` */}
+                {/* health: currentChar.health * 10 */}
+                {currentEnemy.name === boss?.name ? (
+                  <ProgressBarContainer
+                    style={{
+                      top: '8%',
+                      left: '29%',
+                      maxWidth: '280px',
+                      filter:
+                        'drop-shadow(rgba(0, 0, 0, 0.9) 0.6rem 0.6rem 0.5rem)',
+                    }}
+                  >
+                    <OverlayValue>{currentEnemy.health}</OverlayValue>
+                    <ProgressBar
+                      variant={'danger'}
+                      now={currentEnemy.health}
+                      style={{ backgroundColor: 'grey' }}
+                    />
+                  </ProgressBarContainer>
+                ) : (
+                  <></>
+                )}
+                <EnemyImg src={currentEnemy.image_url} id='enemy-img' />
+              </EnemyImgContainer>
+            ) : (
+              <></>
+            )}
             <EventText show={showEvent}>
               <ScrollableContainer>
                 {Object.entries(event).length ? (
@@ -1046,8 +1075,9 @@ const GameView = (props: GameViewProps) => {
                 style={{
                   color: 'green',
                   zIndex: 6,
-                  position: 'relative',
+                  position: 'absolute',
                   bottom: '7.5rem',
+                  right: '48%',
                 }}
                 animate={{
                   scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
@@ -1068,8 +1098,9 @@ const GameView = (props: GameViewProps) => {
                 style={{
                   color: 'red',
                   zIndex: 6,
-                  position: 'relative',
+                  position: 'absolute',
                   bottom: '7.5rem',
+                  right: '48%',
                 }}
                 animate={{
                   scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],

@@ -418,15 +418,26 @@ export const AllyImg = styled.img`
   right: 32%;
 `;
 
-export const EnemyImg = styled.img`
+export const EnemyImgContainer = styled.div`
   z-index: 1;
   height: 100%;
   width: 100%;
   max-width: 500px;
   max-height: 502px;
   position: absolute;
-  top: 0%;
+  bottom: 13%;
   right: 30%;
+`;
+
+export const EnemyImg = styled.img`
+  /* z-index: 1; */
+  height: 100%;
+  width: 100%;
+  /* max-width: 500px;
+  max-height: 502px;
+  position: absolute;
+  top: 0%;
+  right: 30%; */
 `;
 
 export const LocationDiv = styled.div`
