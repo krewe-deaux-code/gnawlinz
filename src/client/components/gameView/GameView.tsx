@@ -992,6 +992,7 @@ const GameView = (props: GameViewProps) => {
                   >
                     <OverlayValue>{currentEnemy.health}</OverlayValue>
                     <ProgressBar
+                      animated
                       variant={'danger'}
                       now={currentEnemy.health}
                       style={{ backgroundColor: 'grey' }}
