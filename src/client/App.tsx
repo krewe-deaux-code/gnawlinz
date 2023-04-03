@@ -80,7 +80,7 @@ const App = () => {
     const sortedInventoryChar = currentChar;
     if (sortedInventoryChar.inventory) {
       if (sortedInventoryChar.inventory.length > 8) {
-      sortedInventoryChar.inventory.length = 8;
+      sortedInventoryChar.inventory.splice(8, 1);
       }
       sortedInventoryChar.inventory.sort((a, b) => b - a);
     }
