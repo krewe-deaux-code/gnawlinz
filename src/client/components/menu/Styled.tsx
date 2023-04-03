@@ -1,7 +1,14 @@
 import Carousel from 'react-bootstrap/Carousel';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
+
+
+
+export const MenuContainer = styled.div`
+
+`;
+
 
 export const ArcadeBackground = styled.div`
   width: 100%;
@@ -199,7 +206,7 @@ export const Body = styled.div`
   height: 100%;
   background-color: rgb(31, 33, 40); /* changed from black */
   color: white;
-  height: 100vh;
+  height: 97vh;
 `;
 
 export const InfoContainer = styled.div`
@@ -210,9 +217,10 @@ export const InfoContainer = styled.div`
 
 export const Tab = styled.button`
   border: none;
+  border-radius:2.6rem;
   outline: none;
   cursor: pointer;
-  width: 33.2%;
+  width: 33%;
   position: relative;
 
   margin-right: 0.1em;
@@ -503,6 +511,113 @@ export const RedX = styled.img`
 `;
 
 export const InnerContainer = styled.div``;
+
+
+
+
+
+export const CRTFlicker = keyframes`
+  0% {
+  opacity: 0.15;
+  }
+  25% {
+  opacity: 0.25;
+  }
+  50% {
+  opacity: 0.15;
+  }
+  75% {
+  opacity: 0.1;
+  }
+  100% {
+  opacity: 0.2;
+  }
+`;
+
+export const CRTGlowPulse = keyframes`
+0% {
+  box-shadow: 0 20px 100px 22.25px #928579;
+  }
+  25% {
+    box-shadow: 0 20px 100px 23.75px #928579;
+  }
+  50% {
+    box-shadow: 0 20px 100px 22.25px #928579;
+  }
+  75% {
+    box-shadow: 0 20px 100px 21.5px #928579;
+  }
+  100% {
+    box-shadow: 0 20px 100px 23px #928579;
+  }
+`;
+
+
+
+export const CRTGlow = styled.div`
+border-radius: 2.6rem;
+box-shadow: 0 20px 100px 20px #928579;
+animation: ${CRTGlowPulse} .15s infinite;
+`;
+
+export const ArcadeGlowContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  background: rgb(31, 33, 40);
+  color: white;
+  grid-area: main;
+  position: relative;
+  background-image: radial-gradient(#717171, #111);
+  border-radius: 2.6rem;
+  box-shadow: inset 0 0 30rem black, inset 0 0 30rem black,
+    0 0 2rem -10px #ffffff;
+  &:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 2.6rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(
+        rgba(18, 16, 16, 0) 50%,
+        rgba(0, 0, 0, 0.25) 50%
+      ),
+      linear-gradient(
+        90deg,
+        rgba(255, 0, 0, 0.06),
+        rgba(0, 255, 0, 0.02),
+        rgba(0, 0, 255, 0.06)
+      );
+    z-index: 4;
+    background-size: 100% 3.4px, 5.1px 100%;
+    pointer-events: none;
+  }
+  &:after {
+    content: ' ';
+    display: block;
+    position: absolute;
+    border-radius: 2.6rem;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(18, 16, 16, 0.1);
+    opacity: 0;
+    z-index: 4;
+    pointer-events: none;
+    animation: ${CRTFlicker} 0.15s infinite;
+  }
+`;
+
+
+
+
+
+
+
 
 // export const SelectorContainer = styled.div`
 //   /* grid-template-rows: .10fr .20fr .20fr;
