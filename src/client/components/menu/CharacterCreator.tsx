@@ -44,18 +44,16 @@ import {
   CCStartButton,
 } from './Styled';
 
-import { UserContext, SettingsContext } from '../../App';
+import { UserContext } from '../../App';
 import { MenuContext } from './Menu';
-import { Character } from '../../utility/interface';
+import { Character, GameViewProps } from '../../utility/interface';
 
-const CharacterCreator: React.FC = () => {
+const CharacterCreator = (props: GameViewProps) => {
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } =
     useContext(UserContext);
 
   const { hideStartButton, setHideStartButton, startFail, setStartFail } =
     useContext(MenuContext);
-
-  const { isSpeakingEnabled } = useContext(SettingsContext);
 
   const navigate = useNavigate();
   const [index, setIndex] = useState(0);
@@ -78,6 +76,7 @@ const CharacterCreator: React.FC = () => {
   const [statPool, setStatPool] = useState<number>(18);
   const [startDisabled, setStartDisabled] = useState<boolean>(true);
 
+
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
   };
@@ -92,13 +91,6 @@ const CharacterCreator: React.FC = () => {
     setInputName(names[Math.floor(Math.random() * names.length)]);
   };
 
-  const msg = new SpeechSynthesisUtterance();
-  const handleSpeak = (e) => {
-    if (isSpeakingEnabled) {
-      msg.text = e.target.innerText;
-      window.speechSynthesis.speak(msg);
-    }
-  };
 
   // *************
   // <-- axios -->
@@ -313,7 +305,7 @@ const CharacterCreator: React.FC = () => {
           </AvatarContainer>
           <NameBox>
             {newChar.name ? (
-              <p onClick={handleSpeak} style={{ color: 'white' }}>
+              <p onClick={props.handleSpeak} style={{ color: 'white' }}>
                 Name: {newChar.name}
               </p>
             ) : (
@@ -321,7 +313,7 @@ const CharacterCreator: React.FC = () => {
                 animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
                 style={{ color: 'white' }}
                 transition={{ duration: 0.3 }}
-                onClick={handleSpeak}
+                onClick={props.handleSpeak}
               >
                 Name: enter your name
               </motion.p>
@@ -351,7 +343,7 @@ const CharacterCreator: React.FC = () => {
         <StatsContainer id='Stats'>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg src={images.healthIcon} />
-            <HStatName id='statName' onClick={handleSpeak}>
+            <HStatName id='statName' onClick={props.handleSpeak}>
               <span>Health: </span>
               <span> {newChar.health}</span>
               <StatButton
@@ -374,7 +366,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg src={images.strengthIcon} />
-            <SStatName id='statName' onClick={handleSpeak}>
+            <SStatName id='statName' onClick={props.handleSpeak}>
               <span>Strength: </span>
               <span> {newChar.strength}</span>
               <StatButton
@@ -397,7 +389,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg src={images.enduranceIcon} />
-            <EStatName id='statName' onClick={handleSpeak}>
+            <EStatName id='statName' onClick={props.handleSpeak}>
               <span>Endurance: </span>
               <span> {newChar.endurance}</span>
               <StatButton
@@ -420,7 +412,7 @@ const CharacterCreator: React.FC = () => {
           </StatIconContainer>
           <StatIconContainer style={{ position: 'relative', right: '1.8rem' }}>
             <IconImg src={images.moodIcon} />
-            <MStatName id='statName' onClick={handleSpeak}>
+            <MStatName id='statName' onClick={props.handleSpeak}>
               <span>Mood: </span>
               <span> {newChar.mood}</span>
               <StatButton
@@ -438,7 +430,7 @@ const CharacterCreator: React.FC = () => {
             </MStatName>
           </StatIconContainer>
           <SaveBox>
-            <StatPoolBox onClick={handleSpeak}>
+            <StatPoolBox onClick={props.handleSpeak}>
               <span>Stat Pool: </span>
               <span> {statPool} </span>
             </StatPoolBox>

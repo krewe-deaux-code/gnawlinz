@@ -17,20 +17,19 @@ import {
 } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
 
-import { UserContext, SettingsContext } from '../../App'; // <-- holds User object
-import { Character } from '../../utility/interface';
+import { UserContext } from '../../App'; // <-- holds User object
+import { Character, GameViewProps } from '../../utility/interface';
 
 // make dummy char for Create New Char? option. silhoutte image below:
 // https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png
 // push dummy char on useEffect (first time render?) into userChars state array...
 
-const CharacterStats: React.FC = () => {
+const CharacterStats = (props: GameViewProps) => {
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } =
     useContext(UserContext); // <-- NEED to get user chars below
 
   const [, /*index*/ setIndex] = useState(0);
   const [locationName, setLocationName] = useState('');
-  const { isSpeakingEnabled } = useContext(SettingsContext);
 
   const handleSelect = (selectedIndex: number) => {
     neutral.play();
@@ -102,13 +101,6 @@ const CharacterStats: React.FC = () => {
     return <div>Loading...</div>;
   }
 
-  const msg = new SpeechSynthesisUtterance();
-  const handleSpeak = (e) => {
-    if (isSpeakingEnabled) {
-      msg.text = e.target.innerText;
-      window.speechSynthesis.speak(msg);
-    }
-  };
   // console.log('CHARS AFTER FETCH', userChars);
   // console.log('CURRENT CHAR', currentChar);
   // console.log('ACTIVE USER', activeUser);
@@ -119,7 +111,7 @@ const CharacterStats: React.FC = () => {
       <div id='outter-container'>
         <InnerContainer id='inner-container'>
           <h1>
-            <u onClick={handleSpeak}>Character Select:</u>
+            <u onClick={props.handleSpeak}>Character Select:</u>
           </h1>
           {userChars.length ? (
             <StyledCarousel
@@ -150,37 +142,37 @@ const CharacterStats: React.FC = () => {
                       />
                     </div>
                     <StatName>
-                      <u onClick={handleSpeak}>Name: {char.name}</u>
+                      <u onClick={props.handleSpeak}>Name: {char.name}</u>
                     </StatName>
                     <CharSelectStatBox>
                       <IconContainerInner>
                         <IconImg src={images.healthIcon} />
-                        <StatName onClick={handleSpeak}>
+                        <StatName onClick={props.handleSpeak}>
                           Health: {char.health}
                         </StatName>
                       </IconContainerInner>
                       <IconContainerInner>
                         <IconImg src={images.strengthIcon} />
-                        <StatName onClick={handleSpeak}>
+                        <StatName onClick={props.handleSpeak}>
                           Strength: {char.strength}
                         </StatName>
                       </IconContainerInner>
                       <IconContainerInner>
                         <IconImg src={images.enduranceIcon} />
-                        <StatName onClick={handleSpeak}>
+                        <StatName onClick={props.handleSpeak}>
                           Endurance: {char.endurance}
                         </StatName>
                       </IconContainerInner>
                       <IconContainerInner>
                         <IconImg src={images.moodIcon} />
-                        <StatName onClick={handleSpeak}>
+                        <StatName onClick={props.handleSpeak}>
                           Mood: {char.mood}
                         </StatName>
                       </IconContainerInner>
                     </CharSelectStatBox>
                     <IconContainerOuter>
                       <StatName
-                        onClick={handleSpeak}
+                        onClick={props.handleSpeak}
                         style={{ display: 'flex' }}
                       >
                         Location: {locationName}
@@ -196,7 +188,7 @@ const CharacterStats: React.FC = () => {
                 style={{ height: '400px', width: '300px' }}
                 src={images.createCharImage}
               />
-              <StatName onClick={handleSpeak}>Create a Character:</StatName>
+              <StatName onClick={props.handleSpeak}>Create a Character:</StatName>
             </>
           )}
         </InnerContainer>
