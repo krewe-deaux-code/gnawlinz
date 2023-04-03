@@ -32,7 +32,7 @@ export const choiceSeed = [
     alignment2: null,
   },
   { // Generic Stealth 5
-    flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
+    flavor_text: 'You decide to sneak through the area, attempting to collect supplies while avoiding contact with the entity.',
     success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected your presence.',
     failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily tracked you!',
     alignment0: null,

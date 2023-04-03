@@ -756,7 +756,7 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
-      setModalText("You searched for items, but didn't find anything");
+      setModalText('You searched for items, but didn\'t find anything');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
@@ -796,6 +796,14 @@ const GameView = (props: GameViewProps) => {
     }));
 
     setInputValue('');
+    setVisited((prevVisited) =>
+      prevVisited.map((item) => {
+        if (item.name === location.name) {
+          return location;
+        }
+        return item;
+      })
+    );
     setVisited((prevVisited) =>
       prevVisited.map((item) => {
         if (item.name === location.name) {
@@ -899,6 +907,15 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
     // throttle(handlePlayerDied, 30000);
+    if (currentChar.mood + bonusMood < 1 ) {
+      axios
+        .post(`story/ending/${currentChar._id}`, {
+          result: 'You haven\'t the heart to go on. Slumping down to the ground, hopeless, you end your journey here.',
+        })
+          .catch((err) =>
+            console.error('Failed to add story on  Mood-death: ', err)
+          );
+    }
     handlePlayerDied();
     return <Result />;
   }
