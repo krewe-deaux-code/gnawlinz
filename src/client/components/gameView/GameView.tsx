@@ -83,6 +83,7 @@ import {
   neutral,
   heartBeat,
   bunny,
+  cancel,
 } from '../../utility/sounds';
 import { ModalBody } from 'react-bootstrap';
 
