@@ -755,7 +755,7 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
-      setModalText('You searched for items, but didn\'t find anything');
+      setModalText("You searched for items, but didn't find anything");
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
@@ -906,14 +906,15 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
     // throttle(handlePlayerDied, 30000);
-    if (currentChar.mood + bonusMood < 1 ) {
+    if (currentChar.mood + bonusMood < 1) {
       axios
         .post(`story/ending/${currentChar._id}`, {
-          result: 'You haven\'t the heart to go on. Slumping down to the ground, hopeless, you end your journey here.',
+          result:
+            "You haven't the heart to go on. Slumping down to the ground, hopeless, you end your journey here.",
         })
-          .catch((err) =>
-            console.error('Failed to add story on  Mood-death: ', err)
-          );
+        .catch((err) =>
+          console.error('Failed to add story on  Mood-death: ', err)
+        );
     }
     handlePlayerDied();
     return <Result />;
@@ -1004,14 +1005,14 @@ const GameView = (props: GameViewProps) => {
                       left: '29%',
                       maxWidth: '280px',
                       filter:
-                        'drop-shadow(rgba(0, 0, 0, 0.9) 0.6rem 0.6rem 0.5rem)',
+                        'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
                     }}
                   >
                     <OverlayValue>{currentEnemy.health}</OverlayValue>
                     <ProgressBar
                       animated
                       variant={'danger'}
-                      now={currentEnemy.health}
+                      now={currentEnemy.health / 5}
                       style={{ backgroundColor: 'grey' }}
                     />
                   </ProgressBarContainer>
