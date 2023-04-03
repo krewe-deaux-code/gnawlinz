@@ -200,10 +200,10 @@ const Menu = (props: GameViewProps) => {
               <h1 onClick={props.handleSpeak}>
                 <u>New Character:</u>
               </h1>
-              <CharacterCreator />
+              <CharacterCreator handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 1}>
-              <CharacterStats />
+              <CharacterStats handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 2}>
               <div>

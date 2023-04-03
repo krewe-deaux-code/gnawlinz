@@ -900,7 +900,7 @@ const GameView = (props: GameViewProps) => {
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
     // throttle(handlePlayerDied, 30000);
     handlePlayerDied();
-    return <Result />;
+    return <Result handleSpeak={props.handleSpeak}/>;
   }
   // Any hooks between above conditional and below return will crash the page.
   console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
