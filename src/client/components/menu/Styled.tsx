@@ -3,6 +3,13 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
+
+
+export const MenuContainer = styled.div`
+
+`;
+
+
 export const ArcadeBackground = styled.div`
   width: 100%;
   height: calc(100vh - 767.33px);
