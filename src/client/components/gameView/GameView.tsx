@@ -55,7 +55,7 @@ import {
   InventoryBubbleText,
   InventoryBottomTextBubble,
   MainGlow,
-  LCDGlow
+  LCDGlow,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -87,6 +87,7 @@ import {
   neutral,
   heartBeat,
   bunny,
+  cancel,
 } from '../../utility/sounds';
 import { ModalBody } from 'react-bootstrap';
 
@@ -350,13 +351,17 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip('Search for an item, search for graffiti, and write graffiti');
+        setTooltip(
+          'Search for an item, search for graffiti, and write graffiti'
+        );
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
         setTooltip('Attack any present threat using your strength stat');
       } else if (itemOrButton === 'evade') {
-        setTooltip('Use your endurance stat to potentially evade an attack and find an item');
+        setTooltip(
+          'Use your endurance stat to potentially evade an attack and find an item'
+        );
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Leave the area without resolving this event');
       } else if (itemOrButton === 'wildcard') {
@@ -898,6 +903,8 @@ const GameView = (props: GameViewProps) => {
     return <Result />;
   }
   // Any hooks between above conditional and below return will crash the page.
+  console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
+
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
@@ -909,147 +916,168 @@ const GameView = (props: GameViewProps) => {
 
       <Main blur={introModal} linearGradient={introModal}>
         <MainGlow>
-        {introModal ? (
-          <IntroModal
-            id='intro-modal'
-            show={introModal}
-            onHide={() => setIntroModal(false)}
-            size='lg'
-            aria-labelledby='contained-modal-title-vcenter'
-            centered
-            backdrop={false}
-            onClick={() => setIntroModal(false)}
-          >
-            <ModalStyle style={{ border: '1px solid #fff' }}>
-              <Modal.Header closeButton></Modal.Header>
-              <Modal.Body>
-                <h4>Lundi Gras</h4>
-                <p>
-                  You awoke from a Carnival bender to find yourself in a monster
-                  infested New Orleans! You set out to find supplies and
-                  vanquish that which should not be.
-                </p>
-              </Modal.Body>
-              <Modal.Footer></Modal.Footer>
-            </ModalStyle>
-          </IntroModal>
-        ) : (
-          <></>
-        )}
-        <h2 onClick={props.handleSpeak}>{location.name}</h2>
-        <LocationDiv>
-          {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
-          {showEnemy ? <EnemyImg src={currentEnemy.image_url} /> : <></>}
-          <EventText show={showEvent}>
-            <ScrollableContainer>
-              {Object.entries(event).length ? (
-                <p onClick={props.handleSpeak}>{event.initial_text}</p>
-              ) : (
-                <></>
-              )}
-              {Object.entries(selectedChoice).length ? (
-                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
-                  {selectedChoice.flavor_text}
-                </p>
-              ) : (
-                <>
-                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
-                    What do you do?
+          {introModal ? (
+            <IntroModal
+              id='intro-modal'
+              show={introModal}
+              onHide={() => setIntroModal(false)}
+              size='lg'
+              aria-labelledby='contained-modal-title-vcenter'
+              centered
+              backdrop={false}
+              onClick={() => setIntroModal(false)}
+            >
+              <ModalStyle style={{ border: '1px solid #fff' }}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                  <h4>It's Mardi Gras...</h4>
+                  <p>
+                    But something isn't right... You come-to from a Carnival
+                    bender, with nothing but {fetchedInventory[0].name} and your
+                    tattered clothes. You can barely remember your own name, but
+                    you remember someone calling you... "{currentChar.name}"?
+                    Your head is pounding and you could swear you hear gurgling
+                    and moaning in the distance... the smell of putrid flesh
+                    creeps into your nostrils... but that might just be Bourbon
+                    Street... You should go find your things and try to get home
+                    before things get any weirder...
                   </p>
-                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
-                    Select an option below...
+                  <p>
+                    You see a grey shape shambling towards you, it looks human
+                    but...{' '}
+                    <i>
+                      you rub your eyes to make sure you aren't hallucinating...
+                    </i>{' '}
+                    the figure shifting towards you has a bone sticking out of
+                    its flesh and gives you a hungry growl...
                   </p>
-                </>
-              )}
-              {outcome.length ? (
-                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
-                  {outcome}
-                </p>
-              ) : (
-                <></>
-              )}
-              {tempText.length ? (
-                <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
-                  {tempText}
-                </p>
-              ) : (
-                <></>
-              )}
-            </ScrollableContainer>
-          </EventText>
-          <Page
-            className='page'
-            onDrop={handleDropItemOnLocation}
-            onDragOver={handleDragOver}
-          >
-            <KillFeedContainer>
-              R.I.P
-              <KillFeed>
-                {killFeed.length ? (
-                  killFeed.map((death, i) => (
-                    <p key={i} onClick={handlePlayerDied}>
-                      {death}
-                    </p>
-                  ))
+                  <p>
+                    <i style={{ color: 'goldenrod' }}>
+                      {'['}Use the buttons below to search for supplies and try
+                      to escape this deranged and violent carnival...{']'}
+                    </i>
+                  </p>
+                </Modal.Body>
+                <Modal.Footer></Modal.Footer>
+              </ModalStyle>
+            </IntroModal>
+          ) : (
+            <></>
+          )}
+          <h2 onClick={props.handleSpeak}>{location.name}</h2>
+          <LocationDiv>
+            {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
+            {showEnemy ? <EnemyImg src={currentEnemy.image_url} /> : <></>}
+            <EventText show={showEvent}>
+              <ScrollableContainer>
+                {Object.entries(event).length ? (
+                  <p onClick={props.handleSpeak}>{event.initial_text}</p>
                 ) : (
-                  <p onClick={handlePlayerDied}>test</p>
+                  <></>
                 )}
-              </KillFeed>
-            </KillFeedContainer>
-            <LocationImg
-              src={location.image_url}
-              style={{
-                position: 'relative',
-                bottom: '98%',
-                zIndex: 0,
-              }}
-            ></LocationImg>
-          </Page>
-          {damageToEnemy > 0 ? (
-            <motion.div
-              style={{
-                color: 'green',
-                zIndex: 6,
-                position: 'relative',
-                bottom: '7.5rem',
-              }}
-              animate={{
-                scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
-                rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
-                y: -250,
-                x: 80,
-              }}
-              transition={{ ease: 'easeInOut', duration: 1.5 }}
-              exit={{ opacity: 0, scale: 0 }}
+                {Object.entries(selectedChoice).length ? (
+                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
+                    {selectedChoice.flavor_text}
+                  </p>
+                ) : (
+                  <>
+                    <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
+                      What do you do?
+                    </p>
+                    <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
+                      Select an option below...
+                    </p>
+                  </>
+                )}
+                {outcome.length ? (
+                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
+                    {outcome}
+                  </p>
+                ) : (
+                  <></>
+                )}
+                {tempText.length ? (
+                  <p onClick={props.handleSpeak} style={{ margin: '1rem' }}>
+                    {tempText}
+                  </p>
+                ) : (
+                  <></>
+                )}
+              </ScrollableContainer>
+            </EventText>
+            <Page
+              className='page'
+              onDrop={handleDropItemOnLocation}
+              onDragOver={handleDragOver}
             >
-              {damageToEnemy}
-            </motion.div>
-          ) : (
-            <></>
-          )}
-          {damageToPlayer > 0 ? (
-            <motion.div
-              style={{
-                color: 'red',
-                zIndex: 6,
-                position: 'relative',
-                bottom: '7.5rem',
-              }}
-              animate={{
-                scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
-                rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
-                y: -250,
-                x: -80,
-              }}
-              transition={{ ease: 'easeInOut', duration: 1.8 }}
-              exit={{ opacity: 0, scale: 0 }}
-            >
-              {damageToPlayer}
-            </motion.div>
-          ) : (
-            <></>
-          )}
-        </LocationDiv>
+              <KillFeedContainer>
+                R.I.P
+                <KillFeed>
+                  {killFeed.length ? (
+                    killFeed.map((death, i) => (
+                      <p key={i} onClick={handlePlayerDied}>
+                        {death}
+                      </p>
+                    ))
+                  ) : (
+                    <p onClick={handlePlayerDied}>test</p>
+                  )}
+                </KillFeed>
+              </KillFeedContainer>
+              <LocationImg
+                src={location.image_url}
+                style={{
+                  position: 'relative',
+                  bottom: '98%',
+                  zIndex: 0,
+                }}
+              ></LocationImg>
+            </Page>
+            {damageToEnemy > 0 ? (
+              <motion.div
+                style={{
+                  color: 'green',
+                  zIndex: 6,
+                  position: 'relative',
+                  bottom: '7.5rem',
+                }}
+                animate={{
+                  scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
+                  y: -250,
+                  x: 80,
+                }}
+                transition={{ ease: 'easeInOut', duration: 1.5 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >
+                {damageToEnemy}
+              </motion.div>
+            ) : (
+              <></>
+            )}
+            {damageToPlayer > 0 ? (
+              <motion.div
+                style={{
+                  color: 'red',
+                  zIndex: 6,
+                  position: 'relative',
+                  bottom: '7.5rem',
+                }}
+                animate={{
+                  scale: [1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 1, 0],
+                  rotate: [-30, 0, 30, 0, -30, 0, 30, 0, -30, 0, 30, 0],
+                  y: -250,
+                  x: -80,
+                }}
+                transition={{ ease: 'easeInOut', duration: 1.8 }}
+                exit={{ opacity: 0, scale: 0 }}
+              >
+                {damageToPlayer}
+              </motion.div>
+            ) : (
+              <></>
+            )}
+          </LocationDiv>
         </MainGlow>
       </Main>
 
@@ -1127,11 +1155,15 @@ const GameView = (props: GameViewProps) => {
               <ArcadeButtonInvestigate
                 onMouseEnter={() => handleOnMouseEnter('investigate')}
                 onMouseLeave={() => handleOnMouseLeave()}
-                disabled={investigateDisabled}
+                /* disabled={investigateDisabled} */
                 onClick={() => {
-                  heartBeat.play();
-                  handleClickButt();
-                  handleShow();
+                  if (!investigateDisabled) {
+                    heartBeat.play();
+                    handleClickButt();
+                    handleShow();
+                  } else {
+                    cancel.play();
+                  }
                 }}
               />
             </div>
@@ -1220,79 +1252,78 @@ const GameView = (props: GameViewProps) => {
         {/* <ArcadeWoodStyle> */}
         <LCDDiv>
           <LCDGlow>
-          <CharStatusContainer>
-            <StatContainer>
-              <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
-              <div
-                className='page'
-                onDrop={handleDropItemOnCharacter}
-                onDragOver={handleDragOver}
-              >
-                <CharImageStyles src={currentChar.image_url} />
-              </div>
-            </StatContainer>
-            <StatContainer2>
-              <h4 onClick={props.handleSpeak}>
-                {' '}
-                {'Score: ' + currentChar.score}
-              </h4>
-              <div style={{ width: '20em' }}>{StatusBars()}</div>
-              <div onClick={props.handleSpeak}>
-                <StatIconContainer>
-                  <TinyStatIconImg src={images.healthIcon} />
-                  {currentChar.health}
-                </StatIconContainer>
-                <StatIconContainer>
-                  <TinyStatIconImg src={images.strengthIcon} />
-                  {currentChar.strength}
-                  <StatBonusColor>{`+${bonusStrength} `}</StatBonusColor>
-                  <TempStatBonusColor>
-                    {temporaryStrength !== 0 ? `+${temporaryStrength}` : ''}
-                  </TempStatBonusColor>
-                </StatIconContainer>
-                <StatIconContainer>
-                  <TinyStatIconImg src={images.enduranceIcon} />
-                  {currentChar.endurance}
-                  <StatBonusColor>{`+${bonusEndurance} `}</StatBonusColor>
-                  {temporaryEndurance !== 0 ? `+${temporaryEndurance}` : ''}
-                  <TempStatBonusColor></TempStatBonusColor>
-                </StatIconContainer>
-                <StatIconContainer>
-                  <TinyStatIconImg src={images.moodIcon} />
-                  {currentChar.mood}
-                  <StatBonusColor>{`+${bonusMood} `}</StatBonusColor>
-                  <TempStatBonusColor>
-                    {temporaryMood !== 0 ? `+${temporaryMood}` : ''}
-                  </TempStatBonusColor>
-                </StatIconContainer>
-              </div>
-            </StatContainer2>
-            <InventoryBorder>
-              <h4 onClick={props.handleSpeak}>Inventory</h4>
-              <InventoryStyle className='itemWidgets'>
-                {fetchedInventory.map((item: Item, i) => (
-                  <div
-                    key={i}
-                    className='itemWidget'
-                    draggable
-                    onDragStart={(e) => handleOnDragItem(e, item._id, i)}
-                    onMouseEnter={() => handleOnMouseEnter(item)}
-                    onMouseLeave={() => handleOnMouseLeave()}
-                  >
-                    <IconContainer>
-                      <IconImg src={item._id !== 1 ? item.image_url : ''} />
-                    </IconContainer>
-                  </div>
-                ))}
-              </InventoryStyle>
-              <div style={{height: '48px'}}/>
-            </InventoryBorder>
-          </CharStatusContainer>
-          {hoveredItem && (
-                <>
+            <CharStatusContainer>
+              <StatContainer>
+                <h4 onClick={props.handleSpeak}>{currentChar.name}</h4>
+                <div
+                  className='page'
+                  onDrop={handleDropItemOnCharacter}
+                  onDragOver={handleDragOver}
+                >
+                  <CharImageStyles src={currentChar.image_url} />
+                </div>
+              </StatContainer>
+              <StatContainer2>
+                <h4 onClick={props.handleSpeak}>
+                  {' '}
+                  {'Score: ' + currentChar.score}
+                </h4>
+                <div style={{ width: '20em' }}>{StatusBars()}</div>
+                <div onClick={props.handleSpeak}>
+                  <StatIconContainer>
+                    <TinyStatIconImg src={images.healthIcon} />
+                    {currentChar.health}
+                  </StatIconContainer>
+                  <StatIconContainer>
+                    <TinyStatIconImg src={images.strengthIcon} />
+                    {currentChar.strength}
+                    <StatBonusColor>{`+${bonusStrength} `}</StatBonusColor>
+                    <TempStatBonusColor>
+                      {temporaryStrength !== 0 ? `+${temporaryStrength}` : ''}
+                    </TempStatBonusColor>
+                  </StatIconContainer>
+                  <StatIconContainer>
+                    <TinyStatIconImg src={images.enduranceIcon} />
+                    {currentChar.endurance}
+                    <StatBonusColor>{`+${bonusEndurance} `}</StatBonusColor>
+                    {temporaryEndurance !== 0 ? `+${temporaryEndurance}` : ''}
+                    <TempStatBonusColor></TempStatBonusColor>
+                  </StatIconContainer>
+                  <StatIconContainer>
+                    <TinyStatIconImg src={images.moodIcon} />
+                    {currentChar.mood}
+                    <StatBonusColor>{`+${bonusMood} `}</StatBonusColor>
+                    <TempStatBonusColor>
+                      {temporaryMood !== 0 ? `+${temporaryMood}` : ''}
+                    </TempStatBonusColor>
+                  </StatIconContainer>
+                </div>
+              </StatContainer2>
+              <InventoryBorder>
+                <h4 onClick={props.handleSpeak}>Inventory</h4>
+                <InventoryStyle className='itemWidgets'>
+                  {fetchedInventory.map((item: Item, i) => (
+                    <div
+                      key={i}
+                      className='itemWidget'
+                      draggable
+                      onDragStart={(e) => handleOnDragItem(e, item._id, i)}
+                      onMouseEnter={() => handleOnMouseEnter(item)}
+                      onMouseLeave={() => handleOnMouseLeave()}
+                    >
+                      <IconContainer>
+                        <IconImg src={item._id !== 1 ? item.image_url : ''} />
+                      </IconContainer>
+                    </div>
+                  ))}
+                </InventoryStyle>
+                <div style={{ height: '48px' }} />
+              </InventoryBorder>
+            </CharStatusContainer>
+            {hoveredItem && (
+              <>
                 <InventoryTextBubble>
                   {hoveredItem.modifier0 && (
-
                     <div>
                       <InventoryBubbleText>
                         {hoveredItem._id === 1 ? '' : `${hoveredItem.name}`}
@@ -1305,27 +1336,25 @@ const GameView = (props: GameViewProps) => {
                       </InventoryBubbleText>
                       {hoveredItem.modifier1 && (
                         <InventoryBubbleText>
-                        {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
+                          {hoveredItem.modified_stat1} + {hoveredItem.modifier1}
                         </InventoryBubbleText>
                       )}
                     </div>
-
                   )}
-                </InventoryTextBubble><InventoryBottomTextBubble>
-                  {
-                hoveredItem.consumable === true ?
-                 'Drag and drop item on character to use or location to drop' :
-                  'drag item over location image to drop item on location'
-                  }
-                </InventoryBottomTextBubble>
-                </>
-              )}
-              {tooltip && (
-                <InventoryTextBubble>
-                  <InventoryBubbleText>{tooltip}</InventoryBubbleText>
                 </InventoryTextBubble>
-              )}
-              </LCDGlow>
+                <InventoryBottomTextBubble>
+                  {hoveredItem.consumable === true
+                    ? 'Drag and drop item on character to use or location to drop'
+                    : 'drag item over location image to drop item on location'}
+                </InventoryBottomTextBubble>
+              </>
+            )}
+            {tooltip && (
+              <InventoryTextBubble>
+                <InventoryBubbleText>{tooltip}</InventoryBubbleText>
+              </InventoryTextBubble>
+            )}
+          </LCDGlow>
         </LCDDiv>
         {/* </ArcadeWoodStyle> */}
         <Content3>

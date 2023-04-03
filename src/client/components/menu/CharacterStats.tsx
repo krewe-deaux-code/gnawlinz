@@ -11,7 +11,8 @@ import {
   CharSelectStatBox,
   IconContainerInner,
   IconContainerOuter,
-  // SelectorContainer,
+  /* SelectorContainer, */
+  InnerContainer,
   RedX,
 } from './Styled';
 import Carousel from 'react-bootstrap/Carousel';
@@ -30,7 +31,6 @@ const CharacterStats: React.FC = () => {
   const [, /*index*/ setIndex] = useState(0);
   const [locationName, setLocationName] = useState('');
   const { isSpeakingEnabled } = useContext(SettingsContext);
-
 
   const handleSelect = (selectedIndex: number) => {
     neutral.play();
@@ -116,77 +116,90 @@ const CharacterStats: React.FC = () => {
   // console.log('Current Acvite User: ', activeUser);
   return (
     <>
-      <div>
-        <h1>
-          <u onClick={handleSpeak}>Character Select:</u>
-        </h1>
-        {userChars.length ? (
-          <StyledCarousel
-            slide={false}
-            indicators={false}
-            onSelect={handleSelect}
-            interval={null}
-          >
-            {userChars.map((char: Character, i: number) => {
-              return (
-                <Carousel.Item key={i}>
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      pointerEvents: 'none',
-                    }}
-                  >
-                    {char.mood < 1 || char.health < 1 ? (
-                      <RedX src={images.redX}></RedX>
-                    ) : (
-                      <></>
-                    )}
-                    <img
-                      style={{ height: '400px', width: '300px' }}
-                      src={char.image_url}
-                    />
-                  </div>
-                  <StatName>
-                    <u onClick={handleSpeak}>Name: {char.name}</u>
-                  </StatName>
-                  <CharSelectStatBox>
-                    <IconContainerInner>
-                      <IconImg src={images.healthIcon} />
-                      <StatName onClick={handleSpeak}>Health: {char.health}</StatName>
-                    </IconContainerInner>
-                    <IconContainerInner>
-                      <IconImg src={images.strengthIcon} />
-                      <StatName onClick={handleSpeak}>Strength: {char.strength}</StatName>
-                    </IconContainerInner>
-                    <IconContainerInner>
-                      <IconImg src={images.enduranceIcon} />
-                      <StatName onClick={handleSpeak}>Endurance: {char.endurance}</StatName>
-                    </IconContainerInner>
-                    <IconContainerInner>
-                      <IconImg src={images.moodIcon} />
-                      <StatName onClick={handleSpeak}>Mood: {char.mood}</StatName>
-                    </IconContainerInner>
-                  </CharSelectStatBox>
-                  <IconContainerOuter>
-                    <StatName onClick={handleSpeak} style={{ display: 'flex' }}>
-                      Location: {locationName}
+      <div id='outter-container'>
+        <InnerContainer id='inner-container'>
+          <h1>
+            <u onClick={handleSpeak}>Character Select:</u>
+          </h1>
+          {userChars.length ? (
+            <StyledCarousel
+              slide={false}
+              indicators={false}
+              onSelect={handleSelect}
+              interval={null}
+            >
+              {userChars.map((char: Character, i: number) => {
+                return (
+                  <Carousel.Item key={i}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        pointerEvents: 'none',
+                      }}
+                    >
+                      {char.mood < 1 || char.health < 1 ? (
+                        <RedX src={images.redX}></RedX>
+                      ) : (
+                        <></>
+                      )}
+                      <img
+                        style={{ height: '400px', width: '300px' }}
+                        src={char.image_url}
+                      />
+                    </div>
+                    <StatName>
+                      <u onClick={handleSpeak}>Name: {char.name}</u>
                     </StatName>
-                  </IconContainerOuter>
-                </Carousel.Item>
-              );
-            })}
-          </StyledCarousel>
-        ) : (
-          <>
-            <img
-              style={{ height: '400px', width: '300px' }}
-              src={images.createCharImage}
-            />
-            <StatName onClick={handleSpeak}>Create a Character:</StatName>
-          </>
-        )}
+                    <CharSelectStatBox>
+                      <IconContainerInner>
+                        <IconImg src={images.healthIcon} />
+                        <StatName onClick={handleSpeak}>
+                          Health: {char.health}
+                        </StatName>
+                      </IconContainerInner>
+                      <IconContainerInner>
+                        <IconImg src={images.strengthIcon} />
+                        <StatName onClick={handleSpeak}>
+                          Strength: {char.strength}
+                        </StatName>
+                      </IconContainerInner>
+                      <IconContainerInner>
+                        <IconImg src={images.enduranceIcon} />
+                        <StatName onClick={handleSpeak}>
+                          Endurance: {char.endurance}
+                        </StatName>
+                      </IconContainerInner>
+                      <IconContainerInner>
+                        <IconImg src={images.moodIcon} />
+                        <StatName onClick={handleSpeak}>
+                          Mood: {char.mood}
+                        </StatName>
+                      </IconContainerInner>
+                    </CharSelectStatBox>
+                    <IconContainerOuter>
+                      <StatName
+                        onClick={handleSpeak}
+                        style={{ display: 'flex' }}
+                      >
+                        Location: {locationName}
+                      </StatName>
+                    </IconContainerOuter>
+                  </Carousel.Item>
+                );
+              })}
+            </StyledCarousel>
+          ) : (
+            <>
+              <img
+                style={{ height: '400px', width: '300px' }}
+                src={images.createCharImage}
+              />
+              <StatName onClick={handleSpeak}>Create a Character:</StatName>
+            </>
+          )}
+        </InnerContainer>
       </div>
       {/* <SelectorContainer></SelectorContainer> */}
     </>
