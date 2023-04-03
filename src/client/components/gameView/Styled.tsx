@@ -211,6 +211,7 @@ export const CharImageStyles = styled.img`
   width: auto;
   max-height: 276px;
   max-width: 183px;
+  filter: drop-shadow(rgba(0, 0, 0, 0.5) 0.1rem 0.1rem 0.2rem);
 `;
 
 export const TinyStatIconImg = styled(CharImageStyles)`
@@ -302,7 +303,7 @@ export const InventoryBottomTextBubble = styled.div`
   bottom: 1.4rem;
   height: 34px;
   width: 491px;
-  left: 1.35rem;
+  left: 1.37rem;
   padding: 5px;
   font-size: 0.8em;
   border-radius: 10px;
@@ -321,8 +322,8 @@ export const InventoryTextBubble = styled.div`
   position: absolute;
   bottom: 11.2rem;
   height: 111px;
-  width: 200px;
-  left: 19.85rem;
+  width: 207px;
+  left: 19.4rem;
   padding: 5px;
   font-size: 1rem;
   border-radius: 10px;
@@ -775,23 +776,23 @@ export const ArcadeWoodStyle = styled.div`
 
 export const LCDGlowPulse = keyframes`
  0% {
-  box-shadow: -20px 4px 50px 13px #8DADA7,
-20px 4px 50px 13px #8DADA7;
+  box-shadow: -10px 0px 11px #8DADA7,
+10px 0px 11px #8DADA7;
   }
   50% {
-    box-shadow: -20px 4px 50px 14px #8DADA7,
-20px 4px 50px 14px #8DADA7;
+    box-shadow: -10px 0px 10px #8DADA7,
+10px 0px 10px #8DADA7;
   }
   100% {
-    box-shadow: -20px 4px 50px 13px #8DADA7,
-20px 4px 50px 13px #8DADA7;
+    box-shadow: -10px 0px 11px #8DADA7,
+10px 0px 11px #8DADA7;
   }
 `;
 
 export const LCDGlow = styled('div')`
   border-radius: 1rem;
   padding: 1rem;
-  box-shadow: -20px 50px 14px #8dada7, 20px 50px 14px #8dada7;
+  box-shadow: -10px 0px 11px #8dada7, 10px 0px 11px #8dada7;
   animation: ${LCDGlowPulse} 0.25s infinite;
 `;
 

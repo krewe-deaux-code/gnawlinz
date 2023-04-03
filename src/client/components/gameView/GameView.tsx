@@ -352,9 +352,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip(
-          'Search for an item, search for graffiti, and write graffiti'
-        );
+        setTooltip('Search for an item search for graffiti and write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
@@ -364,7 +362,7 @@ const GameView = (props: GameViewProps) => {
           'Use your endurance stat to potentially evade an attack and find an item'
         );
       } else if (itemOrButton === 'evacuate') {
-        setTooltip('Leave the area without resolving this event');
+        setTooltip('Move to new area');
       } else if (itemOrButton === 'wildcard') {
         setTooltip('Risk depression for chance at acquiring an ally');
       }
@@ -973,7 +971,9 @@ const GameView = (props: GameViewProps) => {
           ) : (
             <></>
           )}
-          <h2 onClick={props.handleSpeak}>{location.name}</h2>
+          <h2 onClick={props.handleSpeak} style={{ paddingTop: '1rem' }}>
+            {location.name}
+          </h2>
           <LocationDiv id='location-div'>
             {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
             {showEnemy ? (
