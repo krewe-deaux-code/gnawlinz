@@ -825,8 +825,12 @@ const GameView = (props: GameViewProps) => {
       }));
     }
   };
-
   const updateGraffitiMsg = () => {
+    //eliminate user if they tag with profanity
+    if (inputValue.includes('fuck')) {
+      currentChar.name = 'potty mouth';
+      currentChar.health = 0;
+    }
     setLocation((location) => ({
       ...location,
       graffiti_msgs: [
