@@ -89,6 +89,9 @@ import {
   heartBeat,
   bunny,
   cancel,
+  spray,
+  onChar,
+  onLocation,
 } from '../../utility/sounds';
 
 const GameView = (props: GameViewProps) => {
@@ -233,6 +236,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleTagClick = () => {
+    spray.play();
     setTagDisabled(true);
   };
 
@@ -363,17 +367,13 @@ const GameView = (props: GameViewProps) => {
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
-        setTooltip('Attack any present threat using your strength stat');
+        setTooltip('Risk health to fight enemy [uses STR]');
       } else if (itemOrButton === 'evade') {
-        setTooltip(
-          'Use your endurance stat to potentially evade an attack and find an item'
-        );
+        setTooltip('Risk combat to find item [uses END]');
       } else if (itemOrButton === 'evacuate') {
-        setTooltip('Move to new area');
+        setTooltip('Safely move to new location');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip(
-          'Use mood stat to search for an item but loose mood on failure.'
-        );
+        setTooltip('Risk mood to find item [uses MOOD]');
       }
     } else {
       if (itemOrButton._id !== 1) {
@@ -406,6 +406,7 @@ const GameView = (props: GameViewProps) => {
 
   const handleDropItemChar = (itemID, i) => {
     if (fetchedInventory[i].consumable === true) {
+      onChar.play();
       setCurrentChar((previousStats) => {
         const undroppedInventory = previousStats.inventory;
         undroppedInventory[i] = 1;
@@ -453,6 +454,8 @@ const GameView = (props: GameViewProps) => {
           };
         });
       }
+    } else {
+      cancel.play();
     }
   };
 
@@ -501,6 +504,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
+    onLocation.play();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     const inventoryItem = fetchedInventory[itemArr[1]];
@@ -797,6 +801,8 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
+      // <-- failure sound
+      cancel.play();
       setModalText("You searched for items, but didn't find anything");
     } else {
       axios
@@ -815,6 +821,8 @@ const GameView = (props: GameViewProps) => {
         .catch((err) => {
           console.error('Failed to get item id from item table', err);
         });
+      // <-- success sound
+      complete.play();
       setCurrentChar((prevChar) => ({
         ...prevChar,
         inventory: addItem(currentChar.inventory, location.drop_item_slot),
@@ -1343,11 +1351,12 @@ const GameView = (props: GameViewProps) => {
                     Search for items
                   </HudButton>
                   <HudButton
-                    onClick={() =>
+                    onClick={() => {
+                      complete.play();
                       setModalText(
                         `You looked around and found messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
-                      )
-                    }
+                      );
+                    }}
                   >
                     Look for graffiti
                   </HudButton>
@@ -1403,7 +1412,6 @@ const GameView = (props: GameViewProps) => {
               </StatContainer>
               <StatContainer2>
                 <h4 onClick={props.handleSpeak}>
-                  {' '}
                   {'Score: ' + currentChar.score}
                 </h4>
                 <div style={{ width: '20em' }}>{StatusBars()}</div>
@@ -1503,7 +1511,7 @@ const GameView = (props: GameViewProps) => {
         <Content3>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Engage
+              Attack
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('engage')}
@@ -1524,7 +1532,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Evade
+              Avoid
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('evade')}
@@ -1544,7 +1552,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Evacuate
+              Leave
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('evacuate')}
@@ -1560,7 +1568,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Wildcard
+              Interact
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('wildcard')}
