@@ -410,6 +410,7 @@ const GameView = (props: GameViewProps) => {
 
   const handleDropItemChar = (itemID, i) => {
     if (fetchedInventory[i].consumable === true) {
+      onChar.play();
       setCurrentChar((previousStats) => {
         const undroppedInventory = previousStats.inventory;
         undroppedInventory[i] = 1;
@@ -457,6 +458,8 @@ const GameView = (props: GameViewProps) => {
           };
         });
       }
+    } else {
+      cancel.play();
     }
   };
 
@@ -497,7 +500,6 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
-    onChar.play();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     if (itemArr[0] !== 1) {
@@ -835,8 +837,12 @@ const GameView = (props: GameViewProps) => {
       }));
     }
   };
-
   const updateGraffitiMsg = () => {
+    //eliminate user if they tag with profanity
+    if (inputValue.includes('fuck')) {
+      currentChar.name = 'potty mouth';
+      currentChar.health = 0;
+    }
     setLocation((location) => ({
       ...location,
       graffiti_msgs: [
