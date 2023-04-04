@@ -89,6 +89,7 @@ import {
   heartBeat,
   bunny,
   cancel,
+  spray,
 } from '../../utility/sounds';
 
 const GameView = (props: GameViewProps) => {
@@ -233,6 +234,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleTagClick = () => {
+    spray.play();
     setTagDisabled(true);
   };
 
@@ -797,6 +799,8 @@ const GameView = (props: GameViewProps) => {
   // search dropped item based on current location, update location database
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
+      // <-- failure sound
+      cancel.play();
       setModalText("You searched for items, but didn't find anything");
     } else {
       axios
@@ -815,6 +819,8 @@ const GameView = (props: GameViewProps) => {
         .catch((err) => {
           console.error('Failed to get item id from item table', err);
         });
+      // <-- success sound
+      complete.play();
       setCurrentChar((prevChar) => ({
         ...prevChar,
         inventory: addItem(currentChar.inventory, location.drop_item_slot),
@@ -1339,11 +1345,12 @@ const GameView = (props: GameViewProps) => {
                     Search for items
                   </HudButton>
                   <HudButton
-                    onClick={() =>
+                    onClick={() => {
+                      complete.play();
                       setModalText(
                         `You looked around and found messages in graffiti that said: "${location.graffiti_msgs[0]}", "${location.graffiti_msgs[1]}", and "${location.graffiti_msgs[2]}"`
-                      )
-                    }
+                      );
+                    }}
                   >
                     Look for graffiti
                   </HudButton>
