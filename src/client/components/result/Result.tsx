@@ -9,13 +9,14 @@ import {
   StatContainer,
   CharacterStatContainer,
   StoryItemCard,
+  ResultAvatarContainer,
 } from './Styled'; //NavBar,
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
 import { UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
-import { StatButton } from '../menu/Styled';
+import { AvatarContainer, StatButton } from '../menu/Styled';
 
 import axios from 'axios';
 import { GameViewProps } from '../../utility/interface';
@@ -50,7 +51,7 @@ const Result = (props: GameViewProps) => {
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
         setImage(images.trophyIcon);
-        setResultText('you survived!');
+        setResultText(currentChar.name + ' survived!');
       } else {
         setImage(images.deathIcon);
         setResultText('R.I.P. ' + currentChar.name);
@@ -87,8 +88,9 @@ const Result = (props: GameViewProps) => {
         <h1 onClick={props.handleSpeak}>
           <img src={image} />
           {resultText}
-          <img src={image} />
+          <img src={currentChar.image_url} style={{width: '200px', height: '200px'}} />
         </h1>
+        <h2> Score: {currentChar.score} </h2>
         <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
             <StoryItemCard key={index + sentence}>
@@ -106,16 +108,18 @@ const Result = (props: GameViewProps) => {
           </Link>
         </Content1>
       </Story>
-      <End>
-        <div>
+      <End className='End'>
+        <ResultAvatarContainer className='AvatarContainer'>
           {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-          <h2 onClick={props.handleSpeak}> Your Score: {currentChar.score} </h2>
-          <img src={currentChar.image_url} />
-        </div>
+          {/* <h2 onClick={props.handleSpeak}> Score: {currentChar.score} </h2>
+          <img src={currentChar.image_url} /> */}
+          {/* <img src={currentChar.image_url} style={{width: '75%', height: '75%'}}/> */}
+        </ResultAvatarContainer>
+        {/* <h2> Score: {currentChar.score} </h2> */}
         <h2 onClick={props.handleSpeak}>Top Scores</h2>
-        <ScrollableContainer>
+        {/* <ScrollableContainer> */}
           <LeaderBoard />
-        </ScrollableContainer>
+        {/* </ScrollableContainer> */}
       </End>
     </Container>
   );
