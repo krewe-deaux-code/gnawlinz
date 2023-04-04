@@ -90,6 +90,8 @@ import {
   bunny,
   cancel,
   spray,
+  onChar,
+  onLocation,
 } from '../../utility/sounds';
 
 const GameView = (props: GameViewProps) => {
@@ -495,6 +497,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnCharacter = (e: React.DragEvent) => {
+    onChar.play();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     if (itemArr[0] !== 1) {
@@ -503,6 +506,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleDropItemOnLocation = (e: React.DragEvent) => {
+    onLocation.play();
     const itemWidget = e.dataTransfer.getData('itemWidget') as string;
     const itemArr = JSON.parse(itemWidget);
     const inventoryItem = fetchedInventory[itemArr[1]];
