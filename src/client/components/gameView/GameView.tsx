@@ -363,7 +363,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip('Search for an item search for graffiti and write graffiti');
+        setTooltip('Search for an item Search for graffiti Write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
@@ -803,7 +803,9 @@ const GameView = (props: GameViewProps) => {
     if (location.drop_item_slot === 1) {
       // <-- failure sound
       cancel.play();
-      setModalText("You searched for items, but didn't find anything");
+      setModalText('You searched for items, but didn\'t find anything');
+    } else if (fetchedInventory.filter(item => item._id !== 1).length === 8) {
+      setModalText('You have no room for items in your inventory');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)

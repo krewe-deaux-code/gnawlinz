@@ -54,5 +54,15 @@ export const locationSeed = [
     graffiti_msgs: ['Winner, Winner, Chicken Dinner', 'The cake is a lie', 'Save us']
 
 
+  },
+  {
+    name: 'Tomb of The Uncaged',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680643653/gnawlinzLocations/NicUncagedTomb_eqtdi4.png',
+    random_item_spot1: 'Under a skull',
+    random_item_spot2: 'By a fresh grave',
+    drop_item_slot: 11,
+    graffiti: 'https://www.graffiti-empire.com/wp-content/uploads/graffiti-sketches/boom/boom-graffiti-sketch-14.jpg',
+    graffiti_msgs: ['We cannot get out', 'We hear drums in the deep', 'He is coming']
+
   }
 ];
