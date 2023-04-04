@@ -1399,7 +1399,6 @@ const GameView = (props: GameViewProps) => {
               </StatContainer>
               <StatContainer2>
                 <h4 onClick={props.handleSpeak}>
-                  {' '}
                   {'Score: ' + currentChar.score}
                 </h4>
                 <div style={{ width: '20em' }}>{StatusBars()}</div>
@@ -1499,7 +1498,7 @@ const GameView = (props: GameViewProps) => {
         <Content3>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Engage
+              Attack
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('engage')}
@@ -1520,7 +1519,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Evade
+              Avoid
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('evade')}
@@ -1540,7 +1539,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Evacuate
+              Leave
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('evacuate')}
@@ -1556,7 +1555,7 @@ const GameView = (props: GameViewProps) => {
           </div>
           <div>
             <h5 onClick={props.handleSpeak} style={{ marginTop: '0.5rem' }}>
-              Wildcard
+              Interact
             </h5>
             <ArcadeButton
               onMouseEnter={() => handleOnMouseEnter('wildcard')}

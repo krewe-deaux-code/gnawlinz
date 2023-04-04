@@ -12,6 +12,9 @@ import {
   CRTGlow,
   ArcadeGlowContainer,
 } from './Styled';
+
+import { neutral } from '../../utility/sounds';
+
 import { motion } from 'framer-motion';
 import axios from 'axios';
 
@@ -131,6 +134,7 @@ const Menu = (props: GameViewProps) => {
   }, []);
 
   const handleClick = (e) => {
+    neutral.play();
     const index = parseInt(e.target.id, 0);
     if (index !== active) {
       setActive(index);
@@ -158,63 +162,67 @@ const Menu = (props: GameViewProps) => {
         value={{ hideStartButton, setHideStartButton, startFail, setStartFail }}
       >
         <Body>
-          <Nav isActive={false} showButton={true} handleSpeak={props.handleSpeak} />
+          <Nav
+            isActive={false}
+            showButton={true}
+            handleSpeak={props.handleSpeak}
+          />
           <ArcadeGlowContainer>
             <CRTGlow>
-          <InfoContainer>
-            <Tab
-              onClick={(e) => {
-                if (startFail) {
-                  setStartFail(false);
-                }
-                setHideStartButton(true);
-                handleClick(e);
-              }}
-              active={active === 0}
-              id={0}
-            >
-              Character Creation
-            </Tab>
-            <Tab
-              onClick={(e) => {
-                if (userChars.length) {
-                  console.log('we made it');
-                  setCurrentChar(userChars[0]);
-                }
-                setHideStartButton(false);
-                handleClick(e);
-              }}
-              active={active === 1}
-              id={1}
-            >
-              Character Select
-            </Tab>
-            <Tab
-              onClick={(e: any) => {
-                handleClick(e);
-                fetchItems();
-              }}
-              active={active === 2}
-              id={2}
-            >
-              Top Scores
-            </Tab>
-          </InfoContainer>
-          <>
-            <Content active={active === 0}>
-              <h1 onClick={props.handleSpeak}>
-                <u>New Character:</u>
-              </h1>
-              <CharacterCreator handleSpeak={props.handleSpeak}/>
-            </Content>
-            <Content active={active === 1}>
-              <CharacterStats handleSpeak={props.handleSpeak}/>
-            </Content>
-            <Content active={active === 2}>
-              <div>
-                <LeaderBoard/>
+              <InfoContainer>
+                <Tab
+                  onClick={(e) => {
+                    if (startFail) {
+                      setStartFail(false);
+                    }
+                    setHideStartButton(true);
+                    handleClick(e);
+                  }}
+                  active={active === 0}
+                  id={0}
+                >
+                  Character Creation
+                </Tab>
+                <Tab
+                  onClick={(e) => {
+                    if (userChars.length) {
+                      console.log('we made it');
+                      setCurrentChar(userChars[0]);
+                    }
+                    setHideStartButton(false);
+                    handleClick(e);
+                  }}
+                  active={active === 1}
+                  id={1}
+                >
+                  Character Select
+                </Tab>
+                <Tab
+                  onClick={(e: any) => {
+                    handleClick(e);
+                    fetchItems();
+                  }}
+                  active={active === 2}
+                  id={2}
+                >
+                  Top Scores
+                </Tab>
+              </InfoContainer>
+              <>
+                <Content active={active === 0}>
+                  <h1 onClick={props.handleSpeak}>
+                    <u>New Character:</u>
+                  </h1>
+                  <CharacterCreator handleSpeak={props.handleSpeak} />
+                </Content>
+                <Content active={active === 1}>
+                  <CharacterStats handleSpeak={props.handleSpeak} />
+                </Content>
+                <Content active={active === 2}>
+                  <div>
+                    <LeaderBoard />
 
-                {/* {fetchedInventory.map((item: Item, i) => {
+                    {/* {fetchedInventory.map((item: Item, i) => {
                   return (
                     <div key={i}>
                       <IconContainer>
@@ -227,44 +235,47 @@ const Menu = (props: GameViewProps) => {
                     </div>
                   );
                 })} */}
-              </div>
-            </Content>
-          </>
-          {startFail && (
-            <div style={{ display: 'grid', justifyContent: 'center' }}>
-              <motion.h3
-                animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
-                style={{
-                  color: 'red',
-                  maxWidth: '34.4rem',
-                  position: 'relative',
-                }}
-                transition={{ duration: 0.3 }}
-              >
-                CREATE A CHARACTER TO PLAY
-              </motion.h3>
-            </div>
-          )}
-          {!hideStartButton && (
-            <ArcadeBackground>
-              {' '}
-              <SelectStartButton
-                onClick={() => {
-                  if (currentChar.name === 'Someguy McPlaceholder') {
-                    setStartFail(true);
-                    return;
-                  } else if (currentChar.health < 1 || currentChar.mood < 1) {
-                    return;
-                  } else {
-                    handleClickStart();
-                  }
-                }}
-              >
-                Start Game
-              </SelectStartButton>
-            </ArcadeBackground>
-          )}
-          </CRTGlow>
+                  </div>
+                </Content>
+              </>
+              {startFail && (
+                <div style={{ display: 'grid', justifyContent: 'center' }}>
+                  <motion.h3
+                    animate={{ x: [0, 10, -10, 6, -6, 3, -3, 0] }}
+                    style={{
+                      color: 'red',
+                      maxWidth: '34.4rem',
+                      position: 'relative',
+                    }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    CREATE A CHARACTER TO PLAY
+                  </motion.h3>
+                </div>
+              )}
+              {!hideStartButton && (
+                <ArcadeBackground>
+                  {' '}
+                  <SelectStartButton
+                    onClick={() => {
+                      if (currentChar.name === 'Someguy McPlaceholder') {
+                        setStartFail(true);
+                        return;
+                      } else if (
+                        currentChar.health < 1 ||
+                        currentChar.mood < 1
+                      ) {
+                        return;
+                      } else {
+                        handleClickStart();
+                      }
+                    }}
+                  >
+                    Start Game
+                  </SelectStartButton>
+                </ArcadeBackground>
+              )}
+            </CRTGlow>
           </ArcadeGlowContainer>
         </Body>
       </MenuContext.Provider>
