@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 import {
   Container,
   Main,
@@ -60,7 +60,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, SettingsContext } from '../../App';
+import { UserContext } from '../../App';
 import {
   EventData,
   ChoiceData,
@@ -90,9 +90,11 @@ import {
   bunny,
   cancel,
 } from '../../utility/sounds';
-import { ModalBody } from 'react-bootstrap';
 
 const GameView = (props: GameViewProps) => {
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
   const {
     prevEventId,
     setPrevEventId,
@@ -206,15 +208,15 @@ const GameView = (props: GameViewProps) => {
           } else {
             setCurrentEnemy({});
           }
-          if (event.data.ally_effect) {
-            handleAllyFetch();
-            setEvent((prevEvent) => ({
-              ...prevEvent,
-              ally_effect: false,
-            }));
-          } else {
-            setCurrentAlly({});
-          }
+          // if (event.data.ally_effect) {
+          //   handleAllyFetch();
+          //   setEvent((prevEvent) => ({
+          //     ...prevEvent,
+          //     ally_effect: false,
+          //   }));
+          // } else {
+          //   setCurrentAlly({});
+          // }
         })
         .catch((err) => {
           console.error('RANDOM EVENT FETCH FAILED', err);
@@ -369,7 +371,9 @@ const GameView = (props: GameViewProps) => {
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Move to new area');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip('Risk depression for chance at acquiring an ally');
+        setTooltip(
+          'Use mood stat to search for an item but loose mood on failure.'
+        );
       }
     } else {
       if (itemOrButton._id !== 1) {
@@ -589,7 +593,7 @@ const GameView = (props: GameViewProps) => {
               }));
               setTempText(
                 `The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`
-              ); // <-- check for ally??
+              );
               // return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
@@ -642,17 +646,36 @@ const GameView = (props: GameViewProps) => {
         } else {
           // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
-          // arbitrate item/ally acquisition with percentage || algorithm
+          // arbitrate item acquisition with percentage || algorithm
 
           if (
-            (choiceOutcome === 'success' && choiceType === 'wildcard') ||
-            choiceType === 'evade'
+            choiceOutcome === 'success' /*&& choiceType === 'wildcard') ||
+          choiceType === 'evade'*/
           ) {
-            // --> player gets item || ally
-            if (Object.entries(currentAlly).length) {
-              setShowAlly(true);
-              setTempText(currentAlly.greeting); // add to schema
+            if (choiceType === 'evade') {
+              setTempText(
+                'You stealthily made your way through the area, and collected an item!'
+              );
+              setCurrentChar((prevChar) => ({
+                ...prevChar,
+                inventory: addItem(
+                  currentChar.inventory,
+                  Math.floor(Math.random() * 11) + 1
+                ),
+              }));
+            } else if (choiceType === 'wildcard') {
+              setTempText(
+                'You made contact with a survivor, who shared an item with you!'
+              );
+              setCurrentChar((prevChar) => ({
+                ...prevChar,
+                inventory: addItem(
+                  currentChar.inventory,
+                  Math.floor(Math.random() * 11) + 1
+                ),
+              }));
             }
+            // --> player gets item
           }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
@@ -956,19 +979,29 @@ const GameView = (props: GameViewProps) => {
         );
     }
     handlePlayerDied();
-    return <Result />;
+    return <Result handleSpeak={props.handleSpeak} />;
   }
   // Any hooks between above conditional and below return will crash the page.
   // console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
 
+  const handleBodyClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
+        {/* <HudButton
+          onClick={() => {
+            complete.play();
+            return <Result />;
+          }}
+        /> */}
         <Link to='/result' style={{ textDecoration: 'none' }}>
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
-      <Nav isActive={true} showButton={true} />
+      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} />
 
       <Main blur={introModal} linearGradient={introModal}>
         <MainGlow>
@@ -991,36 +1024,40 @@ const GameView = (props: GameViewProps) => {
                 }}
               >
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
-                  <h4>It's Mardi Gras...</h4>
-                  <p>
-                    But something isn't right... You come-to from a Carnival
-                    bender, with nothing but {fetchedInventory[0].name} and your
-                    tattered clothes. You can barely remember your own name, but
-                    you remember someone calling you... "{currentChar.name}"?
-                    Your head is pounding and you could swear you hear gurgling
-                    and moaning in the distance... the smell of putrid flesh
-                    creeps into your nostrils... but that might just be Bourbon
-                    Street... You should go find your things and try to get home
-                    before things get any weirder...
-                  </p>
-                  <p>
-                    You see a grey shape shambling towards you, it looks human
-                    but...{' '}
-                    <i>
-                      you rub your eyes to make sure you aren't hallucinating...
-                    </i>{' '}
-                    the figure shifting towards you has a bone sticking out of
-                    its flesh and gives you a hungry growl...
-                  </p>
-                  <p style={{ color: 'goldenrod' }}>
-                    {'['}
-                    <i>
-                      Use the buttons below to search for supplies and try to
-                      escape this deranged and violent carnival...
-                    </i>
-                    {']'}
-                  </p>
+                <Modal.Body onClick={handleBodyClick}>
+                  <div onClick={props.handleSpeak}>
+                    <h4>It's Mardi Gras...</h4>
+                    <p>
+                      But something isn't right... You come-to from a Carnival
+                      bender, with nothing but {fetchedInventory[0].name} and
+                      your tattered clothes. You can barely remember your own
+                      name, but you remember someone calling you... "
+                      {currentChar.name}"? Your head is pounding and you could
+                      swear you hear gurgling and moaning in the distance... the
+                      smell of putrid flesh creeps into your nostrils... but
+                      that might just be Bourbon Street... You should go find
+                      your things and try to get home before things get any
+                      weirder...
+                    </p>
+                    <p>
+                      You see a grey shape shambling towards you, it looks human
+                      but...{' '}
+                      <i>
+                        you rub your eyes to make sure you aren't
+                        hallucinating...
+                      </i>{' '}
+                      the figure shifting towards you has a bone sticking out of
+                      its flesh and gives you a hungry growl...
+                    </p>
+                    <p style={{ color: 'goldenrod' }}>
+                      {'['}
+                      <i>
+                        Use the buttons below to search for supplies and try to
+                        escape this deranged and violent carnival...
+                      </i>
+                      {']'}
+                    </p>
+                  </div>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
               </ModalStyle>
@@ -1032,7 +1069,7 @@ const GameView = (props: GameViewProps) => {
             {location.name}
           </h2>
           <LocationDiv id='location-div'>
-            {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
+            {/* {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>} */}
             {showEnemy ? (
               <EnemyImgContainer id='enemy-img-container'>
                 {/* overlay: `${health / 10} / 10` */}
@@ -1397,7 +1434,12 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </StatContainer2>
               <InventoryBorder>
-                <h4 onClick={props.handleSpeak}>Inventory</h4>
+                <h4 onClick={props.handleSpeak}>
+                  Inventory{' '}
+                  {`${
+                    fetchedInventory.filter((item) => item._id !== 1).length
+                  }` + '/8'}
+                </h4>
                 <InventoryStyle className='itemWidgets'>
                   {fetchedInventory.map((item: Item, i) => (
                     <div

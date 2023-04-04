@@ -27,7 +27,6 @@ back in VSCode terminal: git remote add upstream <URLorganization.git>
 - Environment: Node.js
 - Linting: ESLint / AirBnB?
 - Front End Routing: React-Router
-- React-Recoil
 - React-Context
 - React-Bootstrap
 - React-Icons
@@ -41,12 +40,10 @@ back in VSCode terminal: git remote add upstream <URLorganization.git>
 - Socket-io
 - Pixel editor: rx
 - PixelIt -
-- React-Dropzone
 - Animations: Framer
 - Continuous Integration: Github Actions
-- Testing: Jest
 
-## Game Assets Creator Credit 
+## Game Assets Creator Credit
 
 - "profile" icon by Bakunetsu Kaito from https://thenounproject.com/icon/profile-1094753/ CC BY 3.0
 - "chat" icon by Bakunetsu Kaito from https://thenounproject.com/icon/chat-1094743/ CC BY 3.0

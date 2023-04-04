@@ -79,6 +79,9 @@ const App = () => {
   const characterUpdate = () => {
     const sortedInventoryChar = currentChar;
     if (sortedInventoryChar.inventory) {
+      if (sortedInventoryChar.inventory.length > 8) {
+      sortedInventoryChar.inventory.length = 8;
+      }
       sortedInventoryChar.inventory.sort((a, b) => b - a);
     }
     console.log('WHAT AM I', currentChar);
@@ -127,15 +130,29 @@ const App = () => {
       .catch((err) => console.error('error update from axios front end', err));
   };
 
+  const throttle = (cb, delay = 1000) => {
+    let shouldWait = false;
+    return (...args) => {
+      if (shouldWait) {
+        return;
+      }
+      cb(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, delay);
+    };
+  };
+
   // text to speech functionality
   const msg = new SpeechSynthesisUtterance();
 
-  const handleSpeak = (e) => {
+  const handleSpeak = throttle((e) => {
     if (isSpeakingEnabled) {
       msg.text = e.target.innerText;
       window.speechSynthesis.speak(msg);
     }
-  };
+  });
 
   useEffect(() => {
     console.log('EVERY TIME CHAR CHANGES');
@@ -210,13 +227,13 @@ const App = () => {
 
           <Suspense fallback={<div>LOADING...</div>}>
             <Routes>
-              <Route path='/' element={<Title />} />
+              <Route path='/' element={<Title handleSpeak={handleSpeak} />} />
               <Route path='menu' element={<Menu handleSpeak={handleSpeak} />} />
               <Route
                 path='game-view'
                 element={<GameView handleSpeak={handleSpeak} />}
               />
-              <Route path='result' element={<Result />} />
+              <Route path='result' element={<Result handleSpeak={handleSpeak}/>} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </Suspense>

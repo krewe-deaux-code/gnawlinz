@@ -10,7 +10,7 @@ import {
   SelectStartButton,
   ArcadeBackground,
   CRTGlow,
-  ArcadeGlowContainer
+  ArcadeGlowContainer,
 } from './Styled';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -18,6 +18,7 @@ import axios from 'axios';
 import CharacterCreator from './CharacterCreator';
 import CharacterStats from './CharacterStats';
 import Nav from '../nav/NavBar';
+import LeaderBoard from '../result/LeaderBoard';
 
 export const MenuContext = createContext<any>('');
 
@@ -157,7 +158,7 @@ const Menu = (props: GameViewProps) => {
         value={{ hideStartButton, setHideStartButton, startFail, setStartFail }}
       >
         <Body>
-          <Nav isActive={false} showButton={true} />
+          <Nav isActive={false} showButton={true} handleSpeak={props.handleSpeak} />
           <ArcadeGlowContainer>
             <CRTGlow>
           <InfoContainer>
@@ -196,7 +197,7 @@ const Menu = (props: GameViewProps) => {
               active={active === 2}
               id={2}
             >
-              Inventory
+              Top Scores
             </Tab>
           </InfoContainer>
           <>
@@ -204,14 +205,16 @@ const Menu = (props: GameViewProps) => {
               <h1 onClick={props.handleSpeak}>
                 <u>New Character:</u>
               </h1>
-              <CharacterCreator />
+              <CharacterCreator handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 1}>
-              <CharacterStats />
+              <CharacterStats handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 2}>
               <div>
-                {fetchedInventory.map((item: Item, i) => {
+                <LeaderBoard/>
+
+                {/* {fetchedInventory.map((item: Item, i) => {
                   return (
                     <div key={i}>
                       <IconContainer>
@@ -223,7 +226,7 @@ const Menu = (props: GameViewProps) => {
                       </IconContainer>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             </Content>
           </>
