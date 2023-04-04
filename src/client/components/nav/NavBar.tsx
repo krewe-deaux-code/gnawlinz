@@ -24,9 +24,10 @@ import { UserContext, SettingsContext } from '../../App';
 type LinkProps = {
   isActive: boolean;
   showButton: boolean;
+  handleSpeak: (e: any) => void;
 };
 
-const Nav = ({ isActive, showButton }: LinkProps) => {
+const Nav = ({ isActive, showButton, handleSpeak }: LinkProps ) => {
   // <-- move to Title after Auth refactor/move -->
   const {
     volume,
@@ -75,15 +76,6 @@ const Nav = ({ isActive, showButton }: LinkProps) => {
   // functions for settings modal
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  // text to speak functions
-  const msg = new SpeechSynthesisUtterance();
-  const handleSpeak = (e) => {
-    if (isSpeakingEnabled) {
-      msg.text = e.target.innerText;
-      window.speechSynthesis.speak(msg);
-    }
-  };
 
   const handleToggleSpeak = () => {
     setIsSpeakingEnabled(!isSpeakingEnabled);
