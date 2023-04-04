@@ -171,8 +171,17 @@ const GameView = (props: GameViewProps) => {
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
 
+  const addScore = (points) => {
+    setCurrentChar((prevChar) => ({
+      ...prevChar,
+      score: (prevChar.score += points),
+    }));
+  };
+
   const fetchEvent = (bossEvent = 0) => {
+    setSelectedChoice({});
     setTempText('');
+    setOutcome('');
     if (bossEvent) {
       // <-- EDIT
       axios
@@ -227,10 +236,6 @@ const GameView = (props: GameViewProps) => {
     }
   };
 
-  const handleClickButt = () => {
-    setInvestigateDisabled(true);
-  };
-
   const handleToggleEvent = () => {
     setShowEvent(showEvent ? false : true);
   };
@@ -251,24 +256,22 @@ const GameView = (props: GameViewProps) => {
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
 
-  const handleAllyFetch = () => {
-    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
-    axios
-      .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
-      .then((ally: any) => {
-        // if (metAllyArr.includes(ally.data._id)) {
-        // setCurrentAlly({});
-        // } else {
-        setMetAllyArr((prevMetAllyArr) => [...prevMetAllyArr, ally.data._id]);
-        setCurrentAlly(ally.data);
-        //}
-        //console.log('ally fetched, sending to state...');
-        // <-- put ally.data.image_url somewhere into HUD to indicate enemy
-      })
-      .catch((err) => console.error('FETCH ENEMY ERROR', err));
-  };
-
-  // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', currentEnemy);
+  // const handleAllyFetch = () => {
+  //   // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
+  //   axios
+  //     .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
+  //     .then((ally: any) => {
+  //       // if (metAllyArr.includes(ally.data._id)) {
+  //       // setCurrentAlly({});
+  //       // } else {
+  //       setMetAllyArr((prevMetAllyArr) => [...prevMetAllyArr, ally.data._id]);
+  //       setCurrentAlly(ally.data);
+  //       //}
+  //       //console.log('ally fetched, sending to state...');
+  //       // <-- put ally.data.image_url somewhere into HUD to indicate enemy
+  //     })
+  //     .catch((err) => console.error('FETCH ENEMY ERROR', err));
+  // };
 
   const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
@@ -562,7 +565,7 @@ const GameView = (props: GameViewProps) => {
       .then((choiceResponse) => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        const choiceOutcome = statCheck(stat); // <-- argument from action Button click
+        const choiceOutcome = statCheck(stat, 'combat'); // <-- argument from action Button click
         // <-- choices valid for combat -->
         if (
           choiceType === 'engage' ||
@@ -651,12 +654,12 @@ const GameView = (props: GameViewProps) => {
           // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
           // arbitrate item acquisition with percentage || algorithm
-
+          const itemRoll = statCheck(stat, 'item'); // success/failure for weighted item roll
           if (
             choiceOutcome === 'success' /*&& choiceType === 'wildcard') ||
           choiceType === 'evade'*/
           ) {
-            if (choiceType === 'evade') {
+            if (choiceType === 'evade' && itemRoll === 'success') {
               setTempText(
                 'You stealthily made your way through the area, and collected an item!'
               );
@@ -664,10 +667,16 @@ const GameView = (props: GameViewProps) => {
                 ...prevChar,
                 inventory: addItem(
                   currentChar.inventory,
-                  Math.floor(Math.random() * 11) + 1
+                  Math.floor(Math.random() * 11) + 1 // <-- changed to 2 from 1
                 ),
+                score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
               }));
-            } else if (choiceType === 'wildcard') {
+            } else if (choiceType === 'evade' && itemRoll === 'failure') {
+              setTempText(
+                'You succesfully made it through the area without detection.'
+              );
+              addScore(Math.floor(Math.random() * 3) + 1);
+            } else if (choiceType === 'wildcard' && itemRoll === 'success') {
               setTempText(
                 'You made contact with a survivor, who shared an item with you!'
               );
@@ -677,9 +686,15 @@ const GameView = (props: GameViewProps) => {
                   currentChar.inventory,
                   Math.floor(Math.random() * 11) + 1
                 ),
+                score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
               }));
+            } else if (choiceType === 'wildcard' && itemRoll === 'failure') {
+              setTempText(
+                'You made contact with survivors but they had no items to spare.'
+              );
+              addScore(Math.floor(Math.random() * 3) + 1);
+              // assign score? damage mood?
             }
-            // --> player gets item
           }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
@@ -1155,7 +1170,7 @@ const GameView = (props: GameViewProps) => {
               onDragOver={handleDragOver}
             >
               <KillFeedContainer>
-                R.I.P
+                Kill Feed
                 <KillFeed>
                   {killFeed.length ? (
                     killFeed.map((death, i) => (
@@ -1164,7 +1179,7 @@ const GameView = (props: GameViewProps) => {
                       </p>
                     ))
                   ) : (
-                    <p onClick={handlePlayerDied}>test</p>
+                    <p onClick={handlePlayerDied}></p>
                   )}
                 </KillFeed>
               </KillFeedContainer>
@@ -1305,7 +1320,7 @@ const GameView = (props: GameViewProps) => {
                 onClick={() => {
                   if (!investigateDisabled) {
                     heartBeat.play();
-                    handleClickButt();
+                    setInvestigateDisabled(true);
                     handleShow();
                   } else {
                     cancel.play();

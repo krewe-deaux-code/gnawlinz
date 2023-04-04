@@ -76,7 +76,6 @@ const CharacterCreator = (props: GameViewProps) => {
   const [statPool, setStatPool] = useState<number>(18);
   const [startDisabled, setStartDisabled] = useState<boolean>(true);
 
-
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
   };
@@ -90,7 +89,6 @@ const CharacterCreator = (props: GameViewProps) => {
   const genRandomName = () => {
     setInputName(names[Math.floor(Math.random() * names.length)]);
   };
-
 
   // *************
   // <-- axios -->
@@ -146,7 +144,7 @@ const CharacterCreator = (props: GameViewProps) => {
 
   const loadCharDefaults = () => {
     const randItem = Math.floor(Math.random() * 11 + 2); // <-- make + 2 ??
-    const randLoc = Math.floor(Math.random() * 3 + 1);
+    // const randLoc = Math.floor(Math.random() * 3 + 1);
     setNewChar((prevChar) => ({
       ...prevChar,
       handle_id: activeUser.google_id, // <-- activeUser.user_id
@@ -156,7 +154,7 @@ const CharacterCreator = (props: GameViewProps) => {
       strength: 1,
       endurance: 1,
       mood: 1,
-      location: randLoc,
+      location: 5,
       ally_count: 0,
       score: 0,
     }));
