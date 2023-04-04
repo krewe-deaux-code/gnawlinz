@@ -350,7 +350,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setHealth, '-', 'health', health)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 -
               </StatButton>
@@ -358,7 +358,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setHealth, '+', 'health', health)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 +
               </StatButton>
@@ -373,7 +373,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setStrength, '-', 'strength', strength)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 -
               </StatButton>
@@ -381,7 +381,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setStrength, '+', 'strength', strength)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 +
               </StatButton>
@@ -396,7 +396,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setEndurance, '-', 'endurance', endurance)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 -
               </StatButton>
@@ -404,7 +404,7 @@ const CharacterCreator = (props: GameViewProps) => {
                 onClick={() =>
                   handleStatChange(setEndurance, '+', 'endurance', endurance)
                 }
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 +
               </StatButton>
@@ -417,13 +417,13 @@ const CharacterCreator = (props: GameViewProps) => {
               <span> {newChar.mood}</span>
               <StatButton
                 onClick={() => handleStatChange(setMood, '-', 'mood', mood)}
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 -
               </StatButton>
               <StatButton
                 onClick={() => handleStatChange(setMood, '+', 'mood', mood)}
-                style={{ width: '2.5rem' }}
+                style={{ width: '2.5rem', paddingRight: '3.5px' }}
               >
                 +
               </StatButton>
