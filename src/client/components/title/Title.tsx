@@ -3,9 +3,10 @@ import React from 'react'; // { useEffect, useContext }
 import Nav from '../nav/NavBar';
 import images from '../../utility/images';
 import { TitleContainer, Main, TitleLogoImg, TitleImg, TitleButton, CRTGlow, ArcadeDiv } from './Styled';
+import { GameViewProps } from '../../utility/interface';
 
 
-const Title: React.FC = () => {
+const Title = (props: GameViewProps) => {
 
   const handleSignIn = () => {
     window.location.href = '/auth/google';
@@ -13,7 +14,7 @@ const Title: React.FC = () => {
 
   return (
     <TitleContainer>
-      <Nav isActive={false} showButton={false}/>
+      <Nav isActive={false} showButton={false} handleSpeak={props.handleSpeak}/>
       <Main>
           <CRTGlow>
         <TitleLogoImg

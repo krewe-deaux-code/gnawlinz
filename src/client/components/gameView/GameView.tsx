@@ -10,7 +10,7 @@ import { motion } from 'framer-motion';
 
 import React, { useEffect, useContext, useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import Button from 'react-bootstrap/Button';
+
 import {
   Container,
   Main,
@@ -60,7 +60,7 @@ import {
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
-import { UserContext, SettingsContext } from '../../App';
+import { UserContext } from '../../App';
 import {
   EventData,
   ChoiceData,
@@ -90,7 +90,6 @@ import {
   bunny,
   cancel,
 } from '../../utility/sounds';
-import { ModalBody } from 'react-bootstrap';
 
 const GameView = (props: GameViewProps) => {
   window.onerror = () => {
@@ -656,22 +655,6 @@ const GameView = (props: GameViewProps) => {
       });
   };
 
-  const throttle = (cb, delay = 1000) => {
-    let shouldWait = false;
-
-    return (...args) => {
-      if (shouldWait) {
-        return;
-      }
-
-      cb(...args);
-      shouldWait = true;
-      setTimeout(() => {
-        shouldWait = false;
-      }, delay);
-    };
-  };
-
   // callback for PlayerDied event listener
   // const appendToKillFeed = throttle((death: string) => {
   //   setKillFeed(prevKillFeed => {
@@ -924,6 +907,10 @@ const GameView = (props: GameViewProps) => {
   // Any hooks between above conditional and below return will crash the page.
   console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
 
+  const handleBodyClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
@@ -938,7 +925,7 @@ const GameView = (props: GameViewProps) => {
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
-      <Nav isActive={true} showButton={true} />
+      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
 
       <Main blur={introModal} linearGradient={introModal}>
         <MainGlow>
@@ -961,7 +948,8 @@ const GameView = (props: GameViewProps) => {
                 }}
               >
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
+                <Modal.Body onClick={handleBodyClick}>
+                  <div onClick={props.handleSpeak}>
                   <h4>It's Mardi Gras...</h4>
                   <p>
                     But something isn't right... You come-to from a Carnival
@@ -991,6 +979,7 @@ const GameView = (props: GameViewProps) => {
                     </i>
                     {']'}
                   </p>
+                  </div>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
               </ModalStyle>

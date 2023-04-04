@@ -158,7 +158,7 @@ const Menu = (props: GameViewProps) => {
         value={{ hideStartButton, setHideStartButton, startFail, setStartFail }}
       >
         <Body>
-          <Nav isActive={false} showButton={true} />
+          <Nav isActive={false} showButton={true} handleSpeak={props.handleSpeak} />
           <ArcadeGlowContainer>
             <CRTGlow>
           <InfoContainer>
