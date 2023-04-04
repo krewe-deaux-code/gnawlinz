@@ -756,6 +756,8 @@ const GameView = (props: GameViewProps) => {
   const retrieveDropItem = () => {
     if (location.drop_item_slot === 1) {
       setModalText('You searched for items, but didn\'t find anything');
+    } else if (fetchedInventory.filter(item => item._id !== 1).length === 8) {
+      setModalText('You have no room for items in your inventory');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
