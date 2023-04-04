@@ -79,9 +79,6 @@ const App = () => {
   const characterUpdate = () => {
     const sortedInventoryChar = currentChar;
     if (sortedInventoryChar.inventory) {
-      if (sortedInventoryChar.inventory.length > 8) {
-      sortedInventoryChar.inventory.length = 8;
-      }
       sortedInventoryChar.inventory.sort((a, b) => b - a);
     }
     console.log('WHAT AM I', currentChar);
