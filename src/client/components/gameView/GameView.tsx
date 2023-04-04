@@ -92,6 +92,9 @@ import {
 } from '../../utility/sounds';
 
 const GameView = (props: GameViewProps) => {
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
   const {
     prevEventId,
     setPrevEventId,
@@ -907,7 +910,14 @@ const GameView = (props: GameViewProps) => {
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
-        <Link to='/result' style={{ textDecoration: 'none' }}>
+        {/* <HudButton
+          onClick={() => {
+            complete.play();
+            return <Result />;
+          }}
+        /> */}
+        <Link to='/result'
+        style={{ textDecoration: 'none' }}>
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>

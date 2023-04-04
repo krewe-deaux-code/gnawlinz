@@ -10,7 +10,7 @@ import {
   SelectStartButton,
   ArcadeBackground,
   CRTGlow,
-  ArcadeGlowContainer
+  ArcadeGlowContainer,
 } from './Styled';
 import { motion } from 'framer-motion';
 import axios from 'axios';
@@ -18,6 +18,7 @@ import axios from 'axios';
 import CharacterCreator from './CharacterCreator';
 import CharacterStats from './CharacterStats';
 import Nav from '../nav/NavBar';
+import LeaderBoard from '../result/LeaderBoard';
 
 export const MenuContext = createContext<any>('');
 
@@ -196,7 +197,7 @@ const Menu = (props: GameViewProps) => {
               active={active === 2}
               id={2}
             >
-              Inventory
+              Top Scores
             </Tab>
           </InfoContainer>
           <>
@@ -211,7 +212,9 @@ const Menu = (props: GameViewProps) => {
             </Content>
             <Content active={active === 2}>
               <div>
-                {fetchedInventory.map((item: Item, i) => {
+                <LeaderBoard/>
+
+                {/* {fetchedInventory.map((item: Item, i) => {
                   return (
                     <div key={i}>
                       <IconContainer>
@@ -223,7 +226,7 @@ const Menu = (props: GameViewProps) => {
                       </IconContainer>
                     </div>
                   );
-                })}
+                })} */}
               </div>
             </Content>
           </>

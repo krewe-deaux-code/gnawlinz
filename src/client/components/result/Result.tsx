@@ -20,7 +20,12 @@ import { StatButton } from '../menu/Styled';
 import axios from 'axios';
 import { GameViewProps } from '../../utility/interface';
 
+
 const Result = (props: GameViewProps) => {
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
+
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
 
   const [story, setStory] = useState([]);
@@ -74,7 +79,7 @@ const Result = (props: GameViewProps) => {
       {resultText === 'you survived!' ? (
         <div>
           {' '}
-          <Confetti colors={colors} gravity={.2}/>{' '}
+          <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
       <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
@@ -94,7 +99,9 @@ const Result = (props: GameViewProps) => {
         <Content1>
           <Link to='/' style={{ textDecoration: 'none' }}>
             <Content1>
-              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>Play Again</StatButton>
+              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>
+                Play Again
+              </StatButton>
             </Content1>
           </Link>
         </Content1>
