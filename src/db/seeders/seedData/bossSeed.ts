@@ -5,7 +5,7 @@ export const bossSeed = [
     weapon1: 'Kukri',
     strength: 5,
     health: 500,
-    location: 1, // Math.floor(Math.random() * 4) + 1
+    location: 6, // Math.floor(Math.random() * 4) + 1
     score: 666,
     event: 4,
     victory: 'You defeated Nick Un-Caged!',
