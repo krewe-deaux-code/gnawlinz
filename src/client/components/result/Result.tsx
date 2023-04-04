@@ -13,15 +13,21 @@ import {
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
-import { SettingsContext, UserContext } from '../../App'; // <-- holds User object
+import { UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
 import { StatButton } from '../menu/Styled';
 
 import axios from 'axios';
+import { GameViewProps } from '../../utility/interface';
 
-const Result: React.FC = () => {
+
+const Result = (props: GameViewProps) => {
+  window.onerror = () => {
+    window.location.href = '/menu';
+  };
+
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
-  const { isSpeakingEnabled } = useContext(SettingsContext);
+
   const [story, setStory] = useState([]);
 
   // add win/loss image & resultText to state
@@ -64,14 +70,6 @@ const Result: React.FC = () => {
 
   // console.log('result from story query:', story);
 
-  const msg = new SpeechSynthesisUtterance();
-  const handleSpeak = (e) => {
-    if (isSpeakingEnabled) {
-      msg.text = e.target.innerText;
-      window.speechSynthesis.speak(msg);
-    }
-  };
-
   const handleClick = () => {
     window.location.href = '/menu';
   };
@@ -81,12 +79,12 @@ const Result: React.FC = () => {
       {resultText === 'you survived!' ? (
         <div>
           {' '}
-          <Confetti colors={colors} gravity={.2}/>{' '}
+          <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
-      <Nav isActive={true} showButton={true} />
+      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
       <Story>
-        <h1 onClick={handleSpeak}>
+        <h1 onClick={props.handleSpeak}>
           <img src={image} />
           {resultText}
           <img src={image} />
@@ -94,14 +92,16 @@ const Result: React.FC = () => {
         <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
             <StoryItemCard key={index + sentence}>
-              <p onClick={handleSpeak}>{sentence} </p>
+              <p onClick={props.handleSpeak}>{sentence} </p>
             </StoryItemCard>
           ))}
         </ScrollableContainer>
         <Content1>
           <Link to='/' style={{ textDecoration: 'none' }}>
             <Content1>
-              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>Play Again</StatButton>
+              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>
+                Play Again
+              </StatButton>
             </Content1>
           </Link>
         </Content1>
@@ -109,10 +109,10 @@ const Result: React.FC = () => {
       <End>
         <div>
           {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-          <h2 onClick={handleSpeak}> Your Score: {currentChar.score} </h2>
+          <h2 onClick={props.handleSpeak}> Your Score: {currentChar.score} </h2>
           <img src={currentChar.image_url} />
         </div>
-        <h2 onClick={handleSpeak}>Top Scores</h2>
+        <h2 onClick={props.handleSpeak}>Top Scores</h2>
         <ScrollableContainer>
           <LeaderBoard />
         </ScrollableContainer>

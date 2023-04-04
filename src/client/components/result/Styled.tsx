@@ -47,11 +47,16 @@ export const Story = styled.main`
   justify-content: center;
   overflow: auto;
   background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
-
+  border-bottom-right-radius: 9px;
+  border-top-right-radius: 9px;
+  border-right: 3px solid silver;
+  margin-right: 10rem;
+  margin-top: 3rem;
 `;
 export const End = styled.div`
   background: rgba(173, 173, 173, 0.4);
-  backdrop-filter: blur(15px);  grid-area: end;
+  backdrop-filter: blur(15px);
+  grid-area: end;
   padding: 0.25rem;
   display: grid;
   align-content: space-evenly;
@@ -59,7 +64,11 @@ export const End = styled.div`
   justify-content: center;
   overflow: auto;
   background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
-
+  border-bottom-left-radius: 9px;
+  border-top-left-radius: 9px;
+  border-left: 3px solid silver;
+  margin-left: 10rem;
+  margin-top: 3rem;
 `;
 
 // export const ResultButton = styled.button`

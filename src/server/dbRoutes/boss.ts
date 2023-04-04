@@ -20,4 +20,13 @@ bossRouter.get('/:id', (req, res) => {
     });
 });
 
+bossRouter.patch('/patch/:id', (req, res) => {
+  Boss.update(req.body, { where: { _id: req.params.id }})
+    .then(() => res.sendStatus(201))
+    .catch(err => {
+      console.error('boss patch health fail', err);
+      res.sendStatus(500);
+    });
+});
+
 export default bossRouter;

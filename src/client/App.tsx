@@ -127,15 +127,29 @@ const App = () => {
       .catch((err) => console.error('error update from axios front end', err));
   };
 
+  const throttle = (cb, delay = 1000) => {
+    let shouldWait = false;
+    return (...args) => {
+      if (shouldWait) {
+        return;
+      }
+      cb(...args);
+      shouldWait = true;
+      setTimeout(() => {
+        shouldWait = false;
+      }, delay);
+    };
+  };
+
   // text to speech functionality
   const msg = new SpeechSynthesisUtterance();
 
-  const handleSpeak = (e) => {
+  const handleSpeak = throttle((e) => {
     if (isSpeakingEnabled) {
       msg.text = e.target.innerText;
       window.speechSynthesis.speak(msg);
     }
-  };
+  });
 
   useEffect(() => {
     console.log('EVERY TIME CHAR CHANGES');
@@ -150,7 +164,7 @@ const App = () => {
     locationUpdate();
   }, [location]);
 
-  console.log('CURRENT CHAR', currentChar);
+  // console.log('CURRENT CHAR', currentChar);
 
   return (
     <SettingsContext.Provider
@@ -210,13 +224,13 @@ const App = () => {
 
           <Suspense fallback={<div>LOADING...</div>}>
             <Routes>
-              <Route path='/' element={<Title />} />
+              <Route path='/' element={<Title handleSpeak={handleSpeak} />} />
               <Route path='menu' element={<Menu handleSpeak={handleSpeak} />} />
               <Route
                 path='game-view'
                 element={<GameView handleSpeak={handleSpeak} />}
               />
-              <Route path='result' element={<Result />} />
+              <Route path='result' element={<Result handleSpeak={handleSpeak}/>} />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </Suspense>
