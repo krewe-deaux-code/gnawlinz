@@ -137,7 +137,12 @@ const CharacterStats = (props: GameViewProps) => {
                         <></>
                       )}
                       <img
-                        style={{ height: '400px', width: '300px' }}
+                        style={{
+                          height: '400px',
+                          width: '300px',
+                          filter:
+                            'drop-shadow(rgba(0, 0, 0, 0.8) 0.4rem 0.3rem 0.7rem)',
+                        }}
                         src={char.image_url}
                       />
                     </div>
@@ -188,7 +193,9 @@ const CharacterStats = (props: GameViewProps) => {
                 style={{ height: '400px', width: '300px' }}
                 src={images.createCharImage}
               />
-              <StatName onClick={props.handleSpeak}>Create a Character:</StatName>
+              <StatName onClick={props.handleSpeak}>
+                Create a Character:
+              </StatName>
             </>
           )}
         </InnerContainer>
