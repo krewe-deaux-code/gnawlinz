@@ -167,7 +167,7 @@ const App = () => {
     locationUpdate();
   }, [location]);
 
-  console.log('CURRENT CHAR', currentChar);
+  // console.log('CURRENT CHAR', currentChar);
 
   return (
     <SettingsContext.Provider
@@ -227,7 +227,7 @@ const App = () => {
 
           <Suspense fallback={<div>LOADING...</div>}>
             <Routes>
-              <Route path='/' element={<Title />} />
+              <Route path='/' element={<Title handleSpeak={handleSpeak} />} />
               <Route path='menu' element={<Menu handleSpeak={handleSpeak} />} />
               <Route
                 path='game-view'

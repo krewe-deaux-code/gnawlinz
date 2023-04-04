@@ -13,7 +13,7 @@ import {
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
-import { SettingsContext, UserContext } from '../../App'; // <-- holds User object
+import { UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
 import { StatButton } from '../menu/Styled';
 
@@ -27,7 +27,7 @@ const Result = (props: GameViewProps) => {
   };
 
   const { currentChar } = useContext(UserContext); // <-- NEED to get user chars below
-  // const { isSpeakingEnabled } = useContext(SettingsContext);
+
   const [story, setStory] = useState([]);
 
   // add win/loss image & resultText to state
@@ -82,7 +82,7 @@ const Result = (props: GameViewProps) => {
           <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
-      <Nav isActive={true} showButton={true} />
+      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
       <Story>
         <h1 onClick={props.handleSpeak}>
           <img src={image} />
