@@ -211,7 +211,7 @@ const Menu = (props: GameViewProps) => {
               <CharacterStats handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 2}>
-              <div>
+              <div style={{margin: 'auto', width: '90%'}}>
                 <LeaderBoard/>
 
                 {/* {fetchedInventory.map((item: Item, i) => {
