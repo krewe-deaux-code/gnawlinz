@@ -13,7 +13,7 @@
 export const eventSeed = [
   {
     initial_text: 'You turn a corner, and are suddenly aware you are not alone. In your peripheral vision you catch a glimpse of a dark shape coming toward you!',
-    choice0: 2, // fight the shadow
+    choice0: 2, // fight an enemy
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
     choice3: 4, // attempt contact
@@ -23,7 +23,7 @@ export const eventSeed = [
   },
   {
     initial_text: 'Entering the space, you feel a hostile presence. You\'re being watched... No. Hunted.',
-    choice0: 2, // fight the zombie
+    choice0: 2, // fight an enemy
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
     choice3: 4, // attempt contact

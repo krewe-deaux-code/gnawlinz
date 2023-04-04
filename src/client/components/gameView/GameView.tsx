@@ -204,15 +204,15 @@ const GameView = (props: GameViewProps) => {
           } else {
             setCurrentEnemy({});
           }
-          if (event.data.ally_effect) {
-            handleAllyFetch();
-            setEvent((prevEvent) => ({
-              ...prevEvent,
-              ally_effect: false,
-            }));
-          } else {
-            setCurrentAlly({});
-          }
+          // if (event.data.ally_effect) {
+          //   handleAllyFetch();
+          //   setEvent((prevEvent) => ({
+          //     ...prevEvent,
+          //     ally_effect: false,
+          //   }));
+          // } else {
+          //   setCurrentAlly({});
+          // }
         })
         .catch((err) => {
           console.error('RANDOM EVENT FETCH FAILED', err);
@@ -366,7 +366,7 @@ const GameView = (props: GameViewProps) => {
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Move to new area');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip('Risk depression for chance at acquiring an ally');
+        setTooltip('Use mood stat to search for an item but loose mood on failure.');
       }
     } else {
       if (itemOrButton._id !== 1) {
@@ -586,7 +586,7 @@ const GameView = (props: GameViewProps) => {
               }));
               setTempText(
                 `The ${currentEnemy.name} hit you with a ${currentEnemy.weapon1} for ${fightResult.damage} damage!`
-              ); // <-- check for ally??
+              );
               // return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
@@ -633,17 +633,30 @@ const GameView = (props: GameViewProps) => {
         } else {
           // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
-          // arbitrate item/ally acquisition with percentage || algorithm
+          // arbitrate item acquisition with percentage || algorithm
 
           if (
-            (choiceOutcome === 'success' && choiceType === 'wildcard') ||
-            choiceType === 'evade'
-          ) {
-            // --> player gets item || ally
-            if (Object.entries(currentAlly).length) {
-              setShowAlly(true);
-              setTempText(currentAlly.greeting); // add to schema
+            choiceOutcome === 'success' /*&& choiceType === 'wildcard') ||
+          choiceType === 'evade'*/
+           ) {
+            if (
+              choiceType === 'evade'
+            ) {
+              setTempText('You stealthily made your way through the area, and collected an item!');
+              setCurrentChar((prevChar) => ({
+                ...prevChar,
+                inventory: addItem(currentChar.inventory, Math.floor(Math.random() * 11) + 1),
+              }));
+            } else if (
+              choiceType === 'wildcard'
+              ) {
+                setTempText('You made contact with a survivor, who shared an item with you!');
+                setCurrentChar((prevChar) => ({
+                  ...prevChar,
+                  inventory: addItem(currentChar.inventory, Math.floor(Math.random() * 11) + 1),
+                }));
             }
+            // --> player gets item
           }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
@@ -991,7 +1004,7 @@ const GameView = (props: GameViewProps) => {
             {location.name}
           </h2>
           <LocationDiv id='location-div'>
-            {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>}
+            {/* {showAlly ? <AllyImg src={currentAlly.image_url} /> : <></>} */}
             {showEnemy ? (
               <EnemyImgContainer id='enemy-img-container'>
                 {/* overlay: `${health / 10} / 10` */}
