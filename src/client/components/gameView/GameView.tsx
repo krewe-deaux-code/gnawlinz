@@ -367,17 +367,13 @@ const GameView = (props: GameViewProps) => {
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
-        setTooltip('Attack any present threat using your strength stat');
+        setTooltip('Risk health to fight enemy [uses STR]');
       } else if (itemOrButton === 'evade') {
-        setTooltip(
-          'Use your endurance stat to potentially evade an attack and find an item'
-        );
+        setTooltip('Risk combat to find item [uses END]');
       } else if (itemOrButton === 'evacuate') {
-        setTooltip('Move to new area');
+        setTooltip('Safely move to new location');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip(
-          'Use mood stat to search for an item but loose mood on failure.'
-        );
+        setTooltip('Risk mood to find item [uses MOOD]');
       }
     } else {
       if (itemOrButton._id !== 1) {
