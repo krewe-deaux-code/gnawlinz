@@ -601,7 +601,9 @@ const GameView = (props: GameViewProps) => {
               setTempText(
                 `You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`
               );
-              bossHealthPatch(fightResult.enemy);
+              if (currentEnemy.name === boss?.name) {
+                bossHealthPatch(fightResult.enemy);
+              }
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) {
@@ -628,7 +630,9 @@ const GameView = (props: GameViewProps) => {
             ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
             setCurrentEnemy({});
-            bossHealthPatch(500); // <-- hardcoded to reset Nick Un-caged
+            if (currentEnemy.name === boss?.name) {
+              bossHealthPatch(500); // <-- hardcoded to reset Nick Un-caged
+            }
           } else {
             // <-- no Enemy on Event/State (enemy !exist)
             // setOutcome('You explored part of the city, but found no signs of life.');
