@@ -150,7 +150,7 @@ const App = () => {
     locationUpdate();
   }, [location]);
 
-  console.log('CURRENT CHAR', currentChar);
+  // console.log('CURRENT CHAR', currentChar);
 
   return (
     <SettingsContext.Provider

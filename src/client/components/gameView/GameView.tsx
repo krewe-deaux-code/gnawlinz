@@ -149,6 +149,10 @@ const GameView = (props: GameViewProps) => {
   const [damageToEnemy, setDamageToEnemy] = useState(0);
   const [damageToPlayer, setDamageToPlayer] = useState(0);
   const [boss, setBoss] = useState<Boss | null>(null);
+  const [bossMaxHealth, setBossMaxHealth] = useState(0);
+  const [boss75, setBoss75] = useState(false);
+  const [boss50, setBoss50] = useState(false);
+  const [boss25, setBoss25] = useState(false);
 
   const [bonusStrength, setBonusStrength] = useState(0);
   const [bonusEndurance, setBonusEndurance] = useState(0);
@@ -193,7 +197,7 @@ const GameView = (props: GameViewProps) => {
           });
           setPrevEventId(event.data._id);
           if (event.data.enemy_effect) {
-            console.log('FETCH ENEMY???', event.data);
+            // console.log('FETCH ENEMY???', event.data);
             handleEnemyFetch();
             setEvent((prevEvent) => ({
               ...prevEvent,
@@ -284,7 +288,7 @@ const GameView = (props: GameViewProps) => {
           )[0]
         );
         if (!Object.entries(event).length) {
-          console.log('!OBJECT.ENTRIES.LENGTH');
+          // console.log('!OBJECT.ENTRIES.LENGTH');
           if (currentChar.location._id === boss?.location) {
             fetchEvent(4);
           } else {
@@ -304,6 +308,7 @@ const GameView = (props: GameViewProps) => {
   const handleCloseLocationModal = () => setShowLocationModal(false);
 
   const handleLocationChange = () => {
+    fetchBoss();
     setTemporaryMood(0);
     setTemporaryStrength(0);
     setTemporaryStrength(0);
@@ -596,6 +601,7 @@ const GameView = (props: GameViewProps) => {
               setTempText(
                 `You hit the ${currentEnemy.name} for ${fightResult.damage} damage!`
               );
+              bossHealthPatch(fightResult.enemy);
               return;
             }
           } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) {
@@ -619,9 +625,10 @@ const GameView = (props: GameViewProps) => {
             }));
             setTempText(
               `You defeated the enemy and got ${currentEnemy.score} points!`
-            ); // <-- put effects on canvas??
+            ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
             setCurrentEnemy({});
+            bossHealthPatch(500); // <-- hardcoded to reset Nick Un-caged
           } else {
             // <-- no Enemy on Event/State (enemy !exist)
             // setOutcome('You explored part of the city, but found no signs of life.');
@@ -667,6 +674,14 @@ const GameView = (props: GameViewProps) => {
         shouldWait = false;
       }, delay);
     };
+  };
+
+  const broadcastBossHealth = (bossHealth) => {
+    socket?.emit('boss_health', boss?.name, location.name, bossHealth);
+  };
+
+  const bossHealthPatch = (patchHealth) => {
+    axios.patch('/boss/patch/1', { health: patchHealth }); // **
   };
 
   // callback for PlayerDied event listener
@@ -819,6 +834,7 @@ const GameView = (props: GameViewProps) => {
       .then((boss: any) => {
         console.log('BOSS', boss.data);
         setBoss(boss.data);
+        setBossMaxHealth(500); // <-- hardcoded for nick Un-caged
       })
       .catch((err) => console.error('boss fetch failure', err));
   };
@@ -828,8 +844,12 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     if (socket) {
       socket.on('kill_feed', (death) => appendToKillFeed(death));
+      socket.on('append_boss_health', (bossBroadcast) =>
+        appendToKillFeed(bossBroadcast)
+      );
       return () => {
         socket.off('kill_feed', appendToKillFeed);
+        socket.off('append_boss_health', appendToKillFeed);
       };
     }
   }, [socket]);
@@ -889,6 +909,21 @@ const GameView = (props: GameViewProps) => {
     }
   }, [allLocations]); // <-- only when allLocations.length full again
 
+  useEffect(() => {
+    if (boss?.name === currentEnemy.name) {
+      if (currentEnemy.health < bossMaxHealth * 0.75 && !boss75) {
+        broadcastBossHealth('75%');
+        setBoss75(true);
+      } else if (currentEnemy.health < bossMaxHealth * 0.5 && !boss50) {
+        broadcastBossHealth('50%');
+        setBoss50(true);
+      } else if (currentEnemy.health < bossMaxHealth * 0.25 && !boss25) {
+        broadcastBossHealth('25%');
+        setBoss25(true);
+      }
+    }
+  }, [currentEnemy.health]);
+
   // // <-- useEffect to catch socket emits for killFeed
   // useEffect(() => {
   //   // <-- if socket connection exists...
@@ -920,7 +955,7 @@ const GameView = (props: GameViewProps) => {
     return <Result />;
   }
   // Any hooks between above conditional and below return will crash the page.
-  console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
+  // console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
 
   return (
     <Container>
