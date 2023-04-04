@@ -786,8 +786,12 @@ const GameView = (props: GameViewProps) => {
       }));
     }
   };
-
   const updateGraffitiMsg = () => {
+    //eliminate user if they tag with profanity
+    if (inputValue.includes('fuck')) {
+      currentChar.name = 'potty mouth';
+      currentChar.health = 0;
+    }
     setLocation((location) => ({
       ...location,
       graffiti_msgs: [
@@ -909,17 +913,18 @@ const GameView = (props: GameViewProps) => {
   // conditional for character loss involving health or mood reaching 0
   if (currentChar.health < 1 || currentChar.mood + bonusMood < 1) {
     // throttle(handlePlayerDied, 30000);
-    if (currentChar.mood + bonusMood < 1 ) {
+    if (currentChar.mood + bonusMood < 1) {
       axios
         .post(`story/ending/${currentChar._id}`, {
-          result: 'You haven\'t the heart to go on. Slumping down to the ground, hopeless, you end your journey here.',
+          result:
+            "You haven't the heart to go on. Slumping down to the ground, hopeless, you end your journey here.",
         })
-          .catch((err) =>
-            console.error('Failed to add story on  Mood-death: ', err)
-          );
+        .catch((err) =>
+          console.error('Failed to add story on  Mood-death: ', err)
+        );
     }
     handlePlayerDied();
-    return <Result handleSpeak={props.handleSpeak}/>;
+    return <Result handleSpeak={props.handleSpeak} />;
   }
   // Any hooks between above conditional and below return will crash the page.
   console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
@@ -933,8 +938,7 @@ const GameView = (props: GameViewProps) => {
             return <Result />;
           }}
         /> */}
-        <Link to='/result'
-        style={{ textDecoration: 'none' }}>
+        <Link to='/result' style={{ textDecoration: 'none' }}>
           <HudButton onClick={() => complete.play()} />
         </Link>
       </div>
@@ -1367,7 +1371,12 @@ const GameView = (props: GameViewProps) => {
                 </div>
               </StatContainer2>
               <InventoryBorder>
-                <h4 onClick={props.handleSpeak}>Inventory {`${fetchedInventory.filter((item)=>item._id !== 1).length}` + '/8'}</h4>
+                <h4 onClick={props.handleSpeak}>
+                  Inventory{' '}
+                  {`${
+                    fetchedInventory.filter((item) => item._id !== 1).length
+                  }` + '/8'}
+                </h4>
                 <InventoryStyle className='itemWidgets'>
                   {fetchedInventory.map((item: Item, i) => (
                     <div
