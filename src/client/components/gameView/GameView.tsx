@@ -907,6 +907,10 @@ const GameView = (props: GameViewProps) => {
   // Any hooks between above conditional and below return will crash the page.
   console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
 
+  const handleBodyClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
+    event.stopPropagation();
+  };
+
   return (
     <Container>
       <div style={{ position: 'absolute', opacity: 0 }}>
@@ -944,7 +948,8 @@ const GameView = (props: GameViewProps) => {
                 }}
               >
                 <Modal.Header closeButton></Modal.Header>
-                <Modal.Body>
+                <Modal.Body onClick={handleBodyClick}>
+                  <div onClick={props.handleSpeak}>
                   <h4>It's Mardi Gras...</h4>
                   <p>
                     But something isn't right... You come-to from a Carnival
@@ -974,6 +979,7 @@ const GameView = (props: GameViewProps) => {
                     </i>
                     {']'}
                   </p>
+                  </div>
                 </Modal.Body>
                 <Modal.Footer></Modal.Footer>
               </ModalStyle>
