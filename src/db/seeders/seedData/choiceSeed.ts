@@ -25,7 +25,7 @@ export const choiceSeed = [
   },
   { // talk to ZB 4 (kill) 4
     flavor_text: 'You attempt to make contact with the entity.',
-    success: 'You met with another survivor.',
+    success: 'You met with another survivor, and they shared an item with you!',
     failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
@@ -65,7 +65,7 @@ export const choiceSeed = [
   },
   { // Search for survivors 9
     flavor_text: 'You cautiously enter the space and call out for survivors.',
-    success: 'You heard the response of a living person!',
+    success: 'You heard the response of a living person! You met another survivor who shared an item with you.',
     failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
