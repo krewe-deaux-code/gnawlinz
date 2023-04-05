@@ -625,6 +625,8 @@ const wildCardUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v16774663
 const enterUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679800513/sounds/enter_vb3mmd.wav';
 const heartBeatUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679937367/sounds/heartBeat_sfodbu.wav';
 const bunnyUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680221674/sounds/bunny_nqoxaq.wav';
+const vampireUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680656621/sounds/vampire2_owkjdp.wav';
+const nationalTreasureUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680656629/sounds/nationaltreasure_ghpzbu.wav';
 
 /*
   *******************************
@@ -680,6 +682,16 @@ export const heartBeat = new Howl({
 
 export const bunny = new Howl({
   src: [bunnyUrl],
+  volume: 1.5
+});
+
+export const vampire = new Howl({
+  src: [vampireUrl],
+  volume: 1.5
+});
+
+export const nationalTreasure = new Howl({
+  src: [nationalTreasureUrl],
   volume: 1.5
 });
 

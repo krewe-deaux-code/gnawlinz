@@ -57,6 +57,7 @@ import {
   MainGlow,
   LCDGlow,
   EnemyImgContainer,
+  BossName,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -92,7 +93,11 @@ import {
   spray,
   onChar,
   onLocation,
+  vampire,
+  nationalTreasure,
 } from '../../utility/sounds';
+
+const nicCageSounds = [bunny, vampire, nationalTreasure];
 
 const GameView = (props: GameViewProps) => {
   window.onerror = () => {
@@ -351,7 +356,8 @@ const GameView = (props: GameViewProps) => {
       //   bunny.play();
       //   setShowEnemy(true);
       // }, 400); // <-- reduce
-      bunny.play(); // both sounds fire (two different spots of the code)
+      // bunny.play(); // both sounds fire (two different spots of the code)
+      nicCageSounds[Math.floor(Math.random() * 3)].play();
       setShowEnemy(true);
       return;
     }
@@ -953,7 +959,8 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     if (hasMounted && allLocations.length === 4) {
       if (location._id === boss?.location) {
-        bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        // bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        nicCageSounds[Math.floor(Math.random() * 3)].play();
         setCurrentEnemy(boss);
         fetchEvent(4);
         setShowEnemy(true);
@@ -1102,23 +1109,28 @@ const GameView = (props: GameViewProps) => {
                 {/* overlay: `${health / 10} / 10` */}
                 {/* health: currentChar.health * 10 */}
                 {currentEnemy.name === boss?.name ? (
-                  <ProgressBarContainer
-                    style={{
-                      top: '8%',
-                      left: '29%',
-                      maxWidth: '280px',
-                      filter:
-                        'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
-                    }}
-                  >
-                    <OverlayValue>{currentEnemy.health}</OverlayValue>
-                    <ProgressBar
-                      animated
-                      variant={'danger'}
-                      now={currentEnemy.health / 5}
-                      style={{ backgroundColor: 'grey' }}
-                    />
-                  </ProgressBarContainer>
+                  <>
+                    <BossName>
+                      <b>Boss: {boss?.name}</b>
+                    </BossName>
+                    <ProgressBarContainer
+                      style={{
+                        top: '8%',
+                        left: '29%',
+                        maxWidth: '280px',
+                        filter:
+                          'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
+                      }}
+                    >
+                      <OverlayValue>{currentEnemy.health}</OverlayValue>
+                      <ProgressBar
+                        animated
+                        variant={'danger'}
+                        now={currentEnemy.health / 5}
+                        style={{ backgroundColor: 'grey' }}
+                      />
+                    </ProgressBarContainer>
+                  </>
                 ) : (
                   <></>
                 )}
@@ -1170,7 +1182,7 @@ const GameView = (props: GameViewProps) => {
               onDragOver={handleDragOver}
             >
               <KillFeedContainer>
-                Kill Feed
+                : Kill Feed :
                 <KillFeed>
                   {killFeed.length ? (
                     killFeed.map((death, i) => (

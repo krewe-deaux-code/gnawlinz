@@ -844,3 +844,13 @@ export const LCDDiv = styled.div`
     animation: ${LCDFlicker} 0.25s infinite;
   }
 `;
+
+export const BossName = styled.span`
+  position: absolute;
+  display: flex;
+  top: 3%;
+  left: 36%;
+  text-shadow: rgb(0, 0, 0) 2px 2px 1px;
+  color: #22dc1f;
+  letter-spacing: 2px;
+`;
