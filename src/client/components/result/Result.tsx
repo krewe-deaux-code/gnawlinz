@@ -98,7 +98,6 @@ const Result = (props: GameViewProps) => {
           <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
-      {/* <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} /> */}
       <Story>
         <h1 onClick={props.handleSpeak}>
           <WinLoss>
@@ -135,7 +134,9 @@ const Result = (props: GameViewProps) => {
         <ResultAvatarContainer className='AvatarContainer'>
         <h2> Final Score: {currentChar.score} </h2>
           {/* <img src={currentChar.image_url} /> */}
-          <img src={currentChar.image_url} style={{width: '25%', height: '25%'}}/>
+          <img src={currentChar.image_url}
+          style={{height: '65%'}}
+          />
         </ResultAvatarContainer>
         {/* <h2> Score: {currentChar.score} </h2> */}
         <h2 onClick={props.handleSpeak}>Top Scores</h2>
