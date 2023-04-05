@@ -52,11 +52,13 @@ import {
   ModalStyle,
   LCDDiv,
   ArcadeWoodStyle,
+  BubbleP,
   InventoryBubbleText,
   InventoryBottomTextBubble,
   MainGlow,
   LCDGlow,
   EnemyImgContainer,
+  BossName,
 } from './Styled'; //ContentBox
 
 import { Link } from 'react-router-dom';
@@ -94,7 +96,11 @@ import {
   spray,
   onChar,
   onLocation,
+  vampire,
+  nationalTreasure,
 } from '../../utility/sounds';
+
+const nicCageSounds = [bunny, vampire, nationalTreasure];
 
 const GameView = (props: GameViewProps) => {
   window.onerror = () => {
@@ -171,10 +177,20 @@ const GameView = (props: GameViewProps) => {
 
   const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
+  const [tooltipExtra, setTooltipExtra] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
 
+  const addScore = (points) => {
+    setCurrentChar((prevChar) => ({
+      ...prevChar,
+      score: (prevChar.score += points),
+    }));
+  };
+
   const fetchEvent = (bossEvent = 0) => {
+    setSelectedChoice({});
     setTempText('');
+    setOutcome('');
     if (bossEvent) {
       // <-- EDIT
       axios
@@ -229,10 +245,6 @@ const GameView = (props: GameViewProps) => {
     }
   };
 
-  const handleClickButt = () => {
-    setInvestigateDisabled(true);
-  };
-
   const handleToggleEvent = () => {
     setShowEvent(showEvent ? false : true);
   };
@@ -253,35 +265,33 @@ const GameView = (props: GameViewProps) => {
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
   };
 
-  const handleAllyFetch = () => {
-    // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
-    axios
-      .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
-      .then((ally: any) => {
-        // if (metAllyArr.includes(ally.data._id)) {
-        // setCurrentAlly({});
-        // } else {
-        setMetAllyArr((prevMetAllyArr) => [...prevMetAllyArr, ally.data._id]);
-        setCurrentAlly(ally.data);
-        //}
-        //console.log('ally fetched, sending to state...');
-        // <-- put ally.data.image_url somewhere into HUD to indicate enemy
-      })
-      .catch((err) => console.error('FETCH ENEMY ERROR', err));
-  };
-
-  // console.log('!!!!!!!!!!!!!!!!!!!!!!!!!', currentEnemy);
+  // const handleAllyFetch = () => {
+  //   // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
+  //   axios
+  //     .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
+  //     .then((ally: any) => {
+  //       // if (metAllyArr.includes(ally.data._id)) {
+  //       // setCurrentAlly({});
+  //       // } else {
+  //       setMetAllyArr((prevMetAllyArr) => [...prevMetAllyArr, ally.data._id]);
+  //       setCurrentAlly(ally.data);
+  //       //}
+  //       //console.log('ally fetched, sending to state...');
+  //       // <-- put ally.data.image_url somewhere into HUD to indicate enemy
+  //     })
+  //     .catch((err) => console.error('FETCH ENEMY ERROR', err));
+  // };
 
   const getAllLocations = (buttonClick = -1) => {
     // console.log('Current Event on State: ', event);
     if (buttonClick > -1) {
       currentChar.location = visited[buttonClick]._id;
       if (visited[buttonClick]._id === boss?.location) {
-        bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        nicCageSounds[Math.floor(Math.random() * 3)].play();
         setCurrentEnemy(boss);
         fetchEvent(4);
         setShowEnemy(true);
-    }
+      }
     }
     axios
       .get('/location/allLocations')
@@ -357,7 +367,8 @@ const GameView = (props: GameViewProps) => {
       //   bunny.play();
       //   setShowEnemy(true);
       // }, 400); // <-- reduce
-      bunny.play(); // both sounds fire (two different spots of the code)
+      // bunny.play(); // both sounds fire (two different spots of the code)
+      nicCageSounds[Math.floor(Math.random() * 3)].play();
       setShowEnemy(true);
       return;
     }
@@ -372,17 +383,20 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip('Search for an item Search for graffiti Write graffiti');
+        setTooltip('Search for items or Write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
-        setTooltip('Risk health to fight enemy [uses STR]');
+        setTooltip('Risk health to fight enemy');
+        setTooltipExtra('STR');
       } else if (itemOrButton === 'evade') {
-        setTooltip('Risk combat to find item [uses END]');
+        setTooltip('Risk combat to find item');
+        setTooltipExtra('END');
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Safely move to new location');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip('Risk mood to find item [uses MOOD]');
+        setTooltip('Risk mood to find item');
+        setTooltipExtra('MOOD');
       }
     } else {
       if (itemOrButton._id !== 1) {
@@ -394,6 +408,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseLeave = () => {
     setHoveredItem(null);
     setTooltip(null);
+    setTooltipExtra(null);
   };
 
   const handleDropItem = async (itemID, i) => {
@@ -571,7 +586,7 @@ const GameView = (props: GameViewProps) => {
       .then((choiceResponse) => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
-        const choiceOutcome = statCheck(stat); // <-- argument from action Button click
+        const choiceOutcome = statCheck(stat, 'combat'); // <-- argument from action Button click
         // <-- choices valid for combat -->
         if (
           choiceType === 'engage' ||
@@ -640,7 +655,12 @@ const GameView = (props: GameViewProps) => {
             // <-- give the player something...
             setCurrentChar(scoreMultiplier(currentChar, currentEnemy));
             setTempText(
-              `You defeated the enemy and got ${Math.floor(currentEnemy.score * (1.5 ** multiplier(currentChar, currentEnemy))) + 1} points!`
+              `You defeated the enemy and got ${
+                Math.floor(
+                  currentEnemy.score *
+                    1.5 ** multiplier(currentChar, currentEnemy)
+                ) + 1
+              } points!`
             ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
             setCurrentEnemy({});
@@ -657,12 +677,13 @@ const GameView = (props: GameViewProps) => {
           // <-- evacuate || wildcard || evade && success
           // specify difficulty on enemy (add to schema) to create dynamic weight for success/fail calculation
           // arbitrate item acquisition with percentage || algorithm
-
+          const itemRoll = statCheck(stat, 'item'); // success/failure for weighted item roll
           if (
-            choiceOutcome === 'success' /*&& choiceType === 'wildcard') || choiceType === 'evade'*/
+            choiceOutcome ===
+            'success' /*&& choiceType === 'wildcard') || choiceType === 'evade'*/
           ) {
-            if ( currentChar.inventory.filter(slot => slot === 1).length > 0 ) {
-              if (choiceType === 'evade') {
+            if (currentChar.inventory.filter((slot) => slot === 1).length > 0) {
+              if (choiceType === 'evade' && itemRoll === 'success') {
                 setTempText(
                   'You stealthily made your way through the area, and collected an item!'
                 );
@@ -670,10 +691,16 @@ const GameView = (props: GameViewProps) => {
                   ...prevChar,
                   inventory: addItem(
                     currentChar.inventory,
-                    Math.floor(Math.random() * 11) + 1
+                    Math.floor(Math.random() * 11) + 1 // <-- changed to 2 from 1
                   ),
+                  score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
                 }));
-              } else if (choiceType === 'wildcard') {
+              } else if (choiceType === 'evade' && itemRoll === 'failure') {
+                setTempText(
+                  'You succesfully made it through the area without detection.'
+                );
+                addScore(Math.floor(Math.random() * 3) + 1);
+              } else if (choiceType === 'wildcard' && itemRoll === 'success') {
                 setTempText(
                   'You made contact with a survivor, who shared an item with you!'
                 );
@@ -683,18 +710,24 @@ const GameView = (props: GameViewProps) => {
                     currentChar.inventory,
                     Math.floor(Math.random() * 11) + 1
                   ),
+                  score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
                 }));
+              } else if (choiceType === 'wildcard' && itemRoll === 'failure') {
+                setTempText(
+                  'You made contact with survivors but they had no items to spare.'
+                );
+                addScore(Math.floor(Math.random() * 3) + 1);
+                // assign score? damage mood?
               }
-            // --> player gets item
-          } else {
-            setTempText (
-              'Your inventory is full, so you cannot carry additional items!'
-            );
+            } else {
+              setTempText(
+                'Your inventory is full, so you cannot carry additional items!'
+              );
+            }
+            // <-- evacuate WORKS already...
+            setOutcome(choiceOutcome); // <-- success or fail to story
           }
-          // <-- evacuate WORKS already...
-          setOutcome(choiceOutcome); // <-- success or fail to story
         }
-      }
         // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
       })
       .catch((err) => {
@@ -814,8 +847,8 @@ const GameView = (props: GameViewProps) => {
     if (location.drop_item_slot === 1) {
       // <-- failure sound
       cancel.play();
-      setModalText('You searched for items, but didn\'t find anything');
-    } else if (fetchedInventory.filter(item => item._id !== 1).length === 8) {
+      setModalText("You searched for items, but didn't find anything");
+    } else if (fetchedInventory.filter((item) => item._id !== 1).length === 8) {
       setModalText('You have no room for items in your inventory');
     } else {
       axios
@@ -951,7 +984,8 @@ const GameView = (props: GameViewProps) => {
   useEffect(() => {
     if (hasMounted && allLocations.length === 4) {
       if (location._id === boss?.location) {
-        bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        // bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        nicCageSounds[Math.floor(Math.random() * 3)].play();
         setCurrentEnemy(boss);
         fetchEvent(4);
         setShowEnemy(true);
@@ -1100,23 +1134,28 @@ const GameView = (props: GameViewProps) => {
                 {/* overlay: `${health / 10} / 10` */}
                 {/* health: currentChar.health * 10 */}
                 {currentEnemy.name === boss?.name ? (
-                  <ProgressBarContainer
-                    style={{
-                      top: '8%',
-                      left: '29%',
-                      maxWidth: '280px',
-                      filter:
-                        'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
-                    }}
-                  >
-                    <OverlayValue>{currentEnemy.health}</OverlayValue>
-                    <ProgressBar
-                      animated
-                      variant={'danger'}
-                      now={currentEnemy.health / 5}
-                      style={{ backgroundColor: 'grey' }}
-                    />
-                  </ProgressBarContainer>
+                  <>
+                    <BossName>
+                      <b>Boss: {boss?.name}</b>
+                    </BossName>
+                    <ProgressBarContainer
+                      style={{
+                        top: '12%',
+                        left: '33%',
+                        maxWidth: '280px',
+                        filter:
+                          'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
+                      }}
+                    >
+                      <OverlayValue>{currentEnemy.health}</OverlayValue>
+                      <ProgressBar
+                        animated
+                        variant={'danger'}
+                        now={currentEnemy.health / 5}
+                        style={{ backgroundColor: 'grey' }}
+                      />
+                    </ProgressBarContainer>
+                  </>
                 ) : (
                   <></>
                 )}
@@ -1168,7 +1207,7 @@ const GameView = (props: GameViewProps) => {
               onDragOver={handleDragOver}
             >
               <KillFeedContainer>
-                R.I.P
+                : Kill Feed :
                 <KillFeed>
                   {killFeed.length ? (
                     killFeed.map((death, i) => (
@@ -1177,7 +1216,7 @@ const GameView = (props: GameViewProps) => {
                       </p>
                     ))
                   ) : (
-                    <p onClick={handlePlayerDied}>test</p>
+                    <p onClick={handlePlayerDied}></p>
                   )}
                 </KillFeed>
               </KillFeedContainer>
@@ -1327,7 +1366,7 @@ const GameView = (props: GameViewProps) => {
                 onClick={() => {
                   if (!investigateDisabled) {
                     heartBeat.play();
-                    handleClickButt();
+                    setInvestigateDisabled(true);
                     handleShow();
                   } else {
                     cancel.play();
@@ -1524,7 +1563,16 @@ const GameView = (props: GameViewProps) => {
             )}
             {tooltip && (
               <InventoryTextBubble>
-                <InventoryBubbleText>{tooltip}</InventoryBubbleText>
+                <InventoryBubbleText>
+                  {tooltip}
+                  {tooltipExtra && (
+                    <BubbleP>
+                      {'uses ['}
+                      <i>{tooltipExtra}</i>
+                      {']'}
+                    </BubbleP>
+                  )}
+                </InventoryBubbleText>
               </InventoryTextBubble>
             )}
           </LCDGlow>

@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useContext, useRef } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+  Suspense,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { motion } from 'framer-motion';
@@ -42,6 +48,7 @@ import {
   BodyCarousel,
   AvatarContainer,
   CCStartButton,
+  Spinner,
 } from './Styled';
 
 import { UserContext } from '../../App';
@@ -76,7 +83,6 @@ const CharacterCreator = (props: GameViewProps) => {
   const [statPool, setStatPool] = useState<number>(18);
   const [startDisabled, setStartDisabled] = useState<boolean>(true);
 
-
   const handleSelect = (i: number, images: string[], fn: any) => {
     fn(images[i]);
   };
@@ -90,7 +96,6 @@ const CharacterCreator = (props: GameViewProps) => {
   const genRandomName = () => {
     setInputName(names[Math.floor(Math.random() * names.length)]);
   };
-
 
   // *************
   // <-- axios -->
@@ -248,60 +253,66 @@ const CharacterCreator = (props: GameViewProps) => {
         <LeftSpacer id='LSpacer'></LeftSpacer>
         <CharacterContainer id='CharContainer'>
           <AvatarContainer id='Avatar Container'>
-            <BodyCarousel
-              id='Body Carousel'
-              slide={false}
-              indicators={false}
-              onSelect={(i) => {
-                neutral.play();
-                handleSelect(i, bodyImageUrls, setChosenBody);
-              }}
-              interval={null}
-            >
-              {bodyImageUrls.map((body: string, i: number) => {
-                return (
-                  <StyledCarouselItem id='Body Item' key={i}>
-                    <BodySlot src={body} />
-                  </StyledCarouselItem>
-                );
-              })}
-            </BodyCarousel>
-            <FaceCarousel
-              id='Face Carousel'
-              slide={false}
-              indicators={false}
-              onSelect={(i) => {
-                neutral.play();
-                handleSelect(i, faceImageUrls, setChosenFace);
-              }}
-              interval={null}
-            >
-              {faceImageUrls.map((face: string, i: number) => {
-                return (
-                  <StyledCarouselItem id='Face Item' key={i}>
-                    <FaceSlot id='FaceSlot' src={face} />
-                  </StyledCarouselItem>
-                );
-              })}
-            </FaceCarousel>
-            <HairCarousel
-              id='Hair Carousel'
-              slide={false}
-              indicators={false}
-              onSelect={(i) => {
-                neutral.play();
-                handleSelect(i, hairImageUrls, setChosenHair);
-              }}
-              interval={null}
-            >
-              {hairImageUrls.map((hair: string, i: number) => {
-                return (
-                  <StyledCarouselItem id='Hair Item' key={i}>
-                    <HairSlot id='HairSlot' src={hair} />
-                  </StyledCarouselItem>
-                );
-              })}
-            </HairCarousel>
+            <Suspense fallback={<Spinner />}>
+              <BodyCarousel
+                id='Body Carousel'
+                slide={false}
+                indicators={false}
+                onSelect={(i) => {
+                  neutral.play();
+                  handleSelect(i, bodyImageUrls, setChosenBody);
+                }}
+                interval={null}
+              >
+                {bodyImageUrls.map((body: string, i: number) => {
+                  return (
+                    <StyledCarouselItem id='Body Item' key={i}>
+                      <BodySlot src={body} />
+                    </StyledCarouselItem>
+                  );
+                })}
+              </BodyCarousel>
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+              <FaceCarousel
+                id='Face Carousel'
+                slide={false}
+                indicators={false}
+                onSelect={(i) => {
+                  neutral.play();
+                  handleSelect(i, faceImageUrls, setChosenFace);
+                }}
+                interval={null}
+              >
+                {faceImageUrls.map((face: string, i: number) => {
+                  return (
+                    <StyledCarouselItem id='Face Item' key={i}>
+                      <FaceSlot id='FaceSlot' src={face} />
+                    </StyledCarouselItem>
+                  );
+                })}
+              </FaceCarousel>
+            </Suspense>
+            <Suspense fallback={<Spinner />}>
+              <HairCarousel
+                id='Hair Carousel'
+                slide={false}
+                indicators={false}
+                onSelect={(i) => {
+                  neutral.play();
+                  handleSelect(i, hairImageUrls, setChosenHair);
+                }}
+                interval={null}
+              >
+                {hairImageUrls.map((hair: string, i: number) => {
+                  return (
+                    <StyledCarouselItem id='Hair Item' key={i}>
+                      <HairSlot id='HairSlot' src={hair} />
+                    </StyledCarouselItem>
+                  );
+                })}
+              </HairCarousel>
+            </Suspense>
           </AvatarContainer>
           <NameBox>
             {newChar.name ? (
