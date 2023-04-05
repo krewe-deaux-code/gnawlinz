@@ -653,37 +653,42 @@ const GameView = (props: GameViewProps) => {
           // arbitrate item acquisition with percentage || algorithm
 
           if (
-            choiceOutcome === 'success' /*&& choiceType === 'wildcard') ||
-          choiceType === 'evade'*/
+            choiceOutcome === 'success' /*&& choiceType === 'wildcard') || choiceType === 'evade'*/
           ) {
-            if (choiceType === 'evade') {
-              setTempText(
-                'You stealthily made your way through the area, and collected an item!'
-              );
-              setCurrentChar((prevChar) => ({
-                ...prevChar,
-                inventory: addItem(
-                  currentChar.inventory,
-                  Math.floor(Math.random() * 11) + 1
-                ),
-              }));
-            } else if (choiceType === 'wildcard') {
-              setTempText(
-                'You made contact with a survivor, who shared an item with you!'
-              );
-              setCurrentChar((prevChar) => ({
-                ...prevChar,
-                inventory: addItem(
-                  currentChar.inventory,
-                  Math.floor(Math.random() * 11) + 1
-                ),
-              }));
-            }
+            if ( currentChar.inventory.filter(slot => slot === 1).length > 0 ) {
+              if (choiceType === 'evade') {
+                setTempText(
+                  'You stealthily made your way through the area, and collected an item!'
+                );
+                setCurrentChar((prevChar) => ({
+                  ...prevChar,
+                  inventory: addItem(
+                    currentChar.inventory,
+                    Math.floor(Math.random() * 11) + 1
+                  ),
+                }));
+              } else if (choiceType === 'wildcard') {
+                setTempText(
+                  'You made contact with a survivor, who shared an item with you!'
+                );
+                setCurrentChar((prevChar) => ({
+                  ...prevChar,
+                  inventory: addItem(
+                    currentChar.inventory,
+                    Math.floor(Math.random() * 11) + 1
+                  ),
+                }));
+              }
             // --> player gets item
+          } else {
+            setTempText (
+              'Your inventory is full, so you cannot carry additional items!'
+            );
           }
           // <-- evacuate WORKS already...
           setOutcome(choiceOutcome); // <-- success or fail to story
         }
+      }
         // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
       })
       .catch((err) => {
