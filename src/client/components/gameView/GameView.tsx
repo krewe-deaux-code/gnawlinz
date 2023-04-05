@@ -1297,6 +1297,15 @@ const GameView = (props: GameViewProps) => {
                   >
                     {localStorage.getItem('3')}{' '}
                   </HudButton>
+                  <HudButton
+                    style={{ fontSize: '1.3rem' }}
+                    onClick={() => {
+                      getAllLocations(4);
+                      handleCloseLocationModal();
+                    }}
+                  >
+                    {localStorage.getItem('4')}{' '}
+                  </HudButton>
                 </ModalBodyContainer>
               </Modal.Body>
             </StyledModal>

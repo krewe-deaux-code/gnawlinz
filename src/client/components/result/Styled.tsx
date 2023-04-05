@@ -51,9 +51,9 @@ export const End = styled.div`
   grid-area: end;
   padding: 0.25rem;
   display: grid;
-  align-content: space-evenly;
+  /* align-content: space-evenly; */
   grid-template-rows: auto auto auto;
-  justify-content: center;
+  /* justify-content: center; */
   overflow: auto;
   background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
   border-bottom-left-radius: 9px;
@@ -61,6 +61,10 @@ export const End = styled.div`
   border-left: 3px solid silver;
   margin-left: 10rem;
   margin-top: 3rem;
+`;
+
+export const ResultAvatarContainer = styled.div`
+
 `;
 
 // export const ResultButton = styled.button`
@@ -145,6 +149,7 @@ export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
   border: 2px solid silver;
+  font-size: 25px;
 `;
 
 export const Th = styled.th`
@@ -157,6 +162,7 @@ export const Th = styled.th`
 export const Td = styled.td`
   border: 1px solid silver;
   padding: 8px;
+
 `;
 
 export const TableRow = styled.tr`
