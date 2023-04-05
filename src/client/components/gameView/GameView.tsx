@@ -77,6 +77,8 @@ import {
   fightEnemy,
   isEnemy,
   addItem,
+  scoreMultiplier,
+  multiplier,
 } from '../../utility/gameUtils';
 import {
   complete,
@@ -630,12 +632,9 @@ const GameView = (props: GameViewProps) => {
             setOutcome(choiceOutcome);
             setShowEnemy(false);
             // <-- give the player something...
-            setCurrentChar((prevChar) => ({
-              ...prevChar,
-              score: (prevChar.score += currentEnemy.score),
-            }));
+            setCurrentChar(scoreMultiplier(currentChar, currentEnemy));
             setTempText(
-              `You defeated the enemy and got ${currentEnemy.score} points!`
+              `You defeated the enemy and got ${Math.floor(currentEnemy.score * (1.5 ** multiplier(currentChar, currentEnemy))) + 1} points!`
             ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
             setCurrentEnemy({});
