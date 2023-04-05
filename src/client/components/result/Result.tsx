@@ -140,9 +140,9 @@ const Result = (props: GameViewProps) => {
         </ResultAvatarContainer>
         {/* <h2> Score: {currentChar.score} </h2> */}
         <h2 onClick={props.handleSpeak}>Top Scores</h2>
-        {/* <ScrollableContainer> */}
+        <ScrollableContainer>
         <LeaderBoard />
-        {/* </ScrollableContainer> */}
+        </ScrollableContainer>
       </End>
     </Container>
     </CRTGlow>
