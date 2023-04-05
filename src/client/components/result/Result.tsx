@@ -79,9 +79,10 @@ const Result = (props: GameViewProps) => {
   };
 
   return (
+    <div>
+    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <ArcadeGlowContainer>
       <CRTGlow>
-    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <Container>
       {resultText === 'you survived!' ? (
         <div>
@@ -126,6 +127,7 @@ const Result = (props: GameViewProps) => {
     </Container>
     </CRTGlow>
     </ArcadeGlowContainer>
+    </div>
   );
 };
 
