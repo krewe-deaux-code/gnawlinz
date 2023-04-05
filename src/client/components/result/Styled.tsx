@@ -1,12 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
   width: 100%;
-  height: 100vh;
-  grid-template-rows: 0.05fr 0.95fr;
+  height: 80vh;
+  grid-template-rows: 1fr;
   grid-template-areas:
-    'nav nav'
     'end  story';
   text-align: center;
   grid-gap: 0.25rem;
@@ -15,25 +14,18 @@ export const Container = styled.div`
   color: white;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 0.4fr 0.4fr;
+    grid-template-rows: 0.5fr 0.5fr;
     grid-template-areas:
-      'nav'
       'end'
       'story';
   }
 `;
 
 export const NavBar = styled.nav`
-  grid-area: nav;
   padding: 0.25rem;
+  width: 100%;
+  height: 20%;
   background: #ffb700;
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 550px) {
-    flex-direction: column;
-  }
 `;
 export const Story = styled.main`
   background: rgba(173, 173, 173, 0.4);
@@ -208,3 +200,42 @@ export const StoryItemCard = styled.div`
     border-radius: 0.5rem;
   }
 `;
+
+
+
+export const CRTFlicker = keyframes`
+  0% {
+  opacity: 0.15;
+  }
+  25% {
+  opacity: 0.25;
+  }
+  50% {
+  opacity: 0.15;
+  }
+  75% {
+  opacity: 0.1;
+  }
+  100% {
+  opacity: 0.2;
+  }
+`;
+
+export const CRTGlowPulse = keyframes`
+0% {
+  box-shadow: 0 20px 100px 22.25px #928579;
+  }
+  25% {
+    box-shadow: 0 20px 100px 23.75px #928579;
+  }
+  50% {
+    box-shadow: 0 20px 100px 22.25px #928579;
+  }
+  75% {
+    box-shadow: 0 20px 100px 21.5px #928579;
+  }
+  100% {
+    box-shadow: 0 20px 100px 23px #928579;
+  }
+`;
+

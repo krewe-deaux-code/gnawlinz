@@ -8,8 +8,12 @@ import {
   ScrollableContainer,
   StatContainer,
   CharacterStatContainer,
-  StoryItemCard,
+  StoryItemCard
 } from './Styled'; //NavBar,
+import { 
+  ArcadeGlowContainer,
+  CRTGlow
+} from '../menu/Styled';
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
@@ -75,6 +79,9 @@ const Result = (props: GameViewProps) => {
   };
 
   return (
+    <ArcadeGlowContainer>
+      <CRTGlow>
+    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <Container>
       {resultText === 'you survived!' ? (
         <div>
@@ -82,7 +89,6 @@ const Result = (props: GameViewProps) => {
           <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
-      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
       <Story>
         <h1 onClick={props.handleSpeak}>
           <img src={image} />
@@ -118,6 +124,8 @@ const Result = (props: GameViewProps) => {
         </ScrollableContainer>
       </End>
     </Container>
+    </CRTGlow>
+    </ArcadeGlowContainer>
   );
 };
 
