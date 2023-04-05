@@ -287,11 +287,11 @@ const GameView = (props: GameViewProps) => {
     if (buttonClick > -1) {
       currentChar.location = visited[buttonClick]._id;
       if (visited[buttonClick]._id === boss?.location) {
-        bunny.play(); // <-- if bunny, gets duplicated... is okay.
+        nicCageSounds[Math.floor(Math.random() * 3)].play();
         setCurrentEnemy(boss);
         fetchEvent(4);
         setShowEnemy(true);
-    }
+      }
     }
     axios
       .get('/location/allLocations')
@@ -655,7 +655,12 @@ const GameView = (props: GameViewProps) => {
             // <-- give the player something...
             setCurrentChar(scoreMultiplier(currentChar, currentEnemy));
             setTempText(
-              `You defeated the enemy and got ${Math.floor(currentEnemy.score * (1.5 ** multiplier(currentChar, currentEnemy))) + 1} points!`
+              `You defeated the enemy and got ${
+                Math.floor(
+                  currentEnemy.score *
+                    1.5 ** multiplier(currentChar, currentEnemy)
+                ) + 1
+              } points!`
             ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
             setCurrentEnemy({});
