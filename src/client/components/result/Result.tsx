@@ -8,9 +8,10 @@ import {
   ScrollableContainer,
   StatContainer,
   CharacterStatContainer,
-  StoryItemCard
+  StoryItemCard,
+  ResultAvatarContainer,
 } from './Styled'; //NavBar,
-import { 
+import {
   ArcadeGlowContainer,
   CRTGlow
 } from '../menu/Styled';
@@ -19,11 +20,10 @@ import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
 import { UserContext } from '../../App'; // <-- holds User object
 import Confetti from 'react-confetti';
-import { StatButton } from '../menu/Styled';
+import { AvatarContainer, StatButton } from '../menu/Styled';
 
 import axios from 'axios';
 import { GameViewProps } from '../../utility/interface';
-
 
 const Result = (props: GameViewProps) => {
   window.onerror = () => {
@@ -38,7 +38,9 @@ const Result = (props: GameViewProps) => {
   const [image, setImage] = useState(
     'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696914/gnawlinzIcons/noun-death-1094768_x1aqmj.png'
   );
-  const [resultText, setResultText] = useState('you died!');
+  const [resultText, setResultText] = useState('');
+  const [resultText1, setResultText1] = useState('');
+
 
   useEffect(() => {
     axios
@@ -54,10 +56,14 @@ const Result = (props: GameViewProps) => {
     const getWinLoss = () => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
         setImage(images.trophyIcon);
-        setResultText('you survived!');
+        setResultText(currentChar.name);
+        setResultText1(' survived!');
+
       } else {
         setImage(images.deathIcon);
-        setResultText('R.I.P. ' + currentChar.name);
+        setResultText('R.I.P. ');
+        setResultText1(currentChar.name);
+
       }
     };
     getWinLoss(); // calling the function once when the component mounts
@@ -84,16 +90,18 @@ const Result = (props: GameViewProps) => {
     <ArcadeGlowContainer>
       <CRTGlow>
     <Container>
-      {resultText === 'you survived!' ? (
+      {resultText1 === ' survived!' ? (
         <div>
           {' '}
           <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
+      {/* <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} /> */}
       <Story>
         <h1 onClick={props.handleSpeak}>
           <img src={image} />
           {resultText}
+          {resultText1}
           <img src={image} />
         </h1>
         <ScrollableContainer>
@@ -113,16 +121,17 @@ const Result = (props: GameViewProps) => {
           </Link>
         </Content1>
       </Story>
-      <End>
-        <div>
-          {/* <h4 onClick={props.handleSpeak}>{currentChar.name}</h4> */}
-          <h2 onClick={props.handleSpeak}> Your Score: {currentChar.score} </h2>
-          <img src={currentChar.image_url} />
-        </div>
+      <End className='End'>
+        <ResultAvatarContainer className='AvatarContainer'>
+        <h2> Final Score: {currentChar.score} </h2>
+          {/* <img src={currentChar.image_url} /> */}
+          <img src={currentChar.image_url} style={{width: '25%', height: '25%'}}/>
+        </ResultAvatarContainer>
+        {/* <h2> Score: {currentChar.score} </h2> */}
         <h2 onClick={props.handleSpeak}>Top Scores</h2>
-        <ScrollableContainer>
-          <LeaderBoard />
-        </ScrollableContainer>
+        {/* <ScrollableContainer> */}
+        <LeaderBoard />
+        {/* </ScrollableContainer> */}
       </End>
     </Container>
     </CRTGlow>
