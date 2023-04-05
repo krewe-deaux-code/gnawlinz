@@ -305,12 +305,12 @@ const GameView = (props: GameViewProps) => {
         );
         if (!Object.entries(event).length) {
           // console.log('!OBJECT.ENTRIES.LENGTH');
-          if (currentChar.location._id === boss?.location) {
-            // ****
-            fetchEvent(4);
-          } else {
-            fetchEvent();
-          }
+          // if (currentChar.location._id === boss?.location) {
+          //   fetchEvent(4);
+          // } else {
+          //   fetchEvent();
+          // }
+          fetchEvent();
         }
       })
       .catch((err) => {
@@ -1331,6 +1331,15 @@ const GameView = (props: GameViewProps) => {
                     }}
                   >
                     {localStorage.getItem('3')}{' '}
+                  </HudButton>
+                  <HudButton
+                    style={{ fontSize: '1.3rem' }}
+                    onClick={() => {
+                      getAllLocations(4);
+                      handleCloseLocationModal();
+                    }}
+                  >
+                    {localStorage.getItem('4')}{' '}
                   </HudButton>
                 </ModalBodyContainer>
               </Modal.Body>

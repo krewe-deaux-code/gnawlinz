@@ -43,10 +43,10 @@ const LeaderBoard: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {(leaders as Leader[]).filter(leader => (leader.score > 0)).map((leader: Leader, i: number) => (
+        {(leaders as Leader[]).filter(leader => (leader.score > -1)).map((leader: Leader, i: number) => (
           <TableRow key={leader.name + i}>
             <Td>{i + 1}</Td>
-            <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '100%', height: '100%' }} /></Td>
+            <Td style={{ width: '50px' }}><img src={leader.image_url} style={{ width: '70%', height: '70%' }} /></Td>
             <Td>{leader.name}</Td>
             {/* <Td>{leader.health}</Td>
             <Td>{leader.strength}</Td>
