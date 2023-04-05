@@ -372,7 +372,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip('Search for an item search for graffiti and write graffiti');
+        setTooltip('Search for an item Search for graffiti Write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
@@ -662,48 +662,54 @@ const GameView = (props: GameViewProps) => {
           // arbitrate item acquisition with percentage || algorithm
           const itemRoll = statCheck(stat, 'item'); // success/failure for weighted item roll
           if (
-            choiceOutcome === 'success' /*&& choiceType === 'wildcard') ||
-          choiceType === 'evade'*/
+            choiceOutcome ===
+            'success' /*&& choiceType === 'wildcard') || choiceType === 'evade'*/
           ) {
-            if (choiceType === 'evade' && itemRoll === 'success') {
+            if (currentChar.inventory.filter((slot) => slot === 1).length > 0) {
+              if (choiceType === 'evade' && itemRoll === 'success') {
+                setTempText(
+                  'You stealthily made your way through the area, and collected an item!'
+                );
+                setCurrentChar((prevChar) => ({
+                  ...prevChar,
+                  inventory: addItem(
+                    currentChar.inventory,
+                    Math.floor(Math.random() * 11) + 1 // <-- changed to 2 from 1
+                  ),
+                  score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
+                }));
+              } else if (choiceType === 'evade' && itemRoll === 'failure') {
+                setTempText(
+                  'You succesfully made it through the area without detection.'
+                );
+                addScore(Math.floor(Math.random() * 3) + 1);
+              } else if (choiceType === 'wildcard' && itemRoll === 'success') {
+                setTempText(
+                  'You made contact with a survivor, who shared an item with you!'
+                );
+                setCurrentChar((prevChar) => ({
+                  ...prevChar,
+                  inventory: addItem(
+                    currentChar.inventory,
+                    Math.floor(Math.random() * 11) + 1
+                  ),
+                  score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
+                }));
+              } else if (choiceType === 'wildcard' && itemRoll === 'failure') {
+                setTempText(
+                  'You made contact with survivors but they had no items to spare.'
+                );
+                addScore(Math.floor(Math.random() * 3) + 1);
+                // assign score? damage mood?
+              }
+            } else {
               setTempText(
-                'You stealthily made your way through the area, and collected an item!'
+                'Your inventory is full, so you cannot carry additional items!'
               );
-              setCurrentChar((prevChar) => ({
-                ...prevChar,
-                inventory: addItem(
-                  currentChar.inventory,
-                  Math.floor(Math.random() * 11) + 1 // <-- changed to 2 from 1
-                ),
-                score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
-              }));
-            } else if (choiceType === 'evade' && itemRoll === 'failure') {
-              setTempText(
-                'You succesfully made it through the area without detection.'
-              );
-              addScore(Math.floor(Math.random() * 3) + 1);
-            } else if (choiceType === 'wildcard' && itemRoll === 'success') {
-              setTempText(
-                'You made contact with a survivor, who shared an item with you!'
-              );
-              setCurrentChar((prevChar) => ({
-                ...prevChar,
-                inventory: addItem(
-                  currentChar.inventory,
-                  Math.floor(Math.random() * 11) + 1
-                ),
-                score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
-              }));
-            } else if (choiceType === 'wildcard' && itemRoll === 'failure') {
-              setTempText(
-                'You made contact with survivors but they had no items to spare.'
-              );
-              addScore(Math.floor(Math.random() * 3) + 1);
-              // assign score? damage mood?
             }
+            // <-- evacuate WORKS already...
+            setOutcome(choiceOutcome); // <-- success or fail to story
           }
-          // <-- evacuate WORKS already...
-          setOutcome(choiceOutcome); // <-- success or fail to story
         }
         // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);
       })
@@ -825,6 +831,8 @@ const GameView = (props: GameViewProps) => {
       // <-- failure sound
       cancel.play();
       setModalText("You searched for items, but didn't find anything");
+    } else if (fetchedInventory.filter((item) => item._id !== 1).length === 8) {
+      setModalText('You have no room for items in your inventory');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
