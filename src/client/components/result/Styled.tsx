@@ -3,7 +3,7 @@ import styled, { keyframes } from 'styled-components';
 export const Container = styled.div`
   display: grid;
   width: 100%;
-  height: 80vh;
+  height: 87vh;
   grid-template-rows: 1fr;
   grid-template-areas:
     'end  story';
@@ -44,16 +44,32 @@ export const Story = styled.main`
   border-right: 3px solid silver;
   margin-right: 10rem;
   margin-top: 3rem;
+  margin-bottom: 3rem;
 `;
+
+export const WinLoss = styled.div`
+display: grid;
+grid-template-columns: auto auto auto;
+align-content: space-evenly;
+justify-content: center;
+`;
+
+export const RipName = styled.div`
+  display: grid;
+  grid-template-rows: auto auto;
+  align-content: center;
+  justify-content: center;
+`;
+
 export const End = styled.div`
   background: rgba(173, 173, 173, 0.4);
   backdrop-filter: blur(15px);
   grid-area: end;
   padding: 0.25rem;
   display: grid;
-  /* align-content: space-evenly; */
+  align-content: space-evenly;
   grid-template-rows: auto auto auto;
-  /* justify-content: center; */
+  justify-content: center;
   overflow: auto;
   background-image: url('https://www.transparenttextures.com/patterns/concrete-wall.png');
   border-bottom-left-radius: 9px;
@@ -61,10 +77,12 @@ export const End = styled.div`
   border-left: 3px solid silver;
   margin-left: 10rem;
   margin-top: 3rem;
+  margin-bottom: 3rem;
+  /* justify-items: center; */
 `;
 
 export const ResultAvatarContainer = styled.div`
-
+  margin-bottom: -4rem;
 `;
 
 // export const ResultButton = styled.button`
@@ -150,6 +168,7 @@ export const Table = styled.table`
   width: 100%;
   border: 2px solid silver;
   font-size: 25px;
+  margin-right: 2rem;
 `;
 
 export const Th = styled.th`
