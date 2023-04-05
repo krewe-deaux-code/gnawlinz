@@ -1,12 +1,11 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 export const Container = styled.div`
   display: grid;
   width: 100%;
-  height: 100vh;
-  grid-template-rows: 0.05fr 0.95fr;
+  height: 80vh;
+  grid-template-rows: 1fr;
   grid-template-areas:
-    'nav nav'
     'end  story';
   text-align: center;
   grid-gap: 0.25rem;
@@ -15,25 +14,18 @@ export const Container = styled.div`
   color: white;
   @media (max-width: 550px) {
     grid-template-columns: 1fr;
-    grid-template-rows: 0.2fr 0.4fr 0.4fr;
+    grid-template-rows: 0.5fr 0.5fr;
     grid-template-areas:
-      'nav'
       'end'
       'story';
   }
 `;
 
 export const NavBar = styled.nav`
-  grid-area: nav;
   padding: 0.25rem;
+  width: 100%;
+  height: 20%;
   background: #ffb700;
-  display: flex;
-  gap: 0.25rem;
-  align-items: center;
-  justify-content: center;
-  @media (max-width: 550px) {
-    flex-direction: column;
-  }
 `;
 export const Story = styled.main`
   background: rgba(173, 173, 173, 0.4);
