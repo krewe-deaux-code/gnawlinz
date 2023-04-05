@@ -169,58 +169,60 @@ const Menu = (props: GameViewProps) => {
           />
           <ArcadeGlowContainer>
             <CRTGlow>
-              <InfoContainer>
-                <Tab
-                  onClick={(e) => {
-                    if (startFail) {
-                      setStartFail(false);
-                    }
-                    setHideStartButton(true);
-                    handleClick(e);
-                  }}
-                  active={active === 0}
-                  id={0}
-                >
-                  Character Creation
-                </Tab>
-                <Tab
-                  onClick={(e) => {
-                    if (userChars.length) {
-                      console.log('we made it');
-                      setCurrentChar(userChars[0]);
-                    }
-                    setHideStartButton(false);
-                    handleClick(e);
-                  }}
-                  active={active === 1}
-                  id={1}
-                >
-                  Character Select
-                </Tab>
-                <Tab
-                  onClick={(e: any) => {
-                    handleClick(e);
-                    fetchItems();
-                  }}
-                  active={active === 2}
-                  id={2}
-                >
-                  Top Scores
-                </Tab>
-              </InfoContainer>
-              <>
-                <Content active={active === 0}>
-                  <h1 onClick={props.handleSpeak}>
-                    <u>New Character:</u>
-                  </h1>
-                  <CharacterCreator handleSpeak={props.handleSpeak} />
-                </Content>
-                <Content active={active === 1}>
-                  <CharacterStats handleSpeak={props.handleSpeak} />
-                </Content>
-                <Content active={active === 2}>
-                  <div style={{ margin: 'auto', width: '90%' }}>
-                    <LeaderBoard />
+          <InfoContainer>
+            <Tab
+              onClick={(e) => {
+                if (startFail) {
+                  setStartFail(false);
+                }
+                setHideStartButton(true);
+                handleClick(e);
+              }}
+              active={active === 0}
+              id={0}
+            >
+              Character Creation
+            </Tab>
+            <Tab
+              onClick={(e) => {
+                if (userChars.length) {
+                  console.log('we made it');
+                  setCurrentChar(userChars[0]);
+                }
+                setHideStartButton(false);
+                handleClick(e);
+              }}
+              active={active === 1}
+              id={1}
+            >
+              Character Select
+            </Tab>
+            <Tab
+              onClick={(e: any) => {
+                setHideStartButton(true);
+                handleClick(e);
+                fetchItems();
+              }}
+              active={active === 2}
+              id={2}
+            >
+              Top Scores
+            </Tab>
+          </InfoContainer>
+          <>
+            <Content active={active === 0}>
+              <h1 onClick={props.handleSpeak}>
+                <u>New Character:</u>
+              </h1>
+              <CharacterCreator handleSpeak={props.handleSpeak}/>
+            </Content>
+            <Content active={active === 1}>
+              <CharacterStats handleSpeak={props.handleSpeak}/>
+            </Content>
+            <Content active={active === 2}>
+              <div style={{margin: 'auto', width: '80%', display: 'flex', justifyContent: 'center', padding: '2rem', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center' }}>
+                <h2 style={{padding: '2rem'}}> Top Scores </h2>
+                <LeaderBoard/>
 
                     {/* {fetchedInventory.map((item: Item, i) => {
                   return (
