@@ -335,7 +335,9 @@ export const InventoryTextBubble = styled.div`
   box-shadow: 10px 1px 5px rgba(0, 0, 0, 0.3);
   white-space: nowrap;
   text-align: center;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   word-break: break-all;
 `;
 
@@ -344,6 +346,15 @@ export const InventoryBubbleText = styled.div`
   font-size: 1rem;
   word-break: break-word;
   white-space: normal;
+  text-align: center;
+`;
+
+export const BubbleP = styled.p`
+  color: #cf6f00;
+  font-size: 1rem;
+  word-break: break-word;
+  white-space: normal;
+  text-align: center;
 `;
 
 export const TopContent1 = styled.div`

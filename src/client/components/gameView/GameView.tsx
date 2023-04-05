@@ -52,6 +52,7 @@ import {
   ModalStyle,
   LCDDiv,
   ArcadeWoodStyle,
+  BubbleP,
   InventoryBubbleText,
   InventoryBottomTextBubble,
   MainGlow,
@@ -174,6 +175,7 @@ const GameView = (props: GameViewProps) => {
 
   const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
+  const [tooltipExtra, setTooltipExtra] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
 
   const addScore = (points) => {
@@ -373,17 +375,20 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseEnter = (itemOrButton: Item | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
-        setTooltip('Search for an item Search for graffiti Write graffiti');
+        setTooltip('Search for items or Write graffiti');
       } else if (itemOrButton === 'toggle') {
         setTooltip('Toggle story text box on or off');
       } else if (itemOrButton === 'engage') {
-        setTooltip('Risk health to fight enemy [uses STR]');
+        setTooltip('Risk health to fight enemy');
+        setTooltipExtra('STR');
       } else if (itemOrButton === 'evade') {
-        setTooltip('Risk combat to find item [uses END]');
+        setTooltip('Risk combat to find item');
+        setTooltipExtra('END');
       } else if (itemOrButton === 'evacuate') {
         setTooltip('Safely move to new location');
       } else if (itemOrButton === 'wildcard') {
-        setTooltip('Risk mood to find item [uses MOOD]');
+        setTooltip('Risk mood to find item');
+        setTooltipExtra('MOOD');
       }
     } else {
       if (itemOrButton._id !== 1) {
@@ -395,6 +400,7 @@ const GameView = (props: GameViewProps) => {
   const handleOnMouseLeave = () => {
     setHoveredItem(null);
     setTooltip(null);
+    setTooltipExtra(null);
   };
 
   const handleDropItem = async (itemID, i) => {
@@ -1538,7 +1544,16 @@ const GameView = (props: GameViewProps) => {
             )}
             {tooltip && (
               <InventoryTextBubble>
-                <InventoryBubbleText>{tooltip}</InventoryBubbleText>
+                <InventoryBubbleText>
+                  {tooltip}
+                  {tooltipExtra && (
+                    <BubbleP>
+                      {'uses ['}
+                      <i>{tooltipExtra}</i>
+                      {']'}
+                    </BubbleP>
+                  )}
+                </InventoryBubbleText>
               </InventoryTextBubble>
             )}
           </LCDGlow>
