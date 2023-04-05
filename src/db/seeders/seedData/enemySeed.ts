@@ -28,7 +28,7 @@ export const enemySeed = [
   {
     name: 'Bill Zombergh',
     image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680334309/GnawlinzEnemies/BillZombergh_rs7otp.png',
-    weapon1: 'TPS Reports',
+    weapon1: 'TPS Report',
     strength: 5,
     health: 5,
     score: 20,

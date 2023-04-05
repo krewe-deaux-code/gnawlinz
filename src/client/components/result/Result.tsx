@@ -11,6 +11,10 @@ import {
   StoryItemCard,
   ResultAvatarContainer,
 } from './Styled'; //NavBar,
+import {
+  ArcadeGlowContainer,
+  CRTGlow
+} from '../menu/Styled';
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
@@ -81,6 +85,9 @@ const Result = (props: GameViewProps) => {
   };
 
   return (
+    <ArcadeGlowContainer>
+      <CRTGlow>
+    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <Container>
       {resultText1 === 'survived!' ? (
         <div>
@@ -126,6 +133,8 @@ const Result = (props: GameViewProps) => {
         {/* </ScrollableContainer> */}
       </End>
     </Container>
+    </CRTGlow>
+    </ArcadeGlowContainer>
   );
 };
 
