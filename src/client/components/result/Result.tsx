@@ -10,6 +10,8 @@ import {
   CharacterStatContainer,
   StoryItemCard,
   ResultAvatarContainer,
+  WinLoss,
+  RipName,
 } from './Styled'; //NavBar,
 import {
   ArcadeGlowContainer,
@@ -99,10 +101,18 @@ const Result = (props: GameViewProps) => {
       {/* <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} /> */}
       <Story>
         <h1 onClick={props.handleSpeak}>
+          <WinLoss>
           <img src={image} />
+          <RipName>
+          <div>
           {resultText}
+          </div>
+          <div>
           {resultText1}
+          </div>
+          </RipName>
           <img src={image} />
+          </WinLoss>
         </h1>
         <ScrollableContainer>
           {uniqueEvents.map((sentence, index) => (
