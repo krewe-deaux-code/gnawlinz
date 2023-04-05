@@ -295,11 +295,12 @@ const GameView = (props: GameViewProps) => {
         );
         if (!Object.entries(event).length) {
           // console.log('!OBJECT.ENTRIES.LENGTH');
-          if (currentChar.location._id === boss?.location) {
-            fetchEvent(4);
-          } else {
-            fetchEvent();
-          }
+          // if (currentChar.location._id === boss?.location) {
+          //   fetchEvent(4);
+          // } else {
+          //   fetchEvent();
+          // }
+          fetchEvent();
         }
       })
       .catch((err) => {
