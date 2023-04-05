@@ -671,6 +671,10 @@ const GameView = (props: GameViewProps) => {
             // <-- no Enemy on Event/State (enemy !exist)
             // setOutcome('You explored part of the city, but found no signs of life.');
             // <-- succeed Engage roll mechanics here (no enemy)
+            // <-- 4/4 evade && choiceOutcome === failure, no ENEMY...
+            setTempText(
+              'You fail utterly to be stealthy, but it is now clear to you that you are alone here...'
+            );
             return;
           }
         } else {
@@ -726,6 +730,9 @@ const GameView = (props: GameViewProps) => {
             }
             // <-- evacuate WORKS already...
             setOutcome(choiceOutcome); // <-- success or fail to story
+          } else if (choiceOutcome === 'failure' && choiceType === 'wildcard') {
+            setTempText('Your voice echoed in the dark. You heard no answer.');
+            setOutcome(choiceOutcome);
           }
         }
         // <-- HOPEFULLY NO CONDITIONS TO CALL setOutcome(choiceOutcome);

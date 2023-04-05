@@ -4,6 +4,7 @@ import React, {
   useContext,
   useRef,
   Suspense,
+  lazy,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -50,6 +51,8 @@ import {
   CCStartButton,
   Spinner,
 } from './Styled';
+
+// const HairCarousel = lazy(() => import('./Styled'));
 
 import { UserContext } from '../../App';
 import { MenuContext } from './Menu';
