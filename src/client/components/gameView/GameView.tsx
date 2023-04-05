@@ -304,6 +304,7 @@ const GameView = (props: GameViewProps) => {
         if (!Object.entries(event).length) {
           // console.log('!OBJECT.ENTRIES.LENGTH');
           if (currentChar.location._id === boss?.location) {
+            // ****
             fetchEvent(4);
           } else {
             fetchEvent();
@@ -1123,8 +1124,8 @@ const GameView = (props: GameViewProps) => {
                     </BossName>
                     <ProgressBarContainer
                       style={{
-                        top: '8%',
-                        left: '29%',
+                        top: '12%',
+                        left: '33%',
                         maxWidth: '280px',
                         filter:
                           'drop-shadow(rgba(0, 0, 0, 0.7) 0.6rem 0.6rem 0.5rem)',
