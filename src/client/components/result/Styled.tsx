@@ -149,7 +149,7 @@ export const Table = styled.table`
   border-collapse: collapse;
   width: 100%;
   border: 2px solid silver;
-  font-size: 20px;
+  font-size: 25px;
 `;
 
 export const Th = styled.th`
@@ -162,6 +162,7 @@ export const Th = styled.th`
 export const Td = styled.td`
   border: 1px solid silver;
   padding: 8px;
+
 `;
 
 export const TableRow = styled.tr`

@@ -57,7 +57,7 @@ const Result = (props: GameViewProps) => {
       if (currentChar.health > 0 && currentChar.mood > 0) {
         setImage(images.trophyIcon);
         setResultText(currentChar.name);
-        setResultText1('survived!');
+        setResultText1(' survived!');
 
       } else {
         setImage(images.deathIcon);
@@ -85,17 +85,18 @@ const Result = (props: GameViewProps) => {
   };
 
   return (
+    <div>
+    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <ArcadeGlowContainer>
       <CRTGlow>
-    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
     <Container>
-      {resultText1 === 'survived!' ? (
+      {resultText1 === ' survived!' ? (
         <div>
           {' '}
           <Confetti colors={colors} gravity={0.1} />{' '}
         </div>
       ) : null}
-      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} />
+      {/* <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} /> */}
       <Story>
         <h1 onClick={props.handleSpeak}>
           <img src={image} />
@@ -124,7 +125,7 @@ const Result = (props: GameViewProps) => {
         <ResultAvatarContainer className='AvatarContainer'>
         <h2> Final Score: {currentChar.score} </h2>
           {/* <img src={currentChar.image_url} /> */}
-          <img src={currentChar.image_url} style={{width: '75%', height: '75%'}}/>
+          <img src={currentChar.image_url} style={{width: '25%', height: '25%'}}/>
         </ResultAvatarContainer>
         {/* <h2> Score: {currentChar.score} </h2> */}
         <h2 onClick={props.handleSpeak}>Top Scores</h2>
@@ -135,6 +136,7 @@ const Result = (props: GameViewProps) => {
     </Container>
     </CRTGlow>
     </ArcadeGlowContainer>
+    </div>
   );
 };
 

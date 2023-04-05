@@ -220,7 +220,7 @@ const Menu = (props: GameViewProps) => {
               <CharacterStats handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 2}>
-              <div style={{margin: 'auto', width: '80%', display: 'flex', justifyContent: 'center', padding: '2rem', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center', fontSize: '16px'}}>
+              <div style={{margin: 'auto', width: '80%', display: 'flex', justifyContent: 'center', padding: '2rem', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center' }}>
                 <h2 style={{padding: '2rem'}}> Top Scores </h2>
                 <LeaderBoard/>
 
