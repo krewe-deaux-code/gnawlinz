@@ -1,4 +1,4 @@
-import { Enemy } from './interface';
+import { Enemy, Character } from './interface';
 
 export const statCheck = (stat: number, engagement: string) => {
   let npcRoll;
@@ -44,4 +44,12 @@ export const addItem = (inventory: Array<number>, itemNum: number) => {
       return inventory;
     }
   }
+};
+
+export const multiplier = (character: Character, enemy: Enemy) => (enemy.strength + ((enemy.name === 'Nicolas Un-Caged') ? 4 : 0)) - character.strength;
+
+export const scoreMultiplier = (character: Character, enemy: Enemy) => {
+  return {
+    ...character, score: character.score += (Math.floor((enemy.score * (1.5 ** multiplier(character, enemy)))) + 1)
+  };
 };
