@@ -15,7 +15,7 @@ export const enemySeed = [
   },
   {
     name: 'F-35 Lightning II',
-    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1678056762/gnawlinzAllies/F35Pxl_fgggew.png',
+    image_url: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680753760/GnawlinzEnemies/highplane_l0bmto.png',
     weapon1: 'Air-to-Ground Missile',
     strength: 7,
     health: 10,
