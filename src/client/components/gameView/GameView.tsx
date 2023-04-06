@@ -893,7 +893,7 @@ const GameView = (props: GameViewProps) => {
     if (inputValue.includes('fuck')) {
       currentChar.name = 'potty mouth';
       currentChar.health = 0;
-    }
+    } else {
     setLocation((location) => ({
       ...location,
       graffiti_msgs: [
@@ -920,6 +920,7 @@ const GameView = (props: GameViewProps) => {
         return item;
       })
     );
+    }
   };
 
   const fetchBoss = () => {
