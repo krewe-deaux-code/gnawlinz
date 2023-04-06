@@ -1054,8 +1054,6 @@ const GameView = (props: GameViewProps) => {
     }
     return <Result handleSpeak={props.handleSpeak} />;
   }
-  // Any hooks between above conditional and below return will crash the page.
-  // console.log('CURRENT CHAR', currentChar, 'FETCHED INV', fetchedInventory);
 
   const handleBodyClick: React.MouseEventHandler<HTMLDivElement> = (event) => {
     event.stopPropagation();
