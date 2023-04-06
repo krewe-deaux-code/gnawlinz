@@ -166,6 +166,7 @@ const GameView = (props: GameViewProps) => {
   const [boss75, setBoss75] = useState(false);
   const [boss50, setBoss50] = useState(false);
   const [boss25, setBoss25] = useState(false);
+  const [playerJustDied, setPlayerJustDied] = useState(false);
 
   const [bonusStrength, setBonusStrength] = useState(0);
   const [bonusEndurance, setBonusEndurance] = useState(0);
@@ -784,6 +785,7 @@ const GameView = (props: GameViewProps) => {
 
   const handlePlayerDied = () => {
     // **
+    console.log('INSIDE PLAYER DIED FUNCTION');
     socket?.emit(
       'player_died',
       currentChar.name,
@@ -952,6 +954,7 @@ const GameView = (props: GameViewProps) => {
     setSocket(newSocket);
     fetchBoss();
     getAllLocations();
+    setPlayerJustDied(false);
     return () => {
       newSocket.disconnect();
     };
@@ -1044,7 +1047,11 @@ const GameView = (props: GameViewProps) => {
           console.error('Failed to add story on  Mood-death: ', err)
         );
     }
-    handlePlayerDied();
+
+    if (!playerJustDied) {
+      handlePlayerDied();
+      setPlayerJustDied(true);
+    }
     return <Result handleSpeak={props.handleSpeak} />;
   }
   // Any hooks between above conditional and below return will crash the page.

@@ -102,7 +102,7 @@ io.on('connection', (socket) => {
   });
   // receive a message from the client
   socket.on('player_died', (charName = 'someone', location = 'somewhere', cause) => {
-    const death = `- ${charName || 'someone'} died from ${article(cause || 'heart attack')} ${cause || 'heart attack'} at ${location || 'somewhere'}`;
+    const death = `- ${charName || 'someone'} was killed by ${article(cause || 'heart attack')} ${cause || 'heart attack'} at ${location || 'somewhere'}`;
     console.log(death);
     socket.broadcast.emit('kill_feed', death); // socket.broadcast.emit **
   });
