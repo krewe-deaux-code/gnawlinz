@@ -42,7 +42,7 @@ export const eventSeed = [
     item_effect: true,
   },
   {
-    initial_text: 'An unnerving quietude fills your ears... then the buzzing... BEEEEEEEEESS!!!!!',
+    initial_text: 'You see a deranged lunatic with eyes bugging out of his head. As you move closer you see him grinning. He has an uncanny familiarity... wait... is that award-winning actor Nicolas Cage?',
     choice0: 8, // Barricade yourself inside
     choice1: 10, // Search the building for supplies
     choice2: 7, // flee the scene
