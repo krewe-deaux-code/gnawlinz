@@ -220,8 +220,8 @@ const Menu = (props: GameViewProps) => {
               <CharacterStats handleSpeak={props.handleSpeak}/>
             </Content>
             <Content active={active === 2}>
-              <div style={{margin: 'auto', width: '80%', display: 'flex', justifyContent: 'center', padding: '2rem', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center' }}>
-                <h2 style={{padding: '2rem'}}> Top Scores </h2>
+              <div style={{margin: 'auto', width: '80%', height: 'auto', display: 'flex', justifyContent: 'center', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center'}}>
+                <h1 style={{textDecoration: 'underline'}}> Top Scores: </h1>
                 <LeaderBoard/>
 
                     {/* {fetchedInventory.map((item: Item, i) => {
