@@ -1,7 +1,12 @@
 import { Enemy, Character } from './interface';
 
-export const statCheck = (stat: number) => {
-  const npcRoll = Math.floor(Math.random() * 10) + 1;
+export const statCheck = (stat: number, engagement: string) => {
+  let npcRoll;
+  if (engagement === 'item') {
+    npcRoll = 3 + Math.floor(Math.random() * 9) + 1; // between 3 - 12
+  } else if (engagement === 'combat') {
+    npcRoll = Math.floor(Math.random() * 10) + 1; // between 1 - 10
+  }
   const weight = 1;
   console.log('INSIDE statCheck Func', stat, npcRoll);
   if (stat > npcRoll * weight) {

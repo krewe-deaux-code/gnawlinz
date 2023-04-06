@@ -1,14 +1,10 @@
+import React from 'react';
 import Carousel from 'react-bootstrap/Carousel';
 import styled, { keyframes } from 'styled-components';
 import { motion } from 'framer-motion';
 import 'bootstrap/dist/css/bootstrap.css';
 
-
-
-export const MenuContainer = styled.div`
-
-`;
-
+export const MenuContainer = styled.div``;
 
 export const ArcadeBackground = styled.div`
   width: 100%;
@@ -217,7 +213,7 @@ export const InfoContainer = styled.div`
 
 export const Tab = styled.button`
   border: none;
-  border-radius:2.6rem;
+  border-radius: 2.6rem;
   outline: none;
   cursor: pointer;
   width: 33%;
@@ -501,7 +497,7 @@ export const RedX = styled.img`
   object-fit: contain;
   pointer-events: none;
   z-index: 3;
-  position: fixed;
+  position: absolute;
   display: flex;
   margin-left: 9rem;
   margin-top: 11.659999999999997rem;
@@ -511,10 +507,6 @@ export const RedX = styled.img`
 `;
 
 export const InnerContainer = styled.div``;
-
-
-
-
 
 export const CRTFlicker = keyframes`
   0% {
@@ -552,12 +544,10 @@ export const CRTGlowPulse = keyframes`
   }
 `;
 
-
-
 export const CRTGlow = styled.div`
-border-radius: 2.6rem;
-box-shadow: 0 20px 100px 20px #928579;
-animation: ${CRTGlowPulse} .15s infinite;
+  border-radius: 2.6rem;
+  box-shadow: 0 20px 100px 20px #928579;
+  animation: ${CRTGlowPulse} 0.15s infinite;
 `;
 
 export const ArcadeGlowContainer = styled.div`
@@ -612,13 +602,6 @@ export const ArcadeGlowContainer = styled.div`
   }
 `;
 
-
-
-
-
-
-
-
 // export const SelectorContainer = styled.div`
 //   /* grid-template-rows: .10fr .20fr .20fr;
 //   grid-template-areas:
@@ -648,3 +631,36 @@ export const ArcadeGlowContainer = styled.div`
 //     /* filter: blur(3px); */
 //   }
 // `;
+
+const SpinnerContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+`;
+
+const LoadingSpinner = styled.div`
+  width: 50px;
+  height: 50px;
+  border: 10px solid #f3f3f3; /* Light grey */
+  border-top: 10px solid #383636; /* Black */
+  border-radius: 50%;
+  animation: spinner 1.5s linear infinite;
+
+  @keyframes spinner {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+export const Spinner = () => {
+  return (
+    <SpinnerContainer>
+      <LoadingSpinner />
+    </SpinnerContainer>
+  );
+};
