@@ -497,7 +497,7 @@ export const RedX = styled.img`
   object-fit: contain;
   pointer-events: none;
   z-index: 3;
-  position: fixed;
+  position: absolute;
   display: flex;
   margin-left: 9rem;
   margin-top: 11.659999999999997rem;
