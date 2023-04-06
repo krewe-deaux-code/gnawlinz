@@ -13,10 +13,7 @@ import {
   WinLoss,
   RipName,
 } from './Styled'; //NavBar,
-import {
-  ArcadeGlowContainer,
-  CRTGlow
-} from '../menu/Styled';
+import { ArcadeGlowContainer, CRTGlow } from '../menu/Styled';
 import Nav from '../nav/NavBar';
 import LeaderBoard from './LeaderBoard';
 import images from '../../utility/images';
@@ -43,7 +40,6 @@ const Result = (props: GameViewProps) => {
   const [resultText, setResultText] = useState('');
   const [resultText1, setResultText1] = useState('');
 
-
   useEffect(() => {
     axios
       .get(`story/ending/${currentChar._id}`)
@@ -60,12 +56,10 @@ const Result = (props: GameViewProps) => {
         setImage(images.trophyIcon);
         setResultText(currentChar.name);
         setResultText1(' survived!');
-
       } else {
         setImage(images.deathIcon);
         setResultText('R.I.P. ');
         setResultText1(currentChar.name);
-
       }
     };
     getWinLoss(); // calling the function once when the component mounts
@@ -87,66 +81,71 @@ const Result = (props: GameViewProps) => {
   };
 
   return (
-    <div>
-    <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak}/>
-    <ArcadeGlowContainer>
-      <CRTGlow>
-    <Container>
-      {resultText1 === ' survived!' ? (
-        <div>
-          {' '}
-          <Confetti colors={colors} gravity={0.1} />{' '}
-        </div>
-      ) : null}
-      <Story>
-        <h1 onClick={props.handleSpeak}>
-          <WinLoss>
-          <img src={image} />
-          <RipName>
-          <div>
-          {resultText}
-          </div>
-          <div>
-          {resultText1}
-          </div>
-          </RipName>
-          <img src={image} />
-          </WinLoss>
-        </h1>
-        <ScrollableContainer>
-          {uniqueEvents.map((sentence, index) => (
-            <StoryItemCard key={index + sentence}>
-              <p onClick={props.handleSpeak}>{sentence} </p>
-            </StoryItemCard>
-          ))}
-        </ScrollableContainer>
-        <Content1>
-          <Link to='/' style={{ textDecoration: 'none' }}>
-            <Content1>
-              <StatButton style={{ margin: 'auto' }} onClick={handleClick}>
-                Play Again
-              </StatButton>
-            </Content1>
-          </Link>
-        </Content1>
-      </Story>
-      <End className='End'>
-        <ResultAvatarContainer className='AvatarContainer'>
-        <h2> Final Score: {currentChar.score} </h2>
-          {/* <img src={currentChar.image_url} /> */}
-          <img src={currentChar.image_url}
-          style={{height: '65%'}}
-          />
-        </ResultAvatarContainer>
-        {/* <h2> Score: {currentChar.score} </h2> */}
-        <h2 onClick={props.handleSpeak}>Top Scores</h2>
-        <ScrollableContainer>
-        <LeaderBoard />
-        </ScrollableContainer>
-      </End>
-    </Container>
-    </CRTGlow>
-    </ArcadeGlowContainer>
+    <div style={{ color: 'white' }}>
+      <Nav isActive={true} showButton={true} handleSpeak={props.handleSpeak} />
+      <ArcadeGlowContainer>
+        <CRTGlow>
+          <Container>
+            {resultText1 === ' survived!' ? (
+              <div>
+                {' '}
+                <Confetti colors={colors} gravity={0.1} />{' '}
+              </div>
+            ) : null}
+            <Story>
+              <h1 onClick={props.handleSpeak}>
+                <WinLoss>
+                  <img src={image} />
+                  <RipName>
+                    <div>{resultText}</div>
+                    <div>{resultText1}</div>
+                  </RipName>
+                  <img src={image} />
+                </WinLoss>
+              </h1>
+              <ScrollableContainer>
+                {uniqueEvents.map((sentence, index) => (
+                  <StoryItemCard key={index + sentence}>
+                    <p onClick={props.handleSpeak}>{sentence} </p>
+                  </StoryItemCard>
+                ))}
+              </ScrollableContainer>
+              <Content1>
+                <Link to='/' style={{ textDecoration: 'none' }}>
+                  <Content1>
+                    <StatButton
+                      style={{ margin: 'auto' }}
+                      onClick={handleClick}
+                    >
+                      Play Again
+                    </StatButton>
+                  </Content1>
+                </Link>
+              </Content1>
+            </Story>
+            <End className='End'>
+              <ResultAvatarContainer className='AvatarContainer'>
+                <h2 style={{ top: '20px', position: 'relative' }}>
+                  {' '}
+                  Final Score: {currentChar.score}{' '}
+                </h2>
+                {/* <img src={currentChar.image_url} /> */}
+                <img src={currentChar.image_url} style={{ height: '65%' }} />
+              </ResultAvatarContainer>
+              {/* <h2> Score: {currentChar.score} </h2> */}
+              <h2
+                onClick={props.handleSpeak}
+                style={{ bottom: '30px', position: 'relative' }}
+              >
+                Top Scores
+              </h2>
+              <ScrollableContainer style={{ bottom: '10%' }}>
+                <LeaderBoard />
+              </ScrollableContainer>
+            </End>
+          </Container>
+        </CRTGlow>
+      </ArcadeGlowContainer>
     </div>
   );
 };
