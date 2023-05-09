@@ -1,4 +1,4 @@
-import { Enemy, Character } from './interface';
+import { Enemy, Character } from '../types/interface';
 
 export const statCheck = (stat: number, engagement: string) => {
   let npcRoll;

@@ -22,7 +22,7 @@ import Confetti from 'react-confetti';
 import { AvatarContainer, StatButton } from '../menu/Styled';
 
 import axios from 'axios';
-import { GameViewProps } from '../../utility/interface';
+import { GameViewProps } from '../../types/interface';
 
 const Result = (props: GameViewProps) => {
   window.onerror = () => {

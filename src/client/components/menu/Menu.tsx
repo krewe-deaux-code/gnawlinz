@@ -26,7 +26,7 @@ import LeaderBoard from '../result/LeaderBoard';
 export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
-import { Item, Character, GameViewProps } from '../../utility/interface';
+import { Item, Character, GameViewProps } from '../../types/interface';
 import { enter } from '../../utility/sounds';
 
 const Menu = (props: GameViewProps) => {
@@ -169,60 +169,74 @@ const Menu = (props: GameViewProps) => {
           />
           <ArcadeGlowContainer>
             <CRTGlow>
-          <InfoContainer>
-            <Tab
-              onClick={(e) => {
-                if (startFail) {
-                  setStartFail(false);
-                }
-                setHideStartButton(true);
-                handleClick(e);
-              }}
-              active={active === 0}
-              id={0}
-            >
-              Character Creation
-            </Tab>
-            <Tab
-              onClick={(e) => {
-                if (userChars.length) {
-                  console.log('we made it');
-                  setCurrentChar(userChars[0]);
-                }
-                setHideStartButton(false);
-                handleClick(e);
-              }}
-              active={active === 1}
-              id={1}
-            >
-              Character Select
-            </Tab>
-            <Tab
-              onClick={(e: any) => {
-                setHideStartButton(true);
-                handleClick(e);
-                fetchItems();
-              }}
-              active={active === 2}
-              id={2}
-            >
-              Top Scores
-            </Tab>
-          </InfoContainer>
-          <>
-            <Content active={active === 0}>
-              <h1 onClick={props.handleSpeak}>
-                <u>New Character:</u>
-              </h1>
-              <CharacterCreator handleSpeak={props.handleSpeak}/>
-            </Content>
-            <Content active={active === 1}>
-              <CharacterStats handleSpeak={props.handleSpeak}/>
-            </Content>
-            <Content active={active === 2}>
-              <div style={{margin: 'auto', width: '80%', height: 'auto', display: 'flex', justifyContent: 'center', paddingBottom: '14rem', flexDirection: 'column', alignItems: 'center'}}>
-                <h1 style={{textDecoration: 'underline'}}> Top Scores: </h1>
-                <LeaderBoard/>
+              <InfoContainer>
+                <Tab
+                  onClick={(e) => {
+                    if (startFail) {
+                      setStartFail(false);
+                    }
+                    setHideStartButton(true);
+                    handleClick(e);
+                  }}
+                  active={active === 0}
+                  id={0}
+                >
+                  Character Creation
+                </Tab>
+                <Tab
+                  onClick={(e) => {
+                    if (userChars.length) {
+                      console.log('we made it');
+                      setCurrentChar(userChars[0]);
+                    }
+                    setHideStartButton(false);
+                    handleClick(e);
+                  }}
+                  active={active === 1}
+                  id={1}
+                >
+                  Character Select
+                </Tab>
+                <Tab
+                  onClick={(e: any) => {
+                    setHideStartButton(true);
+                    handleClick(e);
+                    fetchItems();
+                  }}
+                  active={active === 2}
+                  id={2}
+                >
+                  Top Scores
+                </Tab>
+              </InfoContainer>
+              <>
+                <Content active={active === 0}>
+                  <h1 onClick={props.handleSpeak}>
+                    <u>New Character:</u>
+                  </h1>
+                  <CharacterCreator handleSpeak={props.handleSpeak} />
+                </Content>
+                <Content active={active === 1}>
+                  <CharacterStats handleSpeak={props.handleSpeak} />
+                </Content>
+                <Content active={active === 2}>
+                  <div
+                    style={{
+                      margin: 'auto',
+                      width: '80%',
+                      height: 'auto',
+                      display: 'flex',
+                      justifyContent: 'center',
+                      paddingBottom: '14rem',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                    }}
+                  >
+                    <h1 style={{ textDecoration: 'underline' }}>
+                      {' '}
+                      Top Scores:{' '}
+                    </h1>
+                    <LeaderBoard />
 
                     {/* {fetchedInventory.map((item: Item, i) => {
                   return (

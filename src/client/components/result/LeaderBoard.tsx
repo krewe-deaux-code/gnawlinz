@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'; //
 
 import { Table, Th, TableRow, Td } from './Styled';
 
-import { Leader } from '../../utility/interface';
+import { Leader } from '../../types/interface';
 // import { UserContext } from '../../App'; // <-- holds User object
 
 import axios from 'axios';

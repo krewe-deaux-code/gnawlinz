@@ -4,7 +4,7 @@ import React, {
   useContext,
   useRef,
   Suspense,
-  lazy,
+  ChangeEvent,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -56,7 +56,7 @@ import {
 
 import { UserContext } from '../../App';
 import { MenuContext } from './Menu';
-import { Character, GameViewProps } from '../../utility/interface';
+import { CharacterType, GameViewProps } from '../../types/interface';
 
 const CharacterCreator = (props: GameViewProps) => {
   const { userChars, setUserChars, currentChar, setCurrentChar, activeUser } =
@@ -73,12 +73,16 @@ const CharacterCreator = (props: GameViewProps) => {
   const [hairImageUrls, setHairImageUrls] = useState([]);
   const [faceImageUrls, setFaceImageUrls] = useState([]);
   const [bodyImageUrls, setBodyImageUrls] = useState([]);
-  const [cloudFolders, setCloudFolders] = useState(['hair', 'face', 'body']);
-  const [loadedImage, setLoadedImage] = useState('');
+  const [cloudFolders, setCloudFolders] = useState<string[]>([
+    'hair',
+    'face',
+    'body',
+  ]);
+  const [loadedImage, setLoadedImage] = useState<string>('');
   const [chosenHair, setChosenHair] = useState<string>('');
   const [chosenFace, setChosenFace] = useState<string>('');
   const [chosenBody, setChosenBody] = useState<string>('');
-  const [newChar, setNewChar] = useState<Character>({} as Character);
+  const [newChar, setNewChar] = useState<CharacterType>({} as CharacterType);
   const [health, setHealth] = useState<number>(1);
   const [strength, setStrength] = useState<number>(1);
   const [endurance, setEndurance] = useState<number>(1);
@@ -90,10 +94,9 @@ const CharacterCreator = (props: GameViewProps) => {
     fn(images[i]);
   };
 
-  const handleInputValueChange = (e) => {
+  const handleInputValueChange = (e: ChangeEvent<HTMLInputElement>) => {
     click.play();
     setInputName(e.target.value);
-    console.log('INPUT NAME', inputName, 'NEW CHAR', newChar);
   };
 
   const genRandomName = () => {
@@ -104,7 +107,7 @@ const CharacterCreator = (props: GameViewProps) => {
   // <-- axios -->
   // *************
 
-  const fetchImages = (folderName, i) => {
+  const fetchImages = (folderName: string, i: number) => {
     const fetchFuncs = [setHairImageUrls, setFaceImageUrls, setBodyImageUrls];
     axios
       .get('/cloudinary/get', { params: { folder: folderName } })

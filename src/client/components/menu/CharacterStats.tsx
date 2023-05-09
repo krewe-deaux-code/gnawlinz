@@ -18,7 +18,7 @@ import {
 import Carousel from 'react-bootstrap/Carousel';
 
 import { UserContext } from '../../App'; // <-- holds User object
-import { Character, GameViewProps } from '../../utility/interface';
+import { CharacterType, GameViewProps } from '../../types/interface';
 
 // make dummy char for Create New Char? option. silhoutte image below:
 // https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png
@@ -42,7 +42,7 @@ const CharacterStats = (props: GameViewProps) => {
     const _id = currentChar._id || 1;
     // console.log('currentChar in CharacterStats', currentChar);
     axios
-      .get<Character>(`/character/${_id}`)
+      .get<CharacterType>(`/character/${_id}`)
       .then(({ data }) => setCurrentChar(data))
       .catch((err) =>
         console.error('Error in getCurrentCharacter in Menu.tsx: ', err)
@@ -120,7 +120,7 @@ const CharacterStats = (props: GameViewProps) => {
               onSelect={handleSelect}
               interval={null}
             >
-              {userChars.map((char: Character, i: number) => {
+              {userChars.map((char: CharacterType, i: number) => {
                 return (
                   <Carousel.Item key={i}>
                     <div

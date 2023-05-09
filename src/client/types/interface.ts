@@ -1,4 +1,4 @@
-export interface Character {
+export interface CharacterType {
   _id: number;
   handle_id: number;
   name: string;
@@ -13,7 +13,7 @@ export interface Character {
   score: number;
 }
 
-export interface EventData {
+export interface Event {
   _id: number;
   initial_text: string;
   choice0: number;
@@ -25,7 +25,7 @@ export interface EventData {
   item_effect: boolean;
 }
 
-export interface ChoiceData {
+export interface Choice {
   _id: number;
   flavor_text: string;
   success: string;
@@ -35,7 +35,7 @@ export interface ChoiceData {
   alignment2: string;
 }
 
-export interface LocationData {
+export interface Location {
   _id: number;
   name: string;
   image_url: string;

@@ -64,15 +64,15 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import {
-  EventData,
-  ChoiceData,
+  Event,
+  Choice,
   Enemy,
   Ally,
   Item,
-  Character,
+  CharacterType,
   GameViewProps,
   Boss,
-} from '../../utility/interface';
+} from '../../types/interface';
 
 import {
   statCheck,
@@ -195,7 +195,7 @@ const GameView = (props: GameViewProps) => {
     if (bossEvent) {
       // <-- EDIT
       axios
-        .get<EventData>(`/event/${bossEvent}`)
+        .get<Event>(`/event/${bossEvent}`)
         .then((event) => {
           setEvent(event.data);
           setChoices({
@@ -208,7 +208,7 @@ const GameView = (props: GameViewProps) => {
         .catch((err) => console.error('fetch specific event failure', err));
     } else {
       axios
-        .get<EventData>('/event/random', {
+        .get<Event>('/event/random', {
           params: { excludeEventId: prevEventId },
         })
         .then((event) => {
@@ -341,7 +341,7 @@ const GameView = (props: GameViewProps) => {
     setShowAlly(false);
     setShowEnemy(false);
     setOutcome('');
-    setSelectedChoice({} as ChoiceData);
+    setSelectedChoice({} as Choice);
     if (!allLocations.length) {
       setLocationModalText('true');
       handleShowLocationModal();
@@ -583,7 +583,7 @@ const GameView = (props: GameViewProps) => {
     }
     // look up choice_id from action Button click
     axios
-      .get<ChoiceData>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
+      .get<Choice>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
       .then((choiceResponse) => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
@@ -894,32 +894,32 @@ const GameView = (props: GameViewProps) => {
       currentChar.name = 'potty mouth';
       currentChar.health = 0;
     } else {
-    setLocation((location) => ({
-      ...location,
-      graffiti_msgs: [
-        location.graffiti_msgs[1],
-        location.graffiti_msgs[2],
-        inputValue,
-      ],
-    }));
+      setLocation((location) => ({
+        ...location,
+        graffiti_msgs: [
+          location.graffiti_msgs[1],
+          location.graffiti_msgs[2],
+          inputValue,
+        ],
+      }));
 
-    setInputValue('');
-    setVisited((prevVisited) =>
-      prevVisited.map((item) => {
-        if (item.name === location.name) {
-          return location;
-        }
-        return item;
-      })
-    );
-    setVisited((prevVisited) =>
-      prevVisited.map((item) => {
-        if (item.name === location.name) {
-          return location;
-        }
-        return item;
-      })
-    );
+      setInputValue('');
+      setVisited((prevVisited) =>
+        prevVisited.map((item) => {
+          if (item.name === location.name) {
+            return location;
+          }
+          return item;
+        })
+      );
+      setVisited((prevVisited) =>
+        prevVisited.map((item) => {
+          if (item.name === location.name) {
+            return location;
+          }
+          return item;
+        })
+      );
     }
   };
 
