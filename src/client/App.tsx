@@ -12,7 +12,7 @@ import axios from 'axios';
 import {
   CharacterType,
   EnemyType,
-  Ally,
+  AllyType,
   EventType,
   ChoiceType,
   LocationType,
@@ -41,7 +41,7 @@ const App = () => {
     {} as CharacterType
   );
   const [currentEnemy, setCurrentEnemy] = useState<EnemyType | object>({});
-  const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
+  const [currentAlly, setCurrentAlly] = useState<AllyType | object>({});
   const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');

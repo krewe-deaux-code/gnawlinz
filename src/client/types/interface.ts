@@ -75,7 +75,7 @@ export interface ItemType {
   sell_price: number;
 }
 
-export interface Ally {
+export interface AllyType {
   _id: number;
   name: string;
   image_url: string;
@@ -90,8 +90,7 @@ export interface GameViewProps {
   handleSpeak: (e) => void;
 }
 
-
-export interface Leader {
+export interface LeaderType {
   name: string;
   score: number;
   image_url: string;
@@ -100,7 +99,7 @@ export interface Leader {
   strength: number;
 }
 
-export interface Boss {
+export interface BossType {
   name: string;
   image_url: string;
   weapon1: string;

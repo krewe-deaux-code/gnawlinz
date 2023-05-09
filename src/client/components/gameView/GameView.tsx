@@ -67,11 +67,11 @@ import {
   EventType,
   ChoiceType,
   EnemyType,
-  Ally,
+  AllyType,
   ItemType,
   CharacterType,
   GameViewProps,
-  Boss,
+  BossType,
 } from '../../types/interface';
 
 import {
@@ -161,7 +161,7 @@ const GameView = (props: GameViewProps) => {
   const [showAlly, setShowAlly] = useState(false);
   const [damageToEnemy, setDamageToEnemy] = useState(0);
   const [damageToPlayer, setDamageToPlayer] = useState(0);
-  const [boss, setBoss] = useState<Boss | null>(null);
+  const [boss, setBoss] = useState<BossType | null>(null);
   const [bossMaxHealth, setBossMaxHealth] = useState(0);
   const [boss75, setBoss75] = useState(false);
   const [boss50, setBoss50] = useState(false);
@@ -269,7 +269,7 @@ const GameView = (props: GameViewProps) => {
   // const handleAllyFetch = () => {
   //   // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
   //   axios
-  //     .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
+  //     .get<AllyType>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
   //     .then((ally: any) => {
   //       // if (metAllyArr.includes(ally.data._id)) {
   //       // setCurrentAlly({});
@@ -924,7 +924,7 @@ const GameView = (props: GameViewProps) => {
 
   const fetchBoss = () => {
     axios
-      .get<Boss>('/boss/1')
+      .get<BossType>('/boss/1')
       .then((boss: any) => {
         console.log('BOSS', boss.data);
         setBoss(boss.data);
