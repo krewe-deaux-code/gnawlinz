@@ -1,6 +1,7 @@
 import Character from '../schemas/character';
+import { CharacterDBType } from './seedData/characterSeed';
 
-const characterSeeder = async (characterArr: any) => {
+const characterSeeder = async (characterArr: CharacterDBType[]) => {
   for (let i = 0; i < characterArr.length; i++) {
     await Character.findOrCreate({
       where: {
@@ -16,10 +17,10 @@ const characterSeeder = async (characterArr: any) => {
         ally_count: characterArr[i].ally_count
       }
     })
-      .then((success) =>
+      .then(() =>
         console.log('Character.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error character.findOrCreate error in src/db/seeders/characterSeeder.ts: '));
+        console.error('Error character.findOrCreate error in src/db/seeders/characterSeeder.ts: ', err));
   }
 };
 

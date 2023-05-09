@@ -10,14 +10,14 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
 import {
-  Character,
-  Enemy,
+  CharacterType,
+  EnemyType,
   Ally,
-  EventData,
-  ChoiceData,
-  LocationData,
-  Item,
-} from './utility/interface';
+  EventType,
+  ChoiceType,
+  LocationType,
+  ItemType,
+} from './types/interface';
 // import { SettingsContext } from './components/title/Title';
 
 const Title = lazy(() => import('./components/title/Title'));
@@ -36,16 +36,18 @@ const App = () => {
   // for text to speech toggle button
   const [isSpeakingEnabled, setIsSpeakingEnabled] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-  const [userChars, setUserChars] = useState<Character[]>([]);
-  const [currentChar, setCurrentChar] = useState<Character>({} as Character);
-  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [userChars, setUserChars] = useState<CharacterType[]>([]);
+  const [currentChar, setCurrentChar] = useState<CharacterType>(
+    {} as CharacterType
+  );
+  const [currentEnemy, setCurrentEnemy] = useState<EnemyType | object>({});
   const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
   const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
-  const [event, setEvent] = useState({} as EventData);
-  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceData);
+  const [event, setEvent] = useState({} as EventType);
+  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceType);
   const [choices, setChoices] = useState({
     engage: 0,
     evade: 0,
@@ -53,16 +55,16 @@ const App = () => {
     wildcard: 0,
   });
   const [outcome, setOutcome] = useState('');
-  const [location, setLocation] = useState({} as LocationData);
-  const [allLocations, setAllLocations] = useState<LocationData[]>([]);
-  const [visited, setVisited] = useState<LocationData[]>([]);
+  const [location, setLocation] = useState({} as LocationType);
+  const [allLocations, setAllLocations] = useState<LocationType[]>([]);
+  const [visited, setVisited] = useState<LocationType[]>([]);
   const [investigateDisabled, setInvestigateDisabled] = useState();
   const [tagDisabled, setTagDisabled] = useState();
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
   // item bonus/inventory state
-  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
 
   const fetchItems = (charInventory) => {
     const currentInventory = charInventory.map((item) =>
@@ -83,7 +85,7 @@ const App = () => {
     }
     console.log('WHAT AM I', currentChar);
     axios
-      .patch<Character>(
+      .patch<CharacterType>(
         `/character/update/${currentChar._id}`,
         sortedInventoryChar
       )
@@ -119,7 +121,7 @@ const App = () => {
       }
     }
     axios
-      .patch<LocationData>(
+      .patch<LocationType>(
         `/location/update/${randomItemLocation._id}`,
         randomItemLocation
       )
@@ -230,7 +232,10 @@ const App = () => {
                 path='game-view'
                 element={<GameView handleSpeak={handleSpeak} />}
               />
-              <Route path='result' element={<Result handleSpeak={handleSpeak}/>} />
+              <Route
+                path='result'
+                element={<Result handleSpeak={handleSpeak} />}
+              />
               <Route path='*' element={<Navigate to='/' replace />} />
             </Routes>
           </Suspense>

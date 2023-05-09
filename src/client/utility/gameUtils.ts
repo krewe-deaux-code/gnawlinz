@@ -1,4 +1,4 @@
-import { Enemy, Character } from './interface';
+import { EnemyType, CharacterType } from '../types/interface';
 
 export const statCheck = (stat: number, engagement: string) => {
   let npcRoll;
@@ -32,7 +32,7 @@ export const fightEnemy = (enemyStrength: number, enemyHealth: number, playerStr
   }
 };
 
-export const isEnemy = (obj: any): obj is Enemy => {
+export const isEnemy = (obj: EnemyType): obj is EnemyType => {
   return 'strength' in obj && 'health' in obj;
 };
 
@@ -46,9 +46,9 @@ export const addItem = (inventory: Array<number>, itemNum: number) => {
   }
 };
 
-export const multiplier = (character: Character, enemy: Enemy) => (enemy.strength + ((enemy.name === 'Nicolas Un-Caged') ? 4 : 0)) - character.strength;
+export const multiplier = (character: CharacterType, enemy: EnemyType) => (enemy.strength + ((enemy.name === 'Nicolas Un-Caged') ? 4 : 0)) - character.strength;
 
-export const scoreMultiplier = (character: Character, enemy: Enemy) => {
+export const scoreMultiplier = (character: CharacterType, enemy: EnemyType) => {
   return {
     ...character, score: character.score += (Math.floor((enemy.score * (1.5 ** multiplier(character, enemy)))) + 1)
   };

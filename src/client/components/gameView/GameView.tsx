@@ -64,15 +64,15 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import {
-  EventData,
-  ChoiceData,
-  Enemy,
+  EventType,
+  ChoiceType,
+  EnemyType,
   Ally,
-  Item,
-  Character,
+  ItemType,
+  CharacterType,
   GameViewProps,
   Boss,
-} from '../../utility/interface';
+} from '../../types/interface';
 
 import {
   statCheck,
@@ -176,7 +176,7 @@ const GameView = (props: GameViewProps) => {
   const [temporaryEndurance, setTemporaryEndurance] = useState(0);
   const [temporaryMood, setTemporaryMood] = useState(0);
 
-  const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<ItemType | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [tooltipExtra, setTooltipExtra] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
@@ -195,7 +195,7 @@ const GameView = (props: GameViewProps) => {
     if (bossEvent) {
       // <-- EDIT
       axios
-        .get<EventData>(`/event/${bossEvent}`)
+        .get<EventType>(`/event/${bossEvent}`)
         .then((event) => {
           setEvent(event.data);
           setChoices({
@@ -208,7 +208,7 @@ const GameView = (props: GameViewProps) => {
         .catch((err) => console.error('fetch specific event failure', err));
     } else {
       axios
-        .get<EventData>('/event/random', {
+        .get<EventType>('/event/random', {
           params: { excludeEventId: prevEventId },
         })
         .then((event) => {
@@ -259,7 +259,7 @@ const GameView = (props: GameViewProps) => {
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
     axios
-      .get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
+      .get<EnemyType>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
       })
@@ -284,7 +284,6 @@ const GameView = (props: GameViewProps) => {
   // };
 
   const getAllLocations = (buttonClick = -1) => {
-    // console.log('Current Event on State: ', event);
     if (buttonClick > -1) {
       currentChar.location = visited[buttonClick]._id;
       if (visited[buttonClick]._id === boss?.location) {
@@ -341,7 +340,7 @@ const GameView = (props: GameViewProps) => {
     setShowAlly(false);
     setShowEnemy(false);
     setOutcome('');
-    setSelectedChoice({} as ChoiceData);
+    setSelectedChoice({} as ChoiceType);
     if (!allLocations.length) {
       setLocationModalText('true');
       handleShowLocationModal();
@@ -381,7 +380,7 @@ const GameView = (props: GameViewProps) => {
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
 
-  const handleOnMouseEnter = (itemOrButton: Item | string) => {
+  const handleOnMouseEnter = (itemOrButton: ItemType | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
         setTooltip('Search for items or Write graffiti');
@@ -583,7 +582,7 @@ const GameView = (props: GameViewProps) => {
     }
     // look up choice_id from action Button click
     axios
-      .get<ChoiceData>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
+      .get<ChoiceType>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
       .then((choiceResponse) => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->
@@ -894,32 +893,32 @@ const GameView = (props: GameViewProps) => {
       currentChar.name = 'potty mouth';
       currentChar.health = 0;
     } else {
-    setLocation((location) => ({
-      ...location,
-      graffiti_msgs: [
-        location.graffiti_msgs[1],
-        location.graffiti_msgs[2],
-        inputValue,
-      ],
-    }));
+      setLocation((location) => ({
+        ...location,
+        graffiti_msgs: [
+          location.graffiti_msgs[1],
+          location.graffiti_msgs[2],
+          inputValue,
+        ],
+      }));
 
-    setInputValue('');
-    setVisited((prevVisited) =>
-      prevVisited.map((item) => {
-        if (item.name === location.name) {
-          return location;
-        }
-        return item;
-      })
-    );
-    setVisited((prevVisited) =>
-      prevVisited.map((item) => {
-        if (item.name === location.name) {
-          return location;
-        }
-        return item;
-      })
-    );
+      setInputValue('');
+      setVisited((prevVisited) =>
+        prevVisited.map((item) => {
+          if (item.name === location.name) {
+            return location;
+          }
+          return item;
+        })
+      );
+      setVisited((prevVisited) =>
+        prevVisited.map((item) => {
+          if (item.name === location.name) {
+            return location;
+          }
+          return item;
+        })
+      );
     }
   };
 
@@ -1527,7 +1526,7 @@ const GameView = (props: GameViewProps) => {
                   }` + '/8'}
                 </h4>
                 <InventoryStyle className='itemWidgets'>
-                  {fetchedInventory.map((item: Item, i) => (
+                  {fetchedInventory.map((item: ItemType, i) => (
                     <div
                       key={i}
                       className='itemWidget'

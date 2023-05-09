@@ -1,6 +1,7 @@
 import Item from '../schemas/item';
+import { ItemDBType } from './seedData/itemSeed';
 
-const itemSeeder = async (itemArr: any) => {
+const itemSeeder = async (itemArr: ItemDBType[]) => {
   for (let i = 0; i < itemArr.length; i++) {
     await Item.findOrCreate(
       {
@@ -16,10 +17,10 @@ const itemSeeder = async (itemArr: any) => {
           sell_price: itemArr[i].sell_price
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('Item.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Item.findOrCreate error in src/db/seeders/itemSeeder.ts: '));
+        console.error('Error Item.findOrCreate error in src/db/seeders/itemSeeder.ts: ', err));
   }
 };
 

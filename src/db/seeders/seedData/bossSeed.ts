@@ -1,3 +1,7 @@
+export type BossDBType = {
+  [key: string]: number | string;
+};
+
 export const bossSeed = [
   {
     name: 'Nicolas Un-Caged',

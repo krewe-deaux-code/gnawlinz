@@ -1,3 +1,7 @@
+export type CharacterDBType = {
+  [key: string]: number | number[] | string | null;
+};
+
 export const characterSeed = [
   {
     handle_id: '',
