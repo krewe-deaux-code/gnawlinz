@@ -25,7 +25,7 @@ export interface EventType {
   item_effect: boolean;
 }
 
-export interface Choice {
+export interface ChoiceType {
   _id: number;
   flavor_text: string;
   success: string;
@@ -35,7 +35,7 @@ export interface Choice {
   alignment2: string;
 }
 
-export interface Location {
+export interface LocationType {
   _id: number;
   name: string;
   image_url: string;

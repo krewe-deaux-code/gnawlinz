@@ -65,7 +65,7 @@ import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import {
   EventType,
-  Choice,
+  ChoiceType,
   Enemy,
   Ally,
   Item,
@@ -340,7 +340,7 @@ const GameView = (props: GameViewProps) => {
     setShowAlly(false);
     setShowEnemy(false);
     setOutcome('');
-    setSelectedChoice({} as Choice);
+    setSelectedChoice({} as ChoiceType);
     if (!allLocations.length) {
       setLocationModalText('true');
       handleShowLocationModal();
@@ -582,7 +582,7 @@ const GameView = (props: GameViewProps) => {
     }
     // look up choice_id from action Button click
     axios
-      .get<Choice>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
+      .get<ChoiceType>(`/choice/selected/${choice_id}`) //upon refactor, take all the functionality out of the axios request
       .then((choiceResponse) => {
         setSelectedChoice(choiceResponse.data);
         // <-- computation for success check: -->

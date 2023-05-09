@@ -13,9 +13,9 @@ import {
   CharacterType,
   Enemy,
   Ally,
-  Event,
-  Choice,
-  Location,
+  EventType,
+  ChoiceType,
+  LocationType,
   Item,
 } from './types/interface';
 // import { SettingsContext } from './components/title/Title';
@@ -46,8 +46,8 @@ const App = () => {
   const [activeUser, setActiveUser] = useState({});
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
-  const [event, setEvent] = useState({} as Event);
-  const [selectedChoice, setSelectedChoice] = useState({} as Choice);
+  const [event, setEvent] = useState({} as EventType);
+  const [selectedChoice, setSelectedChoice] = useState({} as ChoiceType);
   const [choices, setChoices] = useState({
     engage: 0,
     evade: 0,
@@ -55,9 +55,9 @@ const App = () => {
     wildcard: 0,
   });
   const [outcome, setOutcome] = useState('');
-  const [location, setLocation] = useState({} as Location);
-  const [allLocations, setAllLocations] = useState<Location[]>([]);
-  const [visited, setVisited] = useState<Location[]>([]);
+  const [location, setLocation] = useState({} as LocationType);
+  const [allLocations, setAllLocations] = useState<LocationType[]>([]);
+  const [visited, setVisited] = useState<LocationType[]>([]);
   const [investigateDisabled, setInvestigateDisabled] = useState();
   const [tagDisabled, setTagDisabled] = useState();
 
@@ -121,7 +121,7 @@ const App = () => {
       }
     }
     axios
-      .patch<Location>(
+      .patch<LocationType>(
         `/location/update/${randomItemLocation._id}`,
         randomItemLocation
       )
