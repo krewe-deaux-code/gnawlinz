@@ -1,3 +1,7 @@
+export type StoryDBType = {
+  [key: string]: number | string[];
+};
+
 export const storySeed = [{
   character_id: 1,
   char_choices: [

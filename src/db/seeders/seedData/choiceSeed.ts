@@ -1,3 +1,7 @@
+export type ChoiceDBType = {
+  [key: string]: string | null;
+};
+
 export const choiceSeed = [
   { // fight jet 1 (keeping for the memories) 1
     flavor_text: 'You stand your ground and are engaged by a Lockheed Martin F-35 Lightning II.',

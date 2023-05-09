@@ -1,3 +1,7 @@
+export type LocationDBType = {
+  [key: string]: number | string[] | string;
+};
+
 export const locationSeed = [
   {
     name: 'Chompitoulas Street',

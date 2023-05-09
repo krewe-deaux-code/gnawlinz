@@ -1,3 +1,7 @@
+export type IconDBType = {
+  [key: string]: string;
+};
+
 export const iconSeed = [
   {
     'name': 'heartIcon',

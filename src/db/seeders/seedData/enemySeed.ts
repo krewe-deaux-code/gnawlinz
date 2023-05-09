@@ -1,5 +1,9 @@
 import images from '../../../client/utility/images';
 
+export type EnemyDBType = {
+  [key: string]: string | number;
+};
+
 export const enemySeed = [
   {
     name: 'Banana-Zombie',

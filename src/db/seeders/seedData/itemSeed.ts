@@ -1,3 +1,7 @@
+export type ItemDBType = {
+  [key: string]: number | string | null | boolean;
+};
+
 export const itemSeed = [
   {
     name: 'Empty',

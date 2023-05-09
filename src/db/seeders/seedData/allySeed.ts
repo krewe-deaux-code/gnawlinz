@@ -1,3 +1,7 @@
+export type AllyDBType = {
+  [key: string]: number | string;
+};
+
 export const allySeed = [
   {
     name: 'Gene Nalgene',

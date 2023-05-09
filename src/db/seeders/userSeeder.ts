@@ -1,6 +1,7 @@
 import User from '../schemas/user';
+import { UserDBType } from './seedData/userSeed';
 
-const userSeeder = async (userArr: any) => {
+const userSeeder = async (userArr: UserDBType[]) => {
   for (let i = 0; i < userArr.length; i++) {
     await User.findOrCreate(
       {
@@ -10,10 +11,10 @@ const userSeeder = async (userArr: any) => {
           name: userArr[i].name,
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('User.findOrCreate successful!'))
       .catch((err) =>
-        console.error('Error Ally.findOrCreate error in src/db/seeders/allySeeder.ts: '));
+        console.error('Error User.findOrCreate error in src/db/seeders/userSeeder.ts: ', err));
   }
 };
 

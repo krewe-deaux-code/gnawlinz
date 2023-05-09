@@ -1,5 +1,6 @@
 import Event from '../schemas/event';
-const eventSeeder = async (eventArr: any) => {
+import { EventDBType } from './seedData/eventSeed';
+const eventSeeder = async (eventArr: EventDBType[]) => {
   // Iterate over events in the input array
   for (let i = 0; i < eventArr.length; i++) {
     await Event.findOrCreate({
@@ -15,7 +16,7 @@ const eventSeeder = async (eventArr: any) => {
       }
     })
       .then((success)=>
-        console.log('Event.findOrCreate successful: '))
+        console.log('Event.findOrCreate successful: ', success))
       .catch((err) =>
         console.error('Error Event.findOrCreate error in src/db/seeders/eventSeeder.ts: ', err));
   }

@@ -13,7 +13,7 @@ export interface CharacterType {
   score: number;
 }
 
-export interface Event {
+export interface EventType {
   _id: number;
   initial_text: string;
   choice0: number;

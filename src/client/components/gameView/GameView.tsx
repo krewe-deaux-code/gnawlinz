@@ -64,7 +64,7 @@ import {
 import { Link } from 'react-router-dom';
 import { UserContext } from '../../App';
 import {
-  Event,
+  EventType,
   Choice,
   Enemy,
   Ally,
@@ -195,7 +195,7 @@ const GameView = (props: GameViewProps) => {
     if (bossEvent) {
       // <-- EDIT
       axios
-        .get<Event>(`/event/${bossEvent}`)
+        .get<EventType>(`/event/${bossEvent}`)
         .then((event) => {
           setEvent(event.data);
           setChoices({
@@ -208,7 +208,7 @@ const GameView = (props: GameViewProps) => {
         .catch((err) => console.error('fetch specific event failure', err));
     } else {
       axios
-        .get<Event>('/event/random', {
+        .get<EventType>('/event/random', {
           params: { excludeEventId: prevEventId },
         })
         .then((event) => {
@@ -284,7 +284,6 @@ const GameView = (props: GameViewProps) => {
   // };
 
   const getAllLocations = (buttonClick = -1) => {
-    // console.log('Current Event on State: ', event);
     if (buttonClick > -1) {
       currentChar.location = visited[buttonClick]._id;
       if (visited[buttonClick]._id === boss?.location) {
