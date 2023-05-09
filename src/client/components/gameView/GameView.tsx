@@ -67,7 +67,7 @@ import {
   EventType,
   ChoiceType,
   EnemyType,
-  Ally,
+  AllyType,
   ItemType,
   CharacterType,
   GameViewProps,
@@ -269,7 +269,7 @@ const GameView = (props: GameViewProps) => {
   // const handleAllyFetch = () => {
   //   // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
   //   axios
-  //     .get<Ally>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
+  //     .get<AllyType>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
   //     .then((ally: any) => {
   //       // if (metAllyArr.includes(ally.data._id)) {
   //       // setCurrentAlly({});

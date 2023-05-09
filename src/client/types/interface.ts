@@ -75,7 +75,7 @@ export interface ItemType {
   sell_price: number;
 }
 
-export interface Ally {
+export interface AllyType {
   _id: number;
   name: string;
   image_url: string;

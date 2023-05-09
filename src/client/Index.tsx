@@ -4,6 +4,6 @@ import App from './App';
 // ReactDOM.createRoot(document.getElementById('app')).render(
 //   <App />
 // );
-const domNode: any = document.getElementById('app');
-const root = createRoot(domNode);
+const domNode: Element | null = document.getElementById('app');
+const root = createRoot(domNode as Element);
 root.render(<App />);
