@@ -1,6 +1,7 @@
 import Ally from '../schemas/ally';
+import { AllyDBType } from './seedData/allySeed';
 
-const allySeeder = async (allyArr: any) => {
+const allySeeder = async (allyArr: AllyDBType[]) => {
   for (let i = 0; i < allyArr.length; i++) {
     await Ally.findOrCreate(
       {
@@ -14,10 +15,10 @@ const allySeeder = async (allyArr: any) => {
           departing: allyArr[i].departing
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('Ally.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Ally.findOrCreate error in src/db/seeders/allySeeder.ts: '));
+        console.error('Error Ally.findOrCreate error in src/db/seeders/allySeeder.ts: ', err));
   }
 };
 
