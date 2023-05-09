@@ -26,7 +26,7 @@ import LeaderBoard from '../result/LeaderBoard';
 export const MenuContext = createContext<any>('');
 
 import { UserContext } from '../../App';
-import { Item, Character, GameViewProps } from '../../types/interface';
+import { ItemType, CharacterType, GameViewProps } from '../../types/interface';
 import { enter } from '../../utility/sounds';
 
 const Menu = (props: GameViewProps) => {
@@ -45,7 +45,7 @@ const Menu = (props: GameViewProps) => {
   } = useContext(UserContext);
 
   const [active, setActive] = useState(0);
-  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
   const [hideStartButton, setHideStartButton] = useState(true);
   const [startFail, setStartFail] = useState(false);
   const navigate = useNavigate();
@@ -66,7 +66,7 @@ const Menu = (props: GameViewProps) => {
   //   });
   // };
 
-  const handleDropItem = (itemID) => {
+  const handleDropItem = (itemID: number) => {
     axios.patch(`/location/update/${currentChar.location}`, {
       drop_item_slot: itemID,
     });
@@ -88,7 +88,7 @@ const Menu = (props: GameViewProps) => {
 
   const fetchItems = () => {
     axios
-      .get<Character>(`/character/${currentChar._id}`)
+      .get<CharacterType>(`/character/${currentChar._id}`)
       .then((character: any) => {
         setCurrentChar(character.data);
         //console.log('EMPTY???', character.data.inventory);
@@ -99,8 +99,8 @@ const Menu = (props: GameViewProps) => {
             .get(`/item/${item}`)
             .then((item: any) => {
               // console.log('ITEM???', item.data);
-              setFetchedInventory((prevInventory: Item[]) =>
-                [...prevInventory, item.data as Item].sort(
+              setFetchedInventory((prevInventory: ItemType[]) =>
+                [...prevInventory, item.data as ItemType].sort(
                   (a, b) => b._id - a._id
                 )
               );

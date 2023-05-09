@@ -11,12 +11,12 @@ import { GlobalStyle } from './GlobalStyled';
 import axios from 'axios';
 import {
   CharacterType,
-  Enemy,
+  EnemyType,
   Ally,
   EventType,
   ChoiceType,
   LocationType,
-  Item,
+  ItemType,
 } from './types/interface';
 // import { SettingsContext } from './components/title/Title';
 
@@ -40,7 +40,7 @@ const App = () => {
   const [currentChar, setCurrentChar] = useState<CharacterType>(
     {} as CharacterType
   );
-  const [currentEnemy, setCurrentEnemy] = useState<Enemy | object>({});
+  const [currentEnemy, setCurrentEnemy] = useState<EnemyType | object>({});
   const [currentAlly, setCurrentAlly] = useState<Ally | object>({});
   const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
   const [activeUser, setActiveUser] = useState({});
@@ -64,7 +64,7 @@ const App = () => {
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
   // item bonus/inventory state
-  const [fetchedInventory, setFetchedInventory] = useState<Item[]>([]);
+  const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
 
   const fetchItems = (charInventory) => {
     const currentInventory = charInventory.map((item) =>

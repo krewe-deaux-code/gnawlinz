@@ -48,7 +48,7 @@ export interface LocationType {
 
 }
 
-export interface Enemy {
+export interface EnemyType {
   _id: number;
   name: string;
   image_url: string;
@@ -62,7 +62,7 @@ export interface Enemy {
   contact: string;
 }
 
-export interface Item {
+export interface ItemType {
   _id: number;
   name: string;
   image_url: string;

@@ -66,9 +66,9 @@ import { UserContext } from '../../App';
 import {
   EventType,
   ChoiceType,
-  Enemy,
+  EnemyType,
   Ally,
-  Item,
+  ItemType,
   CharacterType,
   GameViewProps,
   Boss,
@@ -176,7 +176,7 @@ const GameView = (props: GameViewProps) => {
   const [temporaryEndurance, setTemporaryEndurance] = useState(0);
   const [temporaryMood, setTemporaryMood] = useState(0);
 
-  const [hoveredItem, setHoveredItem] = useState<Item | null>(null);
+  const [hoveredItem, setHoveredItem] = useState<ItemType | null>(null);
   const [tooltip, setTooltip] = useState<string | null>(null);
   const [tooltipExtra, setTooltipExtra] = useState<string | null>(null);
   const [showEvent, setShowEvent] = useState(true);
@@ -259,7 +259,7 @@ const GameView = (props: GameViewProps) => {
   const handleEnemyFetch = () => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
     axios
-      .get<Enemy>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
+      .get<EnemyType>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
       .then((enemy: any) => {
         setCurrentEnemy(enemy.data);
       })
@@ -380,7 +380,7 @@ const GameView = (props: GameViewProps) => {
   //  Item handling Functions drag and drop on location and character.
   //  *********************************************************************************************************************************************************************************************
 
-  const handleOnMouseEnter = (itemOrButton: Item | string) => {
+  const handleOnMouseEnter = (itemOrButton: ItemType | string) => {
     if (typeof itemOrButton === 'string') {
       if (itemOrButton === 'investigate') {
         setTooltip('Search for items or Write graffiti');
@@ -1526,7 +1526,7 @@ const GameView = (props: GameViewProps) => {
                   }` + '/8'}
                 </h4>
                 <InventoryStyle className='itemWidgets'>
-                  {fetchedInventory.map((item: Item, i) => (
+                  {fetchedInventory.map((item: ItemType, i) => (
                     <div
                       key={i}
                       className='itemWidget'
