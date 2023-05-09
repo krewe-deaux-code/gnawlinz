@@ -1,3 +1,7 @@
+export type UserDBType = {
+  [key: string]: string;
+};
+
 export const userSeed = [
   {
     google_id: '111176632224852041225',

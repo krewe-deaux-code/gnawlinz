@@ -10,10 +10,16 @@
  * item_effect: boolean, //can an item be received from this event (currently always true)
  * */
 
-export const eventSeed = [
+// import { EventType } from '../../../client/types/interface';
+
+export type EventDBType = {
+  [key: string]: number | string | boolean;
+};
+
+export const eventSeed: EventDBType[] = [
   {
-    initial_text: 'You turn a corner, and are suddenly aware you are not alone. In you peripheral vision you catch a glimpse of a dark shape coming toward you!',
-    choice0: 2, // fight the shadow
+    initial_text: 'You turn a corner, and are suddenly aware you are not alone. In your peripheral vision you catch a glimpse of a dark shape coming toward you!',
+    choice0: 2, // fight an enemy
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
     choice3: 4, // attempt contact
@@ -23,7 +29,7 @@ export const eventSeed = [
   },
   {
     initial_text: 'Entering the space, you feel a hostile presence. You\'re being watched... No. Hunted.',
-    choice0: 2, // fight the zombie
+    choice0: 2, // fight an enemy
     choice1: 5, // attempt stealth
     choice2: 7, // flee the scene
     choice3: 4, // attempt contact
@@ -40,5 +46,15 @@ export const eventSeed = [
     enemy_effect: false,
     ally_effect: true,
     item_effect: true,
+  },
+  {
+    initial_text: 'You see a deranged lunatic with eyes bugging out of his head. As you move closer you see him grinning. He has an uncanny familiarity... wait... is that award-winning actor Nicolas Cage?',
+    choice0: 8, // Barricade yourself inside
+    choice1: 10, // Search the building for supplies
+    choice2: 7, // flee the scene
+    choice3: 9, // Search the building for survivors
+    enemy_effect: false,
+    ally_effect: false,
+    item_effect: false,
   }
 ];

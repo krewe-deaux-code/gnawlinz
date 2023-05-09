@@ -1,6 +1,7 @@
 //import iconsData from '../seederObjects/icons.json';
 import Location from '../schemas/location';
-const locationSeeder = async (locationArr) => {
+import { LocationDBType } from './seedData/locationSeed';
+const locationSeeder = async (locationArr: LocationDBType[]) => {
   // Iterate over the icons in the JSON file
   for (let i = 0; i < locationArr.length; i++) {
     // Create a new icon instance with the data from the JSON file
@@ -16,10 +17,10 @@ const locationSeeder = async (locationArr) => {
           graffiti_msgs: locationArr[i].graffiti_msgs
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('Location.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Location.findOrCreate error in src/db/seeder/locationSeeder.ts: '));
+        console.error('Error Location.findOrCreate error in src/db/seeder/locationSeeder.ts: ', err));
   }
 };
 

@@ -1,5 +1,6 @@
 import Choice from '../schemas/choice';
-const choiceSeeder = async (choiceArr: any) => {
+import { ChoiceDBType } from './seedData/choiceSeed';
+const choiceSeeder = async (choiceArr: ChoiceDBType[]) => {
   // Iterate over the enemies in the input array
   for (let i = 0; i < choiceArr.length; i++) {
     // Create a new Enemy instance with the data from the JSON file
@@ -14,10 +15,10 @@ const choiceSeeder = async (choiceArr: any) => {
           alignment2: choiceArr[i].alignment2
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('Choice.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Choice.findOrCreate error in src/db/seeders/choiceSeeder.ts: '));
+        console.error('Error Choice.findOrCreate error in src/db/seeders/choiceSeeder.ts: ', err));
   }
 };
 

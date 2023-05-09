@@ -1,8 +1,8 @@
 const images = {
-  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676589660/gnawlinzIcons/noun-heart-pixel-red-2651784_c3mfl8.png',
-  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521482/gnawlinzIcons/moodFinal_utwvym.png',
-  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521480/gnawlinzIcons/armFinal_c2v6js.png',
-  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1677194993/gnawlinzIcons/shield-pixel-2651786_ujlkuq.png',
+  healthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/health_jiez64.png',
+  moodIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/mood_jip5vd.png',
+  strengthIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113820/gnawlinzIcons/strength_iqtlnn.png',
+  enduranceIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1680113819/gnawlinzIcons/endurance_lvjccg.png',
   locationIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679521479/gnawlinzIcons/LocationFinal_cngdiu.png',
   defaultAvatar: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1676696909/gnawlinzIcons/noun-profile-1094753_lwnwm4.png',
   trophyIcon: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1676696912/gnawlinzIcons/noun-trophy-1097545_moxxrf.png',
@@ -14,6 +14,10 @@ const images = {
   soundIcon1: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-2_glabnd.png',
   soundIcon2: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679707976/gnawlinzIcons/noun-volume-3_wa0mkl.png',
   soundIcon3: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679705353/gnawlinzIcons/noun-volume-4_jyml72.png',
+  redX: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679953333/gnawlinzIcons/x1_gwq5ad.png',
+  zombieG: 'https://res.cloudinary.com/de0mhjdfg/image/upload/c_thumb,w_200,g_face/v1678499597/gnawlinzIcons/GnawlinzHeadSmaller_ru4muz.png',
+  bananaZombie: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679946522/GnawlinzEnemies/ZombieBananaGoodPixel_q36qbe.png',
+  zombieGator: 'https://res.cloudinary.com/de0mhjdfg/image/upload/v1679954053/GnawlinzEnemies/ZombieGatorGoodPixel_p4x5ql.png'
 
 };
 

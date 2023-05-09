@@ -1,6 +1,10 @@
+export type ChoiceDBType = {
+  [key: string]: string | null;
+};
+
 export const choiceSeed = [
   { // fight jet 1 (keeping for the memories) 1
-    flavor_text: 'You stand you ground and are engaged by a Lockheed Martin F-35 Lightning II.',
+    flavor_text: 'You stand your ground and are engaged by a Lockheed Martin F-35 Lightning II.',
     success: 'You managed to bring down a hostile aircraft! It crashed to the ground in a burning heap.',
     failure: 'You stood no chance of defeating a high tech aircraft purpose built for war. You were slain immediately by a precision missile strike.',
     alignment0: null,
@@ -8,7 +12,7 @@ export const choiceSeed = [
     alignment2: null,
   },
   { // Generic Fight Text 2
-    flavor_text: 'You stand you ground and fight!',
+    flavor_text: 'You stand your ground and fight!',
     success: 'You defeated the banana zombie, and left behind a gross green peel for someone to slip on later.',
     failure: 'The banana zomibe consumed you, and added your biomass to its own.',
     alignment0: null,
@@ -25,14 +29,14 @@ export const choiceSeed = [
   },
   { // talk to ZB 4 (kill) 4
     flavor_text: 'You attempt to make contact with the entity.',
-    success: 'You met with another survivor.',
+    success: 'You met with another survivor, and they shared an item with you!',
     failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,
     alignment2: null,
   },
   { // Generic Stealth 5
-    flavor_text: 'You decide to sneak through the area, attempting to continue on your path while avoiding contact with the entity.',
+    flavor_text: 'You decide to sneak through the area, attempting to collect supplies while avoiding contact with the entity.',
     success: 'Some sort of aircraft streaks through the sky just overhead, seemingly having not detected your presence.',
     failure: 'You attempt to stick to the shadows, but the advanced detections systems of the F-35 Lightning II easily tracked you!',
     alignment0: null,
@@ -65,7 +69,7 @@ export const choiceSeed = [
   },
   { // Search for survivors 9
     flavor_text: 'You cautiously enter the space and call out for survivors.',
-    success: 'You heard the response of a living person!',
+    success: 'You heard the response of a living person! You met another survivor who shared an item with you.',
     failure: 'Your voice echoed in the dark and got no answer.',
     alignment0: null,
     alignment1: null,

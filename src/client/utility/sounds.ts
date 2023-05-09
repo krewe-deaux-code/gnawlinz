@@ -103,27 +103,27 @@ const evacuateSound = {
   'oldParams': true,
   'wave_type': 0,
   'p_env_attack': 0,
-  'p_env_sustain': 0.3332047155982645,
+  'p_env_sustain': 0.333,
   'p_env_punch': 0,
   'p_env_decay': 0.265313020026675,
-  'p_base_freq': 0.36430960298809556,
+  'p_base_freq': 0.364,
   'p_freq_limit': 0,
-  'p_freq_ramp': 0.20630654229945344,
-  'p_freq_dramp': -0.31,
+  'p_freq_ramp': -0.025,
+  'p_freq_dramp': -0.313,
   'p_vib_strength': 0,
   'p_vib_speed': 0,
-  'p_arp_mod': 0,
-  'p_arp_speed': 0,
+  'p_arp_mod': -0.012,
+  'p_arp_speed': 0.005,
   'p_duty': 0.11399599462626381,
   'p_duty_ramp': 0,
-  'p_repeat_speed': 0,
-  'p_pha_offset': 0,
-  'p_pha_ramp': 0,
-  'p_lpf_freq': 1,
-  'p_lpf_ramp': 0,
+  'p_repeat_speed': 0.332,
+  'p_pha_offset': 0.49,
+  'p_pha_ramp': 0.164,
+  'p_lpf_freq': 0.747,
+  'p_lpf_ramp': -0.17,
   'p_lpf_resonance': 0,
-  'p_hpf_freq': 0.17088982164722222,
-  'p_hpf_ramp': 0,
+  'p_hpf_freq': 0.231,
+  'p_hpf_ramp': -0.306,
   'sound_vol': 0.012,
   'sample_rate': 44100,
   'sample_size': 8
@@ -489,6 +489,126 @@ const cancelSound = {
   'sample_size': 8
 };
 
+const heartBeatSound = {
+  'oldParams': true,
+  'wave_type': 3,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.373,
+  'p_env_punch': 0,
+  'p_env_decay': 0.15173070763555474,
+  'p_base_freq': 0.319,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.596814201137551,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.398,
+  'p_pha_offset': 0,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.187,
+  'p_lpf_ramp': -0.178,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0.21,
+  'p_hpf_ramp': -0.67,
+  'sound_vol': 0.028,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const spraySound = {
+  'oldParams': true,
+  'wave_type': 3,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.056506214804851476,
+  'p_env_punch': 0.5088597829070519,
+  'p_env_decay': 0.4799075933836988,
+  'p_base_freq': 0.239,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0.43,
+  'p_arp_speed': 0.57,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.82,
+  'p_pha_offset': 0.524,
+  'p_pha_ramp': 0.005,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0.678,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.024,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const onCharSound = {
+  'oldParams': true,
+  'wave_type': 1,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.009972700035535721,
+  'p_env_punch': 0,
+  'p_env_decay': 0.346,
+  'p_base_freq': 0.281,
+  'p_freq_limit': 0,
+  'p_freq_ramp': 0.198,
+  'p_freq_dramp': 0.399,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': -0.032,
+  'p_arp_speed': 0,
+  'p_duty': 1,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.563,
+  'p_pha_offset': -0.001,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 0.383,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.018,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
+const onLocationSound = {
+  'oldParams': true,
+  'wave_type': 3,
+  'p_env_attack': 0,
+  'p_env_sustain': 0.09608861695562265,
+  'p_env_punch': 0,
+  'p_env_decay': 0.12487521273216765,
+  'p_base_freq': 0.4942441859104051,
+  'p_freq_limit': 0,
+  'p_freq_ramp': -0.6511823808202913,
+  'p_freq_dramp': 0,
+  'p_vib_strength': 0,
+  'p_vib_speed': 0,
+  'p_arp_mod': 0,
+  'p_arp_speed': 0,
+  'p_duty': 0,
+  'p_duty_ramp': 0,
+  'p_repeat_speed': 0.695,
+  'p_pha_offset': 0.005,
+  'p_pha_ramp': 0,
+  'p_lpf_freq': 1,
+  'p_lpf_ramp': 0,
+  'p_lpf_resonance': 0,
+  'p_hpf_freq': 0.14,
+  'p_hpf_ramp': 0,
+  'sound_vol': 0.023,
+  'sample_rate': 44100,
+  'sample_size': 8
+};
+
 /*
   ***********************************
   **********************************
@@ -500,9 +620,13 @@ const cancelSound = {
 const completeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677436049/sounds/pickupCoin_uwwaos.wav';
 const hitUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677436361/sounds/hit_xznp0f.wav';
 const dodgeUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677444831/sounds/evade_mlgwsf.wav';
-const evacuateUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466224/sounds/evacuate_mcndzl.wav';
+const evacuateUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679937776/sounds/evacuate_hmrhhi.wav';
 const wildCardUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1677466376/sounds/wildcard_ndvygk.wav';
 const enterUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679800513/sounds/enter_vb3mmd.wav';
+const heartBeatUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1679937367/sounds/heartBeat_sfodbu.wav';
+const bunnyUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680221674/sounds/bunny_nqoxaq.wav';
+const vampireUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680656621/sounds/vampire2_owkjdp.wav';
+const nationalTreasureUrl = 'https://res.cloudinary.com/de0mhjdfg/video/upload/v1680656629/sounds/nationaltreasure_ghpzbu.wav';
 
 /*
   *******************************
@@ -517,6 +641,9 @@ export const pointUp = sfxr.toAudio(pointUpSound);
 export const pointDown = sfxr.toAudio(pointDownSound);
 export const neutral = sfxr.toAudio(neutralSound);
 export const cancel = sfxr.toAudio(cancelSound);
+export const spray = sfxr.toAudio(spraySound);
+export const onChar = sfxr.toAudio(onCharSound);
+export const onLocation = sfxr.toAudio(onLocationSound);
 
 export const complete = new Howl({
   src: [completeUrl],
@@ -548,9 +675,24 @@ export const enter = new Howl({
   volume: 0.9
 });
 
-// export const click = new Howl({
-//   src: [clickUrl],
-//   volume: 1.0
-// });
+export const heartBeat = new Howl({
+  src: [heartBeatUrl],
+  volume: 1.0
+});
+
+export const bunny = new Howl({
+  src: [bunnyUrl],
+  volume: 1.5
+});
+
+export const vampire = new Howl({
+  src: [vampireUrl],
+  volume: 1.5
+});
+
+export const nationalTreasure = new Howl({
+  src: [nationalTreasureUrl],
+  volume: 1.5
+});
 
 // Howler.volume(0.7);

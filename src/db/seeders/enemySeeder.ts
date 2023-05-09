@@ -1,5 +1,6 @@
 import Enemy from '../schemas/enemy';
-const enemySeeder = async (enemyArr: any) => {
+import { EnemyDBType } from './seedData/enemySeed';
+const enemySeeder = async (enemyArr: EnemyDBType[]) => {
   // Iterate over the enemies in the input array
   for (let i = 0; i < enemyArr.length; i++) {
     // Create a new Enemy instance with the data from the JSON file
@@ -17,10 +18,10 @@ const enemySeeder = async (enemyArr: any) => {
           defeat: enemyArr[i].defeat
         }
       })
-      .then((success) =>
+      .then(() =>
         console.log('Enemy.findOrCreate successful: '))
       .catch((err) =>
-        console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: '));
+        console.error('Error Enemy.findOrCreate error in src/db/seeders/enemySeeder.ts: ', err));
   }
 };
 

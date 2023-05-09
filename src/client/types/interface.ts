@@ -1,4 +1,4 @@
-export interface Character {
+export interface CharacterType {
   _id: number;
   handle_id: number;
   name: string;
@@ -13,7 +13,7 @@ export interface Character {
   score: number;
 }
 
-export interface EventData {
+export interface EventType {
   _id: number;
   initial_text: string;
   choice0: number;
@@ -25,7 +25,7 @@ export interface EventData {
   item_effect: boolean;
 }
 
-export interface ChoiceData {
+export interface ChoiceType {
   _id: number;
   flavor_text: string;
   success: string;
@@ -35,7 +35,7 @@ export interface ChoiceData {
   alignment2: string;
 }
 
-export interface LocationData {
+export interface LocationType {
   _id: number;
   name: string;
   image_url: string;
@@ -48,7 +48,7 @@ export interface LocationData {
 
 }
 
-export interface Enemy {
+export interface EnemyType {
   _id: number;
   name: string;
   image_url: string;
@@ -62,7 +62,7 @@ export interface Enemy {
   contact: string;
 }
 
-export interface Item {
+export interface ItemType {
   _id: number;
   name: string;
   image_url: string;
@@ -98,4 +98,18 @@ export interface Leader {
   health: number;
   mood: number;
   strength: number;
+}
+
+export interface Boss {
+  name: string;
+  image_url: string;
+  weapon1: string;
+  strength: number;
+  health: number;
+  location: number;
+  score: number;
+  event: number;
+  victory: string;
+  defeat: string;
+  contact: string;
 }
