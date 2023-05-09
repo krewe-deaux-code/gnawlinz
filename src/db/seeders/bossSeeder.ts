@@ -1,6 +1,7 @@
 import Boss from '../schemas/boss';
+import { BossDBType } from './seedData/bossSeed';
 
-const bossSeeder = async (bossArr: any) => {
+const bossSeeder = async (bossArr: BossDBType[]) => {
   for (let i = 0; i < bossArr.length; i++) {
     await Boss.findOrCreate({
       where: {

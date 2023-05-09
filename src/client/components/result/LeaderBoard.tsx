@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'; //
 
 import { Table, Th, TableRow, Td } from './Styled';
 
-import { Leader } from '../../types/interface';
+import { LeaderType } from '../../types/interface';
 // import { UserContext } from '../../App'; // <-- holds User object
 
 import axios from 'axios';
@@ -39,9 +39,9 @@ const LeaderBoard: React.FC = () => {
         </tr>
       </thead>
       <tbody>
-        {(leaders as Leader[])
-          .filter((leader) => leader.score > -1)
-          .map((leader: Leader, i: number) => (
+        {(leaders as LeaderType[])
+          .filter((leader: LeaderType) => leader.score > -1)
+          .map((leader: LeaderType, i: number) => (
             <TableRow key={leader.name + i}>
               <Td>{i + 1}</Td>
               <Td style={{ width: '50px' }}>
