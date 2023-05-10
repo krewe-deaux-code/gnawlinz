@@ -1,12 +1,16 @@
-import React, { useState, useEffect, useContext, createContext } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  MouseEvent,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Body,
   InfoContainer,
   Tab,
   Content,
-  IconImg,
-  IconContainer,
   SelectStartButton,
   ArcadeBackground,
   CRTGlow,
@@ -264,7 +268,7 @@ const Menu = (props: GameViewProps) => {
                   Character Select
                 </Tab>
                 <Tab
-                  onClick={(e: any) => {
+                  onClick={(e: MouseEvent<HTMLElement>) => {
                     setHideStartButton(true);
                     handleClick(e);
                     fetchItems();

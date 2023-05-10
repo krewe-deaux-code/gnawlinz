@@ -2,7 +2,6 @@ import React, {
   Suspense,
   lazy,
   createContext,
-  useContext,
   useState,
   useEffect,
 } from 'react';
@@ -156,9 +155,9 @@ const App = () => {
   // text to speech functionality
   const msg = new SpeechSynthesisUtterance();
 
-  const handleSpeak = throttle((e) => {
+  const handleSpeak = throttle((e: React.MouseEvent<HTMLElement>) => {
     if (isSpeakingEnabled) {
-      msg.text = e.target.innerText;
+      msg.text = (e.target as HTMLElement).innerText;
       window.speechSynthesis.speak(msg);
     }
   });
