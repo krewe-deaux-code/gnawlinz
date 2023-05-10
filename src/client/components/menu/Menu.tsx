@@ -23,10 +23,17 @@ import CharacterStats from './CharacterStats';
 import Nav from '../nav/NavBar';
 import LeaderBoard from '../result/LeaderBoard';
 
-export const MenuContext = createContext<any>('');
+export const MenuContext = createContext<MenuContextType>(
+  {} as MenuContextType
+);
 
 import { UserContext } from '../../App';
-import { ItemType, CharacterType, GameViewProps } from '../../types/interface';
+import {
+  ItemType,
+  CharacterType,
+  GameViewProps,
+  MenuContextType,
+} from '../../types/interface';
 import { enter } from '../../utility/sounds';
 
 const Menu = (props: GameViewProps) => {
@@ -87,7 +94,7 @@ const Menu = (props: GameViewProps) => {
   //   // setFetchedInventory([]);
   //   currentChar.inventory.forEach(item => {
   //     axios.get(`/item/${item}`)
-  //       .then((item: any) => {
+  //       .then((item) => {
   //         // console.log('ITEM???', item.data);
   //         setFetchedInventory((prevInventory: Item[]) => [...prevInventory, item.data as Item]);
   //       })
@@ -136,12 +143,12 @@ const Menu = (props: GameViewProps) => {
               //console.log('fetchedInventory in Menu- fetchedItems', fetchedInventory);
             })
             // .then(() => console.log('fetchedInventory in Menu- fetchedItems After setFetchInventory', fetchedInventory))
-            .catch((err) =>
+            .catch((err: Error) =>
               console.error('error fetching from ITEM router', err)
             );
         });
       })
-      .catch((err: any) =>
+      .catch((err: Error) =>
         console.error('Error in Menu.tsx in fetchItems', err)
       );
   };

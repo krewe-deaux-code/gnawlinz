@@ -5,6 +5,8 @@ import React, {
   useRef,
   Suspense,
   ChangeEvent,
+  Dispatch,
+  SetStateAction,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -162,7 +164,7 @@ const CharacterCreator = (props: GameViewProps) => {
   const loadCharDefaults = () => {
     const randItem = Math.floor(Math.random() * 11 + 2); // <-- make + 2 ??
     // const randLoc = Math.floor(Math.random() * 3 + 1);
-    setNewChar((prevChar: any) => ({
+    setNewChar((prevChar: CharacterType) => ({
       ...prevChar,
       handle_id: activeUser.google_id, // <-- activeUser.user_id
       image_url: '',
@@ -178,7 +180,7 @@ const CharacterCreator = (props: GameViewProps) => {
   };
 
   const handleStatChange = (
-    fn: any,
+    fn: Dispatch<SetStateAction<number>>,
     modifier: string,
     statName: string,
     stat: number

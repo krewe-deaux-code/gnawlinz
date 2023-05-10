@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface CharacterType {
   _id: number;
-  handle_id: number;
+  handle_id: number | string;
   name: string;
   image_url: string;
   inventory: Array<number> | undefined;
