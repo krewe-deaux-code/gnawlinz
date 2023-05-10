@@ -90,7 +90,11 @@ const CharacterCreator = (props: GameViewProps) => {
   const [statPool, setStatPool] = useState<number>(18);
   const [startDisabled, setStartDisabled] = useState<boolean>(true);
 
-  const handleSelect = (i: number, images: string[], fn: any) => {
+  const handleSelect = (
+    i: number,
+    images: string[],
+    fn: (str: string) => void
+  ) => {
     fn(images[i]);
   };
 

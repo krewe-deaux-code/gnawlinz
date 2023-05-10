@@ -118,15 +118,15 @@ const Menu = (props: GameViewProps) => {
   const fetchItems = () => {
     axios
       .get<CharacterType>(`/character/${currentChar._id}`)
-      .then((character: any) => {
+      .then((character) => {
         setCurrentChar(character.data);
         //console.log('EMPTY???', character.data.inventory);
         //console.log('BEFORE fetchedInventory in Menu- fetchedItems', fetchedInventory);
         setFetchedInventory([]);
-        character.data.inventory.forEach((item) => {
+        character!.data!.inventory!.forEach((item) => {
           axios
-            .get(`/item/${item}`)
-            .then((item: any) => {
+            .get<ItemType>(`/item/${item}`)
+            .then((item) => {
               // console.log('ITEM???', item.data);
               setFetchedInventory((prevInventory: ItemType[]) =>
                 [...prevInventory, item.data as ItemType].sort(
