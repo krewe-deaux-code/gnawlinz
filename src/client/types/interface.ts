@@ -1,3 +1,5 @@
+import React from 'react';
+
 export interface CharacterType {
   _id: number;
   handle_id: number;
@@ -111,4 +113,13 @@ export interface BossType {
   victory: string;
   defeat: string;
   contact: string;
+}
+
+export interface SettingsContextType {
+  volume: number;
+  setVolume: React.Dispatch<React.SetStateAction<number>>;
+  isSpeakingEnabled: boolean;
+  setIsSpeakingEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  isChecked: boolean;
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }

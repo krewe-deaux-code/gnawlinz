@@ -17,6 +17,7 @@ import {
   ChoiceType,
   LocationType,
   ItemType,
+  SettingsContextType,
 } from './types/interface';
 // import { SettingsContext } from './components/title/Title';
 
@@ -27,7 +28,9 @@ const GameView = lazy(() => import('./components/gameView/GameView'));
 const Result = lazy(() => import('./components/result/Result'));
 
 export const UserContext = createContext<any>(''); // User model / interface User || null
-export const SettingsContext = createContext<any>('');
+export const SettingsContext = createContext<SettingsContextType>(
+  {} as SettingsContextType
+);
 
 const App = () => {
   const [volume, setVolume] = useState(0.7);
