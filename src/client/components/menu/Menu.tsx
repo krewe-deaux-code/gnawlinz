@@ -31,23 +31,52 @@ import { enter } from '../../utility/sounds';
 
 const Menu = (props: GameViewProps) => {
   const {
-    userChars,
-    setUserChars,
-    currentChar,
-    setCurrentChar,
+    metAllyArr,
+    setMetAllyArr,
+    currentAlly,
+    setCurrentAlly,
+    currentEnemy,
+    setCurrentEnemy,
+    prevEventId,
+    setPrevEventId,
+    visited,
+    setVisited,
+    allLocations,
+    setAllLocations,
+    location,
+    setLocation,
     activeUser,
     setActiveUser,
     stateSession,
     setStateSession,
     avatar,
     setAvatar,
-    fetchItem,
+    userChars,
+    setUserChars,
+    currentChar,
+    setCurrentChar,
+    event,
+    setEvent,
+    selectedChoice,
+    setSelectedChoice,
+    choices,
+    setChoices,
+    outcome,
+    setOutcome,
+    investigateDisabled,
+    setInvestigateDisabled,
+    tagDisabled,
+    setTagDisabled,
+    fetchedInventory,
+    setFetchedInventory,
+    setStartFail,
+    startFail,
   } = useContext(UserContext);
 
   const [active, setActive] = useState(0);
-  const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
+  // const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
   const [hideStartButton, setHideStartButton] = useState(true);
-  const [startFail, setStartFail] = useState(false);
+  // const [startFail, setStartFail] = useState(false);
   const navigate = useNavigate();
 
   const handleClickStart = () => {
@@ -146,16 +175,46 @@ const Menu = (props: GameViewProps) => {
   return (
     <UserContext.Provider
       value={{
+        metAllyArr,
+        setMetAllyArr,
+        currentAlly,
+        setCurrentAlly,
+        currentEnemy,
+        setCurrentEnemy,
+        prevEventId,
+        setPrevEventId,
+        visited,
+        setVisited,
+        allLocations,
+        setAllLocations,
+        location,
+        setLocation,
         activeUser,
+        setActiveUser,
         stateSession,
+        setStateSession,
         avatar,
+        setAvatar,
         userChars,
         setUserChars,
         currentChar,
         setCurrentChar,
+        event,
+        setEvent,
+        selectedChoice,
+        setSelectedChoice,
+        choices,
+        setChoices,
+        outcome,
+        setOutcome,
+        investigateDisabled,
+        setInvestigateDisabled,
+        tagDisabled,
+        setTagDisabled,
+        fetchedInventory,
+        setFetchedInventory,
         setStartFail,
         startFail,
-        fetchItem,
       }}
     >
       <MenuContext.Provider

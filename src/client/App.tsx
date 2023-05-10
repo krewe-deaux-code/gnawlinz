@@ -17,7 +17,10 @@ import {
   ChoiceType,
   LocationType,
   ItemType,
+  UserType,
+  StateChoices,
   SettingsContextType,
+  UserContextType,
 } from './types/interface';
 // import { SettingsContext } from './components/title/Title';
 
@@ -27,7 +30,9 @@ const GameView = lazy(() => import('./components/gameView/GameView'));
 //const NavBar  = lazy(() => import('./components/nav/NavBar'));
 const Result = lazy(() => import('./components/result/Result'));
 
-export const UserContext = createContext<any>(''); // User model / interface User || null
+export const UserContext = createContext<UserContextType>(
+  {} as UserContextType
+);
 export const SettingsContext = createContext<SettingsContextType>(
   {} as SettingsContextType
 );
@@ -43,10 +48,10 @@ const App = () => {
   const [currentChar, setCurrentChar] = useState<CharacterType>(
     {} as CharacterType
   );
-  const [currentEnemy, setCurrentEnemy] = useState<EnemyType | object>({});
+  const [currentEnemy, setCurrentEnemy] = useState<EnemyType>({} as EnemyType);
   const [currentAlly, setCurrentAlly] = useState<AllyType | object>({});
   const [metAllyArr, setMetAllyArr] = useState<number[]>([]);
-  const [activeUser, setActiveUser] = useState({});
+  const [activeUser, setActiveUser] = useState<UserType>({} as UserType);
   const [stateSession, setStateSession] = useState('');
   const [avatar, setAvatar] = useState('');
   const [event, setEvent] = useState({} as EventType);
@@ -56,18 +61,20 @@ const App = () => {
     evade: 0,
     evacuate: 0,
     wildcard: 0,
-  });
+  } as StateChoices);
   const [outcome, setOutcome] = useState('');
   const [location, setLocation] = useState({} as LocationType);
   const [allLocations, setAllLocations] = useState<LocationType[]>([]);
   const [visited, setVisited] = useState<LocationType[]>([]);
-  const [investigateDisabled, setInvestigateDisabled] = useState();
-  const [tagDisabled, setTagDisabled] = useState();
+  const [investigateDisabled, setInvestigateDisabled] = useState(false);
+  const [tagDisabled, setTagDisabled] = useState(false);
 
   const [prevEventId, setPrevEventId] = useState(0); // maybe null if event _id starts at 0...
 
   // item bonus/inventory state
   const [fetchedInventory, setFetchedInventory] = useState<ItemType[]>([]);
+
+  const [startFail, setStartFail] = useState(false);
 
   const fetchItems = (charInventory) => {
     const currentInventory = charInventory.map((item) =>
@@ -199,15 +206,15 @@ const App = () => {
           location,
           setLocation,
           activeUser,
+          setActiveUser,
           stateSession,
+          setStateSession,
           avatar,
           setAvatar,
           userChars,
           setUserChars,
           currentChar,
           setCurrentChar,
-          setActiveUser,
-          setStateSession,
           event,
           setEvent,
           selectedChoice,
@@ -222,6 +229,8 @@ const App = () => {
           setTagDisabled,
           fetchedInventory,
           setFetchedInventory,
+          setStartFail,
+          startFail,
         }}
       >
         <BrowserRouter>
