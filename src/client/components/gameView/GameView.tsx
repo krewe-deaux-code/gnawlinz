@@ -131,10 +131,6 @@ const GameView = (props: GameViewProps) => {
     setTagDisabled,
     currentEnemy,
     setCurrentEnemy,
-    currentAlly,
-    setCurrentAlly,
-    metAllyArr,
-    setMetAllyArr,
     fetchedInventory,
   } = useContext(UserContext);
 
@@ -189,7 +185,7 @@ const GameView = (props: GameViewProps) => {
   };
 
   const fetchEvent = (bossEvent = 0) => {
-    setSelectedChoice({});
+    setSelectedChoice({} as ChoiceType);
     setTempText('');
     setOutcome('');
     if (bossEvent) {
@@ -228,7 +224,7 @@ const GameView = (props: GameViewProps) => {
               enemy_effect: false,
             }));
           } else {
-            setCurrentEnemy({});
+            setCurrentEnemy({} as EnemyType);
           }
           // if (event.data.ally_effect) {
           //   handleAllyFetch();
@@ -251,8 +247,10 @@ const GameView = (props: GameViewProps) => {
   };
 
   const handleTagClick = () => {
-    spray.play();
-    setTagDisabled(true);
+    if (!tagDisabled) {
+      spray.play();
+      setTagDisabled(true);
+    }
   };
 
   // NPC
@@ -420,7 +418,7 @@ const GameView = (props: GameViewProps) => {
 
     await setCurrentChar((previousStats) => {
       const undroppedInventory = previousStats.inventory;
-      undroppedInventory[i] = 1;
+      undroppedInventory![i] = 1;
       return {
         ...previousStats,
         inventory: undroppedInventory,
@@ -433,7 +431,7 @@ const GameView = (props: GameViewProps) => {
       onChar.play();
       setCurrentChar((previousStats) => {
         const undroppedInventory = previousStats.inventory;
-        undroppedInventory[i] = 1;
+        undroppedInventory![i] = 1;
         return {
           ...previousStats,
           inventory: undroppedInventory,
@@ -638,7 +636,10 @@ const GameView = (props: GameViewProps) => {
               }
               return;
             }
-          } else if (isEnemy(currentEnemy) && currentEnemy.health <= 0) {
+          } else if (
+            isEnemy(currentEnemy as EnemyType) &&
+            currentEnemy.health <= 0
+          ) {
             // <-- enemy exists, enemy dead
             axios
               .post(
@@ -663,7 +664,7 @@ const GameView = (props: GameViewProps) => {
               } points!`
             ); // <-- put effects on canvas?? ***
             // choiceOutcome = 'success';
-            setCurrentEnemy({});
+            setCurrentEnemy({} as EnemyType);
             if (currentEnemy.name === boss?.name) {
               bossHealthPatch(500); // <-- hardcoded to reset Nick Un-caged
             }
@@ -686,15 +687,17 @@ const GameView = (props: GameViewProps) => {
             choiceOutcome ===
             'success' /*&& choiceType === 'wildcard') || choiceType === 'evade'*/
           ) {
-            if (currentChar.inventory.filter((slot) => slot === 1).length > 0) {
+            if (
+              currentChar.inventory!.filter((slot) => slot === 1).length > 0
+            ) {
               if (choiceType === 'evade' && itemRoll === 'success') {
                 setTempText(
                   'You stealthily made your way through the area, and collected an item!'
                 );
-                setCurrentChar((prevChar) => ({
+                setCurrentChar((prevChar: CharacterType) => ({
                   ...prevChar,
                   inventory: addItem(
-                    currentChar.inventory,
+                    currentChar.inventory!,
                     Math.floor(Math.random() * 11) + 1 // <-- changed to 2 from 1
                   ),
                   score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
@@ -711,7 +714,7 @@ const GameView = (props: GameViewProps) => {
                 setCurrentChar((prevChar) => ({
                   ...prevChar,
                   inventory: addItem(
-                    currentChar.inventory,
+                    currentChar.inventory!,
                     Math.floor(Math.random() * 11) + 1
                   ),
                   score: (prevChar.score += Math.floor(Math.random() * 3) + 1),
@@ -879,7 +882,7 @@ const GameView = (props: GameViewProps) => {
       complete.play();
       setCurrentChar((prevChar) => ({
         ...prevChar,
-        inventory: addItem(currentChar.inventory, location.drop_item_slot),
+        inventory: addItem(currentChar!.inventory!, location.drop_item_slot),
       }));
       setLocation((prevLocale) => ({
         ...prevLocale,
@@ -892,7 +895,7 @@ const GameView = (props: GameViewProps) => {
     if (inputValue.includes('fuck')) {
       currentChar.name = 'potty mouth';
       currentChar.health = 0;
-    } else {
+    } else if (!tagDisabled) {
       setLocation((location) => ({
         ...location,
         graffiti_msgs: [
@@ -919,6 +922,8 @@ const GameView = (props: GameViewProps) => {
           return item;
         })
       );
+    } else {
+      cancel.play();
     }
   };
 

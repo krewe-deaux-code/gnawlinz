@@ -1,9 +1,11 @@
+import React from 'react';
+
 export interface CharacterType {
   _id: number;
   handle_id: number;
   name: string;
   image_url: string;
-  inventory: Array<number>;
+  inventory: Array<number> | undefined;
   health: number;
   strength: number;
   endurance: number;
@@ -100,6 +102,8 @@ export interface LeaderType {
 }
 
 export interface BossType {
+  _id: number;
+  initial_text: string;
   name: string;
   image_url: string;
   weapon1: string;
@@ -111,4 +115,79 @@ export interface BossType {
   victory: string;
   defeat: string;
   contact: string;
+}
+
+export interface UserType {
+  handle_id: number
+  user_id: number;
+  google_id: string;
+  google_avatar: string;
+  name: string;
+  session_id: string;
+}
+
+export interface SettingsContextType {
+  volume: number;
+  setVolume: React.Dispatch<React.SetStateAction<number>>;
+  isSpeakingEnabled: boolean;
+  setIsSpeakingEnabled: React.Dispatch<React.SetStateAction<boolean>>;
+  isChecked: boolean;
+  setIsChecked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface StateChoices {
+  engage: number;
+  evade: number;
+  evacuate: number;
+  wildcard: number;
+}
+
+export interface MenuContextType {
+  hideStartButton: boolean;
+  setHideStartButton: React.Dispatch<React.SetStateAction<boolean>>;
+  startFail: boolean;
+  setStartFail: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export interface UserContextType {
+  metAllyArr: number[];
+  setMetAllyArr: React.Dispatch<React.SetStateAction<number[]>>;
+  currentAlly: object | AllyType;
+  setCurrentAlly: React.Dispatch<React.SetStateAction<AllyType>>;
+  currentEnemy: EnemyType;
+  setCurrentEnemy: React.Dispatch<React.SetStateAction<EnemyType>>;
+  prevEventId: number;
+  setPrevEventId: React.Dispatch<React.SetStateAction<number>>;
+  visited: LocationType[];
+  setVisited: React.Dispatch<React.SetStateAction<LocationType[]>>;
+  allLocations: LocationType[];
+  setAllLocations: React.Dispatch<React.SetStateAction<LocationType[]>>;
+  location: LocationType
+  setLocation: React.Dispatch<React.SetStateAction<LocationType>>;
+  activeUser: UserType;
+  setActiveUser: React.Dispatch<React.SetStateAction<UserType>>;
+  stateSession: string;
+  setStateSession: React.Dispatch<React.SetStateAction<string>>;
+  avatar: string;
+  setAvatar: React.Dispatch<React.SetStateAction<string>>;
+  userChars: CharacterType[];
+  setUserChars: React.Dispatch<React.SetStateAction<CharacterType[]>>;
+  currentChar: CharacterType;
+  setCurrentChar: React.Dispatch<React.SetStateAction<CharacterType>>;
+  event: EventType;
+  setEvent: React.Dispatch<React.SetStateAction<EventType>>;
+  selectedChoice: ChoiceType;
+  setSelectedChoice: React.Dispatch<React.SetStateAction<ChoiceType>>;
+  choices: StateChoices;
+  setChoices: React.Dispatch<React.SetStateAction<StateChoices>>;
+  outcome: string;
+  setOutcome: React.Dispatch<React.SetStateAction<string>>;
+  investigateDisabled: boolean;
+  setInvestigateDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  tagDisabled: boolean;
+  setTagDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  fetchedInventory: ItemType[];
+  setFetchedInventory: React.Dispatch<React.SetStateAction<ItemType[]>>;
+  startFail: boolean;
+  setStartFail: React.Dispatch<React.SetStateAction<boolean>>;
 }
