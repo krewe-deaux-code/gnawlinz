@@ -258,7 +258,7 @@ const GameView = (props: GameViewProps) => {
     // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ENEMIES IN DB
     axios
       .get<EnemyType>(`/enemy/${Math.floor(Math.random() * 6) + 1}`)
-      .then((enemy: any) => {
+      .then((enemy) => {
         setCurrentEnemy(enemy.data);
       })
       .catch((err) => console.error('FETCH ENEMY ERROR', err));
@@ -268,7 +268,7 @@ const GameView = (props: GameViewProps) => {
   //   // Math.random to query enemy database w/ _id <-- NEEDS TO BE # OF ALLIES IN DB
   //   axios
   //     .get<AllyType>(`/ally/${Math.floor(Math.random() * 2) + 1}`)
-  //     .then((ally: any) => {
+  //     .then((ally) => {
   //       // if (metAllyArr.includes(ally.data._id)) {
   //       // setCurrentAlly({});
   //       // } else {
@@ -612,8 +612,8 @@ const GameView = (props: GameViewProps) => {
                   );
                 setOutcome(choiceOutcome);
               }
-              setDamageToPlayer(fightResult.damage);
-              setCurrentChar((prevChar: any) => ({
+              setDamageToPlayer(fightResult.damage as number);
+              setCurrentChar((prevChar: CharacterType) => ({
                 ...prevChar,
                 health: fightResult.player,
               }));
@@ -623,8 +623,8 @@ const GameView = (props: GameViewProps) => {
               // return;
               // <-- enemy loses, adjust player health below
             } else if (fightResult?.enemy || fightResult.enemy === 0) {
-              setDamageToEnemy(fightResult.damage);
-              setCurrentEnemy((prevEnemy: any) => ({
+              setDamageToEnemy(fightResult.damage as number);
+              setCurrentEnemy((prevEnemy: EnemyType) => ({
                 ...prevEnemy,
                 health: fightResult.enemy,
               })); // could display enemy health: fightResult.enemy
@@ -858,13 +858,13 @@ const GameView = (props: GameViewProps) => {
     if (location.drop_item_slot === 1) {
       // <-- failure sound
       cancel.play();
-      setModalText("You searched for items, but didn't find anything");
+      setModalText('You searched for items, but didn"t find anything');
     } else if (fetchedInventory.filter((item) => item._id !== 1).length === 8) {
       setModalText('You have no room for items in your inventory');
     } else {
       axios
         .get(`item/${location.drop_item_slot}`)
-        .then((response: any) => {
+        .then((response) => {
           const itemName = response.data.name;
           const imageUrl = response.data.image_url;
           const imageTag = `<img src='${imageUrl}' alt='${itemName}' style='max-width: 40%; max-height: 40%'/>`;
@@ -930,7 +930,7 @@ const GameView = (props: GameViewProps) => {
   const fetchBoss = () => {
     axios
       .get<BossType>('/boss/1')
-      .then((boss: any) => {
+      .then((boss) => {
         console.log('BOSS', boss.data);
         setBoss(boss.data);
         setBossMaxHealth(500); // <-- hardcoded for nick Un-caged
