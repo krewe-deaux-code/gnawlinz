@@ -780,7 +780,7 @@ const GameView = (props: GameViewProps) => {
   //   setTimeout(expireKillFeed, 10000);
   // });
   // callback for PlayerDied event listener
-  const appendToKillFeed = (death) => {
+  const appendToKillFeed = (death: string) => {
     setKillFeed((prevKillFeed) => [...prevKillFeed, death]);
     setTimeout(expireKillFeed, 10000);
   };

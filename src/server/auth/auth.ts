@@ -1,11 +1,13 @@
 import 'dotenv/config';
-import passport from 'passport';
+import passport, { Profile } from 'passport';
 
 import User from '../../db/schemas/user';
 import { Model } from 'sequelize';
 
 import { Router } from 'express';
 const Auth = Router();
+
+import { PassportUser } from '../../client/types/interface';
 
 // interface GoogleProfile {
 //   id: string;
@@ -23,12 +25,13 @@ passport.use(new GoogleStrategy({
   callbackURL: CALLBACK_URL as string,
   passReqToCallback: true
 },
-(req, accessToken, refreshToken, profile: any, cb) => {
+(req, accessToken, refreshToken, profile, cb) => {
+  console.log('AUTH PROFILE:', profile);
   User.findOrCreate({
     where: {
       google_id: profile.id,
-      name: profile.name.givenName,
-      google_avatar: profile.photos[0].value
+      name: profile.name?.givenName,
+      google_avatar: profile.photos![0]?.value
       // session_id: req.sessionID
     }
   })
@@ -68,7 +71,7 @@ Auth.get('/google/callback', (req, res) => {
 //   });
 
 passport.serializeUser((user: any, done) => {
-  //console.log('SERIALIZE', user);
+  console.log('SERIALIZE', user);
   const [userCookie] = user;
   const { dataValues } = userCookie;
   //console.log('DATA VALUES --> COOKIE', dataValues);
