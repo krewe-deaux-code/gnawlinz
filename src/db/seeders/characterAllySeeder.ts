@@ -1,6 +1,6 @@
 // import Character_Ally from '../schemas/character_ally';
 
-// const characterAllySeeder = async (Character_AllyArr: any) => {
+// const characterAllySeeder = async (Character_AllyArr) => {
 //   for (let i = 0; i < Character_AllyArr.length; i++) {
 //     await Character_Ally.findOrCreate(
 //       {

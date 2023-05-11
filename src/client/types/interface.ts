@@ -2,7 +2,7 @@ import React from 'react';
 
 export interface CharacterType {
   _id: number;
-  handle_id: number;
+  handle_id: number | string;
   name: string;
   image_url: string;
   inventory: Array<number> | undefined;
@@ -190,4 +190,61 @@ export interface UserContextType {
   setFetchedInventory: React.Dispatch<React.SetStateAction<ItemType[]>>;
   startFail: boolean;
   setStartFail: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// export interface PassportProfile {
+//   id: string;
+//   displayName: string;
+//   name: { familyName: 'Williams', givenName: 'Colin' },
+//   emails: [ { value: 'colin.williams.dev@gmail.com', verified: true } ],
+//   photos: [
+//     {
+//       value: 'https://lh3.googleusercontent.com/a/AGNmyxZVr8rAsrYj51MXgpEh6mwGx2gs06aEupYnjrvM=s96-c'
+//     }
+//   ],
+//   provider: 'google',
+//   _raw: '{\n' +
+//     '  "sub": "117796458228181967492",\n' +
+//     '  "name": "Colin Williams",\n' +
+//     '  "given_name": "Colin",\n' +
+//     '  "family_name": "Williams",\n' +
+//     '  "picture": "https://lh3.googleusercontent.com/a/AGNmyxZVr8rAsrYj51MXgpEh6mwGx2gs06aEupYnjrvM\\u003ds96-c",\n' +
+//     '  "email": "colin.williams.dev@gmail.com",\n' +
+//     '  "email_verified": true,\n' +
+//     '  "locale": "en"\n' +
+//     '}',
+//   _json: {
+//     sub: '117796458228181967492',
+//     name: 'Colin Williams',
+//     given_name: 'Colin',
+//     family_name: 'Williams',
+//     picture: 'https://lh3.googleusercontent.com/a/AGNmyxZVr8rAsrYj51MXgpEh6mwGx2gs06aEupYnjrvM=s96-c',
+//     email: 'colin.williams.dev@gmail.com',
+//     email_verified: true,
+//     locale: 'en'
+//   }
+// }
+
+export interface PassportName {
+  familyName: string;
+  givenName: string;
+}
+
+export interface PassportPhoto {
+  value: string;
+}
+
+export interface PassportEmail {
+  value: string;
+  verified: boolean;
+}
+
+export interface PassportProfile {
+  [key: string]: string | boolean | PassportName | PassportEmail[] | PassportPhoto[];
+}
+
+export interface PassportUser {
+  provider: string;
+  id: string;
+  displayName: string;
 }

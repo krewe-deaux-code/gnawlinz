@@ -1,5 +1,5 @@
 //import axios from 'axios';
-import React, { useEffect, useState, useContext } from 'react'; //useState,
+import React, { useEffect, useState, useContext, MouseEvent } from 'react'; //useState,
 import {
   NavBar,
   TopContent1,
@@ -24,10 +24,10 @@ import { UserContext, SettingsContext } from '../../App';
 type LinkProps = {
   isActive: boolean;
   showButton: boolean;
-  handleSpeak: (e: any) => void;
+  handleSpeak: (e: MouseEvent<HTMLElement>) => void;
 };
 
-const Nav = ({ isActive, showButton, handleSpeak }: LinkProps ) => {
+const Nav = ({ isActive, showButton, handleSpeak }: LinkProps) => {
   // <-- move to Title after Auth refactor/move -->
   const {
     volume,
